@@ -101,6 +101,7 @@
                     \item $\leq$ est un bon ordre : $\forall E \subseteq \mathbb{N}^n$ non vide, $E$ contient un élément minimal pour $<$.
                 \end{enumerate}
             \end{prop}
+            \cor{
             \begin{proof}
                 4 $\Rightarrow$ 3 : Supposons qu'il existe $\alpha \in \mathbb{N}^n$ tq $\alpha < 0$, alors $2\alpha < \alpha$, $3\alpha < 2\alpha$ et ainsi de suite, donc $\cdots < 2\alpha < \alpha < 0$, mais alors $\{m\alpha \mid m \in \mathbb{N}\}$ n'a pas d'élément minimal, donc $\leq$ n'est pas un bon ordre. \\
                 3 $\Rightarrow$ 4 : Supposons qu'il existe $F \subseteq \mathbb{N}^n$ non vide et sans élément minimal. Posons 
@@ -119,20 +120,21 @@
                 \begin{align*}
                     F_i := \{\beta \in F_{i-1} \mid \beta \leq \alpha^{(i)}\}
                 \end{align*}
-                Remarquons finalement que $F_i$ est encore non vide, puisqu'il contiens $\alpha^{(i)}$. Maintenant $F_n$ n'admet pas d'élément minimal, car sinon en notant $\beta$ un tel élément, et prenons $\gamma \in F$. Alors $\gamma \leq \beta$ implique que $\gamma$ est dans $F_n$, puisque $\gamma \leq \beta \leq \alpha^{(n)}$, et ainsi $\gamma = \beta$ par minimalité de $\beta$ dans $F_n$. Ainsi $\beta$ serait un élément minimal de $F$, qui n'en admet pas. Ainsi il existe $\beta \in F_n$ tel que $\beta < \alpha^{(n)}$. Maintenant comme $\alpha^{(n)} \leq \alpha^{(n-1)} \leq \cdots \leq \alpha^{(1)}$, on a $F_n \subseteq F_{n-1} \subseteq \cdots \subseteq F_0 := F$, et donc pour tout $i \in \lcc 1,n \rcc ,\, \beta \in F_{i-1}$. aled aled
+                Remarquons finalement que $F_i$ est encore non vide, puisqu'il contiens $\alpha^{(i)}$. Maintenant $F_n$ n'admet pas d'élément minimal, car sinon en notant $\beta$ un tel élément, et prenons $\gamma \in F$. Alors $\gamma \leq \beta$ implique que $\gamma$ est dans $F_n$, puisque $\gamma \leq \beta \leq \alpha^{(n)}$, et ainsi $\gamma = \beta$ par minimalité de $\beta$ dans $F_n$. Ainsi $\beta$ serait un élément minimal de $F$, qui n'en admet pas. Ainsi il existe $\beta \in F_n$ tel que $\beta < \alpha^{(n)}$. Maintenant comme $\alpha^{(n)} \leq \alpha^{(n-1)} \leq \cdots \leq \alpha^{(1)}$, on a $F_n \subseteq F_{n-1} \subseteq \cdots \subseteq F_0 := F$, et donc pour tout $i \in \lcc 1,n \rcc ,\, \beta \in F_{i-1}$.
 
                 Posons maintenant $m_2 = \min \{\alpha_2 \mid \alpha \in F_1\}$, et prenons $\alpha^{(2)} \in F_1$ tq $\alpha_2^{(2)} = m_2$, $\alpha_1^{(2)} = m_1$. On construit alors $F_2 := \{\beta \in F_1 \mid \beta < \alpha^{(2)}$, puis de manière récursive $m_i$ et $F_i$ pour $i \in \lcc 1,n \rcc$. $F_n$ est infini, et $F_n \subseteq F_{n-1} \subseteq \cdots \subseteq F_1 \subseteq F$. Soit $\beta \in F_n$ tq $\beta < \alpha^{(n)}$, alors $\beta_i \geq \alpha_i^{(n)}$ par construction de $\alpha^{(n)}$. Ainsi $\beta - \alpha^{(n)} \in \mathbb{Z}^n_{> 0}$ Alors $\beta - \alpha^n < 0$, car sinon on aurait $\beta \geq \alpha^{(n)}$. 
-            \end{proof} 
+            \end{proof}
+            }
 
         \subsection{Algorithme de division multivariée}
             Fixons maintenant un ordre monomial $\leq$ sur $k[x_1, \cdots, x_n]$.
             \begin{defi}
                 Soit $f = \sum_{\alpha \in \mathbb{N}^n} \lambda_\alpha x^\alpha \in k[x_1, \cdots, x_n] \bs \{0\}$, 
                 \begin{enumerate}
-                    \item Le multidegré de $f$ est $\mathrm{mdeg}(f) = \max_> \{\alpha \in \mathbb{N}^n \mid \lambda_\alpha \neq 0\}$
+                    \item Le multidegré de $f$ est $\mathrm{mdeg}(f) = \max \{\alpha \in \mathbb{N}^n \mid \lambda_\alpha \neq 0\}$
                     \item Le coefficient dominant de $f$ $\mathrm{LC}(f) = \lambda_{\mathrm{mdeg}(f)}$
-                    \item Le mo,ome dominant de $f$ est $\mathrm{LM}(f) = X^{\mathrm{mdeg}(f)}$
-                    \item Le terme dominant de $f$ est $\mathrm{LT}(f) = \lambda_{\mathrm{mdeg}(f)}{\mathrm{mdeg}(f)}$
+                    \item Le mo,ome dominant de $f$ est $\mathrm{LM}(f) = x^{\mathrm{mdeg}(f)}$
+                    \item Le terme dominant de $f$ est $\mathrm{LT}(f) = \lambda_{\mathrm{mdeg}(f)}x^{\mathrm{mdeg}(f)}$
                 \end{enumerate}
             \end{defi}
             Soit $(f_1, \cdots, f_r)$ un $r$-tuple de polynômes non nuls de $k[x_1, \cdots, x_n]$. Soit $f \in k[x_1, \cdots, x_n]$, on cherche $Q_1, \cdots, Q_r, R \in k[x_1, \cdots, x_n]$ tq
@@ -140,32 +142,60 @@
                 \item $f = Q_1f_1 + \cdots + Q_r f_r + R$
                 \item $R = 0$ ou aucun des termes de $R$ n'est divisible par $\mathrm{LT}(f_1), \cdots, \mathrm{LT}(f_r)$.
             \end{enumerate}
-            \textbf{Algorithme}
-            \begin{enumerate}
-                \item Initialisation : $f^{(0)} := f$, $Q_1^{(0)} , \cdots, Q_r^{(0)} = 0$, $R^{(0)} = 0$.
-                \item Etapte $m \geq 1$ : Si $f^{(m-1)} = 0$, alors $Q_i := Q_i^{(m_1)}$ et $R = R^{(m-1)}$, terminer l'algo. Sinon, si $\mathrm{LT}(f_1) \mid \mathrm{LT}(f^{(m_1)})$, effectuer :
-                \begin{align*}
-                    &f^{(m)} \leftarrow f^{(m-1)} - \frac{\mathrm{LT}(f^{(m-1)})}{\mathrm{LT}(f_1)} f_1 \\
-                    &Q_1^{(m)} \leftarrow Q_1^{(m-1)} + \frac{\mathrm{LT}(f^{(m-1)})}{\mathrm{LT}(f_1)} \\
-                    &Q_i^{(m)} \leftarrow Q_i^{(m_1)},\, i \neq 1 \\
-                    &R^{(m)} \leftarrow R^{(m-1)}
-                \end{align*}
-                Sinon si $\mathrm{LT}(f_2) \mid \mathrm{LT}(f^{(m-1)})$, effectuer
-                \begin{align*}
-                    &f^{(m)} \leftarrow f^{(m-1)} - \frac{\mathrm{LT}(f^{(m-1)})}{\mathrm{LT}(f_2)} f_2 \\
-                    &Q_2^{(m)} \leftarrow Q_2^{(m-1)} + \frac{\mathrm{LT}(f^{(m-1)})}{\mathrm{LT}(f_2)} \\
-                    &Q_i^{(m)} \leftarrow Q_i^{(m_1)},\, i \neq 2 \\
-                    &R^{(m)} \leftarrow R^{(m-1)}
-                \end{align*}
-                sinon si $\mathrm{LT}(f_3) \mid \mathrm{LT}(f^{(m-1)})$, effectuer ... \\
-                sinon si $\mathrm{LT}(f_r) \mid \mathrm{LT}(f^{(m-1)})$, effectuer ... \\
-                sinon effectuer
-                \begin{align*}
-                    & f^{(m)} \leftarrow f^{(m-1)} - \mathrm{LT}(f^{(m-1)}) \\
-                    & R^{(m)} \leftarrow R^{(m-1)} + \mathrm{LT}(f^{(m-1)}) \\
-                    & Q_i^{(m)} \leftarrow Q_i^{(m-1)}
-                \end{align*}
-            \end{enumerate}
+
+            \begin{algorithm}
+                \begin{algorithmic}
+                    \Function{Division multivariée}{$f , f_1, \cdots, f_r \in k[x_1, \cdots, x_n]$}
+                        \State $Q_1, \cdots, Q_r \gets 0$
+                        \State $R \gets 0$
+                        \While{$f \neq 0$}
+                            \State $b = True$
+                            \State $i \gets 1$
+                            \While{b}
+                                \If{$\mathrm{LT}(f_i) \mid \mathrm{LT}(f)$}
+                                    \State $f \gets f - \frac{\mathrm{LT}(f)}{\mathrm{LT}(f_i)} f_i$
+                                    \State $Q_i \gets Q_i + \frac{\mathrm{LT}(f)}{\mathrm{LT}(f_i)}$
+                                    \State $Q_j \gets Q_j,\, j \neq i$
+                                    \State $b \gets False$
+                                \EndIf
+                                \State $i \gets i + 1$
+                            \EndWhile
+                            \If{b}
+                                \State $f \leftarrow f - \mathrm{LT}(f)$
+                                \State $R \leftarrow R + \mathrm{LT}(f)$
+                            \EndIf
+                        \EndWhile
+                        \State \Return $R,Q_1, \cdots, Q_r$
+                    \EndFunction
+                \end{algorithmic}
+            \end{algorithm}
+
+            % \textbf{Algorithme}
+            % \begin{enumerate}
+            %     \item Initialisation : $f^{(0)} := f$, $Q_1^{(0)} , \cdots, Q_r^{(0)} = 0$, $R^{(0)} = 0$.
+            %     \item Etapte $m \geq 1$ : Si $f^{(m-1)} = 0$, alors $Q_i := Q_i^{(m_1)}$ et $R = R^{(m-1)}$, terminer l'algo. Sinon, si $\mathrm{LT}(f_1) \mid \mathrm{LT}(f^{(m_1)})$, effectuer :
+            %     \begin{align*}
+            %         &f^{(m)} \leftarrow f^{(m-1)} - \frac{\mathrm{LT}(f^{(m-1)})}{\mathrm{LT}(f_1)} f_1 \\
+            %         &Q_1^{(m)} \leftarrow Q_1^{(m-1)} + \frac{\mathrm{LT}(f^{(m-1)})}{\mathrm{LT}(f_1)} \\
+            %         &Q_i^{(m)} \leftarrow Q_i^{(m_1)},\, i \neq 1 \\
+            %         &R^{(m)} \leftarrow R^{(m-1)}
+            %     \end{align*}
+            %     Sinon si $\mathrm{LT}(f_2) \mid \mathrm{LT}(f^{(m-1)})$, effectuer
+            %     \begin{align*}
+            %         &f^{(m)} \leftarrow f^{(m-1)} - \frac{\mathrm{LT}(f^{(m-1)})}{\mathrm{LT}(f_2)} f_2 \\
+            %         &Q_2^{(m)} \leftarrow Q_2^{(m-1)} + \frac{\mathrm{LT}(f^{(m-1)})}{\mathrm{LT}(f_2)} \\
+            %         &Q_i^{(m)} \leftarrow Q_i^{(m_1)},\, i \neq 2 \\
+            %         &R^{(m)} \leftarrow R^{(m-1)}
+            %     \end{align*}
+            %     sinon si $\mathrm{LT}(f_3) \mid \mathrm{LT}(f^{(m-1)})$, effectuer ... \\
+            %     sinon si $\mathrm{LT}(f_r) \mid \mathrm{LT}(f^{(m-1)})$, effectuer ... \\
+            %     sinon effectuer
+            %     \begin{align*}
+            %         & f^{(m)} \leftarrow f^{(m-1)} - \mathrm{LT}(f^{(m-1)}) \\
+            %         & R^{(m)} \leftarrow R^{(m-1)} + \mathrm{LT}(f^{(m-1)}) \\
+            %         & Q_i^{(m)} \leftarrow Q_i^{(m-1)}
+            %     \end{align*}
+            % \end{enumerate}
             \begin{remq}
                 A la fin de l'étape $m \geq 0$,
                 \begin{align*}
@@ -173,7 +203,9 @@
                 \end{align*}
                 Si $f^{(m)} = 0$, alors on a bien $\sum Q_i^{(m)} f_i + R^{(m)} = f$ et alors $R^{(m)} = 0$ ou aucun des termes de $R^{(n)}$ n'est divisible par $\mathrm{LT}(f_1), \cdots, \mathrm{LT}(f_r)$. La procédure s'arrête : sinon, on aurait $f^{(0)},f^{(1)}, \cdots$ avec $\mathrm{mdeg} f^{(0)} > \mathrm{mdeg} f^{(1)} > \cdots$ et ainsi $\{\alpha \mid \exists m \in \mathbb{N} ,\, \alpha = \mathrm{mdeg} f^{(m-1)}\}$ n'a pas d'éléments minimal.
             \end{remq}
-            \textbf{Notation} Le reste obtenu s'écrira $\bar f^{f_1, \cdots, f_t}$. Si $F = \{f_1, \cdots, f_r\}$, on écrira $\bar f^F$.
+            \begin{nota}
+                Le reste obtenu s'écrira $\bar f^{f_1, \cdots, f_t}$. Si $F = \{f_1, \cdots, f_r\}$, on écrira $\bar f^F$.
+            \end{nota}
             \begin{remq}
                 L'algo donne l'exitence de $Q_i$ et $R$ tq $f = \sum Q_if_i + R$ satisfaisant les conditions imposées précédemment. Ces $Q_i$ et $R$ ne sont pas uniques.
             \end{remq}
