@@ -144,32 +144,44 @@
             \end{enumerate}
 
             \begin{algorithm}
+                \caption{Réalise la division euclidienne multivariée de $f$ par $f_1, \cdots, f_r$}
                 \begin{algorithmic}
                     \Function{Division multivariée}{$f , f_1, \cdots, f_r \in k[x_1, \cdots, x_n]$}
+                        \State $g \gets f$
                         \State $Q_1, \cdots, Q_r \gets 0$
                         \State $R \gets 0$
-                        \While{$f \neq 0$}
+                        \While{$g \neq 0$}
                             \State $b = True$
                             \State $i \gets 1$
                             \While{b}
                                 \If{$\mathrm{LT}(f_i) \mid \mathrm{LT}(f)$}
-                                    \State $f \gets f - \frac{\mathrm{LT}(f)}{\mathrm{LT}(f_i)} f_i$
-                                    \State $Q_i \gets Q_i + \frac{\mathrm{LT}(f)}{\mathrm{LT}(f_i)}$
+                                    \State $g \gets g - \frac{\mathrm{LT}(g)}{\mathrm{LT}(f_i)} f_i$
+                                    \State $Q_i \gets Q_i + \frac{\mathrm{LT}(g)}{\mathrm{LT}(f_i)}$
                                     \State $Q_j \gets Q_j,\, j \neq i$
                                     \State $b \gets False$
                                 \EndIf
                                 \State $i \gets i + 1$
                             \EndWhile
                             \If{b}
-                                \State $f \leftarrow f - \mathrm{LT}(f)$
-                                \State $R \leftarrow R + \mathrm{LT}(f)$
+                                \State $g \leftarrow g - \mathrm{LT}(g)$
+                                \State $R \leftarrow R + \mathrm{LT}(g)$
                             \EndIf
                         \EndWhile
                         \State \Return $R,Q_1, \cdots, Q_r$
                     \EndFunction
                 \end{algorithmic}
             \end{algorithm}
-
+            \begin{remq}
+                Après chaque tour de boucle while principale, on a toujours 
+                \begin{align*}
+                    f = g + \sum Q_if_i + R
+                \end{align*}
+                au vu des calculs réalisés dans la boucle. Et comme l'algorithme se termine lorsque $g = 0$, on obtiens finalement 
+                \begin{align*}
+                    f = \sum Q_if_i + R
+                \end{align*}
+                et aucun des termes de $R$ n'est divisible par $\mathrm{LT}(f_i)$ vu que l'on ajoute que des termes divisibles par aucun des $\mathrm{LT}(f_i)$ dans l'algorithme. Finalement, l'algorithme termine puisque à chaque étape de la boucle while principale, le multidegré de $g$ diminue strictement au vu des calculs effectués et du fait que $\leq$ est une relation d'ordre monomiale.
+            \end{remq}
             % \textbf{Algorithme}
             % \begin{enumerate}
             %     \item Initialisation : $f^{(0)} := f$, $Q_1^{(0)} , \cdots, Q_r^{(0)} = 0$, $R^{(0)} = 0$.
@@ -196,13 +208,13 @@
             %         & Q_i^{(m)} \leftarrow Q_i^{(m-1)}
             %     \end{align*}
             % \end{enumerate}
-            \begin{remq}
-                A la fin de l'étape $m \geq 0$,
-                \begin{align*}
-                    f^{(m)} + \sum Q_i^{(m)} f_i + R^{(m)} = f
-                \end{align*}
-                Si $f^{(m)} = 0$, alors on a bien $\sum Q_i^{(m)} f_i + R^{(m)} = f$ et alors $R^{(m)} = 0$ ou aucun des termes de $R^{(n)}$ n'est divisible par $\mathrm{LT}(f_1), \cdots, \mathrm{LT}(f_r)$. La procédure s'arrête : sinon, on aurait $f^{(0)},f^{(1)}, \cdots$ avec $\mathrm{mdeg} f^{(0)} > \mathrm{mdeg} f^{(1)} > \cdots$ et ainsi $\{\alpha \mid \exists m \in \mathbb{N} ,\, \alpha = \mathrm{mdeg} f^{(m-1)}\}$ n'a pas d'éléments minimal.
-            \end{remq}
+            % \begin{remq}
+            %     A la fin de l'étape $m \geq 0$,
+            %     \begin{align*}
+            %         f^{(m)} + \sum Q_i^{(m)} f_i + R^{(m)} = f
+            %     \end{align*}
+            %     Si $f^{(m)} = 0$, alors on a bien $\sum Q_i^{(m)} f_i + R^{(m)} = f$ et alors $R^{(m)} = 0$ ou aucun des termes de $R^{(n)}$ n'est divisible par $\mathrm{LT}(f_1), \cdots, \mathrm{LT}(f_r)$. La procédure s'arrête : sinon, on aurait $f^{(0)},f^{(1)}, \cdots$ avec $\mathrm{mdeg} f^{(0)} > \mathrm{mdeg} f^{(1)} > \cdots$ et ainsi $\{\alpha \mid \exists m \in \mathbb{N} ,\, \alpha = \mathrm{mdeg} f^{(m-1)}\}$ n'a pas d'éléments minimal.
+            % \end{remq}
             \begin{nota}
                 Le reste obtenu s'écrira $\bar f^{f_1, \cdots, f_t}$. Si $F = \{f_1, \cdots, f_r\}$, on écrira $\bar f^F$.
             \end{nota}
@@ -213,6 +225,7 @@
                 $k[x_1, x_2]$, $<_{lex} =: <$, $f = x_1^2 + x_1x_2 + x_2^2$, $f_1 = x_1$, $f_2 = x_1 + x_2$. Alors 
                 \begin{align*}
                     f &= (x_1 + x_2)f_1 + x_2^2 \\
+                    \intertext{(Résultat obtenu en appliquant l'algorithme de division multivariée)}
                     &= x_1f_2 + x_2^2 \\
                     &= x_1f_1 + x_2f_2 + 0 \\
                 \end{align*}
@@ -221,18 +234,19 @@
 
     \section{Bases de Gröbner}
         \subsection{Définition}
-            \begin{defi} (Base de Groöbner, 1)
-                Soit $I \subrel{id} k[x_1, \cdots, x_n]$ non nul. Une base de Groöbner de $I$ est un ensemble fini $G \subseteq I$ tq
+            \begin{defi} (Base de Gröbner, 1)
+                \label{grob_1}
+                Soit $I \subrel{id} k[x_1, \cdots, x_n]$ non nul. Une base de Gröbner de $I$ est un ensemble fini $G \subseteq I$ tq
                 \begin{enumerate}
                     \item $I = (G)$,
                     \item $f \in I \iff \bar f^G = 0$
                 \end{enumerate}
             \end{defi}
-            Par convention, $\emptyset$ est une base de Groöbner de l'idéal nul.
+            Par convention, $\emptyset$ est une base de Gröbner de l'idéal nul.
             \begin{expl}
                 \begin{enumerate}
-                    \item Si $0 \neq g \in k[x]$, alors $\{g\}$ est une BDG (base de Groöbner) de $(g)$.
-                    \item Si $0 \neq g \in k[x_1, \cdots, x_n]$, alors $\{g\}$ est une BDG (base de Groöbner) de $(g)$.
+                    \item Si $0 \neq g \in k[x]$, alors $\{g\}$ est une BDG (base de Gröbner) de $(g)$.
+                    \item Si $0 \neq g \in k[x_1, \cdots, x_n]$, alors $\{g\}$ est une BDG de $(g)$.
                 \end{enumerate}
             \end{expl}
             Comment peut-on avoir $f \in (f_1, \cdots, f_r)$ mais $\bar f^{f_1, \cdots, f_r} \neq 0$ ? Il faut qu'à une étape de la division, $\mathrm{LT}(f)$ ne soit pas divisible par aucun des $\mathrm{LT}(f_i)$. 
@@ -248,29 +262,33 @@
                 Exercice
             \end{proof}
             Soient $f_1, \cdots, f_r \in k[x_1, \cdots, x_n]$. $\mathrm{LT}(f)$ divisible par l'un des $\mathrm{LT}(f_1), \cdots, \mathrm{LT}(f_r)$ si et seulement si $\mathrm{LT}(f) \in (\{\mathrm{LT}(f_i)\})$ d'après la proposition précédente. \\
-            \textbf{Notation} $E \subseteq k[x_1, \cdots, x_n]$, 
-            \begin{align*}
-                \mathrm{LT}(E) := \{\mathrm{LT}(f) \mid f \in E\}
-            \end{align*}
-            \begin{defi} (Base de Groöbner, 2)
-                Une base de Groöbner d'un idéal $I \subrel{id} k[x_1, \cdots, x_n]$ est un ensemble (fini) $G \subseteq I$ tq $(\mathrm{LT}(I)) = (\mathrm{LT}(G))$
+            \begin{nota}
+                Soit $E \subseteq k[x_1, \cdots, x_n]$, on note
+                \begin{align*}
+                    \mathrm{LT}(E) := \{\mathrm{LT}(f) \mid f \in E\}
+                \end{align*}
+            \end{nota}
+            \begin{defi} (Base de Gröbner, 2)
+                Une base de Gröbner d'un idéal $I \subrel{id} k[x_1, \cdots, x_n]$ est un ensemble (fini) $G \subseteq I$ tq $(\mathrm{LT}(I)) = (\mathrm{LT}(G))$
             \end{defi}
             \begin{theo}
-                Les deux définitions de bases de Groöbner sont équivalentes.
+                Les deux définitions de bases de Gröbner sont équivalentes.
             \end{theo}
             \begin{proof}
                 def 1 $\Rightarrow$ def 2 : Soit $f \in I$ si $\mathrm{LT}(f) \notin (\mathrm{LT}(G))$, alors $\mathrm{LT}(f)$ n'est divisible par aucun des $\mathrm{LT}(g)$, $g \in G$ donc $\bar f^G \neq 0$. \\
+                \cor{
                 def 2 $\Rightarrow$ def 1 : Notons $G = \{g_1, \cdots, g_r\}$. Soit $f \in I$, on veut que $\bar f^G = 0$. Il suffit de montrer que le reste est nul à chaque étape de l'algo de division. Or
                 \begin{align*}
                     f - \sum Q_i^{(m)} g_i - R^{(m)} = f^{(m)}
                 \end{align*}
                 et $f - \sum Q_i^{(m)} g_i \in I$. Si $R^{(m)}$, alors $f^{(m)} \in I$, donc $\mathrm{LT}(f^{(m)}) \in (\mathrm{LT}(G))$. D'où $R^{(m+1)} = 0$ puis récurrence.
+                }
             \end{proof}
             \begin{theo}
-                Tout $I \subrel{id} k[x_1, \cdots, x_n]$ admet une base de Groöbner.
+                Tout $I \subrel{id} k[x_1, \cdots, x_n]$ admet une base de Gröbner.
             \end{theo}
             \begin{proof}
-                On cherche $G \subrel{fini} I$ tq $(\mathrm{LT}(G)) = (\mathrm{LT}(I))$. D'après le thm de la base de Hilbert, $\exists H \subrel{fini} \mathrm{LT}(I)$ tq $(H) = (\mathrm{LT}(I))$. Notons $h_1, \cdots, h_r$ des polynômes de $I$ dont les termes dominants sont les éléments de $H$. Alors $\{h_1, \cdots, h_r\}$ est une BDG de $I$.
+                On cherche $G \subrel{fini} I$ tq $(\mathrm{LT}(G)) = (\mathrm{LT}(I))$. D'après \ref{base_de_hilbert}, $\exists H \subrel{fini} \mathrm{LT}(I)$ tq $(H) = (\mathrm{LT}(I))$. Notons $h_1, \cdots, h_r$ des polynômes de $I$ dont les termes dominants sont les éléments de $H$. Alors $\{h_1, \cdots, h_r\}$ est une BDG de $I$.
             \end{proof}
 
     \section{Algorithme de Buchberger}
