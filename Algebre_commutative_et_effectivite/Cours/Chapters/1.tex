@@ -153,18 +153,18 @@
                         \While{$g \neq 0$}
                             \State $b = True$
                             \State $i \gets 1$
-                            \While{b}
-                                \If{$\mathrm{LT}(f_i) \mid \mathrm{LT}(f)$}
+                            \While{$b$ \textbf{and} $i \leq r$}
+                                \If{$\mathrm{LT}(f_i) \mid \mathrm{LT}(g)$}
                                     \State $g \gets g - \frac{\mathrm{LT}(g)}{\mathrm{LT}(f_i)} f_i$
                                     \State $Q_i \gets Q_i + \frac{\mathrm{LT}(g)}{\mathrm{LT}(f_i)}$
-                                    \State $Q_j \gets Q_j,\, j \neq i$
                                     \State $b \gets False$
                                 \EndIf
                                 \State $i \gets i + 1$
                             \EndWhile
                             \If{b}
-                                \State $g \leftarrow g - \mathrm{LT}(g)$
-                                \State $R \leftarrow R + \mathrm{LT}(g)$
+                                \State $h = LT(g)$
+                                \State $g \leftarrow g - h$
+                                \State $R \leftarrow R + h$
                             \EndIf
                         \EndWhile
                         \State \Return $R,Q_1, \cdots, Q_r$
@@ -256,10 +256,23 @@
                 Un idéal $I \subrel{id} k[x_1, \cdots, x_n]$ est monomial s'il existe des monômes $m_1, \cdots, m_r$ tq $I = (m_1, \cdots, m_r)$ (par convention $\{0\}$ est monomial).
             \end{defi}
             \begin{prop}
+                \label{lemme_nul}
                 Soient $m_1, \cdots, m_r \in k[x_1, \cdots, x_n]$ des monömes, alors $m \in (m_1, \cdots, m_r) \iff m$ est divisible par l'un des $m_i$.
             \end{prop}
             \begin{proof}
-                Exercice
+                Si $m$ est divisible par l'un des $m_i$, il est clair que $m \in (m_1, \cdots, m_r)$. Pour prouver l'implication réciproque, supposons que $m \in (m_1, \cdots, m_r)$. Alors on peut écrire
+                \begin{align*}
+                    m = \sum_{i = 1}^r a_i m_i
+                \end{align*}
+                avec $a_i \in k[x_1, \cdots, x_n]$. Maintenant écrivons chaque $a_i$ comme
+                \begin{align*}
+                    a_i(x) = \sum_{\alpha \in \mathbb{N}^n} \lambda_\alpha^i x^{\alpha}
+                \end{align*}
+                Alors
+                \begin{align*}
+                    m = \sum_{i = 1}^r \sum_{\alpha \in \mathbb{N}^n} \lambda_\alpha^i x^{\alpha} m_i
+                \end{align*}
+                Maintenant comme $m$ est un monome, il va exister $i, \alpha$ tels que $m = \lambda x^\alpha m_i$, donc $m_i \mid m$.
             \end{proof}
             Soient $f_1, \cdots, f_r \in k[x_1, \cdots, x_n]$. $\mathrm{LT}(f)$ divisible par l'un des $\mathrm{LT}(f_1), \cdots, \mathrm{LT}(f_r)$ si et seulement si $\mathrm{LT}(f) \in (\{\mathrm{LT}(f_i)\})$ d'après la proposition précédente. \\
             \begin{nota}
@@ -277,12 +290,17 @@
             \begin{proof}
                 def 1 $\Rightarrow$ def 2 : Soit $f \in I$ si $\mathrm{LT}(f) \notin (\mathrm{LT}(G))$, alors $\mathrm{LT}(f)$ n'est divisible par aucun des $\mathrm{LT}(g)$, $g \in G$ donc $\bar f^G \neq 0$. \\
                 \cor{
-                def 2 $\Rightarrow$ def 1 : Notons $G = \{g_1, \cdots, g_r\}$. Soit $f \in I$, on veut que $\bar f^G = 0$. Il suffit de montrer que le reste est nul à chaque étape de l'algo de division. Or
+                def 2 $\Rightarrow$ def 1 : Notons $G = \{g_1, \cdots, g_r\}$. Soit $f \in I$, on veut que $\bar f^G = 0$. Il suffit de montrer que le reste est nul à chaque étape de l'algo de division. Or à l'étape $0$ il l'est, puis en supposant qu'il l'est à l'étape $m$, on a
                 \begin{align*}
-                    f - \sum Q_i^{(m)} g_i - R^{(m)} = f^{(m)}
+                    f = g + \sum Q_i g_i \in I
                 \end{align*}
-                et $f - \sum Q_i^{(m)} g_i \in I$. Si $R^{(m)}$, alors $f^{(m)} \in I$, donc $\mathrm{LT}(f^{(m)}) \in (\mathrm{LT}(G))$. D'où $R^{(m+1)} = 0$ puis récurrence.
-                }
+                et donc $g \in I$. Ainsi $LT(g) \in (LT(I)) = (LT(G))$ et donc il existe un $g_i$ tel que $LT(g_i) \mid LT(g)$ daprès \ref{lemme_nul}, et ainsi le reste est inchangé à cette étape.
+                % Or
+                % \begin{align*}
+                %     f - \sum Q_i^{(m)} g_i - R^{(m)} = f^{(m)}
+                % \end{align*}
+                % et $f - \sum Q_i^{(m)} g_i \in I$. Si $R^{(m)}$, alors $f^{(m)} \in I$, donc $\mathrm{LT}(f^{(m)}) \in (\mathrm{LT}(G))$. D'où $R^{(m+1)} = 0$ puis récurrence.
+                % }
             \end{proof}
             \begin{theo}
                 Tout $I \subrel{id} k[x_1, \cdots, x_n]$ admet une base de Gröbner.
@@ -301,4 +319,4 @@
             \end{defi}
             \begin{theo} (Critère de Buchberger)
                 Soit $G = \{g_1, \cdot, g_r\} \subseteq k[x_1, \cdots, x_r]$. Alors $G$ est une BDG de $(G)$ si et seulement si $\forall g,h \in G$, $\overline{S(g,h)}^G = 0$
-            \end{theo}
+            \end{theo}  
