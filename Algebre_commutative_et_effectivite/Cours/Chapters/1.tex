@@ -289,7 +289,6 @@
             \end{theo}
             \begin{proof}
                 def 1 $\Rightarrow$ def 2 : Soit $f \in I$ si $\mathrm{LT}(f) \notin (\mathrm{LT}(G))$, alors $\mathrm{LT}(f)$ n'est divisible par aucun des $\mathrm{LT}(g)$, $g \in G$ donc $\bar f^G \neq 0$. \\
-                \cor{
                 def 2 $\Rightarrow$ def 1 : Notons $G = \{g_1, \cdots, g_r\}$. Soit $f \in I$, on veut que $\bar f^G = 0$. Il suffit de montrer que le reste est nul à chaque étape de l'algo de division. Or à l'étape $0$ il l'est, puis en supposant qu'il l'est à l'étape $m$, on a
                 \begin{align*}
                     f = g + \sum Q_i g_i \in I
@@ -300,7 +299,6 @@
                 %     f - \sum Q_i^{(m)} g_i - R^{(m)} = f^{(m)}
                 % \end{align*}
                 % et $f - \sum Q_i^{(m)} g_i \in I$. Si $R^{(m)}$, alors $f^{(m)} \in I$, donc $\mathrm{LT}(f^{(m)}) \in (\mathrm{LT}(G))$. D'où $R^{(m+1)} = 0$ puis récurrence.
-                % }
             \end{proof}
             \begin{theo}
                 Tout $I \subrel{id} k[x_1, \cdots, x_n]$ admet une base de Gröbner.
