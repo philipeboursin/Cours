@@ -125,6 +125,12 @@
                 Posons maintenant $m_2 = \min \{\alpha_2 \mid \alpha \in F_1\}$, et prenons $\alpha^{(2)} \in F_1$ tq $\alpha_2^{(2)} = m_2$, $\alpha_1^{(2)} = m_1$. On construit alors $F_2 := \{\beta \in F_1 \mid \beta < \alpha^{(2)}$, puis de manière récursive $m_i$ et $F_i$ pour $i \in \lcc 1,n \rcc$. $F_n$ est infini, et $F_n \subseteq F_{n-1} \subseteq \cdots \subseteq F_1 \subseteq F$. Soit $\beta \in F_n$ tq $\beta < \alpha^{(n)}$, alors $\beta_i \geq \alpha_i^{(n)}$ par construction de $\alpha^{(n)}$. Ainsi $\beta - \alpha^{(n)} \in \mathbb{Z}^n_{> 0}$ Alors $\beta - \alpha^n < 0$, car sinon on aurait $\beta \geq \alpha^{(n)}$. 
             \end{proof}
             }
+            \textbf{Contre-exemple de la démo du prof}
+            Considérons la relation d'ordre $\leq_{inv}$ sur $\mathbb{N}^2$ définie comme
+            \begin{align*}
+                \alpha \leq_{revlex} \beta \iff \alpha \geq_{lex} \beta 
+            \end{align*}
+            Pour ne pas alourdir les notations, nous notons $\leq_{revlex}$ comme $\geq_{lex}$, et ainsi nous cherchons a montrer que tout partie contient un élément maximal pour $\leq_{lex}$. 
 
         \subsection{Algorithme de division multivariée}
             Fixons maintenant un ordre monomial $\leq$ sur $k[x_1, \cdots, x_n]$.
