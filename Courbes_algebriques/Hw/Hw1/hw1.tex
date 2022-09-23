@@ -1,0 +1,67 @@
+\documentclass[11pt]{article}
+
+\usepackage{import}
+\import{D:/Bureau/Documents/Maths/Latex/Packages/}{article.tex}
+
+% Couleur de correction
+% \newcommand{\cor}[1]{{#1}}
+\newcommand{\cor}[1]{{\color{red} #1}}
+
+\begin{document}
+
+%Page de garde
+\title{Exercices}
+\date{\today}
+\author{Alexandre Guillemot}
+\maketitle
+
+\section*{Exercice 10, feuille 1}
+    \begin{question}{3)} ($|k| = \infty$)
+        Dans un premier temps, montrons que $V(Y^2 - X^3) = \{(t^2, t^3) \in k^2 \mid t \in k\} =: V$ : si $(x,y) \in V$, alors $\exists t \in k \mid (x,y) = (t^2, t^3)$. Et alors $y^2 - x^3 = t^6 - t^6 = 0$, donc $(x,y) \in V(Y^2 - X^3)$. Réciproquement, si $(x,y) \in V(Y^2 - X^3)$, alors $y^2 = x^3$ dans $k$. Et alors si $x = 0$, alors $y = 0$ et $(0,0) \in V$. Sinon,
+        \begin{align*}
+            &\left(\frac{y}{x}\right)^2 = x \\
+            &\left(\frac{y}{x}\right)^3 = y \\
+        \end{align*}
+        donc en posant $t = x/y$, $(x,y) = (t^2, t^3) \in V$. \\
+        Ensuite, montrons que $I(V(Y^2 - X^3)) = (Y^2 - X^3)$ : remarquons dans un premier temps que pour tout $P \in k[T]$, $P = 0 \iff P(t) = 0$, $\forall t \in k$ du fait que $|k| = \infty$. Ainsi prouver $(Y^2 - X^3) = I(V(Y^2 - X^3))$ reviens à prouver que le noyau de
+        \begin{align*}
+            \begin{array}{cccc}
+                \varphi : & k[X,Y] & \to & k[T] \\
+                & P & \mapsto & P(T^2,T^3) \\
+            \end{array}
+        \end{align*}
+        vaut $(Y^2 - X^3)$. En effet, $P \in I(V(Y^2 - X^3)) \iff P(t^3, t^3) = 0$, $\forall t \in k$ $\iff P(T^2, T^3) = 0$ au vu de la remarque faite précédemment, donc $\ker \varphi = I(V(Y^2 - X^3))$. Il est clair que $(Y^2 - X^3) \subseteq \ker \varphi$. Réciproquement, soit $P \in \ker \varphi$, réalisons la division euclidienne de $P$ par $Y^2 - X^3$ dans $k[X][Y]$ :
+        \begin{align*}
+            P(X,Y) = Q(X,Y)(Y^2 - X^3) + R(X,Y)
+        \end{align*}
+        où $\deg_Y R \leq 1$. Ecrivons alors $R(X,Y) = a(X)Y + b(X)$, montrons que $a$ et $b$ sont nuls. Développons alors $a$ et $b$ : si on écrit 
+        \begin{align*}
+            &a(X) = \sum_{i \geq 0} a_i X^i \\
+            &b(X) = \sum_{i \geq 0} b_i X^i \\
+        \end{align*}
+        on a 
+        \begin{align*}
+            R(T^2, T^3) &= a(T^2)T^3 + b(T^2) \\
+            &= \sum_{i \geq 0} a_i T^{2i + 3} + b_i T^{2i} \\
+            &= \sum_{i \geq 0} a_i T^{2i + 3} + b_i T^{2i} \\
+            &= \sum_{j \geq 0} c_j T^j \\
+        \end{align*}
+        où
+        \begin{align*}
+            c_j =
+            \begin{cases}
+                a_i &\text{ si } j = 2i + 3 \text{ pour un certain } i \in \mathbb{N} \\
+                b_i &\text{ si } j = 2i \text{ pour un certain } i \in \mathbb{N} \\
+                0 & \text{ sinon}
+            \end{cases}
+        \end{align*}
+        (Les coefficients de $a(T^2)T^3$ n'intéragissent pas avec ceux de $b(T^2)$, car devant des monômes de degré impair alors que ceux de $b(T^2)$ n'aparaissent que devant des monômes de degré pair). Ainsi comme $P \in \ker \varphi$, $0 = \varphi(R) = R(T^2, T^3)$ et donc $a_i, b_i = 0$ pour tout $i \geq 0$. Finalement, $a,b = 0$ et donc $R = 0$, d'où $P \in (Y^2 - X^3)$. Ainsi on a bien égalité $I(V(Y^2 - X^3)) = (Y^2 - X^3)$, et $V(Y^2 - X^3)$ est irréductible puisque
+        \begin{align*}
+            k[T] \simeq K[X,Y]/(Y^2 , X^3)
+        \end{align*}
+        par le point précédent, et $k[T]$ est intègre.
+    \end{question}
+
+\section*{Exercice 15, feuille 1}
+
+\end{document}
