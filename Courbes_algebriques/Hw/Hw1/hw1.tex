@@ -17,12 +17,16 @@
 
 \section*{Exercice 10, feuille 1, question 3}
     \begin{question}{3)} ($|k| = \infty$)
-        Dans un premier temps, montrons que $V(Y^2 - X^3) = \{(t^2, t^3) \in k^2 \mid t \in k\} =: V$ : si $(x,y) \in V$, alors $\exists t \in k \mid (x,y) = (t^2, t^3)$. Et alors $y^2 - x^3 = t^6 - t^6 = 0$, donc $(x,y) \in V(Y^2 - X^3)$. Réciproquement, si $(x,y) \in V(Y^2 - X^3)$, alors $y^2 = x^3$ dans $k$. Et alors si $x = 0$, alors $y = 0$ et $(0,0) \in V$. Sinon,
+        Dans un premier temps, montrons que
+        \begin{align*}
+            V(Y^2 - X^3) = \{(t^2, t^3) \in k^2 \mid t \in k\} =: V
+        \end{align*}
+        Si $(x,y) \in V$, alors $\exists t \in k \mid (x,y) = (t^2, t^3)$. Et alors $y^2 - x^3 = t^6 - t^6 = 0$, donc $(x,y) \in V(Y^2 - X^3)$. Réciproquement, si $(x,y) \in V(Y^2 - X^3)$, alors $y^2 = x^3$ dans $k$. Et alors si $x = 0$, alors $y = 0$ et $(0,0) \in V$. Sinon,
         \begin{align*}
             &\left(\frac{y}{x}\right)^2 = x \\
             &\left(\frac{y}{x}\right)^3 = y \\
         \end{align*}
-        donc en posant $t = x/y$, $(x,y) = (t^2, t^3) \in V$. \\
+        donc en posant $t = y/x$, $(x,y) = (t^2, t^3) \in V$. \\
         Ensuite, montrons que $I(V(Y^2 - X^3)) = (Y^2 - X^3)$ : remarquons dans un premier temps que pour tout $P \in k[T]$, $P = 0 \iff P(t) = 0$, $\forall t \in k$ du fait que $|k| = \infty$. Ainsi prouver $(Y^2 - X^3) = I(V(Y^2 - X^3))$ reviens à prouver que le noyau de
         \begin{align*}
             \begin{array}{cccc}
@@ -100,10 +104,10 @@
         en passant au complémentaire.
     \end{question}
     \begin{question}{3)}
-        $D(f) = \emptyset \iff V((f)) = \mathbb{A}^n_k \iff \forall x \in k,\, f(x) = 0 \iff f = 0$, la dernière équivalence provenant du fait que $|k| = \infty$ (résultat que l'on a prouvé par récurrence en td).
+        $D(f) = \emptyset \iff V((f)) = \mathbb{A}^n_k \iff \forall x \in k^n,\, f(x) = 0 \iff f = 0$, la dernière équivalence provenant du fait que $|k| = \infty$ (résultat que l'on a prouvé par récurrence en td).
     \end{question}
     \begin{question}{4)}
-        On utilise les questions précédentes : comme les ensembles $D(f)$ forment une base pour la topologie de $\mathbb{A}^n$, et que $U,V \neq \emptyset$, pour tout $x \in U$, $y \in V$, il existe $f,g \in k[x_1, \cdots, x_n]$ tels que $x \in D(f) \subseteq U$ et $y \in D(g) \subseteq V$. Maintenant $D(f) \cap D(g) = D(fg)$ mais alors si $D(f) \cap D(g) = \emptyset$, alors $fg = 0$ donc $f = 0$ ou $g = 0$ et donc $D(f) = \emptyset$ ou $D(g) = \emptyset$, absurde. AInsi $D(f) \cap D(g)$ est non vide, et donc $U \cap V \neq \emptyset$.
+        On utilise les questions précédentes : comme les ensembles $D(f)$ forment une base pour la topologie de $\mathbb{A}^n$ (question 2), et que $U,V \neq \emptyset$, pour tout $x \in U$, $y \in V$, il existe $f,g \in k[x_1, \cdots, x_n]$ tels que $x \in D(f) \subseteq U$ et $y \in D(g) \subseteq V$. Maintenant $D(f) \cap D(g) = D(fg)$ (question 1) mais alors si $D(f) \cap D(g) = \emptyset$, alors $fg = 0$ (question 3) donc $f = 0$ ou $g = 0$ et donc $D(f) = \emptyset$ ou $D(g) = \emptyset$, absurde. Ainsi, $D(f) \cap D(g)$ est non vide, et donc $U \cap V \neq \emptyset$.
     \end{question}
 
 \end{document}

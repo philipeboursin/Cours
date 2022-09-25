@@ -1,16 +1,72 @@
 \chapter{TD1}
-    \section*{Exercice 1}
+    \section{Exercice 1}
         Soit $V \subset \mathbb{A}^1$ un souos ensemble algébrique, alors il existe $M \subseteq k[x]$ tq $V = V(M)$. Maintenant $V(M) = V((M))$ et comme $k[x]$ est principal, il existe $P \in k[x]$ tq $V = V(P)$. Remarquons alors que $P \neq 0$ car sinon $V(P) = V(0) = \mathbb{A}^1$. Mais alors $V(P) = \{a \in \mathbb{A}^1 \mid P(a) = 0\}$ donc c'est l'ensemble des racines, qui est un ensemble fini (de cardinal inférieur à $\deg P$).
 
-    \section*{Exercice 2}
+    \section{Exercice 2}
         Vérifions la double inclusion : L'inclusion $\mathfrak{m}_a \subseteq \ker ev_a$ est triviale. Réciproquement, prenons $P \in k[x_1, \cdots, x_n]$ tq $P(a) = 0$. Alors par divisions euclidiennes successives, on peut écrire
         \begin{align*}
             P(x_1, \cdots, x_n) = Q_1(x_1, \cdots, x_n)(x_1 - a_1) + \cdots + Q_n(x_1, \cdots, x_n)(x_n - a_n) + r
         \end{align*}
         avec $r$ un polynôme constant. Alors $r = 0$ puisque $P(a) = 0$ et ainsi $P \in \mathfrak{m}_a$.
 
-    \section*{Exercice 3}
-        Par récurrence (flemme)
+    \section{Exercice 3}
+        Soit $k$ un corps infini. On montre par récurrence sur $n$ que $I(\mathbb{A}_k)^n = 0$ :
+        \begin{enumerate}
+            \item Si $n = 1$, alors $I(\mathbb{A}_k^n) = \{f \in k[x] \mid \forall a \in k,\, f(a) = 0\}$. Mais alors soit $f \in I(\mathbb{A}_k^n)$, $f$ a une infinité de racines, donc $f$ est forcément nul (tout polynôme $g$ non nul ayant au maximum $\deg g$ racines).
+            \item Soit $f \in I(\mathbb{A}_k^n)$. Alors regardons $f$ comme un élément de $k[x_1, \cdots, x_{n-1}][x_n]$ : 
+            \begin{align*}
+                f = \sum Q_i x_n^i
+            \end{align*}
+            avec $Q_i \in k[x_1, \cdots, x_{n-1}]$. Maintenant fixons $(a_1, \cdots, a_{n-1}) \in k^{n-1}$, alors pour tout $t \in k$
+            \begin{align*}
+                f(a_1, \cdots, a_{n-1}, t) = 0
+            \end{align*}
+            donc le polynome $\sum Q_i(a_1, \cdots, a_n)x_n^i \in k[x_n]$ est nul (on utilise l'initialisation). Ainsi chaque $Q_i(a_1, \cdots, a_n)$ est nul, et ceci pour tout $(a_1, \cdots, a_{n-1}) \in k^{n-1}$. Ainsi par hypothèse de récurrence les $Q_i \in k[x_1, \cdots, x_{n-1}]$ sont nuls et alors $f$ est nul, donc $I(\mathbb{A}_k^n) = 0$.
+        \end{enumerate}
     
-    \section*{Exercice 4}
-        
+    \section{Exercice 4}
+        $\supseteq$ est trivial. Réciproquement, soit $f \in \mathbb{F}_q[x]$ tel que $f(a) = 0$, pour tout $a \in \mathbb{F}_q$. Remarquons alors que $x^q - x$ s'annule sur tout $\mathbb{F}_q$ et a au maximum $q$ racines, donc doit forcément s'écrire $x^q - x = \prod_{a \in \mathbb{F}_q} (x - a)$. Maintenant, on peut factoriser $f$ en
+        \begin{align*}
+            f = g \prod_{a \in \mathbb{F}_q} (x - a) = g (x^q - x) \in (x^q - x)
+        \end{align*}
+        et donc l'inclusion réciproque est prouvée.
+
+    \section{Exercice 5}
+        \begin{question}{1)}
+            Montrons que $V = V(x^2 + y2 - 1)$ : il est clair que $V \subseteq V(x^2 + y^2 - 1)$. Réciproquement, soit $(a,b) \in \mathbb{R}^2$ tels que $a^2 + b^2 - 1 = 0$. Alors $a \in [-1,1]$ donc il existe $t \in \mathbb{R} \mid x = \cos t$. Et alors $b^2 = 1 - (\cos t)^2 = (\sin t)^2$ donc $b = \pm \sin t$. Si $b = \sin t$, alors on a terminé, sinon posons $t' = -t$, alors $a = cos t'$ et $b = \sin t'$ et donc $(a,b) \in V$.
+        \end{question}
+        \begin{question}{2)}
+            Supposons que $V_2$ est algébrique, disons $V_2 = V(I)$ pour $I \subrel{id} k[x,y]$. Alors prenons $P \in I$, on a $P(t, \sin t) = 0$ pour tout $t \in \mathbb{R}$. Mais alors regardons $P$ comme un polynôme de $k[x][y]$
+            \begin{align*}
+                P = \sum Q_i y^i
+            \end{align*}
+            avec $Q_i \in k[x]$. Alors fixons $t \in \mathbb{R}$, alors $\sum Q_i(t) y^i \in k[y]$ admet une infinité de racines, puisque $\sin (t + 2k\pi)$ sont des racines, pour $k \in \mathbb{Z}$ : en effet, $P(t,\sin (t + 2k\pi)) = P(t, \sin t) = 0$. Ainsi $\sum Q_i(t) y^i =0 \in k[y]$. Donc pour tout $t \in \mathbb{R}$, $Q_i(t) = 0$ et donc $Q_i = 0 \in k[x]$, et ainsi $P = 0$. Mais alors $I = 0$, donc $V_2 = \mathbb{A}_\mathbb{R}^2$ absurde.
+        \end{question}
+        \begin{question}{3)}
+            Supposons que $V_3 = V(I)$. Alors soit $P \in I$, alors $P(t, \e^t) = 0$ pour tout $t \in \mathbb{R}$. Supposons que $P$ est non nul, alors regardons $P$ comme un élément de $k[x][y]$
+            \begin{align*}
+                P = \sum_{n = 1}^k Q_n y^n
+            \end{align*}
+            où $Q_k \neq 0$. Alors
+            \begin{align*}
+                0 = \sum_{n=1}^k Q_n(t) e^{nt} \iff 0 = \sum_{n=1}^k Q_n(t) e^{(n-k)t}
+            \end{align*}
+            et alors en passant à la limite, par croissances comparées on obtiens que $Q_n(t) \xrightarrow[]{t \to \infty} 0$ et donc $Q_n = 0 \in k[x]$ absurde. Ainsi $P = 0$, donc $V_3 = \mathbb{A}_\mathbb{R}^2$, absurde.
+        \end{question}
+
+    \section{Exercice 6}
+        \begin{question}{1)}
+            Il est clair que $V_1 = V(y - x^2, z - x^3)$.
+        \end{question}
+        \begin{question}{2)}
+            Montrons que $V_2 = V(xy - 1)$ : $\subseteq$ est claire. Réciproquement, soit $(a,b) \in V(xy - 1)$, alors $ab = 1$. Maintenant $a$ et $b$ sont non nuls, et alors $b = 1/a$, donc $(a,b) = (a, 1/a) \in V_2$.
+        \end{question}
+        \begin{question}{3)}
+            Remarquons dans un premier temps que
+            \begin{align*}
+                V_3 = \{(t, (t+1)^2 - 1) \in \mathbb{A}^2 \mid t \in k\} = \{(t, t^2 + 2t)\in \mathbb{A}^2 \mid t \in k\}
+            \end{align*}
+            Ainsi il est clair que $V_3 = V(x^2 + 2x - y)$.
+        \end{question}
+
+    \section{Exercice 7}
