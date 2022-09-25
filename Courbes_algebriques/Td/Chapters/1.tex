@@ -10,6 +10,7 @@
         avec $r$ un polynôme constant. Alors $r = 0$ puisque $P(a) = 0$ et ainsi $P \in \mathfrak{m}_a$.
 
     \section{Exercice 3}
+        \label{exo3}
         Soit $k$ un corps infini. On montre par récurrence sur $n$ que $I(\mathbb{A}_k)^n = 0$ :
         \begin{enumerate}
             \item Si $n = 1$, alors $I(\mathbb{A}_k^n) = \{f \in k[x] \mid \forall a \in k,\, f(a) = 0\}$. Mais alors soit $f \in I(\mathbb{A}_k^n)$, $f$ a une infinité de racines, donc $f$ est forcément nul (tout polynôme $g$ non nul ayant au maximum $\deg g$ racines).
@@ -70,3 +71,82 @@
         \end{question}
 
     \section{Exercice 7}
+        \begin{question}{1)}
+            Soit $(x,y) \in V(I)$. Alors $xy^3 = 0$ et $x^2 + y^2 = 0$. Alors
+            \begin{enumerate}
+                \item Soit $x = 0$ et alors $y^2 = 0$ donc $y = 0$
+                \item Soit $y^3 = 0 \Rightarrow y = 0 \Rightarrow x^2 = 0 \Rightarrow x = 0$
+            \end{enumerate}
+            et ainsi $V(I) = \{0\}$. Soit $(x,y) \in V(J)$, alors $x^2 = 0$ et $y^3 = 0$, donc $x = 0$ et $y = 0$. AInsi $V(J) = \{0\}$.
+        \end{question}
+        \begin{question}{2)}
+            $I(V(I)) = I(V(J)) = (x,y)$.
+        \end{question}
+
+    \section{Exercice 8}
+        \begin{question}{1)}
+            Comme $k$ est un corps infini, $I(V) = 0$ (cf \ref{exo3}). On a donc $V(I(V)) = \mathbb{A}^2$.
+        \end{question}
+        \begin{question}{2)}
+            Comme $V \neq V(I(V))$, $V$ n'est pas un ensemble algébrique affine.
+        \end{question}
+
+    \section{Exercice 9}
+        \begin{question}{1)}
+            Oui, vu qu'un singleton n'a aucun sous ensemble propre.
+        \end{question}
+        \begin{question}{2)}
+            Non. Une paire de points et l'union de deux points qui sont des sous-ensembles algébriques propres de cette paire de points.
+        \end{question}
+        \begin{question}{3)}
+            Non : d'après le cours, $V(xy) = V(x) \cup V(y)$.
+        \end{question}
+        \begin{question}{4)}
+            Si le corps n'est pas infini, alors $V(X-Y) = V((X-Y)^2)$ est un union fini disjoint de points, donc n'est pas irréductible. Si le corps est infini, montrons que $I(V(x-y)) = I(V((x-y)^2)) = (x - y)$ : $\supseteq$ est donné directement par le cours. Réciproquement, soit $P \in I(V((x-y)^2))$, alors $V((x-y)^2) = \{(t,t) \in \mathbb{A}^2 \mid t \in k\}$ et donc $P(t,t) = 0$ pour tout $t \in k$. Ainsi si on considère $P$ en tant qu'élément de $k[x][y]$ puis qu'on réalise la division euclidienne de celui-ci par $x-y$, alors on obtiens
+            \begin{align*}
+                P = Q_1(x,y)(x-y) + R(x,y)
+            \end{align*}
+            et $R$ s'identifie à un polynôme de $k[x]$ vu que $\deg_Y R < 1$. Mais alors $|k| = \infty$ et $R(t) = 0$ pour tout $t \in k$, donc finalement $R = 0$ et $P \in (x,y)$. Pour conclure, remarquons (au vu de ce que l'on vient de faire) que $(x-y)$ est le noyau de
+            \begin{align*}
+                \begin{array}{cccc}
+                    & k[x,y] & \to & k[t] \\
+                    & P & \mapsto & P(t,t) \\
+                \end{array}
+            \end{align*}
+            donc finalement $k[x,y]/(x-y) = k[t]$ qui est intègre donc $(x-y)$ est premier, prouvant l'irréductibilité de $V(x-y) = V((x - y)^2)$.
+        \end{question}
+        \begin{question}{5)}
+            $V(y - x^2) = \{(t,t^2) \mid t \in k\}$. Montrons alors que $I(V(y -x^2)) = (y - x^2)$ (si $|k| = \infty$). Si $k$ est fini, alors $V(y - x^2)$ contiens au moins deux points ($(0,0)$ et $(1,1)$ par exemple) et n'est donc pas irréductible. Sinon, prouver l'égalité souhaitée revient à prouver que le noyau de
+            \begin{align*}
+                \begin{array}{cccc}
+                    \varphi : & k[x,y] & \to & k[t] \\
+                    & P & \mapsto & P(t,t^2) \\
+                \end{array}
+            \end{align*}
+            vaut $(y - x^2)$ (du fait que dans un corps infini un polynome est nul si et seulement si sa fonction polynomiale associée est nulle). Mais alors soit $P \in \ker \varphi$, on réalise la division euclidienne de $P$ par $y - x^2$ dans $k[x][y]$ :
+            \begin{align*}
+                P = Q(y - x^2) + R(x,y)
+            \end{align*}
+            mais $R$ s'identifie à un polynôme de $k[x]$ puisque $\deg_y R < 1$. Mais alors $R(a) = 0$ pour tout $a \in k$ et comme $|k| = \infty$, $R = 0$ et donc $P \in (y - x^2)$. L'inclusion réciproque est triviale. Finalement, on a bien $\ker \varphi = (y - x^2)$ et donc $I(V(y - x^2)) = (y - x^2)$ est un idéal premier, du fait que $k[x,y]/(y - x^2) \simeq k[t]$ qui est un anneau intègre.
+        \end{question}
+        \begin{question}{6)}
+            \begin{enumerate}
+                \item $V(x^2 - y^2) = V((x - y)(x + y)) = V(x - y) \cup V(x + y)$, donc $V(x^2 - y^2)$ n'est pas irréductible en caractéristique différente de $2$. En caractéristique $2$,
+                \begin{align*}
+                    V(x^2 - y^2) = V(x^2 + y^2) = V((x + y)^2) = V(x + y)
+                \end{align*}
+                est irréductible si et seulement si $|k| = \infty$.
+                \item On sépare en deux cas
+                \begin{enumerate}
+                    \item S'il existe $i \in k$ tel que $i^2 = -1$, alors $V(x^2 + y^2) = V(x - iy) \cup V(x + iy)$ et ces sous-ensembles sont popres si $\mathrm{char} \, k \neq 2$. En caractéristique $2$, $V(x^2 + y^2) = V((x + y)^2) = V(x + y)$ qui est irréductible si $|k| = \infty$, et réductible sinon.
+                    \item Si $-1$ n'est pas un carré dans $k$, alors $V(x^2 + y^2) = \{0\}$ : soit $(a,b) \in V(x^2 + y^2)$, alors $a^2 + b^2 = 0$. Alors si $a$ est non nul,
+                    \begin{align*}
+                        b^2 = -a^2 \iff \left( \frac{b}{a} \right)^2 = -1
+                    \end{align*}
+                    absurde. Ainsi $a = 0$ et donc $b = 0$. $V(x^2 + y^2)$ est donc irréductible dans ce cas. 
+                \end{enumerate}
+            \end{enumerate}
+        \end{question}
+        \begin{question}{7)}
+            Montrons que $V(y^4 - x^2, y - x) = \{\pm (1,1)\}$ : si $(a,b) \in V(y^4 - x^2, y - x)$ alors $a = b$ et $a^2 = b^4$. Ainsi $a^2 = a^4$ et donc $a^2 = 1$, donc soit $a = 1$ et donc $b = 1$, soit $a = -1$ et donc $b = -1$. Ainsi si la caractéristique est différente de $2$, c'est un ensemble réductible, sinon il est irréductible car composé d'un seul point.
+        \end{question}
