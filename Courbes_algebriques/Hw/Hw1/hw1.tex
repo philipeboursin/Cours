@@ -15,7 +15,7 @@
 \author{Alexandre Guillemot}
 \maketitle
 
-\section*{Exercice 10, feuille 1}
+\section*{Exercice 10, feuille 1, question 3}
     \begin{question}{3)} ($|k| = \infty$)
         Dans un premier temps, montrons que $V(Y^2 - X^3) = \{(t^2, t^3) \in k^2 \mid t \in k\} =: V$ : si $(x,y) \in V$, alors $\exists t \in k \mid (x,y) = (t^2, t^3)$. Et alors $y^2 - x^3 = t^6 - t^6 = 0$, donc $(x,y) \in V(Y^2 - X^3)$. Réciproquement, si $(x,y) \in V(Y^2 - X^3)$, alors $y^2 = x^3$ dans $k$. Et alors si $x = 0$, alors $y = 0$ et $(0,0) \in V$. Sinon,
         \begin{align*}
@@ -63,5 +63,47 @@
     \end{question}
 
 \section*{Exercice 15, feuille 1}
+    Soient $V_1 \subseteq A_k^n$, $V_2 \subseteq A_k^m$ des ensembles algébriques affines. Alors il existe $P_1, \cdots, P_r \subrel{id} k[x_1, \cdots, x_n]$ et $Q_1, \cdots, Q_s \subrel{id} k[y_1, \cdots, y_m]$ tels que $V_1 = V(P_1, \cdots, P_r)$ et $V_2 = V(Q_1, \cdots, Q_s)$. Maintenant par propriété universelle des anneaux de polynômes, nous disposons de morphismes
+    \begin{align*}
+        &\varphi : k[x_1, \cdots, x_n] \injectivearrow k[x_1, \cdots, x_n, y_1, \cdots, y_m] \\
+        &\psi : k[y_1, \cdots, y_m] \injectivearrow k[x_1, \cdots, x_n, y_1, \cdots, y_m] \\
+    \end{align*}
+    Alors montrons que $V_1 \times V_2 = V(\varphi P_1, \cdots, \varphi P_r, \psi Q_1, \cdots, \psi Q_s) =: W$. Remarquons que si $(x,y) \in \mathbb{A}^{n+m}_k$, alors $\forall i \in \lcc 1,r \rcc$, $\varphi P_i(x,y) = P_i(x)$, par commutativité de
+    \begin{figure}[H]
+        \centering
+        \begin{tikzcd}
+            {k[x_1, \cdots, x_n]} \arrow[r, "\varphi"] \arrow[rd, "\mathrm{ev}_x"'] & {k[x_1, \cdots, x_n, y_1, \cdots, y_n]} \arrow[d, "\mathrm{ev}_{(x,y)}"] \\
+                                                                                    & k                                                                 
+            \end{tikzcd}
+    \end{figure} \noindent
+    (au vu de la naturalité de $\Hom_{\mathbf{Sets}}(S,k) \simeq \Hom_{k-\mathbf{CAlg}}(k[S],k)$). De même, $\psi Q_i(x,y) = Q_i(y)$ pour tout $i \in \lcc 1,s \rcc$. Mais alors
+    \begin{align*}
+        (x,y) \in V_1 \times V_2 &\iff \forall 1,1 \leq i,j \leq r,s,\, P_i(x) = 0 \land Q_j(y) = 0 \\
+        &\iff \forall 1,1 \leq i,j \leq r,s,\, \varphi P_i(x,y) = 0 \land \psi Q_j(x,y) = 0 \\
+        &\iff (x,y) \in W
+    \end{align*}
+
+\section*{Exercice 1, feuille 2}
+    \begin{question}{1)}
+        Montrons que $D(f) \cap D(g) = D(fg)$ : en passant au complémentaire, il faut montrer que $V(fg) = V(f) \cup V(g)$, ce que l'on sait vrai d'après le cours.
+    \end{question}
+    \begin{question}{2)}
+        Soit $U = \mathbb{A}^n \bs V(I)$ un ouvert de $\mathbb{A}^n$, avec $I \subrel{id} k[x_1, \cdots, x_n]$. Alors
+        \begin{align*}
+            V(I) &= V\left( \bigcup_{f \in I} (f) \right) \\
+            &= \bigcap_{f \in I} V((f))
+        \end{align*}
+        donc finalement
+        \begin{align*}
+            U = \bigcup_{f \in I} D(f)
+        \end{align*}
+        en passant au complémentaire.
+    \end{question}
+    \begin{question}{3)}
+        $D(f) = \emptyset \iff V((f)) = \mathbb{A}^n_k \iff \forall x \in k,\, f(x) = 0 \iff f = 0$, la dernière équivalence provenant du fait que $|k| = \infty$ (résultat que l'on a prouvé par récurrence en td).
+    \end{question}
+    \begin{question}{4)}
+        On utilise les questions précédentes : comme les ensembles $D(f)$ forment une base pour la topologie de $\mathbb{A}^n$, et que $U,V \neq \emptyset$, pour tout $x \in U$, $y \in V$, il existe $f,g \in k[x_1, \cdots, x_n]$ tels que $x \in D(f) \subseteq U$ et $y \in D(g) \subseteq V$. Maintenant $D(f) \cap D(g) = D(fg)$ mais alors si $D(f) \cap D(g) = \emptyset$, alors $fg = 0$ donc $f = 0$ ou $g = 0$ et donc $D(f) = \emptyset$ ou $D(g) = \emptyset$, absurde. AInsi $D(f) \cap D(g)$ est non vide, et donc $U \cap V \neq \emptyset$.
+    \end{question}
 
 \end{document}
