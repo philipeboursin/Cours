@@ -125,12 +125,6 @@
                 Posons maintenant $m_2 = \min \{\alpha_2 \mid \alpha \in F_1\}$, et prenons $\alpha^{(2)} \in F_1$ tq $\alpha_2^{(2)} = m_2$, $\alpha_1^{(2)} = m_1$. On construit alors $F_2 := \{\beta \in F_1 \mid \beta < \alpha^{(2)}$, puis de manière récursive $m_i$ et $F_i$ pour $i \in \lcc 1,n \rcc$. $F_n$ est infini, et $F_n \subseteq F_{n-1} \subseteq \cdots \subseteq F_1 \subseteq F$. Soit $\beta \in F_n$ tq $\beta < \alpha^{(n)}$, alors $\beta_i \geq \alpha_i^{(n)}$ par construction de $\alpha^{(n)}$. Ainsi $\beta - \alpha^{(n)} \in \mathbb{Z}^n_{> 0}$ Alors $\beta - \alpha^n < 0$, car sinon on aurait $\beta \geq \alpha^{(n)}$. 
             \end{proof}
             }
-            \textbf{Contre-exemple de la démo du prof}
-            Considérons la relation d'ordre $\leq_{inv}$ sur $\mathbb{N}^2$ définie comme
-            \begin{align*}
-                \alpha \leq_{revlex} \beta \iff \alpha \geq_{lex} \beta 
-            \end{align*}
-            Pour ne pas alourdir les notations, nous notons $\leq_{revlex}$ comme $\geq_{lex}$, et ainsi nous cherchons a montrer que tout partie contient un élément maximal pour $\leq_{lex}$. 
 
         \subsection{Algorithme de division multivariée}
             Fixons maintenant un ordre monomial $\leq$ sur $k[x_1, \cdots, x_n]$.
@@ -263,7 +257,10 @@
             \end{defi}
             \begin{prop}
                 \label{lemme_nul}
-                Soient $m_1, \cdots, m_r \in k[x_1, \cdots, x_n]$ des monömes, alors $m \in (m_1, \cdots, m_r) \iff m$ est divisible par l'un des $m_i$.
+                Soient $m_1, \cdots, m_r \in k[x_1, \cdots, x_n]$ des monömes, alors 
+                \begin{align*}
+                    m \in (m_1, \cdots, m_r) \iff m \text{ est divisible par l'un des } m_i
+                \end{align*}
             \end{prop}
             \begin{proof}
                 Si $m$ est divisible par l'un des $m_i$, il est clair que $m \in (m_1, \cdots, m_r)$. Pour prouver l'implication réciproque, supposons que $m \in (m_1, \cdots, m_r)$. Alors on peut écrire
@@ -323,4 +320,213 @@
             \end{defi}
             \begin{theo} (Critère de Buchberger)
                 Soit $G = \{g_1, \cdot, g_r\} \subseteq k[x_1, \cdots, x_r]$. Alors $G$ est une BDG de $(G)$ si et seulement si $\forall g,h \in G$, $\overline{S(g,h)}^G = 0$
-            \end{theo}  
+            \end{theo}
+            \begin{proof}
+                $\Rightarrow$ : $G$ BDF, $f,g \in G$. Comme $S(f,g) \in I$, alors $\overline{S(f,g)}^G = 0$. \\
+                $\Leftarrow$ : Supposons que pour tout $g,h \in G$, alors $\overline{S(g,h)}^G = 0$. Soit $f \in I$, on veut mq $LT(f) \in (LT(G))$. Or $I = (g_1, \cdots, g_r)$. Donc il existe $q_1, \cdots, q_r \in k[x_1, \cdots, x_n]$ tq 
+                \begin{align*}
+                    f = \sum q_ig_i
+                \end{align*}
+                Alors $LM(f) \leq \max_i \{LM(q_ig_i)\} = \mathbb{M}$.
+                \begin{enumerate}
+                    \item Si $LM(f) = \mathbb{M}$ : Alors $LM(f) = LT(q_ig_i)$ pour un certain $i$. Mais $LM(q_ig_i) = LM(q_i)LM(g_i)$ et donc $LM(f) \in (LT(G))$.
+                    \item Si $LM(f) < \mathbb{M}$ : Soit $1 \leq i_1 < i_2 < \cdots < i_s \leq r$ les indices tels que $LM(q_{i_j}g_{i_j}) = \mathbb{M}$. Alors 
+                    \begin{align*}
+                        f = \sum_j LT(q_{i_j})g_{i_j} + \sum_i q_i'g_i
+                    \end{align*}
+                    (et donc $LM(q_i'g_i) \leq \mathbb{M}$). Considérons $\sum_j LT(q_{i_j})g_{i_j}$, on peut l'exprimer en fonction des $S(g_{i_j}, g_{i_{j+1}})$. Pour le voir, notons $h_j = LT(q_{i_j})g_{i_j}$, alors
+                    \begin{align*}
+                        \sum_j h_j = &LC(h_1)\left( \frac{h_1}{LC(h_1)} - \frac{h_2}{LC(h_2)} \right) \\
+                        &+ (LC(h_1) + LC(h_2))\left( \frac{h_2}{LC(h_2)} - \frac{h_3}{LC(h_3)} \right) \\
+                        &+ (LC(h_1) + LC(h_2) + LC(h_3))\left( \frac{h_3}{LC(h_3)} - \frac{h_4}{LC(h_4)} \right) \\
+                        & + \cdots \\
+                        &+(LC(h_1) + \cdots + LC(h_{s-1}))\left( \frac{h_{s-1}}{LC(h_{s-1})} - \frac{h_s}{LC(h_s)} \right) \\
+                        &+ (LC(h_1) + \cdots + LC(h_s))\frac{h_s}{LC(h_s)}
+                    \end{align*}
+                    Or $\sum_j LC(h_j) = 0$, donc le dernier terme s'annule et donc on a bien
+                    \begin{align*}
+                        \sum_j h_j = \sum_{j = 1}^{s-1} \left(\sum_{k = 1}^j LC(h_k) \right) S(h_j,h_{j+1})
+                    \end{align*}
+                    \begin{remq}
+                        \begin{align*}
+                            S(h_j, h_{j+1}) = \frac{1}{LC(h_j)}h_j - \frac{1}{LC(h_{j+1})}h_{j+1}
+                        \end{align*}
+                    \end{remq}
+                    De plus,
+                    \begin{align*}
+                        S(h_j, h_{j+1}) &= \frac{1}{LC(h_j)}h_j - \frac{1}{LC(h_{j+1})}h_{j+1} \\
+                        &= \frac{LT(q_{i_j})}{LC(q_{i_j}g_{i_j})}g_{i_j} - \frac{LT(q_{i_{j+1}})}{LC(q_{i_{j+1}}g_{i_{j+1}})}g_{i_{j+1}} \\
+                        &= \frac{LM(q_{i_j})}{LC(g_{i_j})}g_{i_j} - \frac{LM(q_{i_{j+1}})}{LC(g_{i_{j+1}})}g_{i_{j+1}} \\
+                        &= \frac{LM(g_{i_j}q_{i_j})}{LT(g_{i_j})}g_{i_j} - \frac{LM(g_{i_{j+1}}q_{i_{j+1}})}{LT(g_{i_{j+1}})}g_{i_{j+1}} \\
+                        &= m_j S(g_{i_j}, g_{i_{j+1}})
+                    \end{align*}
+                    pour un certain monôme $m_j$. Donc
+                    \begin{align*}
+                        f &= \sum_j LT(g_{i_j})g_{i_j} + \sum_i q_i'g_i \\
+                        &= \sum_j h_j + \sum_i q_i'g_i \\
+                        &= \sum_{j = 1}^{s-1} \left(\sum_{k = 1}^j LC(h_k) \right) S(h_j,h_{j+1}) + \sum_i q_i'g_i \\
+                        &= \sum_{j = 1}^{s-1} m_j \left(\sum_{k = 1}^j LC(h_k) \right) S(g_{i_j},g_{i_{j+1}}) + \sum_i q_i'g_i \\
+                    \end{align*}
+                    et $\max (LM(q_i'g_i)) < \mathbb{M}$. Par hypothèse, $\overline{S(g_{i_j}, g_{i_{j+1}})}^G = 0$. Donc l'algorithme de division multivariée donne 
+                    \begin{align*}
+                        S(g_{i_j}, g_{i_{j+1}}) = \sum_{i = 1}^r b_i^jg_i
+                    \end{align*}
+                    Par définition de l'algorithme, cjaque $b_i^jq_i$ est de mdeg au plus mdeg$S(g_{i_j}, g_{i_{j+1}})$. Mais alors
+                    \begin{align*}
+                        \mathrm{mdeg}(m_j S(g_{i_j}, g_{i_{j+1}})) = \mathrm{mdeg}(S(h_j,h_{j+1})) < \mathbb{M}
+                    \end{align*}
+                    Donc
+                    \begin{align*}
+                        f &= \sum_{j = 1}^{s-1} \left(\sum_{k = 1}^j LC(h_k) \right) m_j S(g_{i_j},g_{i_{j+1}}) + \sum_i q_i'g_i \\        
+                        &= \sum c_ig_i                
+                    \end{align*}
+                    avec $LM(c_ig_i) < \mathbb{M}$. Par récurrence sur la différence entre $LM(f) - \mathbb{M}$, on peut conclure.
+                \end{enumerate}
+            \end{proof}
+            \begin{coro} (Algorithme de Buchberger)
+                Soit $I = (f_1, \cdots, f_r) \subrel{id} k[x_1, \cdots, x_n]$. Posons $G^0 = \{f_1, \cdots, f_r\}$ et pour $n \geq 1$, on définit
+                \begin{align*}
+                    G^n = G^{n-1} \cup \left\{\overline{S(f,g)}^{G^{n-1}} \mid f,g \in G^{n-1},\, \overline{S(f,g)}^{G^{n-1}} \neq 0\right\} 
+                \end{align*}
+                Alors il existe $N \in \mathbb{N}$ tel que $n \geq N \Rightarrow G^n = G^N$. Dans ce cas, $G^N$ est une bdg de $I$.
+            \end{coro}
+            \begin{proof}
+                Si $G^n = G^{n+1}$, alors par le critère de Buchberger $G^n$ est une bdg. Il faut donc montrer que la suite $(G^n)$ est stationnaire. Supposons le contraire, alors pour tout $n \geq 0$, $\exists f,g \in G^n$ tq $\overline{S(f,g)}^{G^n} \neq 0$. Par définition de l'algorithme de division multivariée, aucun des termes de $\overline{S(f,g)}^{G^n}$ n'est dans $(LT(G^n))$. En particulier, $LT(\overline{S(f,g)}^{G^n}) \notin (LT(G^n))$. On a donc $(LT(G^n)) \nsubseteq (LT(G^{n+1}))$ et donc on obtiens une suite d'idéaux strictement croissante dans $k[x_1, \cdots, x_n]$, contradiction.
+            \end{proof}
+            \begin{remq}
+                L'algorithme de Buchberger n'est pas optimal. Pour des versions optimisées, voir les algorithmes F4 et F5 (Faugère)
+            \end{remq}
+
+    \section{Bases de Groebner réduites, unicité}
+        \begin{expl}
+            $(x-y,y-z) = (x-z, y-z)$. Les deux couples de générateurs sont des bdg pour l'ordre lex.
+        \end{expl}
+        \subsection{Définition}
+            \begin{defi} (bdg réduite)
+                Soit $G$ une bdg de $I \subrel{id} k[x_1, \cdots, x_n]$. Cette base est réduite si
+                \begin{enumerate}
+                    \item Pour tout $g \in G$, $LC(g) = 1$
+                    \item Pour tout $g,h \in G$ distincts, aucun monôme de $g$ n'est divisible par $LT(h)$.
+                \end{enumerate}
+            \end{defi}
+            \begin{theo}
+                \label{1.5.1}
+                Tout idéal $I \subrel{id} k[x_1, \cdots, x_n]$ admet une unique bdg réduite.
+            \end{theo}
+            \begin{remq}
+                La bdg réduite dépend de l'ordre monomial !
+            \end{remq}
+            On aura besoin d'outils de réduction.
+            \begin{lemm}
+                Soit $G = \{g1, \cdots, g_r\}$ une bdg de $I$ idéal.
+                \begin{enumerate}
+                    \item Si $1 \leq i,j \leq r$ distincts sont tq $LT(g_i) = LT(g_j)$, alors $G \bs \{g_j\}$ est une bdg de $I$
+                    \item Si $h_1, \cdots, h_r \in I$ sont tq $\mathrm{mdeg}(h_i) = \mathrm{mdeg}(g_i)$, alors $H = (h_1, \cdots, h_r)$ est une bdg de $I$.
+                \end{enumerate}
+            \end{lemm}
+            \begin{proof}
+                \begin{enumerate}
+                    \item Comme $G$ est une bdg, $(LT(G)) = (LT(I))$. Maintenant si $LT(g_i) \mid LT(g_j)$, alors $(LT(G \bs \{g_j\})) = (LT(G))$ et donc $G \bs \{g_j\}$ est une bdg.
+                    \item $(LT(G)) = (LT(H))$ vu que $LM(G) = LM(H)$.
+                \end{enumerate}
+            \end{proof}
+            \begin{proof} (\ref{1.5.1})
+                Soit $G = (g_1, \cdots, g_r)$ une bdg de $I$.
+                \begin{enumerate}
+                    \item Divisons chaque $g_i$ par $LC(g_i)$. On peut donc supposer que $LC(g_i) = 1$.
+                    \item Chaque fois que $LT(g_i) \mid LT(g_j)$, on peut toujours retirer $g_j$ et toujours avoir une bdg. On peut donc supposer que $\forall i \neq j$, $LT(g_i) \nmid LT(g_j)$.
+                    \item Enfin, pour chaque $i$, considérons $\bar g_i^{G \bs \{g_i\}} \in I$, et par définition aucun monôme de $\bar g_i^{G \bs \{g_i\}}$ n'est divisible par un des $LT(g_j)$, et $LT\left(\bar g_i^{G \bs \{g_i\}}\right) = LT(g_i)$. Par le $2$ du lemme, alors $\left(\bar g_1^{G \bs \{g_1\}}, \cdots, \bar g_r^{G \bs \{g_r\}}\right)$ est une bdg, qui de plus est réduite.
+                \end{enumerate}
+                Ceci prouve l'existence d'une bdg réduite pour $I$. Reste à montrer l"unicité : soient $G,G'$ deus bdg réduites de $I$. Soit $g \in G$, il existe $g' \in G'$ tel que $LT(g') \mid LT(g)$. De même, il existe $g'' \in G$ tel que $LT(g'') \mid LT(g')$, et ainsi $LT(g'') \mid LT(g)$, donc $g'' = g$, et donc $LT(g') = LT(g)$. Ainsi on a montré que $LT(G) = LT(G')$. Considérons maintenant $g - g' \in I$, en particulier $\overline{g - g'}^G = 0$. Notons que si $h \in G \bs \{g\}$, alors aucun des termes de $g$ n'est divisible par $LT(h)$. De même pour $g'$, car $LT(G) = LT(G')$. De même aucun monôme de $g - g'$ n'est divisible par $LT(g)$ car $LT(g) = LT(g')$ donc $LT(g - g') < LT(g)$. D'où $\overline{g - g'}^G = g- g' = 0$ donc $g = g'$.
+            \end{proof}
+
+    \section{Théorie de l'élimination}
+        \subsection{Définition}
+            \begin{defi}
+                Soit $E \subseteq k[x_1, \cdots, x_n]$. On pose
+                \begin{enumerate}
+                    \item $E_1 = E \cap k[x_2, \cdots, x_n]$
+                    \item $E_2 = E \cap k[x_3, \cdots, x_n]$
+                    \item $\cdots$
+                    \item $E_{n-1} = E \cap k[x_n]$
+                    \item $E_n = E \cap k$
+                \end{enumerate}
+                Si $E = I$ est un idéal, les $I_i$ sont appelés idéaux d'élimination de $I$.
+            \end{defi}
+            \begin{expl}
+                $I = (x-y+1, x+y)$. Alors $I_1 = (2y - 1)$. $I_2 = \{0\}$.
+            \end{expl}
+            \begin{theo} (Théorème d'élimination)
+                Soit $I \subrel{id} k[x_1, \cdots, x_n]$, soit $<$ l'ordre lex avec $x_1 > \cdots > x_n$. Soit $G$ une bdg de $I$. Pour chaque $l \in \lcc 1,n \rcc$, une base de Groebner de $I_l$ est $G_l$.
+            \end{theo}
+            \begin{proof}
+                Clairement, $G_l \subseteq I_l$ donc $(LT(G_l)) \subseteq (LT(I_l))$. Il faut montrer $\supseteq$. Soit $f \in I_l$. Alors $f \in I$, d'où $LT(f) \in (LT(G))$. On sait que $f \in k[x_{l+1}, \cdots, x_n]$. Soit $g \in G$ tq $LT(g) \mid LT(f)$. D'où $LT(g) \in k[x_{l+1}, \cdots, x_n]$. Comme $<$ est l'ordre lex, on en déduite que $g \in k[x_{l+1}, \cdots, x_n]$. Donc $g \in G_l$ et $LT(f) \in (LT(G_l))$.
+            \end{proof}
+            Par conséquent, une bdg pour l'ordre lex contient des éléments qui font intervenir de moins en moins de variables.
+
+        \subsection{Application 1 : Intersection d'idéaux}
+            Problème : $I = (f_1, \cdots, f_r)$, $J = (g_1, \cdots, g_s)$. Calculer des générateurs de $I \cap J$. Pour cela, on ajoute une variable $t$. 
+            \begin{nota}
+                SI $I \subrel{id} k[x_1, \cdots, x_n]$ et $f \in k[t]$, on pose
+                \begin{align*}
+                    fI = (fp \mid p \in I) \subrel{id} k[t, x_1, \cdots, x_n]
+                \end{align*}
+            \end{nota}
+            \begin{theo}
+                Avec les notations ci-dessus,
+                \begin{align*}
+                    I \cap J = (tI + (1 - t)J) \cap k[x_1, \cdots, x_n]
+                \end{align*}
+            \end{theo}
+            \begin{proof}
+                $\subseteq$ : Soit $f \in I \cap J$, alors $f = tf + (1 - t)f \in (tI + (1 - t)J)$, puis $f \in k[x_1, \cdots, x_n]$. \\
+                $\supseteq$ : Soit $f \in (tI + (1-t)J) \cap k[x_1, \cdots, x_n]$. Posons
+                \begin{align*}
+                    \begin{array}{cccc}
+                        \varepsilon_\lambda : & k[t,x_1, \cdots, x_n] & \to & k[x_1, \cdots, x_n] \\
+                        & h & \mapsto & h(\lambda, x_1, \cdots, x_n) \\
+                    \end{array}
+                \end{align*}
+                Remarquons alors que $\varepsilon_0(tI) = \{0\}$, $\varepsilon_1(tI) = I$. De même, $\varepsilon_0((1-t)J) = J$, $\varepsilon_1((1-t)J) = \{0\}$. Ecrivons $f = f' + f''$ avec $f' \in tI$, $f'' \in (1 - t)J$. Alors $\varepsilon_0(f) = \varepsilon_0(f'') \in J$. $\varepsilon_1(f) = \varepsilon_1(f') \in I$. Et $\varepsilon_0(f) = \varepsilon_1(f) = f$ vu que $f \in k[x_1, \cdots, x_n]$.
+            \end{proof}
+            \begin{coro}
+                Si $I = (f_1, \cdots, f_r)$, $J = (g_1, \cdots, g_s)$. Alors une bdf de $I \cap J$ pour l'ordre lex est obtenue en calculant une bdg de $(tI + (1 - t)J) \subrel{id} k[t, x_1, \cdots, x_n]$ et en élimnant $t$ (i.e. en prenant l'intersection avec $k[x_1, \cdots, x_n]$).
+            \end{coro}
+            
+        \subsection{Application 2 : extension}
+            Supposons que $k$ est un corps algébrique clos. Soit $I = (f_1, \cdots, f_r) \subrel{id} k[x_1, \cdots, x_n]$. Supposons que $(a_1, \cdots, a_n) \in V(I_1)$. Ce point s'étend en $(a_1, \cdots, a_n) \in V(I)$ si la condition \ref{condi} est vérifiée
+            \label{condi}
+            \begin{align}
+                f_i(x_1, \cdots, x_n) = g_i(x_2, \cdots, x_n) x_1^{N_i} + \text{ termes dont le deg en } x_1 \text{ est } < N_i
+            \end{align}
+            et $(a_2, \cdots, a_n) \notin V(g_1, \cdots, g_r)$.
+
+        \subsection{Résultants}
+            On veut une façon de déterminer si deux polynômes ont un facteur non trivial en commun. \textbf{Idée :} soient $f,g \in k[x]$ de degré $d,e > 0$ respectivement. Alors $f$ et $g$ ont un facteur commun non constant ssi $\exists \alpha, \beta \in k[x]$ tq 
+            \begin{enumerate}
+                \item $\alpha, \beta \neq 0$
+                \item $\alpha f + \beta g = 0$
+                \item $\deg \alpha < e$, $\deg \beta < d$.
+            \end{enumerate}
+            $f = \sum_{i = 0}^d a_ix^i$, $g = \sum_{i = 0}^e b_i x^i$, $\alpha = \sum_{i = 0}^{e-1} \alpha_i x^i$, $\beta = \sum_{i = 0}^{d-1} \beta_i x^i$. Il suffit de vérifier si
+            \begin{align*}
+                (\alpha_0 + \alpha_1x + \cdots + \alpha_{e-1}x^{e-1})f + (\beta_0 + \beta_1x + \cdots + \beta_{d-1}x^{d-1})g = 0
+            \end{align*}
+            admet une solution non nulle en les $\alpha_i, \beta_i$. Ce système est donné par la matrice de Sylvester $Syl(f,g,x)$
+            % \begin{align}
+            %     \begin{vmatrix}
+            %         a_0 & 0 & \cdots 0
+            %         a_1 & a_0 & 0
+            %         \vdots & a_1 & 
+            %         a_d & \vdots &
+            %         \vdots & a_d &
+            %         0 & \cdots & 
+            %     \end{vmatrix}
+            % \end{align}
+            \cor{Ecrire la définition de la matrice de sylvester}
+            \begin{defi}
+                Le résultant de $f$ et $g$ est $Res(f,g,x) := \det Syl(f,g,x)$
+            \end{defi}
+            \begin{prop}
+                $Res(f,g,x) = 0 \iff f$ et $g$ ont un facteur non constant en commun.
+            \end{prop}
