@@ -1,0 +1,57 @@
+\documentclass[11pt]{article}
+
+\usepackage{import}
+\import{D:/Bureau/Documents/Maths/Latex/Packages/}{article.tex}
+
+% Couleur de correction
+% \newcommand{\cor}[1]{{#1}}
+\newcommand{\cor}[1]{{\color{red} #1}}
+
+\begin{document}
+
+%Page de garde
+\title{Correction preuve}
+\date{\today}
+\author{Alexandre Guillemot}
+\maketitle
+
+%Document
+\begin{defi} (Ordre monomial)
+    \label{ordre_mono}
+    Un ordre monomial sur $k[x_1, \cdots, x_n]$ est une relation d'ordre $\leq$ sur l'ensemble des $\{x^\alpha = x_1^{\alpha_1} \cdots x_n^{\alpha_n} \mid \alpha \in \mathbb{N}^n\}$ tq
+    \begin{enumerate}
+        \item $\leq$ est un ordre total (pour tout $x^\alpha, x^\beta \in k[x_1, \cdots, x_n]$, $(x^\alpha \leq x^\beta) \lor (x^\beta \leq x^\alpha)$).
+        \item $x^\alpha \leq x^\beta \Rightarrow \forall \gamma \in \mathbb{N}^n,\, x^{\alpha + \gamma} \leq x^{\beta + \gamma}$
+        \item $1 \leq x^\alpha$ pour tout $\alpha \in \mathbb{N}^n$.
+    \end{enumerate}
+\end{defi}
+\begin{nota}
+    On écrira $\alpha \leq \beta$ au lieu de $x^\alpha \leq x^\beta$.
+\end{nota}
+\begin{prop}
+    Soit $\leq$ un ordre sur $\mathbb{N}^n$ satisfaisant les propriétés $1$ et $2$ de la def \ref{ordre_mono}. Alors tfae
+    \begin{enumerate}\addtocounter{enumi}{2}
+        \item $0_{\mathbb{N}^n} \leq \alpha ,\, \forall \alpha \in \mathbb{N}^n$
+        \item $\leq$ est un bon ordre : $\forall E \subseteq \mathbb{N}^n$ non vide, $E$ contient un élément minimal pour $<$.
+    \end{enumerate}
+\end{prop}
+\begin{proof} \textbf{(Preuve originale)}
+    (3) $\Rightarrow$ (4) : On raisonne par contraposée : soit $F \neq \emptyset$ une partie de $\mathbb{N}^n$. Supposons que $F$ n'a pas d'élément minimal. Posons
+    \begin{enumerate}
+        \item $m_1 = \min \{\alpha_1 \in \mathbb{N} \mid \alpha \in F\}$, il existe $\alpha^{(1)} \in F$ tel que $\alpha_1^{(1)} = m_1$ et finalement on pose $F_1 = \{\beta \in F \mid \beta \leq \alpha^{(1)}\}$.
+        \item $m_2 = \min \{\alpha_2 \in \mathbb{N} \mid \alpha \in F_1\}$, \cor{il existe} $\alpha^{(2)} \in F_1$ tel que $\alpha^{(2)}_1 = m_1$, $\alpha^{(2)}_2 = m_2$. Enfin on pose $F_2 = \{\beta \in F_1 \mid \beta \leq \alpha^{(2)}\}$.
+        \item $\vdots$
+        \item $m_n = \min \{\alpha_n \in \mathbb{N} \mid \alpha \in F_{n-1},\, \alpha_1 = m_1, \cdots, \alpha_{n-1} = m_{n-1}\}$. Il existe $\alpha^{(n)}$ tel que $\alpha_i^{(n)} = m_i$ pour $i \in \lcc 1,n \rcc$. Finalement, on pose $F_n = \{\beta \in F_{n-1} \mid \beta \leq \alpha^{(n)}\}$.
+    \end{enumerate}
+    $F_n$ est infini, et on a $F_n \subseteq F_{n-1} \subseteq \cdots \subseteq F_1 \subseteq F$. Alors soit $\beta \in F_n$ tq $\beta \leq \alpha^{(n)}$, alors $\beta_i \geq \alpha_i^{(n)}$ pour $i \in \lcc 1,n \rcc$. En particulier, $\beta - \alpha^{(n)} \in \mathbb{N}^n \bs \{0\}$. Mais $\beta - \alpha^{(n)} \leq 0$ car sinon $\beta \geq \alpha^{(n)}$.
+\end{proof}
+\cleardoublepage
+\begin{remq}
+    $n = 2$, $\leq = \geq_{lex}$ ($(a,b) \leq (a',b') \iff (a,b) \geq_{lex} (a',b')$)
+    \begin{enumerate}
+        \item Le il existe du point 2 (en rouge) pose problème. Par exemple, considérer l'ensemble $\mathbb{N}^2 \bs \{0\}$, alors $m_1 = 0$, et $F_1 = \mathbb{N}^2 \bs \{0\}$, et donc $m_2 = 0$ et il n'existe aucun $(a,b) \in \mathbb{N}^2 \bs \{0\}$ tel que $a = 0$ et $b = 0$.
+        \item Si on rectifie en écrivant $m_2 = \min \{\alpha_2 \in \mathbb{N} \mid \alpha \in F_1,\, \alpha_1 = m_1\}$, alors le problème survient après : si on prend $\beta \in F_n$, alors $\beta \in F_1$ mais le minimum n'est pas pris sur $F_1$ mais sur les éléments de $F_1$ de première coordonnée $m_1$ donc on ne peut pas comparer facilement $\beta_1$ et $m_1$. Par exemple, considérons encore $\mathbb{N}^2 \bs \{0\}$, alors $m_1 = 0$, prenons $\alpha^{(1)} = (0,1)$, $F_1 = \mathbb{N}^2 \bs \{0\}$. ensuite $m_2 = 1$, $\alpha^{(2)} = (0,1)$ forcément, et $F_2 = \mathbb{N}^2 \bs \{0\}$. Mais alors $\beta  = (1,0) \in F_2$ et n'est pas égal à $\alpha^{(2)}$, et pour autant $\beta - \alpha^{(2)} \notin \mathbb{N}^2 \bs \{0\}$. Il existe bien pourtant des éléments $\beta \in F_2 = \mathbb{N}^2 \bs \{0\}$ (quoiqu'on doit même pouvoir modifier $F$ pour qu'il n'existe aucun $\beta$ qui convient, il doit falloir être plus subtil sur le choix des $\alpha^{(i)}$ et peut être même faire attention à l'ordre que l'on choisit pour minimiser les coordonnées)
+    \end{enumerate}
+\end{remq}
+
+\end{document}

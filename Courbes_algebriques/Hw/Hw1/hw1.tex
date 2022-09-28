@@ -59,33 +59,37 @@
                 0 & \text{ sinon}
             \end{cases}
         \end{align*}
-        (Les coefficients de $a(T^2)T^3$ n'intéragissent pas avec ceux de $b(T^2)$, car devant des monômes de degré impair alors que ceux de $b(T^2)$ n'aparaissent que devant des monômes de degré pair). Ainsi comme $P \in \ker \varphi$, $0 = \varphi(R) = R(T^2, T^3)$ et donc $a_i, b_i = 0$ pour tout $i \geq 0$. Finalement, $a,b = 0$ et donc $R = 0$, d'où $P \in (Y^2 - X^3)$. Ainsi on a bien égalité $I(V(Y^2 - X^3)) = (Y^2 - X^3)$, et $V(Y^2 - X^3)$ est irréductible puisque
-        \begin{align*}
-            k[T] \simeq K[X,Y]/(Y^2 , X^3)
-        \end{align*}
-        par le point précédent, et $k[T]$ est intègre.
+        (Les coefficients de $a(T^2)T^3$ n'intéragissent pas avec ceux de $b(T^2)$, car devant des monômes de degré impair alors que ceux de $b(T^2)$ n'aparaissent que devant des monômes de degré pair). Ainsi comme $P \in \ker \varphi$, $0 = \varphi(R) = R(T^2, T^3)$ et donc $a_i, b_i = 0$ pour tout $i \geq 0$. Finalement, $a,b = 0$ et donc $R = 0$, d'où $P \in (Y^2 - X^3)$. Ainsi on a bien égalité $I(V(Y^2 - X^3)) = (Y^2 - X^3)$, et $V(Y^2 - X^3)$ est irréductible puisque $K[X,Y]/(Y^2 , X^3)$ s'injecte dans $k[T]$ qui est lui-même intègre.
     \end{question}
 
 \section*{Exercice 15, feuille 1}
-    Soient $V_1 \subseteq A_k^n$, $V_2 \subseteq A_k^m$ des ensembles algébriques affines. Alors il existe $P_1, \cdots, P_r \subrel{id} k[x_1, \cdots, x_n]$ et $Q_1, \cdots, Q_s \subrel{id} k[y_1, \cdots, y_m]$ tels que $V_1 = V(P_1, \cdots, P_r)$ et $V_2 = V(Q_1, \cdots, Q_s)$. Maintenant par propriété universelle des anneaux de polynômes, nous disposons de morphismes
+    Soient $V_1 \subseteq \mathbb{A}_k^n$, $V_2 \subseteq \mathbb{A}_k^m$ des ensembles algébriques affines. On note
     \begin{align*}
-        &\varphi : k[x_1, \cdots, x_n] \injectivearrow k[x_1, \cdots, x_n, y_1, \cdots, y_m] \\
-        &\psi : k[y_1, \cdots, y_m] \injectivearrow k[x_1, \cdots, x_n, y_1, \cdots, y_m] \\
+        &k[x_1, \cdots, x_n] =: A \\
+        &k[y_1, \cdots, y_m] =: B \\
+        &k[x_1, \cdots, x_n, y_1, \cdots, y_m] =: C \\
     \end{align*}
-    Alors montrons que $V_1 \times V_2 = V(\varphi P_1, \cdots, \varphi P_r, \psi Q_1, \cdots, \psi Q_s) =: W$. Remarquons que si $(x,y) \in \mathbb{A}^{n+m}_k$, alors $\forall i \in \lcc 1,r \rcc$, $\varphi P_i(x,y) = P_i(x)$, par commutativité de
+    Alors il existe $I \subrel{id} A$ et $J \subrel{id} B$ tels que $V_1 = V(I)$ et $V_2 = V(J)$. Considérons le morphisme
+    \begin{align}
+        \varphi := p_I \otimes p_J : A \otimes_k B \to A/I \otimes_k B/J
+    \end{align}
+    Où $p_I : A \to A/I$, $p_J : B \to B/J$ sont les projections canoniques des quotients respectifs. On sait que le morphisme $A \otimes_k B \to C$ induit par les morphismes canoniques $i_1 : A \to C$, $i_B : B \to C$ (issus de la propriété universelle des anneaux de polynômes) est un isomorphisme ($\sum_{finie} P_i \otimes Q_i$ est envoyé sur $\sum_{finie} i_A(P_j)i_B(Q_j)$). Une dernière remarque est qu'au vu de la naturalité de $\Hom_{\mathbf{Sets}}(S,k) \simeq \Hom_{k-\mathbf{CAlg}}(k[S],k)$, nous avons la commutativité du diagramme
     \begin{figure}[H]
         \centering
         \begin{tikzcd}
-            {k[x_1, \cdots, x_n]} \arrow[r, "\varphi"] \arrow[rd, "\mathrm{ev}_x"'] & {k[x_1, \cdots, x_n, y_1, \cdots, y_n]} \arrow[d, "\mathrm{ev}_{(x,y)}"] \\
-                                                                                    & k                                                                 
+            A \arrow[r, "i_1"] \arrow[rd, "\mathrm{ev}_a"'] & C \arrow[d, "{\mathrm{ev}_{(a,b)}}"] & B \arrow[l, "i_2"'] \arrow[ld, "\mathrm{ev}_b"] \\
+                                                            & k                                    &                                                
             \end{tikzcd}
     \end{figure} \noindent
-    (au vu de la naturalité de $\Hom_{\mathbf{Sets}}(S,k) \simeq \Hom_{k-\mathbf{CAlg}}(k[S],k)$). De même, $\psi Q_i(x,y) = Q_i(y)$ pour tout $i \in \lcc 1,s \rcc$. Mais alors
+    Pour terminer l'exercice, montrons que $V(\ker \varphi) = V_1 \times V_2$ (où $\ker \varphi$ est vu comme un idéal de $C$ par l'isomorphisme naturel donné précédemment). Prenons $(a,b) \in V(\ker \varphi)$, puis soient $P \in I$, $Q \in J$. Alors $P \otimes 1, 1 \otimes Q \in \ker \varphi$ et donc
     \begin{align*}
-        (x,y) \in V_1 \times V_2 &\iff \forall 1,1 \leq i,j \leq r,s,\, P_i(x) = 0 \land Q_j(y) = 0 \\
-        &\iff \forall 1,1 \leq i,j \leq r,s,\, \varphi P_i(x,y) = 0 \land \psi Q_j(x,y) = 0 \\
-        &\iff (x,y) \in W
+        0 = \mathrm{ev}_{(a,b)}(i_1(P)i_2(1)) =  P(a)
     \end{align*}
+    et de même, $Q(b) = 0$, et ainsi $(a,b) \in V_1 \times V_2$. Réciproquement, soit $(a,b) \in V_1 \times V_2$. Alors tout élément de $\ker \varphi$ s'écrit comme une somme finie $\sum_{\mathrm{\mathrm{finie}}} P_j \otimes Q_j$. Mais
+    \begin{align*}
+        \mathrm{ev}_{(a,b)}\left(\sum_{\mathrm{finie}} i_A(P_j)i_B(Q_j)\right) = \sum_{\mathrm{finie}} P_j(a)Q_j(b) = 0
+    \end{align*}
+    et ainsi $(a,b) \in V(\ker \varphi)$.
 
 \section*{Exercice 1, feuille 2}
     \begin{question}{1)}
