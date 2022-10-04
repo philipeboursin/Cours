@@ -1,1 +1,53 @@
-\chapter{}
+\chapter{Aide mémoire programmation}
+//// Boucles :
+while (condition)
+{
+	code
+}
+
+for (variable, condition de sortie, opération à faire à chaque tour de boucle sur la variable)
+{
+	code
+}
+expl :
+for (int i=0; i<10, i++)
+{
+	code
+}
+
+//// Formats :
+\%d -> int
+\%c -> char
+
+Tableaux :
+type nom_tab[N];
+type nom_tab[N] = {a_1, ..., a_N};
+int i = valeur;
+nom_tab[i] // Renvoie la valeur du tableau en i
+// Les cases d'un tableau sont indicée en démarrant à 0
+char tab[7] = "bonjour" // Pour les string
+// Dans le cas où le tableau est spécifié lors de sa définition, pas besoin de donner sa taille
+
+//// Structures
+struct framework
+{
+	type_1 variable_1;
+	...
+	type_n variable_n;
+}
+struct framework objet; // pour définir un objet du struct
+// peut écrire objet juste derriere l'acollade du struct pour déclarer un object.
+enum booleen {vrai, faux};
+// pour les types énumérés
+typedef enum booleen booleen // pour créer un type booléen
+booleen a;
+
+//// Pointeurs
+int *p; // pour définir un pointeur d'entier
+int a; // &a renvoie l'adresse de a.
+p = &a; // Donne a p la valeur &a
+*p += 1; // *p représente le contenu de la case d'adresse p. Cette opération rajoute 1 au contenu de la case adréssée par p, donc rajoute 1 a 'a'
+
+//// Allocation de mémoire
+malloc(nombre d'octets) // Alloue de la mémoire. On peut définir un pointeur et lui donner cette valeur pour spécifier l'adresse du début de cette zone mémoire allouée
+free(pt) // Libère la mémoire associée à un pointeur qui pointe sur une zone de mémoire. On libère toujours le début de la zone (free(pt + 1) n'est pas valide par exemple)

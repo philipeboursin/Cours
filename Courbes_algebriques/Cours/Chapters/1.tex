@@ -1,458 +1,645 @@
-\chapter{Ensembles algébriques affines}
-    \section{Définition}
-        $k$ un corps, $n \in \mathbb{Z}$.
-        \begin{defi} (Espace affine)
-            $\mathbb{A}^n_k := k^n$ est l'espace affine sur le corps $k$ de dimension $n$.
-        \end{defi}
-        \begin{remq}
-            Ce n'est pas vraiment la définition de l'espace affine, c'est la définition de l'ensemble sous-jacent à l'espace affine, sachant que les espaces affines sont des variétés algébriques.
-        \end{remq}
-        \cor{
-        \begin{expl}
-            Si $n = 1$, c'est une "droite". Si $n = 2$, c'est un "plan".
-        \end{expl}
-        }
-        \begin{defi}
-            Soit $S \subseteq k[x_1, \cdots, x_n]$, on définit
-            \begin{align*}
-                V(S) := \{a \in \mathbb{A}_k^n \mid \forall P \in S ,\, P(a) = 0 \}
-            \end{align*}
-            On appelle de tels ensembles des ensembles algébriques affines.
-        \end{defi}
-        \begin{remq}
-            Si $S = \{P_1, \cdots, P_r\}$, on écrit $V(P_1, \cdots, P_r) := V(S)$.
-        \end{remq}
-        \begin{expl}
-            \begin{enumerate}
-                \item $V(\emptyset) = \mathbb{A}_k^n$
-                \item $V(1) = \emptyset$
-                \item $P = X^4 - 1 \in k[X]$, si $k = \mathbb{R}$, $V(P) = \{1, -1\}$. Si $k = \mathbb{C}$, $V(P) = \{1,-1,i,-i\}$. Si $k = \mathbb{F}_2$, $V(P) = \{1\}$.
-                \item $P = X^2 + Y^2 + 1 \in k[X,Y]$, si $k = \mathbb{R}$, $V(P) = \emptyset$. Si $k = \mathbb{C}$, $V(P)$ est isomorphe (en tant que variété algébrique, même si cela n'a pour le moment aucun sens) au cercle complexe (en considérant le changement de variables $a_j = ib_j$).
-                \item $P_i = \sum a_{ij} x_j - b_i \in k[x_1, \cdots, x_n]$, $i \in \lcc 1,r \rcc$.
+\chapter{Géométrie algébrique affine}
+    \section{Ensembles algébriques affines}
+        \subsection{Définition}
+            $k$ un corps, $n \in \mathbb{Z}$.
+            \begin{defi} (Espace affine)
+                $\mathbb{A}^n_k := k^n$ est l'espace affine sur le corps $k$ de dimension $n$.
+            \end{defi}
+            \ajout{
+            \begin{remq}
+                Ce n'est pas vraiment la définition de l'espace affine, c'est la définition de l'ensemble sous-jacent à l'espace affine, sachant que les espaces affines sont des variétés algébriques.
+            \end{remq}
+            }
+            lorsque $n = 1$, on parlera de droite affine. Lorsque $n = 2$, on parlera de plan affine.
+            \begin{defi}
+                Soit $S \subseteq k[X_1, \cdots, X_n]$, on définit
                 \begin{align*}
-                    V(P_i) = \{x \in k^n \mid (a_{ij})x = b\} \simeq \mathbb{A}_k^n \text{ ou } \emptyset
+                    V(S) := \{a \in \mathbb{A}_k^n \mid \forall P \in S ,\, P(a) = 0 \}
                 \end{align*}
-            \end{enumerate}
-        \end{expl}
-        \begin{exo}
-            Les ensembles algébriques de $\mathbb{A}^1_k$ sont : $\emptyset$, $\mathbb{A}_k^1$, tous les sous-ensembles finis.
-        \end{exo}
-        \begin{expl}
-            Les sous-ensembles algébriques de $\mathbb{A}^2_k$ sont $\emptyset$, tout le plan, les sous-ensembles finis et des réunions finies des sous-ensembles finis avec des courbes planes, i.e. $V(P) \neq \emptyset$ les zéros d'un seul polynôme non constant. Donnons des exemples de courbes planes :
-            \begin{enumerate}
-                \item Les droites $V(ax + by + c) \in \mathbb{A}_k^2$, avec $a \neq 0$ ou $b \neq 0$.
-                \item Les coniques $V(ax^2 + by^2 + cxy + dx + ey + f) \subseteq \mathbb{A}_k^2$ ($a \neq 0$ ou $b \neq 0$ ou $c \neq 0$). Dans $\mathbb{P}_\mathbb{C}^2$, toutes les coniques sont de type cercle, droite ou droites qui se croisent.
-                \item $y^2 = x^3 + ax + b$, $a,b \in k$ définissent ce qu'on appelle des courbes elliptiques.
-            \end{enumerate}
-        \end{expl}
-        \begin{remq}
-            $V(S) = V(T)$ n'implique pas que $S = T$. Par exemple $V(x^2 + y^2 + 1) = V(x^4 + 1) \subseteq \mathbb{A}_\mathbb{R}^2$. Plus généralement, sur n'importe quel corps, $V(P^2) = V(P)$ avec $P = k[x_1, \cdots, x_n]$.
-        \end{remq}
-        \begin{prop}
-            \begin{enumerate}
-                \item Si $S \subseteq T \subseteq k[x_1, \cdots, x_n]$, alors $V(T) \subseteq V(S) \subseteq \mathbb{A}_k^n$.
-                \item $S \subseteq k[x_1, \cdots, x_n]$, $I = (S)$ idéal engendré par $S$, alors $V(S) = V(I)$
-                \item $S \subseteq k[x_1, \cdots, x_n]$, alors
+                On appelle de tels ensembles des ensembles algébriques affines.
+            \end{defi}
+            \begin{remq}
+                Si $S = \{P_1, \cdots, P_r\}$, on écrit $V(P_1, \cdots, P_r) := V(S)$.
+            \end{remq}
+            \begin{expl}
+                \begin{enumerate}
+                    \item $V(\emptyset) = \mathbb{A}_k^n$
+                    \item $V(1) = \emptyset$
+                    \item $P = X^4 - 1 \in k[X]$, si $k = \mathbb{R}$, $V(P) = \{1, -1\}$. Si $k = \mathbb{C}$, $V(P) = \{1,-1,i,-i\}$. Si $k = \mathbb{F}_2$, $V(P) = \{1\}$.
+                    \item $P = X^2 + Y^2 + 1 \in k[X,Y]$, si $k = \mathbb{R}$, $V(P) = \emptyset$. Si $k = \mathbb{C}$, $V(P)$ est isomorphe (en tant que variété algébrique, même si cela n'a pour le moment aucun sens) au cercle complexe (en considérant le changement de variables $a_j = ib_j$).
+                    \item $P_i = \sum a_{ij} X_j - b_i \in k[X_1, \cdots, X_n]$, $i \in \lcc 1,r \rcc$.
+                    \begin{align*}
+                        V(P_i) = \{x \in k^n \mid (a_{ij})x = b\} \simeq \mathbb{A}_k^n \text{ ou } \emptyset
+                    \end{align*}
+                \end{enumerate}
+            \end{expl}
+            \begin{exo}
+                Les ensembles algébriques de $\mathbb{A}^1_k$ sont : $\emptyset$, $\mathbb{A}_k^1$, tous les sous-ensembles finis \ajout{(cf Td1 Exercice 1).}
+            \end{exo}
+            \begin{expl}
+                Les sous-ensembles algébriques de $\mathbb{A}^2_k$ sont $\emptyset$, tout le plan, les sous-ensembles finis et des réunions finies des sous-ensembles finis avec des courbes planes, i.e. $V(P) \neq \emptyset$ les zéros d'un seul polynôme non constant. Donnons des exemples de courbes planes :
+                \begin{enumerate}
+                    \item Les droites $V(aX + bY + c) \in \mathbb{A}_k^2$, avec $a \neq 0$ ou $b \neq 0$.
+                    \item Les coniques $V(aX^2 + bY^2 + cXY + dX + eY + f) \subseteq \mathbb{A}_k^2$ ($a \neq 0$ ou $b \neq 0$ ou $c \neq 0$). Dans $\mathbb{P}_\mathbb{C}^2$, toutes les coniques sont de type cercle, droite ou droites qui se croisent.
+                    \item $Y^2 = X^3 + aX + b$, $a,b \in k$ définissent ce qu'on appelle des courbes elliptiques.
+                \end{enumerate}
+            \end{expl}
+            \begin{remq}
+                $V(S) = V(T)$ n'implique pas que $S = T$. Par exemple $V(X^2 + Y^2 + 1) = V(X^4 + 1) \subseteq \mathbb{A}_\mathbb{R}^2$. Plus généralement, sur n'importe quel corps, $V(P^2) = V(P)$ avec $P = k[X_1, \cdots, X_n]$.
+            \end{remq}
+            \begin{theo} (Théorème de la base de Hilbert)
+                Pour tout $n \geq 1$, $k[X_1, \cdots, X_n]$ est un anneau noethérien.
+            \end{theo}
+            \ajout{
+            \begin{remq}
+                Pour tout $S \subseteq k[X_1, \cdots, X_n]$, on a $V(S) = V((S))$. Ainsi tout ensemble algébrique peut s'écrire $V(I)$ avec $I \subrel{id} k[X_1, \cdots, X_n]$.
+            \end{remq}
+            }
+            La remarque précédente nous permet de donner le corollaire suivant :
+            \begin{coro}
+                Chaque ensemble algébrique $V \subseteq \mathbb{A}_k^n$ est de la forme $V = V(P_1, \cdots, P_r)$ avec $P_i \in k[X_1, \cdots, X_n]$
+            \end{coro}
+
+        \subsection{Topologie de Zariski}
+            \begin{prop}
+                \begin{enumerate}
+                    \item Si $S \subseteq T \subseteq k[X_1, \cdots, X_n]$, alors $V(T) \subseteq V(S) \subseteq \mathbb{A}_k^n$.
+                    \item $S \subseteq k[X_1, \cdots, X_n]$, alors
+                    \begin{align*}
+                        V(S) = \bigcap_{P \in S} V(P)
+                    \end{align*}
+                    \item
+                    \begin{align*}
+                        \bigcap_{j \in J} V(S_j) = V\left(\bigcup_{j \in J} S_j\right),\, S_j \subseteq k[X_1, \cdots, X_n]
+                    \end{align*}
+                    \item $V(PQ) = V(P) \cup V(Q)$ pour $P,Q \in k[X_1, \cdots, X_n]$
+                    \item Plus généralement, $V(IJ) = V(I) \cup V(J) = V(I \cap J)$ avec $I,J \subrel{id} k[X_1, \cdots, X_n]$
+                \end{enumerate}
+            \end{prop}
+            \begin{proof}
+                \begin{enumerate}
+                    \ajout{
+                    \item Soit $x \in V(T)$. Alors soit $P \in S$, $P \in  T$ comme $S \subseteq T$ et donc $P(x) = 0$, d'où $x \in V(S)$.
+                    \item Pour tout $P \in S$, $V(S) \subseteq V(P)$ d'après (1). Ainsi $V(S) \subseteq \bigcap_{P \in S} V(P)$. Réciproquement, si $x \in \bigcap_{P \in S} V(P)$, alors $P(x) = 0$ pour tout $P \in S$ et ainsi $x \in V(S)$.
+                    \item $S_i \subseteq \bigcup_{j \in J} S_j$, $\supseteq$ est claire. Maintenant soit $x \in \bigcap_{j \in J} V(S_j)$, soit $P \in  \bigcup_{j \in J} S_j$, il existe $j \in J$ tel que $P \in S_j$. Mais en particulier $x \in V(S_j)$, et donc $P(x) = 0$, ce qui prouve $\subseteq$.
+                    \item D'après (1), $V(P),V(Q) \subseteq V(PQ)$ et ainsi $V(P) \cup V(Q) \subseteq V(PQ)$. Réciproquement, si $x \in V(PQ)$, alors $PQ(x) = 0$ et ainsi $P(x) = 0$ ou $Q(x) = 0$ par intégrité de $k$, et donc $x \in V(P) \cup V(Q)$.
+                    }
+                    \item $IJ \subseteq I \cap J \subseteq I$ donc $V(I) \subseteq V(I \cap J) \subseteq V(IJ)$ et donc par symétrie \linebreak $V(I) \cup V(J) \subseteq V(I \cap J) \subseteq V(IJ)$. Supposons qu'il existe $x \in V(IJ)$ tq $x \notin V(I) \cup V(J)$. Alors $\exists P \in I$, $Q \in J$ tq $P(x) \neq 0$ et $Q(x) \neq 0$. Mais $PQ \in IJ$ donc $PQ(x) = 0$, contradiction.
+                \end{enumerate}
+            \end{proof}
+            \begin{coro}
+                Les ensembles algébriques de $\mathbb{A}_k^n$ forment les fermés d'une topologie. On appelle cette topologie la topologie de Zariski.
+            \end{coro}
+
+        \subsection{Nullstellensatz de Hilbert}
+            \begin{defi}
+                Soit $E \subseteq \mathbb{A}_k^n$. On définit
                 \begin{align*}
-                    V(S) = \bigcap_{p \in S} V(P)
+                    I(E) = \{P \in k[X_1, \cdots, X_n] \mid P(a) = 0 ,\, \forall a \in E\}
                 \end{align*}
-                \item
+            \end{defi}
+            \begin{expl}
+                \begin{enumerate}
+                    \item $I(\emptyset) = k[X_1, \cdots, X_n]$
+                    \item $I(a) = (X_1 - a_1, \cdots, X_n - a_n) =: \mathfrak{m}_a$. \ajout{Cet idéal est maximal, vu que c'est le noyau de l'application surjective
+                    \begin{align*}
+                        \begin{array}{cccc}
+                            \mathrm{ev}_a : & k[X_1, \cdots, X_n] & \to & k \\
+                            & X_i & \mapsto & a_i \\
+                        \end{array}
+                    \end{align*}
+                    et donc $k[X_1, \cdots, X_n]/\mathfrak{m}_a \simeq k$. }
+                    \item $I(\mathbb{A}_k^n) = \{0\}$ si le corps est infini.
+                \end{enumerate}
+            \end{expl}
+            \begin{defi}
+                $I \subrel{id} A$, alors 
                 \begin{align*}
-                    \bigcap_{j \in J} V(S_j) = V\left(\bigcup_{j \in J} S_j\right),\, S_j \subseteq k[x_1, \cdots, x_n]
+                    \sqrt{I} = \{f \in A \mid \exists n > 0,\, f^n \in I\}
                 \end{align*}
-                \item $V(PQ) = V(P) \cup V(Q)$ pour $P,Q \in k[x_1, \cdots, x_n]$
-                \item Plus généralement, $V(IJ) = V(I) \cup V(J) = V(I \cap J)$ avec $I,J \subrel{id} k[x_1, \cdots, x_n]$
-            \end{enumerate}
-        \end{prop}
-        \begin{proof}
-            Prouvons 6 : $IJ \subseteq I \cap J \subseteq I$ donc $V(I) \subseteq V(I \cap J) \subseteq V(IJ)$ et donc par symétrie $V(I) \cup V(J) \subseteq V(I \cap J) \subseteq V(IJ)$. Supposons qu'il existe $x \in V(IJ)$ tq $x \notin V(I) \cup V(J)$. Alors $\exists P \in I$, $Q \in J$ tq $P(x) \neq 0$ et $Q(x) \neq 0$. Mais $PQ \in IJ$ donc $PQ(x) = 0$, contradiction. Les autres points sont en exercice.
-        \end{proof}
-        \begin{coro}
-            Les ensembles algébriques de $\mathbb{A}_k^n$ forment les fermés d'une topologie. On appelera cette topologie la topologie de Zariski.
-        \end{coro}
-        \begin{defi}
-            Soit $E \subseteq \mathbb{A}_k^n$. On définit
-            \begin{align*}
-                I(E) = \{P \in k[x_1, \cdots, x_n] \mid P(a) = 0 ,\, \forall a \in E\}
-            \end{align*}
-        \end{defi}
-        \begin{expl}
-            \begin{enumerate}
-                \item $I(\emptyset) = k[x_1, \cdots, x_n]$
-                \item $I(a) = (x_1 - a_1, \cdots, x_n - a_n) =: \mathfrak{m}_a$. Remarquons que cet idéal est un idéal maximal.
-                \item $I(\mathbb{A}_k^n) = \{0\}$ si le corps est infini.
-            \end{enumerate}
-        \end{expl}
-        \begin{defi}
-            $I \subrel{id} A$, alors 
-            \begin{align*}
-                \sqrt{I} = \{f \in A \mid \exists n > 0,\, f^n \in I\}
-            \end{align*}
-            est le radical de $I$. $I$ est un idéal radical si $I = \sqrt{I}$
-        \end{defi}
-        \begin{prop}
-            \begin{enumerate}
-                \item $E \subseteq E' \subseteq \mathbb{A}_k^n$, alors $I(E') \subseteq I(E)$
-                \item $I(E \cup E') = I(E) \cap I(E')$
-                \item $J \subseteq I(V(J))$ pour tout $J \subrel{id} k[x_1, \cdots, x_n]$.
-                \item $E \subseteq V(I(E))$ pour tout $E \subseteq \mathbb{A}_k^n$.
-                \item $V(I) = V(\sqrt{I}) \subseteq \mathbb{A}_k^n$, pour tout $I \subrel{id} k[x_1, \cdots, x_n]$
-            \end{enumerate}
-        \end{prop}
-        \begin{proof}
-            Exercice
-        \end{proof}
-        \begin{lemm}
-            $E = V(I(E)) \iff E$ est un ensemble algébrique. 
-        \end{lemm}
-        \begin{proof}
-            Montrons $V(I(E)) \subseteq E$ : Supposons que $E = V(J)$, $J \subrel{id} k[x_1, \cdots, x_n]$. ALors $J \subseteq I(V(J))$ et ainsi $V(I(E)) \subseteq E$.
-        \end{proof}
-        \begin{expl}
-            Le segment ouvert $(0,1) \subseteq \mathbb{A}_\mathbb{R}^1$ n'est pas un ensemble algébrique.
-        \end{expl}
-        \begin{theo} (Nullstellensatz, 1)
-            \label{Null_1}
-            Si $k = \bar k$, alors on a $I(V(J)) = \sqrt{J}$ pour tout $J \subrel{id} k[x_1, \cdots, x_n]$
-        \end{theo}
-        \begin{expl}
-            Si $k = \mathbb{R}$, $P = x^2 + y^2 + 1 \in \mathbb{R}[x,y]$ irréductible. $I = (P)$ est un idéal premier, donc radical, mais $I(V(P)) = I(\emptyset) = \mathbb{R}[x,y] \neq (P)$.
-        \end{expl}
-        \begin{theo}
-            Pour tout $n \geq 1$, $k[x_1, \cdots, x_n]$ est un anneau noéthérien.
-        \end{theo}
-        \begin{coro}
-            Chaque ensemble algébrique $V \subseteq \mathbb{A}_k^n$ est de la forme $V = V(P_1, \cdots, P_r)$ avec $P_i \in k[x_1, \cdots, x_n]$
-        \end{coro}
-        Ainsi $V$ et $I$ nous donnent des applications entre les idéaux radicaux de $k[x_1, \cdots, x_n]$ et les sous espaces algébriques de $\mathbb{A}_k^n$. Vérifier que $I(E)$ est un idéal radical. De plus, si $k$ est algébriquement clos, d'après le nullstellensatz $I$ et $V$ sont inverses l'une de l'autre. Par cette bijection, les idéaux premiers vont correspondre aux ensembles irréductibles. Les idéaux maximaux vont correspondre à des points.
-        \begin{defi}
-            $V \subseteq \mathbb{A}_k^n$ ensemble algébrique. $V$ est irréductible si pour toute décomposition $V = V_1 \cup V_2$ avec $V_1,V_2$ ensembles algébriques, on a $V = V_1$ ou $V = V_2$. On dit sinon que $V$ est réductible.
-        \end{defi}
-        \begin{prop}
-            $V \subseteq \mathbb{A}_k^n$ ensemble algébrique. Alors tfae
-            \begin{enumerate}
-                \item $V$ est irréductible
-                \item $I(V)$ est un idéal premier
-                \item $k[x_1, \cdots, x_n]/I(V)$ est un anneau intègre
-            \end{enumerate}
-        \end{prop}
-        \begin{proof}
-            1 $\Rightarrow$ 2 : Soient $f,g \in k[x_1, \cdots, x_n]$ tq $fg \in I(V)$. Mais $V(fg) = V(f) \cup V(g)$, puis soit $V_1  V \cap V(f)$, $V_2 = V \cap V(g)$, alors $V_1 \cup V_2 = V \cap V(fg) = V$. Ainsi $V_1 = V$ ou $V_2 = V$, donc $f \in V$ ou $g \in V$. \\
-            2 $\Rightarrow$ 1 : Soit $V \subseteq \mathbb{A}_k^n$ ensemble algébrique tq $I(V)$ est un idéal premier. Supposons que $V$ est réductible, alors $V = V_1 \cup V_2$ avec $V \neq V_1, V \neq V_2$. Comme $V_1,V_2$ sont algébriques, alors $V(I(V)) = V$, $V(I(V_i)) = V_i$, et ainsi $V(I(V)) \neq V(I(V_1))$ et $I(V) \subseteq I(V_1)$. Donc il existe $f_1 \in I(V_1)$ tq $f \notin I(V)$. De même, il existe $f_2 \in I(V_2)$ tq $f_2 \notin I(V)$. Mais $f_1f_2 \in I(V_1) \cap I(V_2) = I(V)$ et ainsi $I(V)$ n'est pas premier.
-        \end{proof}
-        \begin{theo}
-            Soit $V \subseteq \mathbb{A}_k^n$ un ensemble algébrique. Alors $\exists V_1, \cdots, V_m \subseteq \mathbb{A}_k^n$ irréductibles tels que
-            \begin{enumerate}
-                \item $V = V_1 \cup V_2 \cup \cdots \cup V_m$
-                \item $\forall i \neq j$, $V_i \nsubseteq V_j$
-            \end{enumerate}
-            Les $\{V_i\}_{i \in \lcc 1,m \rcc}$ avec ces propriétés sont uniques à ordre près, on les appelle les composantes irréductibles de $V$.
-        \end{theo}
-        \begin{expl}
-            Soit $V := V(xy, (x-1)z) \subseteq \mathbb{A}_k^n$, $k$ de caractéristique $0$. Sur $V$, on a 
-            \begin{align*}
-                &(x = 0 \lor z = 0) \land (x = 1 \lor y = 0) \\
-                \iff &(x = 0 \land y = 0) \lor (z = 0 \land x = 1) \lor (z = 0 \land y = 0)
-            \end{align*}
-            Ainsi $V = V_1 \cup V_2 \cup V_3$ avec $V_1 = V(x,y)$, $V_2 = V(x-1, z)$ et $V_3 = V(y,z)$. On peut alors prouver que ce sont les composantes irréductibles de $V$.
-        \end{expl}
-        \begin{proof}
-            Soit $V \subseteq \mathbb{A}_k^n$ un ensemble algébrique. Si $V$ est irréductible, on a terminé. Sinon il existe des sous-ensembles algébriques propres de $V_1, V_2 \nsubseteq V$ tels que $V = V_1 \cup V_2$. Si $V_1,V_2$ sont irréductibles, alors on a finit. Sinon on itère le procédé sur $V_1$ et $V_2$. Alors supposons que le procédé ne termine pas, il va exister une suite strictement décroissante $\cdots \nsubseteq W_2 \nsubseteq W_1 \nsubseteq V$ d'ensembles algébriques. Ainsi on obtiens une suite croissante
-            \begin{align*}
-                I(W) \subseteq I(W_1) \subseteq I(W_2) \subseteq \cdots
-            \end{align*}
-            Remarquons alors qu'elle es strictement croissante puisque $V(I(W_i)) = W_i$ et la suite des $W_i$ est strictement décroissante. Ainsi on obtiens une contradiction avec le fait que $k[x_1, \cdots, x_n]$ est noéthérien. \\
-            Occupons nous maintenant de l'unicité : Supposons que 
-            \begin{align*}
-                V = \bigcup_{i = 1}^s V_i = \bigcup_{i = 1}^t W_i
-            \end{align*}
-            On veut montrer que l'ensemble $\{V_i\}_{i \in \lcc 1,s \rcc}$ est égal à l'ensemble $\{W_i\}_{i \in \lcc 1,t \rcc}$. On va montrer une inclusion : montrons qu'il existe $j \in \lcc 1,t \rcc$ tel que $V_i = W_j$, avec $i \in \lcc 1,s \rcc$. Comme $V_i \subseteq \bigcup_{j \in \lcc 1,t \rcc} W_j$, on a
-            \begin{align*}
-                V_i \subseteq \bigcup_{j \in \lcc 1,t \rcc} W_j \cap V_i
-            \end{align*}
-            Mais $V_i$ est irréductible, donc $\exists j \in \lcc 1,t \rcc$ tel que $V_i = W_j \cap V_j$, et en particulier $V_i \subseteq W_j$. Maintenant de la même manière on peut prouver qu'il existe $i' \in \lcc 1,s \rcc$ tel que $W_i \subseteq V_{i'}$. Mais alors $V_i \subseteq W_j \subseteq V_{i'}$ et donc $i = i'$, d'où $V_i = W_j$.
-        \end{proof}
-        Donnons $2$ reformulations du Nullstellensatz
-        \begin{prop} (Nullstellensatz 2,3)
-            Considérons l'anneau $k[x_1, \cdots, x_n]$. Tfae :
-            \begin{enumerate}
-                \item \label{null_1} Pour tout $J \subrel{id} k[x_1, \cdots, x_n]$, $I(V(J)) = \sqrt{J}$
-                \item \label{null_2} Pour tout $J \subrel{id} k[x_1, \cdots, x_n]$, $J$ propre implique que $V(J) \neq \emptyset$
-                \item \label{null_3} Les idéaux maximaux de $k[x_1, \cdots, x_n]$ sont exactement les idéaux
-                \begin{align*}
-                    \mathfrak{m}_a = (x_1 - a_1, \cdots, x_n - a_n)
-                \end{align*}
-            \end{enumerate}
-        \end{prop}
-        % \begin{prop} (Nullstellensatz, 2)
-        %     \label{Null_2}
-        %     Soit $k$ un corps algébriquement clos. Si $J \subrel{id} k[x_1, \cdots, x_n]$ est un idéal propre, alors $V(J) \neq \emptyset$.
-        % \end{prop}
-        % \begin{prop} (Nullstellensatz, 3)
-        %     \label{Null_3}
-        %     Soit $k$ un corps algébriquement clos. Les idéaux maximaux de $k[x_1, \cdots, x_n]$ sont exactement les $\mathfrak{m}_a = (x_1 - a_1, \cdots, x_n - a_n)$.
-        % \end{prop}
-        \begin{proof}
-            2 $\Rightarrow$ 3 : Soit $\mathfrak{m} \subrel{max} k[x_1, \cdots, x_n]$. C'est un idéal propre, donc $V(\mathfrak{m}) \neq \emptyset$. Alors soit $a \in V(\mathfrak{m})$, remarquons que pour tout $f \in \mathfrak{m}$, $f(a) = 0$ donc $f \in \mathfrak{m}_a$ (vu que l'on peut écrire $f = Q_1(x_1 - a_1) + \cdots + Q_i(x_i - a_i) + c$). Ainsi $\mathfrak{m} \subseteq \mathfrak{m}_a$ mais $\mathfrak{m}$ est maximal donc $\mathfrak{m} = \mathfrak{m}_a$ ce qui prouve simultanément que $(x_1 - a_1, \cdots, x_n - a_n)$ est un idéal maximal et que $\mathfrak{m}$ est cet idéal. \\
-            1 $\Rightarrow$ 2 : Soit $J \subrel{id} k[x_1, \cdots, x_n]$ idéal propre. On a $\sqrt{J} = I(V(J))$. Supposons que $V(J) = \emptyset$, alors $\sqrt{J} = I(V(J)) = k[x_1, \cdots, x_n]$ et donc $J = k[x_1, \cdots, x_n]$, contradiction.\\
-            3 $\Rightarrow$ 1 : Soit $I \subrel{id} k[x_1, \cdots, x_n]$, on veut mq $\sqrt{I} = I(V(I))$. Comme $I \subseteq I(V(I))$, on a directement le première inclusion du fait que $\sqrt{I(V(I))} = I(V(I))$. Dans l'autre sens, si $I = k[x_1, \cdots, x_n]$, l'égalité est claire. Sinon soit $f \in I(V(I))$, écrivons $I = (P_1, \cdots, P_r)$. Maintenant considérons l'anneau $k[x_1, \cdots, x_n, x_{n+1}]$, puis l'idéal
-            \begin{align*}
-                (P_1, \cdots, P_r, 1 - x_{n+1}f) =: J \subrel{id} k[x_1, \cdots, x_{n+1}]
-            \end{align*}
-            Si $J$ est un idéal propre, alors d'après le théorème de Krull il existe $\mathfrak{m} \subrel{max} k[x_1, \cdots, x_{n+1}]$ tel que $J \subseteq \mathfrak{m}$. Maintenant par hypothèse il existe $(a_1, \cdots, a_n, b) \in \mathbb{A}_k^{n+1}$ tel que
-            \begin{align*}
-                \mathfrak{m} = (x_1 - a_1, \cdots, x_n - a_n, x_{n+1} - b)
-            \end{align*}
-            Mais alors pour tout $i \in \lcc 1,r \rcc$, $P_i(a) = 0$ et $1 - bf(a) = 0$. Mais alors la première série d'égalités nous indique que $a \in V(I)$, et comme $f \in I(V(I))$, $f(a) = 0$, ce qui est absurde. Ainsi $J$ est $k[x_1, \cdots, x_{n+1}]$ tout entier, donc en particulier il existe $Q_1, \cdots, Q_n, Q \in k[x_1, \cdots, x_{n+1}]$ tels que
-            \label{1.1}
-            \begin{align}
-                1 = P_1Q_1 + \cdots + P_rQ_r + Q(1 + x_{n+1}f)
-             \end{align}
-            Maintenant le morphisme de localisation $k[x_1, \cdots, x_n] \to k[x_1, \cdots, x_n, 1/f]$ et le choix de l'élément $1/f$ induit un morphisme d'évaluation
-            \begin{figure}[H]
-                \centering
-                \begin{tikzcd}
-                    {k[x_1, \cdots, x_n]} \arrow[r] \arrow[d]                      & {k[x_1, \cdots, x_n, 1/f]} \arrow[r, hook] & {k(x_1, \cdots, x_n)} \\
-                    {k[x_1, \cdots, x_n][x_{n+1}]} \arrow[ru, "!\exists"', dashed] &                                            &                      
-                    \end{tikzcd}
-            \end{figure}
-            Ainsi au travers de ce morphisme l'égalité \ref{1.1} deviens
-            \begin{align*}
-                1 = P_1(x_1, \cdots, x_n)Q_1(x_1, \cdots, x_n, 1/f) + \cdots + P_r(x_1, \cdots, x_n)Q_r(x_1, \cdots, x_n, 1/f)
-            \end{align*}
-            Alors écrivons les $Q_i$ comme des éléments de $k[x_1, \cdots, x_n][x_{n+1}]$,
-            \begin{align*}
-                Q_i = \sum_{l = 0}^{d_i} R_{i,l}(x_1, \cdots, x_n)x^l_{n+1}
-            \end{align*}
-            En les passant au travers du morphisme d'évaluation précédent on peut les réécrire
-            \begin{align*}
-                Q_i = \frac{R_i(x_1, \cdots, x_n)}{f^{d_i}}
-            \end{align*}
-            et alors \ref{1.1} deviens
-            \begin{align*}
-                1 = \sum_{i = 1}^r \frac{P_iR_i}{f^{d_i}}
-            \end{align*}
-            et ainsi en notant $d = \max \{d_i\}$
-            \begin{align*}
-                f^d = \sum_{i = 1}^r P_iR_if^{d - d_i}
-            \end{align*} 
-            dans $k(x_1, \cdots, x_n)$ donc dans $k[x_1, \cdots, x_n]$. Finalement si $d = 0$, alors $1 \in I$ absurde puisque l'on avait supposé $I$ propre. Sinon, $f^d \in I$ et donc $f \in \sqrt{I}$.
-        \end{proof}
-        \begin{theo} (Nullstellensatz, 0)
-            \label{null_0}
-            Soit une extension de corps $K \injectivearrow L$, avec $L$ une $k$-algèbre de type fini. Alors $[L : K] < \infty$.
-        \end{theo}
-        \begin{remq}
-            $L$ $K$-algèbre de type fini ssi $L \simeq k[x_1, \cdots, x_n]/I$.
-        \end{remq}
-        Montrons que \ref{null_0} implique \ref{null_3} : 
-        \begin{proof}
-            Soit $k$ un corps algébriquement clos. Soit $\mathfrak{m} \subrel{max} k[x_1, \cdots, x_n]$. Soit $L := k[x_1, \cdots, x_n]/\mathfrak{m}$ (qui est un corps et une $k$-algèbre de type fini). Considérons les morphismes $i : k \injectivearrow k[x_1, \cdots, x_n]$, $\pi : k[x_1, \cdots, x_n] \surjectivearrow L$. On note $\varphi = \pi \circ i$. $k \to L$ est un morphisme de $k$-algèbres, donc de corps et donc d'après \ref{null_0}, $[L : K] < \infty$. Mais comme $k$ est algébriquement clos, on doit avoir $k \simeq L$ (car $K \injectivearrow L$ est alors une extension algébrique de $k$). Soit $a_i := \pi(x_i) \in L \simeq k$. Maitenant $\pi(x_i - i(\varphi^{-1}(a_i))) = \pi(x_i) - \varphi(a_i) = a_i - a_i = 0$, donc $\mathfrak{m}_a \subseteq \mathfrak{m}$ et comme $\mathfrak{m}_a$ est maximal, $\mathfrak{m} = \mathfrak{m}_a$. 
-        \end{proof} \noindent
-        Prouvons \ref{null_0} dans le cas où $k$ est non dénombrable :
-        \begin{proof} (Nullstellensatz, 0, corps $K$ non dénombrable)
-            Soit $K \injectivearrow L$ une extension de corps, avec $L$ $k$-algèbre de type fini. Ecrivons $L \simeq k[x_1, \cdots, x_n] / I = k[a_1, \cdots, a_n]$. Il suffit de montrer que $K \injectivearrow L$ est algébrique, car dans ce cas $a_1, \cdots, a_n$ est un élément algébrique et donc $K \injectivearrow K(a_1) \injectivearrow \cdots \injectivearrow K(a_1, a_2, \cdots, a_n) = L$ est finie et chaque extension de cette suite d'extension est finie puisque chaque $a_i$ est algébrique. Pour prouver que $K \injectivearrow L$ est algébrique, supposons le contraire. Alors soit $z \in L$ un élément transcendant, puis considérons $K \injectivearrow K(z) \injectivearrow L$, et $K(z) \simeq K(T)$ le corps des fractions de $k[T]$. Maintenant $L \simeq K[a_1, \cdots, a_n]$ est un isom de $K$-algèbres, $L$ admet une base dénombrable comme $K$-espace vectoriel. Mais $K(T)$ comme $K$-ev admets une famille libre non dénombrable
-            \begin{align*}
-                \left\{ \frac{1}{T - \lambda} \right\}_{\lambda \in k}
-            \end{align*}
-            car $K$ est non dénombrable. Vérifions que cette famille est bien libre : écrivons
-            \begin{align*}
-                \sum_{\mathrm{finie}} a_i \frac{1}{T - \lambda_i} = 0
-            \end{align*}
-            dans $K(T) \injectivearrow L$. Ainsi
-            \begin{align*}
-                \sum_{\mathrm{finie}} a_i (T - \lambda_i) \cdots \widehat{(T - \lambda_i)} \cdots (T - \lambda_l) = 0
-            \end{align*}
-            dans $k[T]$, puis on évalue en $\lambda_i$ et on obtiens $a_i = 0$ pour tout $i$.
-        \end{proof}
-        \begin{defi}
-            $V \subseteq \mathbb{A}_k^n$ ensemble algébrique. L'algèbre des fonctions régulières sur $V$ est
-            \begin{align*}
-                k[V] := k[x_1, \cdots, x_n]/I(V)
-            \end{align*}
-        \end{defi}
-        \begin{remq}
-            Comme $I(V) = \sqrt{I(V)}$, $K[V]$ est une $k$-algèbre de type fini et réduite ($\sqrt{\{0\}} = \{0\}$).
-        \end{remq}
-        Observons que si $k = \bar k$, on a
-        \begin{align*}
-            \{k-\text{alg de type finies réduites}\} = \{k[V] \mid V \text{ ensemble algébrique}\}
-        \end{align*}
-        $V,W \subseteq \mathbb{A}^n, \mathbb{A}^m$ ensembles algébriques affines
-        \begin{defi}
-            $V \subseteq \mathbb{A}_k^n$ ensemble algébrique. Une fonction régulière $f : V \to k$ est une fonction tq $\exists P \in k[x_1, \cdots, x_n]$ tq $f(a) = P(a)$ pour tout $a \in V$.
-        \end{defi}
-        \begin{lemm}
-            Il existe une bijection
+                est le radical de $I$. $I$ est un idéal radical si $I = \sqrt{I}$
+            \end{defi}
+            \begin{prop}
+                \label{prop112}
+                \begin{enumerate}
+                    \item $E \subseteq E' \subseteq \mathbb{A}_k^n$, alors $I(E') \subseteq I(E)$
+                    \item $I(E \cup E') = I(E) \cap I(E')$
+                    \item $J \subseteq I(V(J))$ pour tout $J \subrel{id} k[X_1, \cdots, X_n]$.
+                    \item $E \subseteq V(I(E))$ pour tout $E \subseteq \mathbb{A}_k^n$.
+                    \item $V(I) = V(\sqrt{I}) \subseteq \mathbb{A}_k^n$, pour tout $I \subrel{id} k[X_1, \cdots, X_n]$
+                    \item $I(V) = \sqrt{I(V)}$, pour tout $V \subseteq \mathbb{A}_k^n$ ensemble algébrique affine.
+                \end{enumerate}
+            \end{prop}
+            \begin{proof}
+                \ajout{
+                \begin{enumerate}
+                    \item Soit $P \in I(E')$. Alors pour tout $x \in E$, $x \in E'$ et donc $P(x) = 0$, ce qui prouve que $P \in I(E)$.
+                    \item $E,E' \subseteq E \cup E'$, donc $I(E \cup E') \subseteq I(E),I(E')$ et donc $I(E \cup E') \subseteq I(E) \cap I(E')$. Réciproquement, soit $P \in I(E) \cap I(E')$, alors pour tout $x \in E \cup E'$, $x \in E$ ou $x \in E'$ et donc $P(x) = 0$.
+                    \item Soit $P \in J$, alors pour tout $x \in V(J)$, $P(x) = 0$ et ainsi $P \in I(V(J))$.
+                    \item Soit $x \in E$, alors pour tout $P \in I(E)$, $P(x) = 0$ et ainsi $x \in V(I(E))$.
+                    \item Comme $I \subseteq \sqrt{I}$, $V(\sqrt{I}) \subseteq V(I)$. Maitenant soit $x \in V(I)$, alors pour tout $P \in \sqrt{I}$, il existe $n \geq 1$ tel que $P^n \in I$, et ainsi $P^n(x) = 0$. Mais par intégrité de $k$, $P(x) = 0$ et ainsi $x \in V(\sqrt{I})$.
+                    \item On a toujours $I(V) \subseteq \sqrt{I(V)}$. Maintenant soit $P \in \sqrt{I(V)}$, alors $\exists n \geq 1$ tel que $P^n \in I(V)$. Ainsi, pour tout $x \in V$, $P^n(x) = 0$ et donc $P(x) = 0$ par intégrité de $k$. Finalement, $P \in I(V)$.
+                \end{enumerate}
+                }
+            \end{proof}
+            \begin{lemm}
+                $E = V(I(E)) \iff E$ est un ensemble algébrique. 
+            \end{lemm}
+            \begin{proof}
+                Il suffit de montrer que si $E$ est un ensemble algébrique affine, alors \linebreak $V(I(E)) \subseteq E$ : supposons que $E = V(J)$, $J \subrel{id} k[X_1, \cdots, X_n]$. ALors $J \subseteq I(V(J))$ et ainsi $V(I(E)) = V(I(V(J))) \subseteq V(J) = E$.
+            \end{proof}
+            \begin{expl}
+                Le segment $[0,1] \subseteq \mathbb{A}_\mathbb{R}^1$ n'est pas un ensemble algébrique.
+            \end{expl}
+            Fixons $k \in \mathbf{Fld}$, $n \geq 1$. Définissons deux applications :
             \begin{align*}
                 \begin{array}{cccc}
-                    \chi : & k[V] & \to & \{f : V \to k \mid f \text{ fonction régulière sur } V\} \\
-                    & [P] & \mapsto & (a \mapsto f_P(a) )\\
+                    I : & \{V \subseteq \mathbb{A}_k^n \text{ ensemble algébrique}\} & \to & \{I \subrel{id} k[X_1, \cdot, X_n] \mid I = \sqrt{I} \} \\
+                    & V & \mapsto & I(V)\\
                 \end{array}
             \end{align*}
-        \end{lemm}
-        \begin{remq}
-            $\chi$ est un isomorphisme de $k$-algèbres (On vérifie que $I(V)$ est inclus dans le noyau de $k[x_1, \cdots, x_n] \to \{f : V \to k \mid f \text{ fonction régulière sur } V\}$, et donc cette application passe au quotient par propriété universelle du quotient)
-        \end{remq}
-        \begin{defi}
-            Soient $V,W \subseteq \mathbb{A}_k^{n}, \mathbb{A}_k^{l}$ des ensembles algébriques. Une application $\varphi : V \to W$ est dite régulière (ou morphisme d'ensembles algébriques) si pour tout $f : W \to k$ fonction régulière, on a que $f \circ \varphi : V \to k$ est une fonction régulière. C'est la même chose que demander que 
+            Remarquons que cette application est bien définie d'après \ref{prop112}. De même, on définit
             \begin{align*}
                 \begin{array}{cccc}
-                    & k[W] & \to & k[V] \\
-                    & f & \mapsto & f \circ \varphi \\
+                    V : & \{I \subrel{id} k[X_1, \cdot, X_n] \mid I = \sqrt{I} \} & \to & \{V \subseteq \mathbb{A}_k^n \text{ ensemble algébrique}\} \\
+                    & I & \mapsto & V(I) \\
                 \end{array}
             \end{align*}
-            est bien définie.
-        \end{defi}
-        \begin{nota}
-            On note $\varphi^*$ l'application définie dans la définition précédente. 
-        \end{nota}
-        \begin{remq}
-            $\varphi^*$ est un morphisme de $k$-algèbres.
-        \end{remq}
-        Soient $V,W \subseteq \mathbb{A}_k^n, \mathbb{A}_k^l$ ensembles algébriques, puis $\varphi : V \to W$. Notons $\varphi = (\varphi_1, \cdots, \varphi_l)$, où $\varphi_i = \pi_i \circ \varphi$ ($\pi_i : \mathbb{A}_k^l \to k$). 
-        \begin{lemm}
-            $\varphi$ est un morphisme $\iff$ $\varphi_i$ est une fonction régulière pour tout $i$.
-        \end{lemm}
-        \begin{proof}
-            $\Rightarrow$ : $\pi_i, \pi_{i|W}$ sont des fonctions régulières. Ainsi $\varphi_i = \pi_i \circ \varphi$ est une fonction régulière (comme $\varphi$ est un morphisme, par définition). \\
-            $\Leftarrow$ : $f : W \to k$ fonction régulière, alors $\exists Q \in k[y_1, \cdots, y_l]$ tq $f(b) = Q(b)$ pour tout $b \in W$. Maintenant $\varphi_i$ est régulière, donc $\exists R_i \in k[x_1, \cdots, x_n]$ tq $\varphi_i(a) = R_i(a)$ pour tout $a \in V$. Soit $P \in Q(R_1, \cdots, R_n) \in k[x_1, \cdots, x_n]$ On a alors 
-            \begin{align*}
-                P(a) &= Q(R_1(a), \cdots, R_n(a)) \\
-                &= f(\varphi_1(a), \cdots, \varphi_n(a)) = f \circ \varphi(a)
-            \end{align*} 
-            pour tout $a \in V$, et donc $\varphi$ est un morphisme.
-        \end{proof}
-        \begin{expl}
-            Soit $\varphi : \mathbb{A}^n \to \mathbb{A}^l$ définie par $\varphi(x_1, \cdots, x_n) = (P_1(x), \cdots, P_l(x))$ avec les $P_i \in k[x_1, \cdots, x_n]$.
-        \end{expl}
-        \begin{remq}
-            $\varphi : V \to W \subseteq \mathbb{A}^l$ est un morphisme ssi $V \to \mathbb{A}^l$ est un morphisme.
-        \end{remq}
-        \begin{expl}
-            \begin{enumerate}
-                \item $\varphi : \mathbb{A}^1 \to V := \{(x,y) \mid y = x^2\} \subseteq \mathbb{A}^2$ donné par $\varphi(t) = (t, t^2)$ est un morphisme.
-                \item $\varphi : \mathbb{A}^1 \to V := \{(x,y) \mid y^2 = x^3\} \subseteq \mathbb{A}^2$ donné par $\varphi(t) = (t^2, t^3)$ est un morphisme.
-            \end{enumerate}
-        \end{expl}
-        \begin{exo}
-            Les morphismes d'ensembles algébriques affines sont stables par composition.
-        \end{exo}
-        \begin{defi}
-            $\varphi : V \to W$ est un isomorphisme si $\varphi$ est un morphisme bijectif et $\varphi^{-1} : W \to V$ est un morphisme.
-        \end{defi}
-        \begin{expl}
-            \begin{enumerate}
-                \item Reprenons l'exemple précédent : c'est un isomorphisme puisque $\varphi^{-1} : V \to \mathbb{A}^1$ donné par $\varphi^{-1}(x,y) = x$ est un morphisme et est une inverse de $\varphi$ dans $\mathbf{Sets}$.
-                \item Forcément, une inverse de $\varphi$ est une inverse dans $\mathbf{Sets}$ au travers du foncteur d'oubli qui envoie un ensemble algébrique sur son ensemble sous-jacent. Ainsi $\phi^{-1} : V \to \mathbb{A}^1$ doit forcément être définie comme
+            \begin{theo} (Nullstellensatz, 1)
+                \label{Null_1}
+                Si $k = \bar k$, alors on a $I(V(J)) = \sqrt{J}$ pour tout $J \subrel{id} k[X_1, \cdots, X_n]$
+            \end{theo}
+            \begin{expl}
+                Si $k = \mathbb{R}$, $P = X^2 + Y^2 + 1 \in \mathbb{R}[X,Y]$ irréductible. $I = (P)$ est un idéal premier, donc radical, mais $I(V(P)) = I(\emptyset) = \mathbb{R}[X,Y] \neq (P)$.
+            \end{expl}
+            \ajout{
+            \begin{coro}
+                Si $k = \bar k$, alors $V$ et $I$ sont inverses l'une de l'autre.
+            \end{coro}
+            \begin{proof}
+                Soit $J \subrel{id} k[X_1, \cdots, X_n]$ un idéal radical. Alors $I(V(J)) = \sqrt{J} = J$ et donc $I \circ V = \id$. Soit $V = V(J) \subseteq \mathbb{A}_k^n$ un ensemble algébrique affine. Alors $I(V(J)) = \sqrt{J}$ et donc $V(I(V)) = V(\sqrt{J}) = V(J) = V$, donc $V \circ I = \id$.
+            \end{proof}
+            }
+            Donnons $2$ reformulations du Nullstellensatz
+            \begin{prop} (Nullstellensatz 2,3)
+                Considérons l'anneau $k[X_1, \cdots, X_n]$. Tfae :
+                \begin{enumerate}
+                    \item \label{null_1} Pour tout $J \subrel{id} k[X_1, \cdots, X_n]$, $I(V(J)) = \sqrt{J}$
+                    \item \label{null_2} Pour tout $J \subrel{id} k[X_1, \cdots, X_n]$, $J$ propre implique que $V(J) \neq \emptyset$
+                    \item \label{null_3} Les idéaux maximaux de $k[X_1, \cdots, X_n]$ sont exactement les idéaux
+                    \begin{align*}
+                        \mathfrak{m}_a = (X_1 - a_1, \cdots, X_n - a_n)
+                    \end{align*}
+                \end{enumerate}
+            \end{prop}
+            % \begin{prop} (Nullstellensatz, 2)
+            %     \label{Null_2}
+            %     Soit $k$ un corps algébriquement clos. Si $J \subrel{id} k[X_1, \cdots, X_n]$ est un idéal propre, alors $V(J) \neq \emptyset$.
+            % \end{prop}
+            % \begin{prop} (Nullstellensatz, 3)
+            %     \label{Null_3}
+            %     Soit $k$ un corps algébriquement clos. Les idéaux maximaux de $k[X_1, \cdots, X_n]$ sont exactement les $\mathfrak{m}_a = (X_1 - a_1, \cdots, X_n - a_n)$.
+            % \end{prop}
+            \begin{proof}
+                2 $\Rightarrow$ 3 : Soit $\mathfrak{m} \subrel{max} k[X_1, \cdots, X_n]$. C'est un idéal propre, donc $V(\mathfrak{m}) \neq \emptyset$. Alors soit $a \in V(\mathfrak{m})$, remarquons que pour tout $f \in \mathfrak{m}$, $f(a) = 0$ donc $f \in \mathfrak{m}_a$ (vu que l'on peut écrire $f = Q_1(X_1 - a_1) + \cdots + Q_i(X_i - a_i) + c$). Ainsi $\mathfrak{m} \subseteq \mathfrak{m}_a$ mais $\mathfrak{m}$ est maximal donc $\mathfrak{m} = \mathfrak{m}_a$.\\
+                1 $\Rightarrow$ 2 : Soit $J \subrel{id} k[X_1, \cdots, X_n]$ idéal propre. On a $\sqrt{J} = I(V(J))$. Supposons que $V(J) = \emptyset$, alors $\sqrt{J} = I(V(J)) = k[X_1, \cdots, X_n]$ et donc $J = k[X_1, \cdots, X_n]$, contradiction.\\
+                3 $\Rightarrow$ 1 : Soit $I \subrel{id} k[X_1, \cdots, X_n]$, on veut mq $\sqrt{I} = I(V(I))$. Comme $I \subseteq I(V(I))$, on a directement le première inclusion du fait que $\sqrt{I(V(I))} = I(V(I))$. Dans l'autre sens, si $I = k[X_1, \cdots, X_n]$, l'égalité est claire. Sinon soit $f \in I(V(I))$, écrivons $I = (P_1, \cdots, P_r)$. Maintenant considérons l'anneau $k[X_1, \cdots, X_n, X_{n+1}]$, puis l'idéal
                 \begin{align*}
-                    \varphi^{-1}(x,y) = 
-                    \begin{cases}
-                        y/x & \text{si } (x,y) \neq 0 \\
-                        0 & \text{sinon}
-                    \end{cases}
+                    (P_1, \cdots, P_r, 1 - X_{n+1}f) =: J \subrel{id} k[X_1, \cdots, X_{n+1}]
                 \end{align*}
-                Mais $\varphi^{-1}$ n'est pas un morphisme : supposons qu'il existe $P \in k[X,Y]$ tq $P(x,y) = \varphi^{-1}(x,y)$, alors $P(x,y) = y/x$ pour tout $(x,y) \in V$ et $V = \{(t^2, t^3) \mid t \in k \}$, et ainsi $P(t^2, t^3) = t$ pour tout $t \in k \bs \{0\}$, ce qui est clairement impossible. On peut aussi vérifier que le morphisme induit sur les algèbres de fonctions régulières n'est pas un isomorphisme.
+                Si $J$ est un idéal propre, alors d'après le théorème de Krull il existe $\mathfrak{m} \subrel{max} k[X_1, \cdots, X_{n+1}]$ tel que $J \subseteq \mathfrak{m}$. Maintenant par hypothèse il existe $(a_1, \cdots, a_n, b) \in \mathbb{A}_k^{n+1}$ tel que
+                \begin{align*}
+                    \mathfrak{m} = (X_1 - a_1, \cdots, X_n - a_n, X_{n+1} - b)
+                \end{align*}
+                Mais alors pour tout $i \in \lcc 1,r \rcc$, $P_i(a) = 0$ et $1 - bf(a) = 0$. Mais alors la première série d'égalités nous indique que $a \in V(I)$, et comme $f \in I(V(I))$, $f(a) = 0$, ce qui est absurde. Ainsi $J$ est $k[X_1, \cdots, X_{n+1}]$ tout entier, donc en particulier il existe $Q_1, \cdots, Q_n, Q \in k[X_1, \cdots, X_{n+1}]$ tels que
+                \label{1.1}
+                \begin{align}
+                    1 = P_1Q_1 + \cdots + P_rQ_r + Q(1 + X_{n+1}f)
+                \end{align}
+                Maintenant le morphisme de localisation $k[X_1, \cdots, X_n] \to k[X_1, \cdots, X_n, 1/f]$ et le choix de l'élément $1/f$ induit un morphisme d'évaluation
+                \begin{figure}[H]
+                    \centering
+                    \begin{tikzcd}
+                        {k[X_1, \cdots, X_n]} \arrow[r] \arrow[d]                      & {k[X_1, \cdots, X_n, 1/f]} \arrow[r, hook] & {k(X_1, \cdots, X_n)} \\
+                        {k[X_1, \cdots, X_n][X_{n+1}]} \arrow[ru, "!\exists"', dashed] &                                            &                      
+                        \end{tikzcd}
+                \end{figure}
+                Ainsi au travers de ce morphisme l'égalité \ref{1.1} deviens
+                \begin{align*}
+                    1 = P_1(X_1, \cdots, X_n)Q_1(X_1, \cdots, X_n, 1/f) + \cdots + P_r(X_1, \cdots, X_n)Q_r(X_1, \cdots, X_n, 1/f)
+                \end{align*}
+                Alors écrivons les $Q_i$ comme des éléments de $k[X_1, \cdots, X_n][X_{n+1}]$,
+                \begin{align*}
+                    Q_i = \sum_{l = 0}^{d_i} R_{i,l}(X_1, \cdots, X_n)X^l_{n+1}
+                \end{align*}
+                En les passant au travers du morphisme d'évaluation précédent on peut les réécrire
+                \begin{align*}
+                    Q_i = \frac{R_i(X_1, \cdots, X_n)}{f^{d_i}}
+                \end{align*}
+                et alors \ref{1.1} deviens
+                \begin{align*}
+                    1 = \sum_{i = 1}^r \frac{P_iR_i}{f^{d_i}}
+                \end{align*}
+                et ainsi en notant $d = \max \{d_i\}$
+                \begin{align*}
+                    f^d = \sum_{i = 1}^r P_iR_if^{d - d_i}
+                \end{align*} 
+                dans $k(X_1, \cdots, X_n)$ donc dans $k[X_1, \cdots, X_n]$. Finalement si $d = 0$, alors $1 \in I$ absurde puisque l'on avait supposé $I$ propre. Sinon, $f^d \in I$ et donc $f \in \sqrt{I}$.
+            \end{proof}
+            Citons finalement une version plus générale du Nullstellensatz. Montrons qu'elle implique \hyperref[null_1]{la version 3}, et ainsi tous les énoncés équivalents prouvés précédemment.
+            \begin{theo} (Nullstellensatz, 0)
+                \label{null_0}
+                Soit une extension de corps $K \injectivearrow L$, avec $L$ une $k$-algèbre de type fini. Alors $[L : K] < \infty$.
+            \end{theo}
+            \begin{remq}
+                $L$ $K$-algèbre de type fini ssi $L \simeq k[X_1, \cdots, X_n]/I$.
+            \end{remq}
+            Montrons que \ref{null_0} implique \ref{null_3} : 
+            \begin{proof}
+                Soit $k$ un corps algébriquement clos. Soit $\mathfrak{m} \subrel{max} k[X_1, \cdots, X_n]$. Soit \linebreak $L := k[X_1, \cdots, X_n]/\mathfrak{m}$ (qui est un corps et une $k$-algèbre de type fini). Considérons les morphismes $i : k \injectivearrow k[X_1, \cdots, X_n]$, $\pi : k[X_1, \cdots, X_n] \surjectivearrow L$. On note $\varphi = \pi \circ i$. $k \to L$ est un morphisme de $k$-algèbres, donc de corps et donc d'après \ref{null_0}, $[L : K] < \infty$. Mais comme $k$ est algébriquement clos, on doit avoir $k \simeq L$ (car $K \injectivearrow L$ est alors une extension algébrique de $k$). Soit $a_i := \pi(X_i) \in L \simeq k$. Maitenant $\pi(X_i - i(\varphi^{-1}(a_i))) = \pi(X_i) - a_i = a_i - a_i = 0$, donc 
+                \begin{align*}
+                    (X_1 - i(\varphi^{-1}(a_1)), \cdots, X_n - i(\varphi^{-1}(a_n))) =: \mathfrak{m}_a \subseteq \mathfrak{m}
+                \end{align*}
+                et comme $\mathfrak{m}_a$ est maximal, $\mathfrak{m} = \mathfrak{m}_a$. 
+            \end{proof} \noindent
+            Prouvons \ref{null_0} dans le cas où $k$ est non dénombrable :
+            \begin{proof} (Nullstellensatz 0, corps $K$ non dénombrable)
+                Soit $K \injectivearrow L$ une extension de corps, avec $L$ une $k$-algèbre de type fini. Ecrivons $L \simeq k[X_1, \cdots, X_n] / I = K[a_1, \cdots, a_n]$. Il suffit de montrer que $K \injectivearrow L$ est algébrique, car dans ce cas $a_1, \cdots, a_n$ sont des éléments algébriques sur $K$ et donc $K \injectivearrow K(a_1) \injectivearrow \cdots \injectivearrow K(a_1, a_2, \cdots, a_n) = L$ est finie et chaque extension de cette suite d'extension est finie. Pour prouver que $K \injectivearrow L$ est algébrique, supposons le contraire. Alors soit $z \in L$ un élément transcendant, puis considérons $K \injectivearrow K(z) \injectivearrow L$, et $K(z) \simeq K(T)$ le corps des fractions de $k[T]$. Maintenant $L \simeq K[a_1, \cdots, a_n]$ est un isom de $K$-algèbres, $L$ admet une base dénombrable comme $K$-espace vectoriel. Mais $K(T)$ comme $K$-ev admets une famille libre non dénombrable
+                \begin{align*}
+                    \left\{ \frac{1}{T - \lambda} \right\}_{\lambda \in k}
+                \end{align*}
+                car $K$ est non dénombrable. Vérifions que cette famille est bien libre : écrivons
+                \begin{align*}
+                    \sum_{\mathrm{finie}} a_i \frac{1}{T - \lambda_i} = 0
+                \end{align*}
+                dans $K(T) \injectivearrow L$. Ainsi
+                \begin{align*}
+                    \sum_{\mathrm{finie}} a_i (T - \lambda_i) \cdots \widehat{(T - \lambda_i)} \cdots (T - \lambda_l) = 0
+                \end{align*}
+                dans $k[T]$, puis on évalue en $\lambda_i$ et on obtiens $a_i = 0$ pour tout $i$.
+            \end{proof}
+
+        \subsection{Sous-ensembles irréductibles}
+            \begin{defi}
+                $V \subseteq \mathbb{A}_k^n$ ensemble algébrique. $V$ est irréductible si pour toute décomposition $V = V_1 \cup V_2$ avec $V_1,V_2$ ensembles algébriques, on a $V = V_1$ ou $V = V_2$. On dit sinon que $V$ est réductible.
+            \end{defi}
+            \begin{prop}
+                $V \subseteq \mathbb{A}_k^n$ ensemble algébrique. Alors tfae
+                \begin{enumerate}
+                    \item $V$ est irréductible
+                    \item $I(V)$ est un idéal premier
+                    \item $k[X_1, \cdots, X_n]/I(V)$ est un anneau intègre
+                \end{enumerate}
+            \end{prop}
+            \begin{proof}
+                \item 1 $\Rightarrow$ 2 : Soient $f,g \in k[X_1, \cdots, X_n]$ tq $fg \in I(V)$. Mais $V(fg) = V(f) \cup V(g)$, puis soit $V_1 = V \cap V(f)$, $V_2 = V \cap V(g)$, alors $V_1 \cup V_2 = V \cap V(fg) = V$. Ainsi $V_1 = V$ ou $V_2 = V$, donc $f \in V$ ou $g \in V$.
+                \item 2 $\Rightarrow$ 1 : Soit $V \subseteq \mathbb{A}_k^n$ ensemble algébrique tq $I(V)$ est un idéal premier. Supposons que $V$ est réductible, alors $V = V_1 \cup V_2$ avec $V \neq V_1, V \neq V_2$. Comme $V_1,V_2$ sont algébriques, alors $V(I(V)) = V$, $V(I(V_i)) = V_i$, et ainsi $V(I(V)) \neq V(I(V_1))$ et $I(V) \subseteq I(V_1)$. Donc il existe $f_1 \in I(V_1)$ tq $f_1 \notin I(V)$. De même, il existe $f_2 \in I(V_2)$ tq $f_2 \notin I(V)$. Mais $f_1f_2 \in I(V_1) \cap I(V_2) = I(V)$ et ainsi $I(V)$ n'est pas premier.
+                \ajout{
+                \item 2 $\iff$ 3 : viens du fait que $J \subrel{id} A$ est premier si et seulement si $A/J$ est intègre.
+                }
+            \end{proof}
+            \begin{remq}
+                Supposons que $k = \bar k$. Alors $I$ et $V$ sont inverses l'une de l'autre et donnent une correspondance entre les idéaux radicaux de $k[X_1, \cdots, X_n]$ et les ensembles algébriques affines de $\mathbb{A}_k^n$. Alors au travers de cette bijection, les ensembles irréductibles correspondent aux idéaux premiers, et les points aux idéaux maximaux.
+            \end{remq}
+            \begin{theo}
+                Soit $V \subseteq \mathbb{A}_k^n$ un ensemble algébrique. Alors $\exists V_1, \cdots, V_m \subseteq \mathbb{A}_k^n$ irréductibles tels que
+                \begin{enumerate}
+                    \item $V = V_1 \cup V_2 \cup \cdots \cup V_m$
+                    \item $\forall i \neq j$, $V_i \nsubseteq V_j$
+                \end{enumerate}
+                Les $\{V_i\}_{i \in \lcc 1,m \rcc}$ avec ces propriétés sont uniques à ordre près, on les appelle les composantes irréductibles de $V$.
+            \end{theo}
+            \begin{expl}
+                Soit $V := V(XY, (X-1)Z) \subseteq \mathbb{A}_k^n$, $k$ de caractéristique $0$. Sur $V$, on a 
+                \begin{align*}
+                    &(X = 0 \lor Z = 0) \land (X = 1 \lor Y = 0) \\
+                    \iff &(X = 0 \land Y = 0) \lor (Z = 0 \land X = 1) \lor (Z = 0 \land Y = 0)
+                \end{align*}
+                Ainsi $V = V_1 \cup V_2 \cup V_3$ avec $V_1 = V(X,Y)$, $V_2 = V(X-1, Z)$ et $V_3 = V(Y,Z)$. On peut alors prouver que ce sont les composantes irréductibles de $V$.
+            \end{expl}
+            \begin{proof}
+                Soit $V \subseteq \mathbb{A}_k^n$ un ensemble algébrique. Si $V$ est irréductible, on a terminé. Sinon il existe des sous-ensembles algébriques propres de $V_1, V_2 \nsubseteq V$ tels que $V = V_1 \cup V_2$. Si $V_1,V_2$ sont irréductibles, alors on a finit. Sinon on itère le procédé sur $V_1$ et $V_2$. Alors supposons que le procédé ne termine pas, il va exister une suite strictement décroissante $\cdots \nsubseteq W_2 \nsubseteq W_1 \nsubseteq V$ d'ensembles algébriques. Ainsi on obtiens une suite croissante
+                \begin{align*}
+                    I(W) \subseteq I(W_1) \subseteq I(W_2) \subseteq \cdots
+                \end{align*}
+                Remarquons alors qu'elle es strictement croissante puisque $V(I(W_i)) = W_i$ et la suite des $W_i$ est strictement décroissante. Ainsi on obtiens une contradiction avec le fait que $k[X_1, \cdots, X_n]$ est noethérien. \\
+                Occupons nous maintenant de l'unicité : Supposons que 
+                \begin{align*}
+                    V = \bigcup_{i = 1}^s V_i = \bigcup_{i = 1}^t W_i
+                \end{align*}
+                On veut montrer que l'ensemble $\{V_i\}_{i \in \lcc 1,s \rcc}$ est égal à l'ensemble $\{W_i\}_{i \in \lcc 1,t \rcc}$. On va montrer une inclusion : montrons qu'il existe $j \in \lcc 1,t \rcc$ tel que $V_i = W_j$, avec $i \in \lcc 1,s \rcc$. Comme $V_i \subseteq \bigcup_{j \in \lcc 1,t \rcc} W_j$, on a
+                \begin{align*}
+                    V_i \subseteq \bigcup_{j \in \lcc 1,t \rcc} W_j \cap V_i
+                \end{align*}
+                Mais $V_i$ est irréductible, donc $\exists j \in \lcc 1,t \rcc$ tel que $V_i = W_j \cap V_j$, et en particulier $V_i \subseteq W_j$. Maintenant de la même manière on peut prouver qu'il existe $i' \in \lcc 1,s \rcc$ tel que $W_i \subseteq V_{i'}$. Mais alors $V_i \subseteq W_j \subseteq V_{i'}$ et donc $i = i'$, d'où $V_i = W_j$.
+            \end{proof}
+            
+
+    \section{Catégorie des ensembles algébriques et foncteur $k[-]$}
+        Fixons un $k \in \mathbf{Fld}$.
+        \subsection{Catégorie des ensembles algébriques sur $k$}
+            Pour définir une catégorie des ensembles algébriques, nous avons besoin de définir une notion de morphisme entre ensembles algébriques.
+            % \begin{defi} \old{(Fonction régulière)
+            %     $V \subseteq \mathbb{A}_k^n$ ensemble algébrique. Une fonction régulière $f : V \to k$ est une fonction tq $\exists P \in k[X_1, \cdots, X_n]$ tq $f(a) = P(a)$ pour tout $a \in V$.
+            %     }
+            % \end{defi}
+            % \begin{defi} \old{(Morphisme d'ensembles algébriques)
+            %     \label{ensalgmor}
+            %     Soient $V,W \subseteq \mathbb{A}_k^{n}, \mathbb{A}_k^{l}$ des ensembles algébriques. Une application $\varphi : V \to W$ est dite régulière (ou morphisme d'ensembles algébriques, ou encore seulement morphisme si le contexte est clair) si pour tout $f : W \to k$ fonction régulière, on a que $f \circ \varphi : V \to k$ est une fonction régulière.
+            %     }
+            % \end{defi}
+
+
+            \begin{defi} (Morphisme d'ensembles algébriques)
+                \label{ensalgmor}
+                Soit $V,W \subseteq \mathbb{A}^n, \mathbb{A}^m$ des ensembles algébriques affines. $\varphi = (\varphi_1, \cdots, \varphi_m) : V \to W$ est une fonction régulière, ou morphisme (d'ensembles algébriques affines) si pour tout $i \in \lcc 1,l \rcc$, $\exists P_i \in k[X_1, \cdots, X_n]$ tel que $\varphi_i(q) = P_i(a)$ pour tout $a \in V$.
+            \end{defi}
+
+            \begin{expl}
+                \begin{enumerate}
+                    \item Soit $V \subseteq W \subseteq \mathbb{A}^n$ un ensemble algébrique. Alors l'injection associée à cette inclusion $i : V \to W$ est un morphisme.
+                    \item $\pi_i : \mathbb{A}^n_k \to \mathbb{A}_k^1$ la projection sur la $i$-ème coordonnée est un morphisme.
+                \end{enumerate}
+            \end{expl}
+
+            \begin{prop}
+                \ajout{
+                Soit $\varphi^1 : V_1 \to V_2,\ \varphi^2 : V_2 \to V_3$ des morphismes d'ensembles algébriques, où $V_i \subseteq \mathbb{A}_k^{n_i}$. Alors $\varphi^2 \circ \varphi^1 : V_1 \to V_3$ est un morphisme d'ensembles algébriques.
+                }
+            \end{prop}
+            \ajout{
+            \begin{proof}
+                Notons $\varphi^1 = (\varphi^1_1, \cdots, \varphi^1_{n_2})$ et $\varphi^2 = (\varphi^2_1, \cdots, \varphi^2_{n_3})$, puis \linebreak $f^1_i$, $g^2_j \in k[X_1, \cdots, X_{n_1}], k[Y_1, \cdots, Y_{n_2}]$ les polynômes associés à $\varphi^1_i$, $\varphi^2_j$. Maintenant considérons les polynômes $h_i \in k[X_1, \cdots, X_{n_1}]$ obtenus en évaluant les $g_i$ en $f_1, \cdots, f_{n_2}$, alors on a
+                \begin{align*}
+                    (\varphi^2 \circ \varphi^1)(a) &= (g_1(f_1(a), \cdots, f_{n_2}(a)), \cdots, g_{n_3}(f_1(a), \cdots, f_{n_2}(a))) \\
+                    &= (h_1(a), \cdots, h_{n_3}(a))
+                \end{align*}
+                et donc $\varphi^2 \circ \varphi^1$ est un morphisme.
+            \end{proof}
+            }
+            \begin{prop} 
+                Soient $V,W \subseteq \mathbb{A}_k^{n}, \mathbb{A}_k^{l}$ des ensembles algébriques. Une application $\varphi : V \to W$ est un morphisme si et seulement si pour tout morphisme $f : W \to \mathbb{A}^1$, $f \circ \varphi : V \to \mathbb{A}^1$ est un morphisme.
+            \end{prop}
+            \begin{proof}
+                \item $\Rightarrow$ : La composition de morphismes est un morphisme.
+                \item $\Leftarrow$ : Soit $p_i : W \injectivearrow \mathbb{A}^l \to \mathbb{A}^1$ la projection sur la $i$-ème coordonnée, c'est un morphisme car composition de morphismes. Maintenant $\pi \circ \varphi = \varphi_i$ est un morphisme donc il existe $P_i \in k[X_1, \cdots, X_n]$ tel que $\varphi_i(a) = P_i(a)$ pour tout $a \in V$, et ainsi $\varphi$ est un morphisme.
+            \end{proof}
+
+            On peut ainsi définir une catégorie des ensembles algébriques affines sur $k$, notée $k-\mathbf{EnsAlg}$, ou encore seulement $\mathbf{EnsAlg}$ si le contexte est clair, dont
+            \begin{enumerate}
+                \item Les objets sont les ensembles algébriques affines $V \subseteq \mathbb{A}_k^n$,
+                \item $\Hom_\mathbf{EnsAlg}(V,W)$ est la classe des morphismes de $V$ dans $W$ au sens de \ref{ensalgmor}
+                \item La composition de morphismes correspond à la composition des applications sous-jacentes.
             \end{enumerate}
-        \end{expl}
-        \begin{theo}
-            \label{theo115}
-            Soient $V,W \subseteq \mathbb{A}_k^n, \mathbb{A}_k^l$ ensembles algébriques. Alors il existe une bijection
-            \begin{align*}
-                F : \Hom_{\mathbf{EnsAlg}}(V,W) \to \Hom_{k-\mathbf{CAlg}}(k[W], k[V))
-            \end{align*} 
-            qui envoie $\varphi$ sur $\varphi^*$ est une bijection. De plus cette bijection est fonctorielle, i.e. $(\psi \circ \varphi)^* = \varphi^* \circ \psi^*$, et $\id_V^* = \id_{k[V]}$.
-        \end{theo}
-        \begin{coro}
-            \label{coro113}
-            Soit $\varphi : V \to W$ morphisme. C'est un isomorphisme ssi $\varphi^* : k[W] \to k[V]$ est un isomorphisme. En particulier $V$ non isomorphe à $W$ ssi $k[V]$ non isomorphe à $k[W]$.
-        \end{coro}
-        \begin{remq}
-            Si $k = \bar k$, on a une équivalence de catégories entre $\mathbf{EnsAlg}$ et les $k$-algèbres de type fini réduites (catégorie notée $k-\mathbf{CAlg_{ft,red}}$).
-        \end{remq}
-        \begin{proof} (\ref{coro113})
-            Les foncteurs pleinements fidèles préservent et réfléchissent les isomorphismes.
-        \end{proof}
-        \begin{proof} (\ref{theo115})
-            Soit $\varphi : V \to W \subseteq \mathbb{A}^l$, écrivons $\varphi = (\varphi_1, \cdots, \varphi_l)$, avec $\varphi_i : V \to k$. $\varphi$ morphisme, donc
+            Remarquons que cette catégorie est bien définie du fait que $\id_V$ est un morphisme et que les morphismes sont stables par composition.
+            \begin{prop}
+                $\varphi : V \to W \subseteq \mathbb{A}^l$ est un morphisme ssi $V \to \mathbb{A}^l$ est un morphisme.
+            \end{prop}
+            \begin{proof}
+                \ajout{
+                \item $\Rightarrow$ : $V \to W \injectivearrow \mathbb{A}^l$ est une composition de morphismes, donc est un morphisme. 
+                \item $\Leftarrow$ : Par hypothèse, $i \circ \varphi : V \to \mathbb{A}^l$ est un morphisme ($i : W \to \mathbb{A}^l$ est le morphisme associé à l'inclusion $W \subseteq \mathbb{A}^l$). Ainsi il existe $P_i \in k[X_1, \cdots, X_n]$ tels que
+                \begin{align*}
+                    (P_1(a), \cdots, P_l(a)) = (i \circ \varphi)(a) =  \varphi(a)
+                \end{align*}
+                pour tout $a \in V$, et donc $\varphi$ est un morphisme.
+                }
+            \end{proof}
+            \begin{expl}
+                \label{ex121}
+                \begin{enumerate}
+                    \item $\varphi : \mathbb{A}^n \to \mathbb{A}^l$ définie par $\varphi(X_1, \cdots, X_n) = (P_1(x), \cdots, P_l(x))$ avec les $P_i \in k[X_1, \cdots, X_n]$ est un morphisme, par définition.
+                    \item \label{ex3} $\varphi : \mathbb{A}^1 \to V := \{(x,y) \mid y = x^2\} \subseteq \mathbb{A}^2$ donné par $\varphi(t) = (t, t^2)$ est un morphisme.
+                    \item \label{ex4}$\varphi : \mathbb{A}^1 \to V := \{(x,y) \mid y^2 = x^3\} \subseteq \mathbb{A}^2$ donné par $\varphi(t) = (t^2, t^3)$ est un morphisme.
+                \end{enumerate}
+            \end{expl}
+
+        \subsection{Foncteur $k[-]$}
+            Donnons maintenant un foncteur entre $\mathbf{EnsAlg}$ et $k-\mathbf{CAlg}_\mathrm{tf, red}$ la catégorie des $k$-algèbres de type fini réduites sur $k$.
+            \begin{defi}
+                $V \subseteq \mathbb{A}_k^n$ ensemble algébrique. L'algèbre des fonctions régulières sur $V$ est
+                \begin{align*}
+                    k[V] := k[X_1, \cdots, X_n]/I(V)
+                \end{align*}
+            \end{defi}
+            \begin{remq}
+                Comme $I(V) = \sqrt{I(V)}$, $K[V]$ est une $k$-algèbre de type fini et réduite ($\sqrt{\{0\}} = \{0\}$). En effet, pour tout anneau $A$ et $I \subrel{id} A$, $A/I$ est réduit si et seulement si $I = \sqrt{I}$.
+            \end{remq}
+            Remarquons que l'ensemble des fonctions régulières sur un ensemble algébrique $V \subseteq \mathbb{A}_k^n$ est munie d'une structure naturelle de $k$-algèbre. Alors
+            \begin{lemm}
+                L'application
+                \begin{align*}
+                    \begin{array}{cccc}
+                        \chi : & k[V] & \to & \Hom_{\mathbf{EnsAlg}}(V, \mathbb{A}^1) \\
+                        & [P] & \mapsto & (f_P : a \mapsto P(a))\\
+                    \end{array}
+                \end{align*}
+                est bien définie et est un isomorphisme de $k$-algèbres.
+            \end{lemm}
+            \begin{proof}
+                Considérons l'application
+                \begin{align*}
+                    \begin{array}{cccc}
+                        \tilde \chi : & k[X_1, \cdots, X_n] & \to & \Hom_{\mathbf{EnsAlg}}(V, \mathbb{A}^1) \\
+                        & P & \mapsto & f_P\\
+                    \end{array}
+                \end{align*}
+                C'est un morphisme de $k$-algèbres, vérifions que son noyau est exactement $I(V)$ : \begin{align*}
+                    \tilde \chi (P) = 0 \iff \forall a \in V,\, P(a) = 0 \iff P \in I(V)
+                \end{align*}
+                Finalement, cette application est surjective par définition de $\Hom_{\mathbf{EnsAlg}}(V, \mathbb{A}^1)$, et donc $\tilde \chi$ se factorise en un isomorphisme au travers du quotient $k[V]$ (cet isomorphisme est $\chi$ et donc $\chi$ est un isomorphisme).
+            \end{proof}
+            Maintenant, soit $\varphi : V \subseteq \mathbb{A}_k^n \to W \subseteq \mathbb{A}_k^l$ un morphisme, alors ce morphisme induit un morphisme de $k$-algèbres entre $k[W]$ et $k[V]$, définit formellement comme
             \begin{align*}
                 \begin{array}{cccc}
-                    \varphi^* : & k[W] \simeq k[y_1, \cdots, y_l]/I(W) & \to & k[V] \\
-                    & [y_i] & \mapsto & \varphi_i \\
+                    k[\varphi] = \varphi^* : & k[W] & \to & k[V] \\
+                    & [P] & \mapsto & \chi^{-1}(\chi([P]) \circ \varphi) \\
                 \end{array}
             \end{align*}
-            Montrons que $F$ est injective : soient $\varphi, \psi$ telles que $\varphi^* = \psi^*$. Alors $\varphi_i = \psi_i$ et donc $\varphi = \psi$. Montrons que $F$ est surjective : soit $\alpha : k[W] \to k[V]$ un morphisme de $k$-algèbres. Alors notons $\varphi_i := \alpha([y_i]) \in k[V]$, ainsi $\varphi_i : V \to k$ est une fonction régulière. Posons alors $\varphi = (\varphi_1, \cdots, \varphi_l)$. Il suffit de montrer que l'image de $\varphi$ est contenue dans $W$. En effet, si c'est le cas, on peut définit $\tilde \varphi : V \to W$ qui fait commuter
-            \begin{figure}[H]
-                \centering
-                \begin{tikzcd}
-                    V \arrow[r, "\varphi"] \arrow[rd, "\tilde \varphi"', dashed] & \mathbb{A}^l      \\
-                                                                                 & W \arrow[u, hook]
-                    \end{tikzcd}
-            \end{figure} \noindent
-            et ainsi $\tilde \varphi ^* = \alpha$. Soit $W = V(P_1, \cdots, P_r) \subseteq \mathbb{A}^l$, $P_i \in k[y_1, \cdots, y_l]$. En particulier, $P_i \in I(W)$ pour tout $i$. On doit vérifier que $P_i(\varphi_1(a), \cdots, \varphi_l(a)) = 0$ pour tout $i$ et $a \in V$. Comme $P_i \in I(W)$, $\alpha([P_i]) = 0$. Mais $\alpha([y_i]) = \varphi_i$, donc 
+            Ainsi au travers de $\chi$ il envoie $f_P$ sur $f_P \circ \varphi$. De plus, si on note $\varphi_i \in k[X_1, \cdots, X_n]$ des polynômes tels que $\varphi(a) = (\varphi_i(a))$ pour tout $a \in V$, alors 
             \begin{align*}
-                0 = \alpha([P_i]) = P_i(\alpha([y_1]), \cdots, \alpha([y_l])) = P_i(\varphi_1, \cdots, \varphi_l) \in k[V]
+                \varphi^*([Y_i]) = \chi^{-1}(\chi([T_i]) \circ \varphi) = \varphi_i
             \end{align*}
-        \end{proof}
-        $\mathbb{A}_k^n$ est muni d'une topologie, dont les fermés sont les $V(I)$ pour $I$ un idéal de $k[x_1, \cdots, x_n]$. Ainsi on définit la topologie de Zariski sur $V \subseteq \mathbb{A}_k^n$ un esnemble algébrique comme la topologie induite sur $V$. Plus concrètement, les fermés de $V$ sont les $V(I) \cap V$, pour $I$ un idéal de $k[x_1, \cdots, x_n]$ (i.e. les ensembles algébriques $W \subseteq V$).
-        \begin{exo}
-            Les ouverts distingués $D(f)$ forment une base pour la topologie de zariski de $\mathbb{A}^n$.
-        \end{exo}
-        Ainsi $\{D(f) \cap V\}_f$ est une base des ouverts pour la topologie de Zariski sur $V$ un ensemble algébrique fixé.
-        \begin{prop}
-            Soient $V,W \subseteq \mathbb{A}^n, \mathbb{A}^l$. $\varphi : V \to W$ morphisme est continu pour la topologie de zariski induite sur $V$ et $W$.
-        \end{prop}
-        \begin{proof}
-            Exercice
-        \end{proof}
-        \begin{exo}
-            Soit $f : X \to Y$ un morphisme dans $\mathbf{Top}$, si $X$ est irréductible, alors $\overline{f(X)}$ irréductible.
-        \end{exo}
-        \begin{expl}
-            ($k = \bar k$) $f : \mathbb{A}^1 \to V := \{(x,y) \mid y^2 = x^3\}$ est surjectif, donc $V$ est irréductible.
-        \end{expl}
-        \begin{expl}
-            $V = \{(x,y) \mid xy = 1\} \subseteq \mathbb{A}^2$. Notons $f : V \to \mathbb{A}^1$ la projection sur la première coordonnée, alors $f(V) = \mathbb{A}^1 \bs \{0\}$ n'est pas fermé (si $|k| = \infty$) et donc ne peut pas être un ensemble algébrique.
-        \end{expl}
-        \begin{exo}
-            $E \subseteq \mathbb{A}^n_k$ ensemble quelconque, alors $\bar E = V(I(E))$.
-        \end{exo}
-        \begin{defi} (Variété affine)
-            Une variété affine est un ensemble algébrique affine irréductible.
-        \end{defi}
-        Ainsi si $V$ est une variété affine, alors $k[V] = k[x_1, \cdots, x_n]/I(V)$ est intègre (vu que $I(V)$ est un idéal premier).
-        \begin{defi}
-            $k(V) := \mathrm{Frac} k[V]$ est le corps de fonctions rationnelles sur $V$.
+            Ainsi $\varphi^*$ correspond au morphisme d'évaluation en les $\varphi_i$. Finalement, pour tout $y \in W$,
             \begin{align*}
-                k(V) = \left\{ \frac{P}{Q} \mid P,Q \in k[V],\, Q \neq 0 \right\}
+                \varphi^*([P])(x) = (f_P \circ \varphi)(x) = f_P(\varphi(x)) = [P](\varphi(x))
             \end{align*}
-        \end{defi}
-        \begin{defi} ($k = \bar k$)
-            $V$ variété affine. $\mathrm{dim} V := \mathrm{trdeg}_k k(V)$ degré de transcendance de $k(V)$ sur $k$.
-        \end{defi}
-        \begin{defi}
-            $k \subseteq K$ extension de corps.
-            \begin{enumerate}
-                \item Une partie $S \subseteq K$ est algébriquement indépendante si pour tout $m \geq 1$, tout $s_1, \cdots, s_m \in S$, si $P \in k[x_1, \cdots, x_m]$ est tel que $P(s_1, \cdots, s_m) = 0$, alors $P = 0$.
-                \item $S \subseteq K$ est une base de transcendance de $K$ (sur $k$) si $S$ est algébriquement indépendante et $k(S) \subseteq K$ est algébrique.
-                \item On dit que $k \subseteq K$ est purement transcendante si $\exists S$ base de transcendance $k \subseteq k(S) = K$.
-            \end{enumerate}
-        \end{defi}
-        \begin{remq}
-            Si $|S| = n$, alors $k(S) \simeq k(x_1, \cdots, x_n)$. Si $S_1,S_2$ sont deux bases de transcendance de $K/k$, alors $|S_1| = |S_2|$. 
-        \end{remq}
-        \begin{defi}
-            $\mathrm{trdeg}_k(K) = |S|$, $S$ base de transcendance de $K/k$.
-        \end{defi}
-        \begin{expl}
-            \begin{enumerate}
-                \item $\dim \mathbb{A}_k^n = n$ : $V = \mathbb{A}_k^n$, $k[V] = k[x_1, \cdots, x_n]$. $I(V) = \{0\}$. Ainsi $k(V) = k(x_1, \cdots, x_n)$. Et $\{x_1, \cdots, x_n\}$ est une base de transcendance de $k(V)$, donc $\dim V = n$.
-                \item $V = \{(x,y) \mid xy = 1\} \subseteq \mathbb{A}^1$. Alors $V = V(XY - 1)$ est irréductible; Ainsi $V$ est une variété affine. $k[V] = k[X,Y]/(XY - 1) = k[x,y]$ où $x = [X]$, $y = [Y]$ (et $xy = 1$). $k(V) = \mathrm{Frac} (k[x,y]) =: k(x,y)$. Maintenant $k(x,y) = k(x)$ vu que $y = 1/x$. Maintenant $\{x\}$ est une base de trascendance de $k(x)$ : sinon il existe $P \in k[X]$ non nul tel que $P(x) = 0 \in k(x)$, et en particulier dans $k[x] \subseteq k[V]$. Ainsi $P \in I(V)$ donc $P(X) = (XY - 1)Q(X,Y)$ dans $k[X,Y]$ avec $Q \in k[X,Y]$, ce qui est absudre puisque $\deg_YP = 0$. Ainsi $\dim V = 1$
-            \end{enumerate} 
-        \end{expl}
-        \begin{lemm}
-            ($k = \bar k$) Soit $f \in k[X_1, \cdots, X_n]$ irréductible. Alors $V := V(f) \subseteq \mathbb{A}_k^n$ est une variété affine de dimension $n-1$.
-        \end{lemm}
-        \begin{proof}
-            $f$ non constant. On peut supposer que $\deg_{X_n}(f) > 0$. Notons $k[V] = k[x_1, \cdots, x_n]$. Ainsi $f(x_1, \cdots, x_n) = 0$ vu que $I(V) = (f)$. . Maoitenant $k \subseteq k(x_1, \cdots, x_{n-1}) \subseteq k(x_1, \cdots, x_{n-1})(x_n)$ est algébrique car $f(x_1, \cdots, x_n) = 0$. Montrons que $\{x_1, \cdots, x_{n-1}\}$ sont algébriquement indépendants sur $k$ : si $g \in k[X_1, \cdots, X_{n-1}]$ tel que $g(x_1, \cdots, x_{n-1}) = 0$ dans $k(V)$ (donc dans $k[V]$). Alors $g(X_1, \cdots, X_{n-1}) \in I(V) = (f)$ mais $\deg_{X_n} = 0$, absurde.
-        \end{proof}
+            \begin{prop}
+                \label{phistarfunct}
+                Soient $\varphi_1 : V_1 \to V_2$, $\varphi_2 : V_2 \to V_3$. Alors $\varphi_1^* \circ \varphi_2^* = (\varphi_2 \circ \varphi_1)^*$. De plus, $(\id_V)^* = \id_{k[V]}$.
+            \end{prop}
+            \begin{proof}
+                \begin{enumerate}
+                    \item $k[\id_V]([P]) = \chi^{-1}(\chi([P]) \circ \id_V) = [P] = \id_{k[V]}([P])$ donc $k[\id_V] = \id_{k[V]}$.
+                    \item
+                    \begin{align*}
+                        (k[\varphi_1] \circ k[\varphi_2])[P] &= \chi^{-1}(\chi( \chi^{-1}(\chi([P]) \circ \varphi_2) ) \circ \varphi_1) \\
+                        &= \chi^{-1}(\chi([P]) \circ \varphi_2 \circ \varphi_1) \\
+                        &= k[\varphi_2 \circ \varphi_1]([P])
+                    \end{align*}
+                \end{enumerate}
+            \end{proof}
+            \begin{defi} (Foncteur $k[-]$)
+                On définit
+                \begin{align*}
+                    \begin{array}{cccc}
+                        k[-] : & \mathbf{EnsAlg}^\mathrm{op} & \to & k-\mathbf{CAlg}_\mathrm{tf, red} \\
+                        & V & \mapsto & k[V] \\
+                        & \varphi : V \to W & \mapsto & k[\varphi] : k[W] \to k[V] \\
+                    \end{array}
+                \end{align*}
+            \end{defi}
+            Ce foncteur est bien défini au vu de \ref{phistarfunct}.
+            \begin{theo}
+                \label{theo115}
+                $k[-]$ est pleinement fidèle.
+            \end{theo}
+            \begin{coro}
+                \label{coro113}
+                Soit $\varphi : V \to W$ morphisme. C'est un isomorphisme ssi $\varphi^* : k[W] \to k[V]$ est un isomorphisme. En particulier $V$ non isomorphe à $W$ ssi $k[V]$ non isomorphe à $k[W]$.
+            \end{coro}
+            \begin{proof} (\ref{coro113})
+                Les foncteurs pleinements fidèles préservent et réfléchissent les isomorphismes.
+            \end{proof}
+            \begin{proof} (\ref{theo115})
+                \cor{A relire}
+                Soit $\varphi : V \to W \subseteq \mathbb{A}^l$, écrivons $\varphi = (\varphi_1, \cdots, \varphi_l)$, avec $\varphi_i : V \to k$. $\varphi$ morphisme, donc
+                \begin{align*}
+                    \begin{array}{cccc}
+                        \varphi^* : & k[W] \simeq k[Y_1, \cdots, Y_l]/I(W) & \to & k[V] \\
+                        & [Y_i] & \mapsto & \varphi_i \\
+                    \end{array}
+                \end{align*}
+                Montrons que $F$ est injective : soient $\varphi, \psi$ telles que $\varphi^* = \psi^*$. Alors $\varphi_i = \psi_i$ et donc $\varphi = \psi$. Montrons que $F$ est surjective : soit $\alpha : k[W] \to k[V]$ un morphisme de $k$-algèbres. Alors notons $\varphi_i := \alpha([Y_i]) \in k[V]$, ainsi $\varphi_i : V \to k$ est une fonction régulière. Posons alors $\varphi = (\varphi_1, \cdots, \varphi_l)$. Il suffit de montrer que l'image de $\varphi$ est contenue dans $W$. En effet, si c'est le cas, on peut définit $\tilde \varphi : V \to W$ qui fait commuter
+                \begin{figure}[H]
+                    \centering
+                    \begin{tikzcd}
+                        V \arrow[r, "\varphi"] \arrow[rd, "\tilde \varphi"', dashed] & \mathbb{A}^l      \\
+                                                                                     & W \arrow[u, hook]
+                        \end{tikzcd}
+                \end{figure} \noindent
+                et ainsi $\tilde \varphi ^* = \alpha$. Soit $W = V(P_1, \cdots, P_r) \subseteq \mathbb{A}^l$, $P_i \in k[Y_1, \cdots, Y_l]$. En particulier, $P_i \in I(W)$ pour tout $i$. On doit vérifier que $P_i(\varphi_1(a), \cdots, \varphi_l(a)) = 0$ pour tout $i$ et $a \in V$. Comme $P_i \in I(W)$, $\alpha([P_i]) = 0$. Mais $\alpha([Y_i]) = \varphi_i$, donc 
+                \begin{align*}
+                    0 = \alpha([P_i]) = P_i(\alpha([Y_1]), \cdots, \alpha([Y_l])) = P_i(\varphi_1, \cdots, \varphi_l) \in k[V]
+                \end{align*}
+            \end{proof}
+            \begin{prop}
+                $\varphi : V \to W$ est un isomorphisme si et seulement si l'application sous-jacente à $\varphi$ est bijective, et son inverse $\varphi^{-1} : W \to V$ est un morphisme.
+            \end{prop}
+            \begin{proof}
+                Clair du fait que le foncteur d'oubli $\mathbf{EnsAlg} \to \mathbf{Sets}$ est fidèle.
+            \end{proof}
+            \begin{expl}
+                Reprenons les points \ref{ex3} et \ref{ex4} de \ref{ex121} :
+                \begin{enumerate} \addtocounter{enumi}{2}
+                    \item C'est un isomorphisme puisque $\varphi^{-1} : V \to \mathbb{A}^1$ donné par $\varphi^{-1}(x,y) = x$ est un morphisme et est une inverse de $\varphi$ dans $\mathbf{Sets}$.
+                    \item Forcément, une inverse de $\varphi$ est une inverse dans $\mathbf{Sets}$ au travers du foncteur d'oubli qui envoie un ensemble algébrique sur son ensemble sous-jacent. Ainsi $\varphi^{-1} : V \to \mathbb{A}^1$ doit forcément être définie comme
+                    \begin{align*}
+                        \varphi^{-1}(x,y) = 
+                        \begin{cases}
+                            y/x & \text{si } (x,y) \neq 0 \\
+                            0 & \text{sinon}
+                        \end{cases}
+                    \end{align*}
+                    Mais $\varphi^{-1}$ n'est pas un morphisme : supposons qu'il existe $P \in k[X,Y]$ tq $P(x,y) = \varphi^{-1}(x,y)$, alors $P(x,y) = y/x$ pour tout $(x,y) \in V$ et $V = \{(t^2, t^3) \mid t \in k \}$, et ainsi $P(t^2, t^3) = t$ pour tout $t \in k \bs \{0\}$, ce qui est clairement impossible. On peut aussi vérifier que le morphisme induit sur les algèbres de fonctions régulières n'est pas un isomorphisme.
+                \end{enumerate}
+            \end{expl}
+            
+        \subsection{Cas des corps algébriquement clos}
+            Supposons désormais que $k = \bar k$. Alors
+            \begin{prop}
+                $k[-] : \mathbf{EnsAlg}^\mathrm{op} \to k-\mathbf{CAlg}_\mathrm{tf, red}$ est essentiellement surjectif. Ainsi les catégories $\mathbf{EnsAlg}^\mathrm{op}$ et $k-\mathbf{CAlg}_\mathrm{tf, red}$ sont équivalentes.
+            \end{prop}
+            \begin{proof}
+                Soit $L = k[X_1, \cdots, X_n]/J \in k-\mathbf{CAlg}_\mathrm{td, red}$. Alors
+                \begin{align*}
+                    k[V(J)] = k[X_1, \cdots, X_n]/I(V(J)) = k[X_1, \cdots, X_n]/\sqrt{J} = L
+                \end{align*}
+                d'après le Nullstellensatz.
+            \end{proof}
+
+
+
+
+    \section{Retour à la topologie, dimension}
+        \subsection{Topologie induite sur les ensembles algébriques, lien avec les morphismes}
+            $\mathbb{A}_k^n$ est muni d'une topologie, dont les fermés sont les $V(I)$ pour $I$ un idéal de $k[X_1, \cdots, X_n]$. Ainsi on définit la topologie de Zariski sur $V \subseteq \mathbb{A}_k^n$ un esnemble algébrique comme la topologie induite sur $V$. Plus concrètement, les fermés de $V$ sont les $V(I) \cap V$, pour $I$ un idéal de $k[X_1, \cdots, X_n]$ (i.e. les ensembles algébriques $W \subseteq V$).
+            \begin{exo}
+                Les ouverts distingués $D(f)$ forment une base pour la topologie de zariski de $\mathbb{A}^n$.
+            \end{exo}
+            Ainsi $\{D(f) \cap V\}_f$ est une base des ouverts pour la topologie de Zariski sur $V$ un ensemble algébrique fixé.
+            \begin{prop}
+                Soient $V,W \subseteq \mathbb{A}^n, \mathbb{A}^l$. Tout morphisme $\varphi : V \to W$ est continu pour la topologie de zariski induite sur $V$ et $W$.
+            \end{prop}
+            \begin{proof}
+                \ajout{
+                    Dans un premier temps, soit $f_i \in k[X_1, \cdots, X_n]$ tels que $\varphi(a) = (f_1(a), \cdots, f_i(a))$. Alors montrer que $\varphi$ est continue revient à montrer que $\tilde \varphi : \mathbb{A}^n \to \mathbb{A}^l$ définie par $\tilde \varphi(a) = (f_1(a), \cdots, f_i(a))$ pour tout $a \in \mathbb{A}^n$ est continue. En effet, soit $Z$ un fermé de $W$, alors $Z = Z' \cap W$ pour $Z$ un fermé de $\mathbb{A}^l$. Maintenant $\varphi^{-1}(Z) = \tilde \varphi^{-1}(Z') \cap V$ et est donc un fermé si et seulement si $\tilde \varphi^{-1}(Z')$ est un fermé. On peut donc se ramener au cas $\varphi : \mathbb{A}^n \to \mathbb{A}^l$. Ainsi considérons un fermé $V(J) \subrel{fermé} \mathbb{A}^l$, posons $I := k[\varphi](J)$, et montrons que $\varphi^{-1}(V(J)) = V(I)$.
+                    \item $\subseteq$ : soit $x \in \varphi^{-1}(V(J))$, alors pour tout $P \in I$, il existe $Q \in J$ tel que $P = k[\varphi](Q)$. Maintenant
+                    \begin{align*}
+                        P(x) &= k[\varphi](Q)(x) = Q(\varphi(x)) = 0
+                    \end{align*}
+                    puisque $Q \in J$ et $\varphi(x) \in V(J)$.
+                    \item Soit $x \in V(I)$, alors pour tout $Q \in J$, $k[\varphi](Q) \in I$ et donc
+                    \begin{align*}
+                        Q(\varphi(x)) = k[\varphi](Q)(x) = 0 \\
+                    \end{align*}
+                    et donc $\varphi(x) \in V(J)$.
+                }
+            \end{proof}
+            \begin{exo}
+                Soit $f : X \to Y$ un morphisme dans $\mathbf{Top}$, si $X$ est irréductible, alors $\overline{f(X)}$ irréductible.
+            \end{exo}
+            \begin{expl}
+                ($k = \bar k$) $f : \mathbb{A}^1 \to V := \{(x,y) \mid y^2 = x^3\}$ est surjectif, donc $V$ est irréductible.
+            \end{expl}
+            \begin{expl}
+                $V = \{(x,y) \mid xy = 1\} \subseteq \mathbb{A}^2$. Notons $f : V \to \mathbb{A}^1$ la projection sur la première coordonnée, alors $f(V) = \mathbb{A}^1 \bs \{0\}$ n'est pas fermé (si $|k| = \infty$) et donc ne peut pas être un ensemble algébrique.
+            \end{expl}
+            \begin{exo}
+                $E \subseteq \mathbb{A}^n_k$ ensemble quelconque, alors $\bar E = V(I(E))$. \ajout{Soit $E \subseteq V(J)$ un fermé Alors $J \subseteq I(V(J)) \subseteq I(E)$ et donc $V(I(E)) \subseteq V(J)$, ce qui prouve que $V(I(E)) = \bar E$.}
+            \end{exo}
+
+        \subsection{Variétés affines, dimension}
+            \begin{defi} (Variété affine)
+                Une variété affine est un ensemble algébrique affine irréductible.
+            \end{defi}
+            Ainsi si $V$ est une variété affine, alors $k[V] = k[X_1, \cdots, X_n]/I(V)$ est intègre (vu que $I(V)$ est un idéal premier).
+            \begin{defi}
+                $k(V) := \mathrm{Frac}\, k[V]$ est le corps de fonctions rationnelles sur $V$.
+                \begin{align*}
+                    k(V) = \left\{ \frac{P}{Q} \mid P,Q \in k[V],\, Q \neq 0 \right\}
+                \end{align*}
+            \end{defi}
+            \begin{defi} ($k = \bar k$)
+                $V$ variété affine. On définit la dimension de $V$ par
+                \begin{align*}
+                    \mathrm{dim} V := \mathrm{trdeg}_k k(V)
+                \end{align*}
+                où $\mathrm{trdeg}_k k(V)$ est le degré de transcendance de $k(V)$ sur $k$.
+            \end{defi}
+            \begin{defi}
+                $k \subseteq K$ extension de corps.
+                \begin{enumerate}
+                    \item Une partie $S \subseteq K$ est algébriquement indépendante si pour tout $m \geq 1$, tout $s_1, \cdots, s_m \in S$, si $P \in k[X_1, \cdots, X_m]$ est tel que $P(s_1, \cdots, s_m) = 0$, alors $P = 0$.
+                    \item $S \subseteq K$ est une base de transcendance de $K$ (sur $k$) si $S$ est algébriquement indépendante et $k(S) \subseteq K$ est algébrique.
+                    \item On dit que $k \subseteq K$ est purement transcendante si $\exists S$ base de transcendance $k \subseteq k(S) = K$.
+                \end{enumerate}
+            \end{defi}
+            \begin{remq}
+                Si $|S| = n$, alors $k(S) \simeq k(X_1, \cdots, X_n)$. Si $S_1,S_2$ sont deux bases de transcendance de $K/k$, alors $|S_1| = |S_2|$. 
+            \end{remq}
+            \begin{defi}
+                $\mathrm{trdeg}_k(K) = |S|$, $S$ base de transcendance de $K/k$.
+            \end{defi}
+            \begin{expl}
+                \begin{enumerate}
+                    \item $\dim \mathbb{A}_k^n = n$ : $V = \mathbb{A}_k^n$, $k[V] = k[X_1, \cdots, X_n]$. $I(V) = \{0\}$. Ainsi $k(V) = k(X_1, \cdots, X_n)$. Et $\{X_1, \cdots, X_n\}$ est une base de transcendance de $k(V)$, donc $\dim V = n$.
+                    \item $V = \{(x,y) \mid xy = 1\} \subseteq \mathbb{A}^1$. Alors $V = V(XY - 1)$ est irréductible; Ainsi $V$ est une variété affine. $k[V] = k[X,Y]/(XY - 1) = k[x,y]$ où $x = [X]$, $y = [Y]$ (et $xy = 1$). $k(V) = \mathrm{Frac} (k[x,y]) =: k(x,y)$. Maintenant $k(x,y) = k(x)$ vu que $y = 1/x$. Maintenant $\{x\}$ est une base de trascendance de $k(x)$ : sinon il existe $P \in k[X]$ non nul tel que $P(x) = 0 \in k(x)$, et en particulier dans $k[x] \subseteq k[V]$. Ainsi $P \in I(V)$ donc $P(X) = (XY - 1)Q(X,Y)$ dans $k[X,Y]$ avec $Q \in k[X,Y]$, ce qui est absudre puisque $\deg_YP = 0$. Ainsi $\dim V = 1$
+                \end{enumerate} 
+            \end{expl}
+            \begin{lemm}
+                ($k = \bar k$) Soit $f \in k[X_1, \cdots, X_n]$ irréductible. Alors $V := V(f) \subseteq \mathbb{A}_k^n$ est une variété affine de dimension $n-1$.
+            \end{lemm}
+            \begin{proof}
+                $f$ non constant. On peut supposer que $\deg_{X_n}(f) > 0$. Notons $k[V] = k[X_1, \cdots, X_n]$. Ainsi $f(X_1, \cdots, X_n) = 0$ vu que $I(V) = (f)$. . Maoitenant $k \subseteq k(X_1, \cdots, X_{n-1}) \subseteq k(X_1, \cdots, X_{n-1})(X_n)$ est algébrique car $f(X_1, \cdots, X_n) = 0$. Montrons que $\{X_1, \cdots, X_{n-1}\}$ sont algébriquement indépendants sur $k$ : si $g \in k[X_1, \cdots, X_{n-1}]$ tel que $g(X_1, \cdots, X_{n-1}) = 0$ dans $k(V)$ (donc dans $k[V]$). Alors $g(X_1, \cdots, X_{n-1}) \in I(V) = (f)$ mais $\deg_{X_n} = 0$, absurde.
+            \end{proof}
