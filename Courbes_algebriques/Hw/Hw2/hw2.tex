@@ -1,0 +1,45 @@
+\documentclass[11pt]{article}
+
+\usepackage{import}
+\import{D:/Bureau/Documents/Maths/Latex/Packages/}{article.tex}
+
+% Couleur de correction
+% \newcommand{\cor}[1]{{#1}}
+\newcommand{\cor}[1]{{\color{red} #1}}
+
+\begin{document}
+
+%Page de garde
+\title{Exercices}
+\date{\today}
+\author{Alexandre Guillemot}
+\maketitle
+
+\section*{Exercice 10, feuille 2}
+Avant de résoudre les questions, il faut prouver que $C$ est bien une variété algébrique, i.e. $Y^2 - X(X-1)(X-a)$ est irréductible. Pour cela, utilisons le résultat suivant :
+\begin{lemm}
+    Soit $A$ un anneau commutatif, et $a \in A$. Alors le polynôme $X^2 - a \in A[X]$ est irréductible si et seulement si $a$ est un carré dans $A$.
+\end{lemm}
+\begin{proof}
+    \item Si $a$ est un carré, disons $a = b^2$ avec $b \in A$, alors $X^2 - a = (X - b)(X + b)$ et donc $X^2 - a$ est réductible.
+    \item Supposons maintenant que $X^2 - a$ est réductible, écrivons $X^2 - a = PQ$ avec $P,Q \in A[X]$ qui ne sont pas des unités dans $A$. Alors 3 cas se présentent :
+    \begin{enumerate}
+        \item $\deg P = 0$, $\deg Q = 2$, écrivons $P = \lambda_1X^2 + \lambda_2X + \lambda_3$, et $Q = \lambda$. Alors $\lambda \lambda_1 = 1$ donc $\lambda$ est inversible dans $A$, absurde.
+        \item $\deg P = 2$, $\deg Q = 0$, c'est le même cas que dans le point précédent.
+        \item $\deg P = \deg Q = 1$ : écrivons $P = \lambda_1X + \lambda_2$, $Q = \lambda_3X + \lambda_4$. Comme $\lambda_1\lambda_2 = 1$, on peut se ramener au cas où $\lambda_1 = \lambda_2 = 1$. Mais alors on dispose des équations $\lambda_2 + \lambda_4 = 0$ et $\lambda_2 \lambda_4 = -a$, d'où $a = \lambda_2^2$ est bien un carré dans $A$.
+    \end{enumerate}
+\end{proof}
+Maintenant considérons $f$ comme un élément de $k[X][Y]$, alors par analyse de degré en $X$ on remarque que $X(X-1)(X-a)$ n'est pas un carré dans $k[X]$, et ainsi par le lemme précédent $f$ est irréductible dans $k[X][Y] = k[X,Y]$.
+\begin{question}{1.}
+    Comme $k$ est algébriquement clos et $f$ est irréductible,
+    \begin{align*}
+        K[V] = k[X,Y]/I(C) = k[X,Y]/I(V(f)) = k[X,Y]/\sqrt{(f)} = k[X,Y]/(f) =: k[x,y]
+    \end{align*}
+    où $x = [X], y = [Y] \in k[X,Y]/(f)$ (et donc $y^2 = x(x-1)(x-a)$).
+\end{question}
+
+\section*{Exercice 6, feuille 3}
+
+\section*{Exercice 7, feuille 3}
+
+\end{document}

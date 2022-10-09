@@ -1,53 +1,96 @@
-\chapter{Aide mémoire programmation}
-//// Boucles :
-while (condition)
-{
-	code
-}
+\chapter*{Aide mémoire programmation}
+    \section*{Compilation}
+        \mintinline{c}{>gcc [options] fichier.c [arguments] [librairies]}. Les options sont :
+        \begin{itemize}
+            \item \mintinline{c}{-E} : préprocesseur uniquement
+            \item \mintinline{c}{-o nom} : nomme \mintinline{c}{nom.out} le binaire produit
+            \item \mintinline{c}{-O, -O1, -O2, -O3} : choix d'efficacité de la compilation, de la pire a la meilleure.
+            \item \mintinline{c}{-S} : donne le fichier assembleur
+            \item \mintinline{c}{-W} : donne plus de messages d'avertissement
+            \item \mintinline{c}{-Wall} : donns tous les messages d'avertissement
+        \end{itemize}
+        \mintinline{c}{>time ./a.out} pour mesurer le temps d'exécution du programme
 
-for (variable, condition de sortie, opération à faire à chaque tour de boucle sur la variable)
-{
-	code
-}
-expl :
-for (int i=0; i<10, i++)
-{
-	code
-}
+    \section*{Programme et fonctions}
+        structure d'un programme :
+        \begin{minted}[]{c}
+            [directives préprocesseur]
+            [déclarations variables externes]
+            [prototype des fonctions externes]
+            [déclaration des fonctions secondaires]
 
-//// Formats :
-\%d -> int
-\%c -> char
+            int main()
+            {
+                instructions
+            }
+        \end{minted}
+        \mintinline{c}{#include<lib.h>} (ex \mintinline{c}{stdio.h}) pour inclure une librarie avec le préprocesseur \\
+        template d'une fonction \mintinline{c}{type fonction(arguments);} \\
+        structure d'une fonction
+        \begin{minted}{c}
+            type fonction(arguments)
+            {
+                instructions;
+                return var;
+            }
+        \end{minted}
+        On l'appelle en écrivant \mintinline{c}{fonction(arguments)}
 
-Tableaux :
-type nom_tab[N];
-type nom_tab[N] = {a_1, ..., a_N};
-int i = valeur;
-nom_tab[i] // Renvoie la valeur du tableau en i
-// Les cases d'un tableau sont indicée en démarrant à 0
-char tab[7] = "bonjour" // Pour les string
-// Dans le cas où le tableau est spécifié lors de sa définition, pas besoin de donner sa taille
+    \section*{Types de variables}
+        \begin{itemize}
+            \item Globales : sont stockées sous le tas et est déclarée en dehors du main (donc utilisable par tout le programme)
+            \item Temporaires : variable déclarée à l'intérieur d'une fonction, est détruite en sortie de fonction
+            \item Statiques : \mintinline{c}{static type var} variable associée à une fonction qui change lorsque l'on appelle cette fonction mais n'est pas détruite en sortie de fonction et conserve sa valeur.
+        \end{itemize}
+% //// Boucles :
+% while (condition)
+% {
+% 	code
+% }
 
-//// Structures
-struct framework
-{
-	type_1 variable_1;
-	...
-	type_n variable_n;
-}
-struct framework objet; // pour définir un objet du struct
-// peut écrire objet juste derriere l'acollade du struct pour déclarer un object.
-enum booleen {vrai, faux};
-// pour les types énumérés
-typedef enum booleen booleen // pour créer un type booléen
-booleen a;
+% for (variable, condition de sortie, opération à faire à chaque tour de boucle sur la variable)
+% {
+% 	code
+% }
+% expl :
+% for (int i=0; i<10, i++)
+% {
+% 	code
+% }
 
-//// Pointeurs
-int *p; // pour définir un pointeur d'entier
-int a; // &a renvoie l'adresse de a.
-p = &a; // Donne a p la valeur &a
-*p += 1; // *p représente le contenu de la case d'adresse p. Cette opération rajoute 1 au contenu de la case adréssée par p, donc rajoute 1 a 'a'
+% //// Formats :
+% \%d -> int
+% \%c -> char
 
-//// Allocation de mémoire
-malloc(nombre d'octets) // Alloue de la mémoire. On peut définir un pointeur et lui donner cette valeur pour spécifier l'adresse du début de cette zone mémoire allouée
-free(pt) // Libère la mémoire associée à un pointeur qui pointe sur une zone de mémoire. On libère toujours le début de la zone (free(pt + 1) n'est pas valide par exemple)
+% Tableaux :
+% type nom_tab[N];
+% type nom_tab[N] = {a_1, ..., a_N};
+% int i = valeur;
+% nom_tab[i] // Renvoie la valeur du tableau en i
+% // Les cases d'un tableau sont indicée en démarrant à 0
+% char tab[7] = "bonjour" // Pour les string
+% // Dans le cas où le tableau est spécifié lors de sa définition, pas besoin de donner sa taille
+
+% //// Structures
+% struct framework
+% {
+% 	type_1 variable_1;
+% 	...
+% 	type_n variable_n;
+% }
+% struct framework objet; // pour définir un objet du struct
+% // peut écrire objet juste derriere l'acollade du struct pour déclarer un object.
+% enum booleen {vrai, faux};
+% // pour les types énumérés
+% typedef enum booleen booleen // pour créer un type booléen
+% booleen a;
+
+% //// Pointeurs
+% int *p; // pour définir un pointeur d'entier
+% int a; // &a renvoie l'adresse de a.
+% p = &a; // Donne a p la valeur &a
+% *p += 1; // *p représente le contenu de la case d'adresse p. Cette opération rajoute 1 au contenu de la case adréssée par p, donc rajoute 1 a 'a'
+
+% //// Allocation de mémoire
+% malloc(nombre d'octets) // Alloue de la mémoire. On peut définir un pointeur et lui donner cette valeur pour spécifier l'adresse du début de cette zone mémoire allouée
+% free(pt) // Libère la mémoire associée à un pointeur qui pointe sur une zone de mémoire. On libère toujours le début de la zone (free(pt + 1) n'est pas valide par exemple)
