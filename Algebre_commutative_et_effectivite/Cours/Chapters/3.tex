@@ -1,0 +1,28 @@
+\chapter{Changements de bases de Grobner}
+    \begin{defi}
+        Soit $M \in M_{m,n}(\mathbb{R})$. On définit une relation $<_M$ sur $\mathbb{N}^n$ de la façon suivante :
+        \begin{align*}
+            \alpha <_M \beta &\iff M \alpha <_{lex} M \beta \\
+        \end{align*}
+    \end{defi}
+    \begin{expl}
+        Sur $k[x_1, x_2, x_3]$, $I_3$ convient pour $<_{lex}$,
+        \begin{align*}
+            \begin{bmatrix}
+                1 & 1 & 1 \\
+                1 & 0 & 0 \\
+                0 & 1 & 0 \\
+                0 & 0 & 1 \\
+            \end{bmatrix}
+        \end{align*}
+        convient pour $<_{deglex}$,
+        \begin{align*}
+            \begin{bmatrix}
+                1 & 1 & 1 \\
+                0 & 0 & -1 \\
+                0 & -1 & 0 \\
+                -1 & 0 & 0 &\\
+            \end{bmatrix}
+        \end{align*}
+        convient pour $<_{degrevlex}$.
+    \end{expl}

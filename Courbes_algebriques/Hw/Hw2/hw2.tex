@@ -16,7 +16,7 @@
 \maketitle
 
 \section*{Exercice 10, feuille 2}
-Avant de résoudre les questions, il faut prouver que $C$ est bien une variété algébrique, i.e. $Y^2 - X(X-1)(X-a)$ est irréductible. Pour cela, utilisons le résultat suivant :
+Avant de résoudre les questions, il faut prouver que $C$ est bien une variété algébrique, i.e. $Y^2 - X(X-1)(X-a)$ est irréductible (car dans ce cas $I(C) = \sqrt{(Y^2 - X(X-1)(X-a))}$ sera un idéal premier). Pour cela, utilisons le résultat suivant :
 \begin{lemm}
     Soit $A$ un anneau commutatif, et $a \in A$. Alors le polynôme $X^2 - a \in A[X]$ est irréductible si et seulement si $a$ est un carré dans $A$.
 \end{lemm}
@@ -39,7 +39,43 @@ Maintenant considérons $f$ comme un élément de $k[X][Y]$, alors par analyse d
 \end{question}
 
 \section*{Exercice 6, feuille 3}
+    Si deux variétés sont isomorphes, alors leurs algèbres de fonctions régulières sont isomorphes. La dimension d'une variété étant égale à la dimension de Krull de leurs algèbres de fonctions régulières, deux variétés isomorphes sont de même dimension. Pour terminer l'exercice, considérons les isomorphismes
+    \begin{align*}
+        \begin{array}{cccc}
+            & \mathbb{A}^1 & \to & V(X - Y) \subseteq \mathbb{A}^2 \\
+            & x & \mapsto & (x, x) \\
+        \end{array}
+    \end{align*}
+    \begin{align*}
+        \begin{array}{cccc}
+            & \mathbb{A}^2 & \to & V(X - Y) \subseteq \mathbb{A}^3 \\
+            & (x,y) & \mapsto & (x, x, y) \\
+        \end{array}
+    \end{align*}
+    Ainsi $V(X - Y) \subseteq \mathbb{A}^2$ est de dimension $1$, alors que $V(X - Y) \subseteq \mathbb{A}^3$ est de dimension $2$.
 
 \section*{Exercice 7, feuille 3}
+
+    \begin{enumerate}
+        \item Première méthode : si le corps $k$ est infini, on a déja bu
+        
+        
+        on a déja vu dans un exercice précédent que $V(X^2 - Y, Y^2 - Z) = \{(t,t^2,t^4) \in \mathbb{A}^3 \mid t \in k\}$ et $I(V(X^2 - Y, Y^2 - Z)) = (X^2 - Y, Y^2 - Z)$. Ainsi considérons l'application
+        \begin{align*}
+            \begin{array}{cccc}
+                \varphi & \mathbb{A}^3 & \to & \mathbb{A}^2 \\
+                & (x,y,z) & \mapsto & (x^2 - y, y^2 - z) \\
+            \end{array}
+        \end{align*}
+        sa jacobienne en $(x,y,z) \in \mathbb{A}^3$ est donné par
+        \begin{align*}
+            \begin{bmatrix}
+                2x & -1 & 0 \\
+                0 & 2y & -1 \\
+            \end{bmatrix}
+        \end{align*}
+        Maintenant soit $(x,y,z) \in V(X^2 - Y, Y^2 - Z)$, alors $\exists t \in k$ tq $(x,y,z) = (t, t^2, t^4)$. Mais alors
+        
+    \end{enumerate}
 
 \end{document}

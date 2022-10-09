@@ -1,0 +1,222 @@
+\chapter{Catégorie des ensembles algébriques et foncteur $k[-]$}
+    Fixons un $k \in \mathbf{Fld}$.
+    \section{Catégorie des ensembles algébriques sur $k$}
+        Pour définir une catégorie des ensembles algébriques, nous avons besoin de définir une notion de morphisme entre ensembles algébriques.
+        % \begin{defi} \old{(Fonction régulière)
+        %     $V \subseteq \mathbb{A}_k^n$ ensemble algébrique. Une fonction régulière $f : V \to k$ est une fonction tq $\exists P \in k[X_1, \cdots, X_n]$ tq $f(a) = P(a)$ pour tout $a \in V$.
+        %     }
+        % \end{defi}
+        % \begin{defi} \old{(Morphisme d'ensembles algébriques)
+        %     \label{ensalgmor}
+        %     Soient $V,W \subseteq \mathbb{A}_k^{n}, \mathbb{A}_k^{l}$ des ensembles algébriques. Une application $\varphi : V \to W$ est dite régulière (ou morphisme d'ensembles algébriques, ou encore seulement morphisme si le contexte est clair) si pour tout $f : W \to k$ fonction régulière, on a que $f \circ \varphi : V \to k$ est une fonction régulière.
+        %     }
+        % \end{defi}
+
+
+        \begin{defi} (Morphisme d'ensembles algébriques)
+            \label{ensalgmor}
+            Soit $V,W \subseteq \mathbb{A}^n, \mathbb{A}^m$ des ensembles algébriques affines. $\varphi = (\varphi_1, \cdots, \varphi_m) : V \to W$ est une fonction régulière, ou morphisme (d'ensembles algébriques affines) si pour tout $i \in \lcc 1,l \rcc$, $\exists P_i \in k[X_1, \cdots, X_n]$ tel que $\varphi_i(q) = P_i(a)$ pour tout $a \in V$.
+        \end{defi}
+
+        \begin{expl}
+            \begin{enumerate}
+                \item Soit $V \subseteq W \subseteq \mathbb{A}^n$ un ensemble algébrique. Alors l'injection associée à cette inclusion $i : V \to W$ est un morphisme.
+                \item $\pi_i : \mathbb{A}^n_k \to \mathbb{A}_k^1$ la projection sur la $i$-ème coordonnée est un morphisme.
+            \end{enumerate}
+        \end{expl}
+
+        \begin{prop}
+            \ajout{
+            Soit $\varphi^1 : V_1 \to V_2,\ \varphi^2 : V_2 \to V_3$ des morphismes d'ensembles algébriques, où $V_i \subseteq \mathbb{A}_k^{n_i}$. Alors $\varphi^2 \circ \varphi^1 : V_1 \to V_3$ est un morphisme d'ensembles algébriques.
+            }
+        \end{prop}
+        \ajout{
+        \begin{proof}
+            Notons $\varphi^1 = (\varphi^1_1, \cdots, \varphi^1_{n_2})$ et $\varphi^2 = (\varphi^2_1, \cdots, \varphi^2_{n_3})$, puis \linebreak $f^1_i$, $g^2_j \in k[X_1, \cdots, X_{n_1}], k[Y_1, \cdots, Y_{n_2}]$ les polynômes associés à $\varphi^1_i$, $\varphi^2_j$. Maintenant considérons les polynômes $h_i \in k[X_1, \cdots, X_{n_1}]$ obtenus en évaluant les $g_i$ en $f_1, \cdots, f_{n_2}$, alors on a
+            \begin{align*}
+                (\varphi^2 \circ \varphi^1)(a) &= (g_1(f_1(a), \cdots, f_{n_2}(a)), \cdots, g_{n_3}(f_1(a), \cdots, f_{n_2}(a))) \\
+                &= (h_1(a), \cdots, h_{n_3}(a))
+            \end{align*}
+            et donc $\varphi^2 \circ \varphi^1$ est un morphisme.
+        \end{proof}
+        }
+        \begin{prop} 
+            Soient $V,W \subseteq \mathbb{A}_k^{n}, \mathbb{A}_k^{l}$ des ensembles algébriques. Une application $\varphi : V \to W$ est un morphisme si et seulement si pour tout morphisme $f : W \to \mathbb{A}^1$, $f \circ \varphi : V \to \mathbb{A}^1$ est un morphisme.
+        \end{prop}
+        \begin{proof}
+            \item $\Rightarrow$ : La composition de morphismes est un morphisme.
+            \item $\Leftarrow$ : Soit $p_i : W \injectivearrow \mathbb{A}^l \to \mathbb{A}^1$ la projection sur la $i$-ème coordonnée, c'est un morphisme car composition de morphismes. Maintenant $\pi \circ \varphi = \varphi_i$ est un morphisme donc il existe $P_i \in k[X_1, \cdots, X_n]$ tel que $\varphi_i(a) = P_i(a)$ pour tout $a \in V$, et ainsi $\varphi$ est un morphisme.
+        \end{proof}
+
+        On peut ainsi définir une catégorie des ensembles algébriques affines sur $k$, notée $k-\mathbf{EnsAlg}$, ou encore seulement $\mathbf{EnsAlg}$ si le contexte est clair, dont
+        \begin{enumerate}
+            \item Les objets sont les ensembles algébriques affines $V \subseteq \mathbb{A}_k^n$,
+            \item $\Hom_\mathbf{EnsAlg}(V,W)$ est la classe des morphismes de $V$ dans $W$ au sens de \ref{ensalgmor}
+            \item La composition de morphismes correspond à la composition des applications sous-jacentes.
+        \end{enumerate}
+        Remarquons que cette catégorie est bien définie du fait que $\id_V$ est un morphisme et que les morphismes sont stables par composition.
+        \begin{prop}
+            $\varphi : V \to W \subseteq \mathbb{A}^l$ est un morphisme ssi $V \to \mathbb{A}^l$ est un morphisme.
+        \end{prop}
+        \begin{proof}
+            \ajout{
+            \item $\Rightarrow$ : $V \to W \injectivearrow \mathbb{A}^l$ est une composition de morphismes, donc est un morphisme. 
+            \item $\Leftarrow$ : Par hypothèse, $i \circ \varphi : V \to \mathbb{A}^l$ est un morphisme ($i : W \to \mathbb{A}^l$ est le morphisme associé à l'inclusion $W \subseteq \mathbb{A}^l$). Ainsi il existe $P_i \in k[X_1, \cdots, X_n]$ tels que
+            \begin{align*}
+                (P_1(a), \cdots, P_l(a)) = (i \circ \varphi)(a) =  \varphi(a)
+            \end{align*}
+            pour tout $a \in V$, et donc $\varphi$ est un morphisme.
+            }
+        \end{proof}
+        \begin{expl}
+            \label{ex121}
+            \begin{enumerate}
+                \item $\varphi : \mathbb{A}^n \to \mathbb{A}^l$ définie par $\varphi(X_1, \cdots, X_n) = (P_1(x), \cdots, P_l(x))$ avec les $P_i \in k[X_1, \cdots, X_n]$ est un morphisme, par définition.
+                \item \label{ex3} $\varphi : \mathbb{A}^1 \to V := \{(x,y) \mid y = x^2\} \subseteq \mathbb{A}^2$ donné par $\varphi(t) = (t, t^2)$ est un morphisme.
+                \item \label{ex4}$\varphi : \mathbb{A}^1 \to V := \{(x,y) \mid y^2 = x^3\} \subseteq \mathbb{A}^2$ donné par $\varphi(t) = (t^2, t^3)$ est un morphisme.
+            \end{enumerate}
+        \end{expl}
+
+    \section{Foncteur $k[-]$}
+        Donnons maintenant un foncteur entre $\mathbf{EnsAlg}$ et $k-\mathbf{CAlg}_\mathrm{tf, red}$ la catégorie des $k$-algèbres de type fini réduites sur $k$.
+        \begin{defi}
+            $V \subseteq \mathbb{A}_k^n$ ensemble algébrique. L'algèbre des fonctions régulières sur $V$ est
+            \begin{align*}
+                k[V] := k[X_1, \cdots, X_n]/I(V)
+            \end{align*}
+        \end{defi}
+        \begin{remq}
+            Comme $I(V) = \sqrt{I(V)}$, $K[V]$ est une $k$-algèbre de type fini et réduite ($\sqrt{\{0\}} = \{0\}$). En effet, pour tout anneau $A$ et $I \subrel{id} A$, $A/I$ est réduit si et seulement si $I = \sqrt{I}$.
+        \end{remq}
+        Remarquons que l'ensemble des fonctions régulières sur un ensemble algébrique $V \subseteq \mathbb{A}_k^n$ est munie d'une structure naturelle de $k$-algèbre. Alors
+        \begin{lemm}
+            L'application
+            \begin{align*}
+                \begin{array}{cccc}
+                    \chi : & k[V] & \to & \Hom_{\mathbf{EnsAlg}}(V, \mathbb{A}^1) \\
+                    & [P] & \mapsto & (f_P : a \mapsto P(a))\\
+                \end{array}
+            \end{align*}
+            est bien définie et est un isomorphisme de $k$-algèbres.
+        \end{lemm}
+        \begin{proof}
+            Considérons l'application
+            \begin{align*}
+                \begin{array}{cccc}
+                    \tilde \chi : & k[X_1, \cdots, X_n] & \to & \Hom_{\mathbf{EnsAlg}}(V, \mathbb{A}^1) \\
+                    & P & \mapsto & f_P\\
+                \end{array}
+            \end{align*}
+            C'est un morphisme de $k$-algèbres, vérifions que son noyau est exactement $I(V)$ : \begin{align*}
+                \tilde \chi (P) = 0 \iff \forall a \in V,\, P(a) = 0 \iff P \in I(V)
+            \end{align*}
+            Finalement, cette application est surjective par définition de $\Hom_{\mathbf{EnsAlg}}(V, \mathbb{A}^1)$, et donc $\tilde \chi$ se factorise en un isomorphisme au travers du quotient $k[V]$ (cet isomorphisme est $\chi$ et donc $\chi$ est un isomorphisme).
+        \end{proof}
+        Maintenant, soit $\varphi : V \subseteq \mathbb{A}_k^n \to W \subseteq \mathbb{A}_k^l$ un morphisme, alors ce morphisme induit un morphisme de $k$-algèbres entre $k[W]$ et $k[V]$, définit formellement comme
+        \begin{align*}
+            \begin{array}{cccc}
+                k[\varphi] = \varphi^* : & k[W] & \to & k[V] \\
+                & [P] & \mapsto & \chi^{-1}(\chi([P]) \circ \varphi) \\
+            \end{array}
+        \end{align*}
+        Ainsi au travers de $\chi$ il envoie $f_P$ sur $f_P \circ \varphi$. De plus, si on note $\varphi_i \in k[X_1, \cdots, X_n]$ des polynômes tels que $\varphi(a) = (\varphi_i(a))$ pour tout $a \in V$, alors 
+        \begin{align*}
+            \varphi^*([Y_i]) = \chi^{-1}(\chi([T_i]) \circ \varphi) = \varphi_i
+        \end{align*}
+        Ainsi $\varphi^*$ correspond au morphisme d'évaluation en les $\varphi_i$. Finalement, pour tout $y \in W$,
+        \begin{align*}
+            \varphi^*([P])(x) = (f_P \circ \varphi)(x) = f_P(\varphi(x)) = [P](\varphi(x))
+        \end{align*}
+        \begin{prop}
+            \label{phistarfunct}
+            Soient $\varphi_1 : V_1 \to V_2$, $\varphi_2 : V_2 \to V_3$. Alors $\varphi_1^* \circ \varphi_2^* = (\varphi_2 \circ \varphi_1)^*$. De plus, $(\id_V)^* = \id_{k[V]}$.
+        \end{prop}
+        \begin{proof}
+            \begin{enumerate}
+                \item $k[\id_V]([P]) = \chi^{-1}(\chi([P]) \circ \id_V) = [P] = \id_{k[V]}([P])$ donc $k[\id_V] = \id_{k[V]}$.
+                \item
+                \begin{align*}
+                    (k[\varphi_1] \circ k[\varphi_2])[P] &= \chi^{-1}(\chi( \chi^{-1}(\chi([P]) \circ \varphi_2) ) \circ \varphi_1) \\
+                    &= \chi^{-1}(\chi([P]) \circ \varphi_2 \circ \varphi_1) \\
+                    &= k[\varphi_2 \circ \varphi_1]([P])
+                \end{align*}
+            \end{enumerate}
+        \end{proof}
+        \begin{defi} (Foncteur $k[-]$)
+            On définit
+            \begin{align*}
+                \begin{array}{cccc}
+                    k[-] : & \mathbf{EnsAlg}^\mathrm{op} & \to & k-\mathbf{CAlg}_\mathrm{tf, red} \\
+                    & V & \mapsto & k[V] \\
+                    & \varphi : V \to W & \mapsto & k[\varphi] : k[W] \to k[V] \\
+                \end{array}
+            \end{align*}
+        \end{defi}
+        Ce foncteur est bien défini au vu de \ref{phistarfunct}.
+        \begin{theo}
+            \label{theo115}
+            $k[-]$ est pleinement fidèle.
+        \end{theo}
+        \begin{coro}
+            \label{coro113}
+            Soit $\varphi : V \to W$ morphisme. C'est un isomorphisme ssi $\varphi^* : k[W] \to k[V]$ est un isomorphisme. En particulier $V$ non isomorphe à $W$ ssi $k[V]$ non isomorphe à $k[W]$.
+        \end{coro}
+        \begin{proof} (\ref{coro113})
+            Les foncteurs pleinements fidèles préservent et réfléchissent les isomorphismes.
+        \end{proof}
+        \begin{proof} (\ref{theo115})
+            \cor{A relire}
+            Soit $\varphi : V \to W \subseteq \mathbb{A}^l$, écrivons $\varphi = (\varphi_1, \cdots, \varphi_l)$, avec $\varphi_i : V \to k$. $\varphi$ morphisme, donc
+            \begin{align*}
+                \begin{array}{cccc}
+                    \varphi^* : & k[W] \simeq k[Y_1, \cdots, Y_l]/I(W) & \to & k[V] \\
+                    & [Y_i] & \mapsto & \varphi_i \\
+                \end{array}
+            \end{align*}
+            Montrons que $F$ est injective : soient $\varphi, \psi$ telles que $\varphi^* = \psi^*$. Alors $\varphi_i = \psi_i$ et donc $\varphi = \psi$. Montrons que $F$ est surjective : soit $\alpha : k[W] \to k[V]$ un morphisme de $k$-algèbres. Alors notons $\varphi_i := \alpha([Y_i]) \in k[V]$, ainsi $\varphi_i : V \to k$ est une fonction régulière. Posons alors $\varphi = (\varphi_1, \cdots, \varphi_l)$. Il suffit de montrer que l'image de $\varphi$ est contenue dans $W$. En effet, si c'est le cas, on peut définit $\tilde \varphi : V \to W$ qui fait commuter
+            \begin{figure}[H]
+                \centering
+                \begin{tikzcd}
+                    V \arrow[r, "\varphi"] \arrow[rd, "\tilde \varphi"', dashed] & \mathbb{A}^l      \\
+                                                                                & W \arrow[u, hook]
+                    \end{tikzcd}
+            \end{figure} \noindent
+            et ainsi $\tilde \varphi ^* = \alpha$. Soit $W = V(P_1, \cdots, P_r) \subseteq \mathbb{A}^l$, $P_i \in k[Y_1, \cdots, Y_l]$. En particulier, $P_i \in I(W)$ pour tout $i$. On doit vérifier que $P_i(\varphi_1(a), \cdots, \varphi_l(a)) = 0$ pour tout $i$ et $a \in V$. Comme $P_i \in I(W)$, $\alpha([P_i]) = 0$. Mais $\alpha([Y_i]) = \varphi_i$, donc 
+            \begin{align*}
+                0 = \alpha([P_i]) = P_i(\alpha([Y_1]), \cdots, \alpha([Y_l])) = P_i(\varphi_1, \cdots, \varphi_l) \in k[V]
+            \end{align*}
+        \end{proof}
+        \begin{prop}
+            $\varphi : V \to W$ est un isomorphisme si et seulement si l'application sous-jacente à $\varphi$ est bijective, et son inverse $\varphi^{-1} : W \to V$ est un morphisme.
+        \end{prop}
+        \begin{proof}
+            Clair du fait que le foncteur d'oubli $\mathbf{EnsAlg} \to \mathbf{Sets}$ est fidèle.
+        \end{proof}
+        \begin{expl}
+            Reprenons les points \ref{ex3} et \ref{ex4} de \ref{ex121} :
+            \begin{enumerate} \addtocounter{enumi}{2}
+                \item C'est un isomorphisme puisque $\varphi^{-1} : V \to \mathbb{A}^1$ donné par $\varphi^{-1}(x,y) = x$ est un morphisme et est une inverse de $\varphi$ dans $\mathbf{Sets}$.
+                \item Forcément, une inverse de $\varphi$ est une inverse dans $\mathbf{Sets}$ au travers du foncteur d'oubli qui envoie un ensemble algébrique sur son ensemble sous-jacent. Ainsi $\varphi^{-1} : V \to \mathbb{A}^1$ doit forcément être définie comme
+                \begin{align*}
+                    \varphi^{-1}(x,y) = 
+                    \begin{cases}
+                        y/x & \text{si } (x,y) \neq 0 \\
+                        0 & \text{sinon}
+                    \end{cases}
+                \end{align*}
+                Mais $\varphi^{-1}$ n'est pas un morphisme : supposons qu'il existe $P \in k[X,Y]$ tq $P(x,y) = \varphi^{-1}(x,y)$, alors $P(x,y) = y/x$ pour tout $(x,y) \in V$ et $V = \{(t^2, t^3) \mid t \in k \}$, et ainsi $P(t^2, t^3) = t$ pour tout $t \in k \bs \{0\}$, ce qui est clairement impossible. On peut aussi vérifier que le morphisme induit sur les algèbres de fonctions régulières n'est pas un isomorphisme.
+            \end{enumerate}
+        \end{expl}
+        
+    \section{Cas des corps algébriquement clos}
+        Supposons désormais que $k = \bar k$. Alors
+        \begin{prop}
+            $k[-] : \mathbf{EnsAlg}^\mathrm{op} \to k-\mathbf{CAlg}_\mathrm{tf, red}$ est essentiellement surjectif. Ainsi les catégories $\mathbf{EnsAlg}^\mathrm{op}$ et $k-\mathbf{CAlg}_\mathrm{tf, red}$ sont équivalentes.
+        \end{prop}
+        \begin{proof}
+            Soit $L = k[X_1, \cdots, X_n]/J \in k-\mathbf{CAlg}_\mathrm{td, red}$. Alors
+            \begin{align*}
+                k[V(J)] = k[X_1, \cdots, X_n]/I(V(J)) = k[X_1, \cdots, X_n]/\sqrt{J} = L
+            \end{align*}
+            d'après le Nullstellensatz.
+        \end{proof}

@@ -1,0 +1,398 @@
+\chapter{Dimension, espace tangent}
+    \section{Topologie induite sur les ensembles algébriques}
+        $\mathbb{A}_k^n$ est muni d'une topologie, dont les fermés sont les $V(I)$ pour $I$ un idéal de $k[X_1, \cdots, X_n]$. Ainsi on définit la topologie de Zariski sur $V \subseteq \mathbb{A}_k^n$ un esnemble algébrique comme la topologie induite sur $V$. Plus concrètement, les fermés de $V$ sont les $V(I) \cap V$, pour $I$ un idéal de $k[X_1, \cdots, X_n]$ (i.e. les ensembles algébriques $W \subseteq V$).
+        \begin{exo}
+            Les ouverts distingués $D(f)$ forment une base pour la topologie de zariski de $\mathbb{A}^n$.
+        \end{exo}
+        Ainsi $\{D(f) \cap V\}_f$ est une base des ouverts pour la topologie de Zariski sur $V$ un ensemble algébrique fixé.
+        \begin{prop}
+            Soient $V,W \subseteq \mathbb{A}^n, \mathbb{A}^l$. Tout morphisme $\varphi : V \to W$ est continu pour la topologie de zariski induite sur $V$ et $W$.
+        \end{prop}
+        \begin{proof}
+            \ajout{
+                Dans un premier temps, soit $f_i \in k[X_1, \cdots, X_n]$ tels que $\varphi(a) = (f_1(a), \cdots, f_i(a))$. Alors montrer que $\varphi$ est continue revient à montrer que $\tilde \varphi : \mathbb{A}^n \to \mathbb{A}^l$ définie par $\tilde \varphi(a) = (f_1(a), \cdots, f_i(a))$ pour tout $a \in \mathbb{A}^n$ est continue. En effet, soit $Z$ un fermé de $W$, alors $Z = Z' \cap W$ pour $Z$ un fermé de $\mathbb{A}^l$. Maintenant $\varphi^{-1}(Z) = \tilde \varphi^{-1}(Z') \cap V$ et est donc un fermé si et seulement si $\tilde \varphi^{-1}(Z')$ est un fermé. On peut donc se ramener au cas $\varphi : \mathbb{A}^n \to \mathbb{A}^l$. Ainsi considérons un fermé $V(J) \subrel{fermé} \mathbb{A}^l$, posons $I := k[\varphi](J)$, et montrons que $\varphi^{-1}(V(J)) = V(I)$.
+                \item $\subseteq$ : soit $x \in \varphi^{-1}(V(J))$, alors pour tout $P \in I$, il existe $Q \in J$ tel que $P = k[\varphi](Q)$. Maintenant
+                \begin{align*}
+                    P(x) &= k[\varphi](Q)(x) = Q(\varphi(x)) = 0
+                \end{align*}
+                puisque $Q \in J$ et $\varphi(x) \in V(J)$.
+                \item $\supseteq$ : Soit $x \in V(I)$, alors pour tout $Q \in J$, $k[\varphi](Q) \in I$ et donc
+                \begin{align*}
+                    Q(\varphi(x)) = k[\varphi](Q)(x) = 0 \\
+                \end{align*}
+                et donc $\varphi(x) \in V(J)$.
+            }
+        \end{proof}
+        \begin{exo}
+            Soit $f : X \to Y$ un morphisme dans $\mathbf{Top}$, si $X$ est irréductible, alors $\overline{f(X)}$ irréductible.
+        \end{exo}
+        \begin{expl}
+            ($k = \bar k$) $f : \mathbb{A}^1 \to V := \{(x,y) \mid y^2 = x^3\}$ est surjectif, donc $V$ est irréductible.
+        \end{expl}
+        \begin{expl}
+            $V = \{(x,y) \mid xy = 1\} \subseteq \mathbb{A}^2$. Notons $f : V \to \mathbb{A}^1$ la projection sur la première coordonnée, alors $f(V) = \mathbb{A}^1 \bs \{0\}$ n'est pas fermé (si $|k| = \infty$) et donc ne peut pas être un ensemble algébrique.
+        \end{expl}
+        \begin{exo}
+            $E \subseteq \mathbb{A}^n_k$ ensemble quelconque, alors $\bar E = V(I(E))$. \ajout{Soit $E \subseteq V(J)$ un fermé Alors $J \subseteq I(V(J)) \subseteq I(E)$ et donc $V(I(E)) \subseteq V(J)$, ce qui prouve que $V(I(E)) = \bar E$.}
+        \end{exo}
+
+    \section{Variétés affines, dimension}
+        \begin{defi} (Variété affine)
+            Une variété affine est un ensemble algébrique affine irréductible.
+        \end{defi}
+        Ainsi si $V$ est une variété affine, alors $k[V] = k[X_1, \cdots, X_n]/I(V)$ est intègre (vu que $I(V)$ est un idéal premier).
+        \subsection{Dimension d'une variété affine}
+            \begin{defi}
+                $k(V) := \mathrm{Frac}\, k[V]$ est le corps de fonctions rationnelles sur $V$.
+                \begin{align*}
+                    k(V) = \left\{ \frac{P}{Q} \mid P,Q \in k[V],\, Q \neq 0 \right\}
+                \end{align*}
+            \end{defi}
+            \begin{defi} ($k = \bar k$)
+                $V$ variété affine. On définit la dimension de $V$ par
+                \begin{align*}
+                    \mathrm{dim} V := \mathrm{trdeg}_k k(V)
+                \end{align*}
+                où $\mathrm{trdeg}_k k(V)$ est le degré de transcendance de $k(V)$ sur $k$.
+            \end{defi}
+            \begin{defi}
+                $k \subseteq K$ extension de corps.
+                \begin{enumerate}
+                    \item Une partie $S \subseteq K$ est algébriquement indépendante si pour tout $m \geq 1$, tout $s_1, \cdots, s_m \in S$, si $P \in k[X_1, \cdots, X_m]$ est tel que $P(s_1, \cdots, s_m) = 0$, alors $P = 0$.
+                    \item $S \subseteq K$ est une base de transcendance de $K$ (sur $k$) si $S$ est algébriquement indépendante et $k(S) \subseteq K$ est algébrique.
+                    \item On dit que $k \subseteq K$ est purement transcendante si $\exists S$ base de transcendance $k \subseteq k(S) = K$.
+                \end{enumerate}
+            \end{defi}
+            \begin{remq}
+                Si $|S| = n$, alors $k(S) \simeq k(X_1, \cdots, X_n)$. Si $S_1,S_2$ sont deux bases de transcendance de $K/k$, alors $|S_1| = |S_2|$. 
+            \end{remq}
+            \begin{remq}
+                $\dim V \leq n$ pour toute variété algébrique dans $\mathbb{A}^n$.
+            \end{remq}
+            \begin{defi}
+                $\mathrm{trdeg}_k(K) = |S|$, $S$ base de transcendance de $K/k$.
+            \end{defi}
+            \begin{expl}
+                \begin{enumerate}
+                    \item $\dim \mathbb{A}_k^n = n$ : $V = \mathbb{A}_k^n$, $k[V] = k[X_1, \cdots, X_n]$. $I(V) = \{0\}$. Ainsi $k(V) = k(X_1, \cdots, X_n)$. Et $\{X_1, \cdots, X_n\}$ est une base de transcendance de $k(V)$, donc $\dim V = n$.
+                    \item $V = \{(x,y) \mid xy = 1\} \subseteq \mathbb{A}^1$. Alors $V = V(XY - 1)$ est irréductible; Ainsi $V$ est une variété affine. $k[V] = k[X,Y]/(XY - 1) = k[x,y]$ où $x = [X]$, $y = [Y]$ (et $xy = 1$). $k(V) = \mathrm{Frac} (k[x,y]) =: k(x,y)$. Maintenant $k(x,y) = k(x)$ vu que $y = 1/x$. Maintenant $\{x\}$ est une base de trascendance de $k(x)$ : sinon il existe $P \in k[X]$ non nul tel que $P(x) = 0 \in k(x)$, et en particulier dans $k[x] \subseteq k[V]$. Ainsi $P \in I(V)$ donc $P(X) = (XY - 1)Q(X,Y)$ dans $k[X,Y]$ avec $Q \in k[X,Y]$, ce qui est absudre puisque $\deg_YP = 0$. Ainsi $\dim V = 1$
+                \end{enumerate} 
+            \end{expl}
+            \begin{lemm}
+                ($k = \bar k$) Soit $f \in k[X_1, \cdots, X_n]$ irréductible. Alors $V := V(f) \subseteq \mathbb{A}_k^n$ est une variété affine de dimension $n-1$.
+            \end{lemm}
+            \begin{proof}
+                $f$ non constant. On peut supposer que $\deg_{X_n}(f) > 0$. Notons $k[V] = k[x_1, \cdots, x_n]$. Ainsi $f(x_1, \cdots, x_n) = 0$ vu que $I(V) = (f)$. . Maoitenant $k \subseteq k(x_1, \cdots, x_{n-1}) \subseteq k(x_1, \cdots, x_{n-1})(x_n)$ est algébrique car $f(x_1, \cdots, x_n) = 0$. Montrons que $\{x_1, \cdots, x_{n-1}\}$ sont algébriquement indépendants sur $k$ : si $g \in k[X_1, \cdots, X_{n-1}]$ tel que $g(x_1, \cdots, x_{n-1}) = 0$ dans $k(V)$ (donc dans $k[V]$). Alors $g(x_1, \cdots, x_{n-1}) \in I(V) = (f)$ mais $\deg_{X_n} g = 0$, absurde.
+            \end{proof}
+            \begin{remq}
+                \label{rq113}
+                Soient $f_1, \cdots, f_r \in k[X_1, \cdots, X_n]$, $V := V(f_1, \cdots, f_r) \subseteq \mathbb{A}^n_k$. Supposons que $V$ est irréductible, alors $\dim V \geq n-r$. \cor{Preuve en exercice}
+            \end{remq}
+            \begin{expl}
+                $V := V(Y - X^2, Z - X^3, XZ - Y^2) \subseteq \mathbb{A}^3_k$. Alors $V = \{(t,t^2, t^3) \mid t \in k\}$ est une variété affine de dimension $1$ (on parle de courbe affine). En effet, $V$ est irréductible, puis $k[V] \simeq k[T]$ donc $\frac k[V] \simeq k(T)$ est de degré de transcendance $1$ sur $k$. Comme $V$ est définie par $3$ équations, $XZ - Y^2$ peut s'exprimer en fonction des deux autres polynômes et est donc superflue.
+            \end{expl}
+            \begin{remq}
+                Si $V,W$ sont des variétés affines isomorphes, alors $k[V] \simeq k[W]$ et ainsi $k(V) \simeq k(W)$ donc $\dim V = \dim W$. Dans l'exemple précédente, on peut conclure que $V$ est de dimension $1$ avec cette remarque.
+            \end{remq}
+            \begin{expl}
+                $V = V(XZ - Y^2 ,  XW - YZ, YW - Z^2) = V(f_1, f_2, f_3) \subseteq \mathbb{A}^4$. On sait que $\dim V \geq 1$ d'après la remarque \ref{rq113}. En fait, $\dim V = 2$, et $f_i \notin (f_j, f_l)$ pour tout $i,j,k$ différents deux à deux. Montrons par exemple que $f_3 \notin (f_1, f_2)$ : Soit $W = V(f_1, f_2)$, si $f_3 \in (f_1, f_2)$, alors $V = W$. Mais $V \cap \{x = 0\} \neq W \cap \{x = 0\}$ :
+                \begin{align*}
+                    &V \cap \{x = 0\} = \{(0,0,0,w) \mid w \in k\} \\
+                    &W \cap \{x = 0\} = \{(0,0,z,w) \mid z,w \in k\} \\
+                \end{align*}
+                On peut montrer les autres de manière similaire, ainsi on ne peut pas éliminer d'équation, mais pourtant $\dim V = 2$ : Soit $V' = V(f_1)$, $V'' = V(f_1, f_2)$ ($V \subseteq V'' \subseteq V'$). Calculons la dimension de ces différentes variétés :
+                \item 
+                \begin{align*}
+                    k[V'] = k[X,Y,Z,W]/(XZ - Y^2) = k[x,y,z,w]
+                \end{align*}
+                où $xz = y^2$. Alors $k(V') = k(x,y,z,w) = k(x,y,w)$ puisque $z = y^2/x$ dans $k(V')$. Enfin on peut prouver que $x,y,z$ sont algébriquement indépendants, et donc $\dim V' = 3$. 
+                \item $k[V''] = k[x,y,z,w]$ avec $xz = y^2$, $sw = yz$. Ainsi $k(V'') = k(x,y)$ puisque $z = y^2/x$, $w = yz/x$, et on peut prouver que $x,y$ sont algébriquement indépendants, i.e. $\dim V'' = 2$. 
+                \item $k(V) = k(x,y,z,w)$, mais $z = y^2/x$, $w = yz/x$, mais la $3$eme équation ne nous donne pas d'autre relation (c'est la même que celle donnée par la première équation). Il est donc possible de prouver que $x,y$ sont algébriquements indépendnts et alors $\dim V = 2$.
+            \end{expl}
+
+        \subsection{Dimension de krull}
+            Soit $A \in \mathbf{CRings}$.
+            \begin{defi} (Dimension de Krull)
+                \begin{align*}
+                    \dim A := \sup \{l \geq 0 \mid \mathfrak{p}_0 \nsubseteq \mathfrak{p}_1 \nsubseteq \cdots \nsubseteq \mathfrak{p}_l \subseteq A\}
+                \end{align*}
+            \end{defi}
+            \begin{expl}
+                \begin{enumerate}
+                    \item $A = k[X_1, \cdots, X_n]$. Alors considérons $\mathfrak{p}_i = (X_1, \cdots, X_i)$ pour $0 \leq i \leq n$, on a donc $\dim A \geq n$. On peut en fait montrer que $\dim A = n$. 
+                    \item La dimension d'un corps vaut $0$,
+                    \item $\dim \mathbb{Z} = 1$.
+                \end{enumerate}
+            \end{expl}
+            \begin{remq}
+                $\mathfrak{p} \subseteq A$ idéal premier, alors
+                \begin{align*}
+                    \dim (A/\mathfrak{p}) = \sup \{l \geq 0 \mid \mathfrak{p} = \mathfrak{p}_0 \nsubseteq \cdots \nsubseteq \mathfrak{p}_l \}
+                \end{align*}
+            \end{remq}
+            \begin{defi} (Hauteur)
+                Soit $\mathfrak{p} \subrel{pr} A$, alors
+                \begin{align*}
+                    ht(\mathfrak{p}) = \sup \{s \geq 0 \mid \mathfrak{p}_0 \nsubseteq \cdots \nsubseteq \mathfrak{p}_s = \mathfrak{p} \}
+                \end{align*}
+            \end{defi}
+            \begin{expl}
+                \begin{enumerate}
+                    \item $A = \mathbb{Z}$, alors $ht(p \mathbb{Z}) = 1$. 
+                    \item $A = k[T]$, alors $ht((f)) = 1$.
+                    \item $A = k[X_1, \cdots, X_n]$, $\mathfrak{p} = (X_1, \cdots, X_s)$. Alors $ht \mathfrak{p} = s$.
+                \end{enumerate}
+            \end{expl}
+            \begin{theo}
+                $k$ corps, $A$ $k$-algèbre de type fini. Soit $\mathfrak{p}$ idéal premier, alors 
+                \begin{align*}
+                    ht \mathfrak{p} + \dim A/\mathfrak{p} = \dim A
+                \end{align*}
+            \end{theo}
+            \begin{expl}
+                \begin{enumerate}
+                    \item $A = \mathbb{Z}$, $\mathfrak{p} = p \mathbb{Z}$ avec $p$ premier; Alors $ht \mathfrak{p} = 1$, $\mathfrak{A}/p = \mathbb{F}_p$ est de dimension $0$.
+                    \item $A = k[X_1, \cdots, X_n]$, $\mathfrak{p} = (X_1, \cdots, X_s)$ avec $s \in \lcc 1,n \rcc$. $ht \mathfrak{p} = s$, $A/\mathfrak{p} \simeq k[X_{s+1}, \cdots, X_n]$, $\dim A/\mathfrak{p} = n-s$.
+                    \item La dimension peut être infinie : par exemple $A = k[\mathbb{N}]$.
+                \end{enumerate}
+            \end{expl}
+            \begin{theo}
+                Soit $V$ une variété affine. Alors
+                \begin{align*}
+                    \dim k[V] = \dim V
+                \end{align*}
+            \end{theo}
+
+    \section{Singularités}
+        \subsection{Points singuliers, variétés lisses}
+            Soit $V \subseteq \mathbb{A}^n_k$ une variété affine. Notons $d = \dim V$, et soit $I(V) = (P_1, \cdots, P_r) \subrel{id} k[X_1, \cdots, X_n]$. On a $d \geq n - r$. Considérons le morphisme
+            \begin{align*}
+                \begin{array}{cccc}
+                    \varphi : & \mathbb{A}^n & \to & \mathbb{A}^r \\
+                    & x & \mapsto & (P_1(x), \cdots, P_r(x)) \\
+                \end{array}
+            \end{align*}
+            En particulier, $\varphi_{|V} = 0$.
+            \begin{nota}
+                On note
+                \begin{align*}
+                    d \varphi (x) = 
+                    \begin{bmatrix}
+                        \frac{\partial P_1}{\partial X_1}(x) & \cdots & \frac{\partial P_1}{\partial X_n}(x) \\
+                        \vdots & & \vdots \\
+                        \frac{\partial P_r}{\partial X_1}(x) & \cdots & \frac{\partial P_r}{\partial X_n}(x) \\
+                    \end{bmatrix}
+                    \in M_{r, n}(k)
+                \end{align*}
+                la matrice jacobienne de $\varphi$ en $x$.
+            \end{nota}
+            \begin{defi}
+                $a \in V$ est un point régulier (ou encore non singulier) de $V$ si 
+                \begin{align*}
+                    rk (d \varphi(a)) = n - d
+                \end{align*}
+                Si $rk (d \varphi(a)) < n - d$, on dit que $a$ est un point singulier de $V$.
+            \end{defi}
+            \begin{remq}
+                \begin{enumerate}
+                    \item $\forall a \in V$, $rk (d \varphi(a)) \leq n - d$
+                    \item La définition précédente ne dépend pas du choix de $P_1, \cdots, P_r$
+                \end{enumerate}
+            \end{remq}
+            \begin{defi}
+                $V$ est lisse si $\forall a \in V$, $a$ est un point régulier.
+            \end{defi}
+            \begin{expl}
+                \begin{enumerate}
+                    \item $\mathbb{A}^n$ est lisse.
+                    \item $V = V(f) \subseteq \mathbb{A}^n$, pour $f \in k[X_1, \cdots, X_n]$ irréductible est une variété affine de dimension $n-1$?. Alors
+                    \begin{align*}
+                        d \varphi =
+                        \begin{bmatrix}
+                            \frac{\partial f}{X_1}, \cdots, \frac{\partial f}{X_n}
+                        \end{bmatrix}
+                    \end{align*}
+                    Ainsi $a \in V(f)$ est singuler ssi $rk (d \varphi(a)) = 0$ ssi $\frac{\partial f}{X_1}(a) = \cdots = \frac{\partial f}{X_n}(a) = 0$.
+                    \item Si $f = XY - 1$, $V = V(f) \subseteq \mathbb{A}^2$. Alors $\frac{\partial f}{X} = Y$ et $\frac{\partial f}{Y} = X$, alors $a \in V$ singulier si $a_2 = a_1 = 0$, mais $a \in V \iff a_1a_2 = 1$, donc tout point de $V$ est régulier et $V$ est donc lisse.
+                    \item $f = Y^2 - X^3$, $V := V(f) \subseteq \mathbb{A}^2$. Si $char \, k \neq 2,3$, alors $a \in V$ singulier ssi $a = (0,0)$. 
+                    \item $f = Y^2 - X(X-1)(X - \lambda)$, $\lambda \in k$ ("courbe ellipitique" si $\lambda \neq 0,1$). $f = Y^2 - X^3 + (\lambda + 1)X^2 - \lambda X$. Alors
+                    \begin{align*}
+                        & \frac{\partial f}{\partial X} = -3X^2 + 2(\lambda + 1)X - \lambda \\
+                        & \frac{\partial f}{\partial Y} = 2Y \\
+                    \end{align*}
+                    et donc $(a,b) \in V(f)$ singulier ssi
+                    \begin{align*}
+                        &\begin{cases}
+                        -3x^2 + 2(\lambda + 1)x - \lambda = 0 \\
+                        2y = 0 \\
+                        y^2 = x(x-1)(x - \lambda) \\
+                        \end{cases}
+                        &\iff 
+                        \begin{cases}
+                            y = 0 \\
+                            x = 0,1,\lambda \\
+                            -3x^2 + 2(\lambda + 1)x - \lambda = 0 \\
+                        \end{cases}
+                    \end{align*}
+                    Alors
+                    \begin{enumerate}
+                        \item Si $x = 0$, $\lambda = 0$ et $(0,0)$ est le seul point singulier.
+                        \item Si $x = 1$, alors $\lambda = 1$ et $(1,0)$ est le seul point singulier.
+                        \item Si $x = \lambda$, alors $\lambda = 0,1$ et donc c'est les cas précédents.
+                    \end{enumerate}
+                    Ainsi si $\lambda \neq 0,1$, alors $V(f)$ est lisse.
+                \end{enumerate}
+            \end{expl}
+
+    \section{Anneau des fonctions régulières en un point}
+        Soit $V \subseteq \mathbb{A}^n_k$ une variété affine, $a \in V$. Par définition,
+        \begin{align*}
+            k[V] = \frac{k[X_1, \cdots, X_n]}{I(V)}
+        \end{align*}
+        puis $k(V) = \Frac k[V]$.
+        \begin{defi}
+            $\alpha \in k(V)$ est bien définie au point $a \in V$ si $\exists f,g \in k[V]$ telles que $\alpha = f/g \in k(V)$ et $g(a) \neq 0$. Dans ce cas, la valeur de $\alpha$ en $a$ est définie comme $\alpha(a) := f(a)/g(a) \in k$.
+        \end{defi}
+        \begin{remq}
+            En général, pour $\alpha \in k(V)$, on peut toujours écrire $\alpha = f/g$ mais $f$ et $g$ ne sont pas uniques.
+        \end{remq}
+        \begin{expl}
+            $V = V(Y^2 - X^3) \subseteq \mathbb{A}^2$; Alors $k[V] = k[x,y]$ avec $y^2 = x^3$. Alors 
+            \begin{align*}
+                \frac yx = \frac{x^2}y \in k(V)
+            \end{align*}
+        \end{expl}
+        \begin{prop}
+            Soit $\alpha \in k(V)$ bien définie en $a \in V$. Alors $\alpha(a)$ est bien définie.
+        \end{prop}
+        \begin{proof}
+            Si $\alpha = f/g = f'/g'$ avec $f,g,f',g' \in k[V]$ et $g(a), g'(a) \neq 0$. Alors $fg' - f'g = 0 \in k[V]$ et donc $f(a)g'(a) - f'(a)g(a) = 0$, ce qui implique que
+            \begin{align*}
+                \frac{f(a)}{g(a)} = \frac{f'(a)}{g'(a)} \in k
+            \end{align*}
+        \end{proof}
+        \begin{nota}
+            \begin{align*}
+                k[V]_a := \{\alpha \in k(V) \mid \alpha \text{ est définie en } a \}
+            \end{align*}
+            C'est un sous anneau de $k(V)$, dit anneau local de fonctions régulières autour de $a$.
+        \end{nota}
+        \begin{remq}
+            \begin{enumerate}
+            \item $k \subseteq k[V] \subseteq k[V]_a \subseteq k(V)$
+            \item $a \in V \iff I(V) \subseteq \mathfrak{m}_a$. Si $g \in k[V]$, $g(a) = 0 \iff g \in \mathfrak{m}_a/I(V) \subrel{max} k[V]$.
+            \item $k[V]_a$ est la localisation de $k[V]$ en $S = A \bs \mathfrak{p}$, où $\mathfrak{p} = \mathfrak{m}_a/I(V)$. 
+            \end{enumerate}
+        \end{remq}
+
+        \subsection{Anneaux locaux}
+            Rappelons que si $A$ est un anneau, $S = A \bs \mathfrak{p}$, l'image $S^{-1} \mathfrak{p}$ de $\mathfrak{p}$ par le morphisme canonique $A \to S^{-1}A$ est l'unique idéal maximal de $S^{-1}A$. En effet, $S^{-1} A \bs S^{-1}\mathfrak{p}$ sont des inversibles de $S^{-1}A$. Ainsi $S^{-1}A$ est un anneau local. 
+            \begin{nota}
+                On notera $(A, \mathfrak{m})$ les anneaux locaux, avec $\mathfrak{m}$ leur unique idéal maximal. $A/\mathfrak{m}$ est le corps résiduel de $A$.
+            \end{nota}
+            \begin{prop}
+                Soit $A$ un anneau noethérien intègre, $S \subseteq A$ un ensemble multiplicatif. Alors $S^{-1}A$ est noethérien.
+            \end{prop}
+            \begin{proof}
+                Soit $I \subrel{id} S^{-1}A$. Ainsi le morphisme $\varphi : A \to S^{-1}A$ est injectif. Alors $J := \varphi^{-1}(I)$ est un idéal de $A$, qui est de type fini. Ainsi il existe $P_1, \cdots, P_r \in J$ tel que $J = (P_1, \cdots, P_r)$. Montrons que $I = (\varphi(P_1), \cdots, \varphi(P_r)) = (P_1/1, \cdots, P_r/1)$. Soit $a/s \in I$, alors 
+                \begin{align*}
+                    \varphi(a) = \frac a1 = \frac as \frac S1
+                \end{align*}
+                donc il existe $f_1, \cdots, f_r \in A$ tq $a = \sum f_i P_i \in A$. Et donc
+                \begin{align*}
+                    \frac as = \sum \frac{f_i}s \frac{P_i}1
+                \end{align*}
+                et donc $a/s \in (P_1/1, \cdots, P_r/1)$.
+            \end{proof}
+            \begin{coro}
+                Soit $V$ une variété algébrique. Alors $k[V]_a$ est un anneau noethérien.
+            \end{coro}
+            \begin{proof}
+                $k[V]$ est noethérien et intègre car $V$ est une variété algébrique. Ainsi $k[V]_a$ est noéthérien comme localisation de $k[V]$.
+            \end{proof}
+            \begin{lemm} (Nakayama)
+                $(A, \mathfrak{m})$ anneau local noethérien, et $M$ un $A$-module de type fini. Si $\mathfrak{m} M = M$, alors $M = 0$.
+            \end{lemm}
+            \begin{coro}
+                $\mathfrak{m}^i/ \mathfrak{m}^{i+1} = 0 \iff \mathfrak{m}^i = 0$. En particulier, $\mathfrak{m}/\mathfrak{m}^2 = 0 \iff \mathfrak{m} = 0 \iff A$ est un corps.
+            \end{coro}
+            \begin{remq}
+                Soit $(A, \mathfrak{m})$ un anneau local noethérien. $\mathfrak{m}/\mathfrak{m}^2$ est un $A$-module, mais aussi un $k$-ev où $k = A/\mathfrak{m}$ de type fini (en tant que $A$-module et en tant que $k$-ev)
+            \end{remq}
+            \begin{theo}
+                $(A, \mathfrak{m})$ anneau local noethérien, $k = A/\mathfrak{m}$. Alors
+                \begin{align*}
+                    \dim_k \mathfrak{m}/\mathfrak{m}^2 \geq \dim A
+                \end{align*}
+                où $\dim A$ est la dimension e krull de $A$. De plus, si on a égalité (on note $d = \dim A$), alors $\mathfrak{m} = (x_1, \cdots ,x_d)$ avec $x_i \in A$, et on dit que $(A, \mathfrak{m})$ est un anneau régulier.
+            \end{theo}
+        
+    \section{Espace tangent}
+        Soit $V$ une variété affine, $a \in V$, on note $A = k[V]_a$. L'idéal maximal de $A$ est $\mathfrak{m} = \{\alpha \in A \mid \alpha(a) = 0\}$.
+        \begin{exo}
+            Considérons le morphisme
+            \begin{align*}
+                \begin{array}{cccc}
+                    ev : & k[V]_a & \to & k \\
+                    & \alpha & \mapsto & ev(\alpha) = \alpha(a) \\
+                \end{array}
+            \end{align*}
+            Alors $\ker(ev) = \mathfrak{m}$ idéal maximal de $k[V]_a$, et $k[V]_a/\mathfrak{m} \simeq k$
+        \end{exo}
+        
+        \subsection{Espace tangent de Zariski}
+            \begin{defi}
+                $V \subseteq \mathbb{A}^n$ variété affine, $a \in V$. Soit $A = k[V]_a$ l'anneau local associé à $a$. L'espace tangent de $V$ en $a$ est le $k$-ev
+                \begin{align*}
+                    T_aV := (\mathfrak{m}/ \mathfrak{m}^2)^{\vee} := \Hom_k(\mathfrak{m}/ \mathfrak{m}^2, k)
+                \end{align*}
+                l'espace tangent à $V$ en $a$.
+            \end{defi}
+            \begin{theo}
+                \cor{
+                    $\dim k[V] = \dim k[V]_a$
+                }
+            \end{theo}
+            Donc $(A, \mathfrak{m})$ est régulier ssi $\dim V =\dim A = \dim_k \mathfrak{m}/ \mathfrak{m}^2 = \dim_k T_aV$. On va montrer que $(A, \mathfrak{m})$ est régulier si et seulement si $a \in V$ est régulier.
+            \begin{theo}
+                $\dim_k T_aV \geq \dim V$ avec égalité si et seulement si $a \in V$ est un point régulier.
+            \end{theo}
+            Pour montrer ce théorème, nous devons parler d'espace tangent géométrique.
+        
+        \subsection{Espace tangent géométrique}
+            Soit $V = V(P_1, \cdots, P_r) \subseteq \mathbb{A}^n$, avec $P_1, \cdots, P_r \in k[X_1, \cdots, X_n]$, et $a \in V$.
+            \begin{defi} (Espace tangent géométrique)
+                L'espace tangent géométrique de $V$ en $a$ est définit comme
+                \begin{align*}
+                    T_a^\mathrm{geom} V = V(P^1_1, \cdots, P_r^1) \subseteq \mathbb{A}^n
+                \end{align*}
+                où 
+                \begin{align*}
+                    P_i^1 = \sumç_{j = 1}^n \frac{\partial P_i}{\partial X_j}(a) (X_j - a_j)
+                \end{align*}
+            \end{defi}
+            \begin{remq}
+                Soit $P \in k[X_1, \cdots, X_n]$, on peut décomposer $P$ en $P = \sum_{i = 0}^d P^i$ où les $P^i$ sont des polynômes homogènes de degré $i$ (tous les monômes sont de la forme $X^\alpha$ avec $|\alpha| = i$) en réalisant l'expansion de taylor de $P$ en $0$. Ainsi, 
+                \begin{align*}
+                    P^1 = \sum_{j = 1}^n \frac{\partial P}{\partial X_j}(0) X_j
+                \end{align*}
+                Maintenant si $a \in \mathbb{A}^n$, alors on peut réaliser l'expansion de taylor de $P$ en $a$, $P = \sum P^i$, et alors
+                \begin{align*}
+                    P^1 = \sum_{j = 1}^n \frac{\partial P}{\partial X_j}(a) (X_j - a_j)
+                \end{align*}
+            \end{remq}
+            \begin{expl}
+                \begin{enumerate}
+                    \item Soit $V = \{(x,y) \mid y^2 = x\} \subseteq \mathbb{A}^2$. Alors $V = V(P)$ avec $P = Y^2 - X$. Alors soit $a = (a_1, \cdots, a_2) \in V$ (donc $a_2^2 = a_2$), on a 
+                    \begin{align*}
+                        &\frac{\partial P}{\partial X} = -1 \\
+                        &\frac{\partial P}{\partial Y} = 2Y \\
+                    \end{align*}
+                    On a donc 
+                    \begin{align*}
+                        T_a^\mathrm{geom} = V(-(X - a_1) + 2a_2(Y - a_2))
+                    \end{align*}
+                    est la droite tangente au point $(a_1, a_2)$, qui est isomorphe à $k$. En effet, $\dim T_a^\mathrm{geom} = 1$ (c'est le translaté d'un sous-espace de $k^2$ de dimension $1$). De même, $\dim V = 1$ vu que $k[V] = k[Y]$, puis $V$ est lisse donc tout point est régulier.
+                    \item Cas particulier : $a = (0,0)$, alors $T_a^\mathrm{geom} V = V(x)$. Maintenant $k[V] \simeq k[X]$, et $k[V]_a = k[x,y]_{(x,y)} \simeq k[x]/(x)$. Finalement, $\mathfrak{m} = (X/1)$ et donc $\dim_k \mathfrak{m}/\mathfrak{m}^2 = 1$ ($X/1$ est une base de ce $k$-ev). Ainsi $\dim T_aV = 1$ en $0$.
+                \end{enumerate}
+            \end{expl}

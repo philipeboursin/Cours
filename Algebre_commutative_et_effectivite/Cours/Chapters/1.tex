@@ -1,57 +1,54 @@
-\chapter{Préliminaires sur les anneaux de polynômes, idéaux, noethérianité}
+\chapter{Bases de Gröbner}
     Dans ce chapitre, tous les anneaux seront commutatifs. Fixons dès à présent un $k \in \mathbf{Fld}$ (on supposera toujours qu'on dispose d'algorithmes pour les opérations du corps). 
-    \section{Anneaux noéthériens}
-        \subsection{Définition}
-            \begin{defi} (Anneau noéthérien)
-                Un anneau est noéthérien si toute suite croissante d'idéaux $I_0 \subseteq I_1 \subseteq I_2 \subseteq \cdots$ est stationnaire i.e. 
-                \begin{align*}
-                    \exists N \in \mathbb{N} \mid \forall m \geq N,\, I_m = I_N 
-                \end{align*}
-            \end{defi}
-            \begin{prop}
-                Un anneau est noéthérien si et seulement si tout idéal de $A$ est finiment engendré. 
-            \end{prop}
-            \begin{expl}
-                Voici des exemples d'anneaux noéthériens/non noéthériens
-                \begin{figure}[H]
-                    \centering
-                    \begin{tabular}{c|c}
-                        Anneaux noéthériens & Anneaux non noéthériens \\
-                        \hline
-                        $\mathbb{Q}$ & $k[\mathbb{N}]$ \\
-                        Plus généralement, tout corps $k$ & \\
-                        $\mathbb{R}[x]$ & \\
-                        Plus généralement, tout PID & \\
-                        $\mathbb{Z}$ & \\
-                        $k[x_1, \cdots, x_n]$ (conséquence de \ref{base_de_hilbert}) & \\
-                        Anneaux finis & \\
-                        Anneaux artiniens & \\
-                    \end{tabular}
-                \end{figure}
-            \end{expl}
-
-        \subsection{Théorème de la base de hilbert}
-            \begin{theo} (Théorème de la base de Hilbert)
-                \label{base_de_hilbert}
-                Soit $A$ un anneau noéthérien. Alors $A[x]$ est un anneau noéthérien.
-            \end{theo}
-            \begin{coro}
-                Si $k$ est un corps, alors $k[x_1, \cdots, x_n]$ est noeth pour $n \in \mathbb{N}$.
-            \end{coro}
-            \begin{proof}
-                On veut montrer que tout idéal $I \subrel{id} A[x]$ est finiment engendré. Soit $I \subrel{id} A[x]$, montrons qu'il est finiment engendré. Pour chaque $n \in \mathbb{N}$, soit
-                \begin{align*}
-                    I_n := \{a_n \in A \mid \exists a_0 + a_1x + \cdots + a_n x^n \in I\}
-                \end{align*}
-                Il est facile de voir que $I_n \subrel{id} A$. Ensuite $(I_i)$ est croissante, car si $a_i \in I_i$ pour un $i \in \mathbb{N}$, alors $\exists f \in I$ tq le coefficient directeur de $f$ soit $a_i$. Mais alors $xf(x) \in I$ est de degré $i+1$ et son coefficient directeur est encore $a_i$, d'où $a_i \in I_{i+1}$. Ainsi cette suite d'idéaux est stationnaire ($A$ noeth). Notons $N \in \mathbb{N}$ tq $m \geq N \Rightarrow I_m = I_N$. Les idéaux $I_0, \cdots, I_N$ sont finiment engendrés, notons $\{a_{i,j}\}_{1 \leq j \leq r_i}$ des familles génératrices pour $I_i$, pour tout $i \in \lcc 0, N \rcc$. Pour chaque $a_{i,j}$, $\exists f_{ij} \in I$ tq $\mathrm{deg}(f_{ij}) \leq i$ et le terme de degré $i$ de $f_{i,j}$ est $a_{i,j}$ (par définition de $I_i$). Montrons que $I = (\{f_{i,j}\}_{0,1 \leq i,j \leq N,r_i})$ : soit $f \in I$,
-                \begin{enumerate}
-                    \item si $\mathrm{deg}(f) = 0$, alors posons $a \in A$ tq $f = ax^0$. Ainsi $a \in I_0$, ainsi $\exists b_1, \cdots, b_{r_0}$ tq $a = \sum_{i = 1}^{r_0} b_i a_{0,i}$. Or $f_{0,i} = a_{0,i}x^0$, ainsi $f = \sum_{i = 1}^{r_0} b_i f_{0,i}$.
-                    \item Si $d = \mathrm{deg} f > 0$, notons $b$ le coeff directeur de $f$. Ainsi $b \in I_d$ \\
-                    \textbf{Cas où $d \leq N$ :} On peut écrire $b = \sum_{i = 1}^{r_d} \lambda_i a_{d,i}$ avec $\lambda_i \in A$. Posons $S = \sum_{i = 1}^{r_d} \lambda_i f_{d,i}$, alors le coefficient directeur de $S$ est précisément $b$ (et $\mathrm{deg} S \leq d$). Ainsi $\mathrm{deg} (f-S) < d$, et $f - S \in I$. Par hypothèse de récurrence, $f - S \in (\{f_{i,j}\})$ et $S \in (\{f_{i,j}\})$, donc finalement $f \in (\{f_{i,j}\})$. \\
-                    \textbf{Cas où $d > N$ :} Notons $b$ le coeff directeur de $f$, $b \in I_d = I_N \Rightarrow b = \sum \lambda_i a_{N,i}$. Posons $T := \sum \lambda_i f_{N,i}X^{d-N}$ est de degré $d$ et de coeff directeur $b$, puis on conclut comme précedemment en regardant le polynômes $f - T$.
-                \end{enumerate}
-                Ainsi les idéaux de $A[x]$ sont finiment engendrés, donc $A[x]$ est noeth.
-            \end{proof}
+    \section{Préliminaires}
+        \begin{defi} (Anneau noéthérien)
+            Un anneau est noéthérien si toute suite croissante d'idéaux $I_0 \subseteq I_1 \subseteq I_2 \subseteq \cdots$ est stationnaire i.e. 
+            \begin{align*}
+                \exists N \in \mathbb{N} \mid \forall m \geq N,\, I_m = I_N 
+            \end{align*}
+        \end{defi}
+        \begin{prop}
+            Un anneau est noéthérien si et seulement si tout idéal de $A$ est finiment engendré. 
+        \end{prop}
+        \begin{expl}
+            Voici des exemples d'anneaux noéthériens/non noéthériens
+            \begin{figure}[H]
+                \centering
+                \begin{tabular}{c|c}
+                    Anneaux noéthériens & Anneaux non noéthériens \\
+                    \hline
+                    $\mathbb{Q}$ & $k[\mathbb{N}]$ \\
+                    Plus généralement, tout corps $k$ & \\
+                    $\mathbb{R}[x]$ & \\
+                    Plus généralement, tout PID & \\
+                    $\mathbb{Z}$ & \\
+                    $k[x_1, \cdots, x_n]$ (conséquence de \ref{base_de_hilbert}) & \\
+                    Anneaux finis & \\
+                    Anneaux artiniens & \\
+                \end{tabular}
+            \end{figure}
+        \end{expl}
+        \begin{theo} (Théorème de la base de Hilbert)
+            \label{base_de_hilbert}
+            Soit $A$ un anneau noéthérien. Alors $A[x]$ est un anneau noéthérien.
+        \end{theo}
+        \begin{coro}
+            Si $k$ est un corps, alors $k[x_1, \cdots, x_n]$ est noeth pour $n \in \mathbb{N}$.
+        \end{coro}
+        \begin{proof}
+            On veut montrer que tout idéal $I \subrel{id} A[x]$ est finiment engendré. Soit $I \subrel{id} A[x]$, montrons qu'il est finiment engendré. Pour chaque $n \in \mathbb{N}$, soit
+            \begin{align*}
+                I_n := \{a_n \in A \mid \exists a_0 + a_1x + \cdots + a_n x^n \in I\}
+            \end{align*}
+            Il est facile de voir que $I_n \subrel{id} A$. Ensuite $(I_i)$ est croissante, car si $a_i \in I_i$ pour un $i \in \mathbb{N}$, alors $\exists f \in I$ tq le coefficient directeur de $f$ soit $a_i$. Mais alors $xf(x) \in I$ est de degré $i+1$ et son coefficient directeur est encore $a_i$, d'où $a_i \in I_{i+1}$. Ainsi cette suite d'idéaux est stationnaire ($A$ noeth). Notons $N \in \mathbb{N}$ tq $m \geq N \Rightarrow I_m = I_N$. Les idéaux $I_0, \cdots, I_N$ sont finiment engendrés, notons $\{a_{i,j}\}_{1 \leq j \leq r_i}$ des familles génératrices pour $I_i$, pour tout $i \in \lcc 0, N \rcc$. Pour chaque $a_{i,j}$, $\exists f_{ij} \in I$ tq $\mathrm{deg}(f_{ij}) \leq i$ et le terme de degré $i$ de $f_{i,j}$ est $a_{i,j}$ (par définition de $I_i$). Montrons que $I = (\{f_{i,j}\}_{0,1 \leq i,j \leq N,r_i})$ : soit $f \in I$,
+            \begin{enumerate}
+                \item si $\mathrm{deg}(f) = 0$, alors posons $a \in A$ tq $f = ax^0$. Ainsi $a \in I_0$, ainsi $\exists b_1, \cdots, b_{r_0}$ tq $a = \sum_{i = 1}^{r_0} b_i a_{0,i}$. Or $f_{0,i} = a_{0,i}x^0$, ainsi $f = \sum_{i = 1}^{r_0} b_i f_{0,i}$.
+                \item Si $d = \mathrm{deg} f > 0$, notons $b$ le coeff directeur de $f$. Ainsi $b \in I_d$ \\
+                \textbf{Cas où $d \leq N$ :} On peut écrire $b = \sum_{i = 1}^{r_d} \lambda_i a_{d,i}$ avec $\lambda_i \in A$. Posons $S = \sum_{i = 1}^{r_d} \lambda_i f_{d,i}$, alors le coefficient directeur de $S$ est précisément $b$ (et $\mathrm{deg} S \leq d$). Ainsi $\mathrm{deg} (f-S) < d$, et $f - S \in I$. Par hypothèse de récurrence, $f - S \in (\{f_{i,j}\})$ et $S \in (\{f_{i,j}\})$, donc finalement $f \in (\{f_{i,j}\})$. \\
+                \textbf{Cas où $d > N$ :} Notons $b$ le coeff directeur de $f$, $b \in I_d = I_N \Rightarrow b = \sum \lambda_i a_{N,i}$. Posons $T := \sum \lambda_i f_{N,i}X^{d-N}$ est de degré $d$ et de coeff directeur $b$, puis on conclut comme précedemment en regardant le polynômes $f - T$.
+            \end{enumerate}
+            Ainsi les idéaux de $A[x]$ sont finiment engendrés, donc $A[x]$ est noeth.
+        \end{proof}
 
     \section{Division multivariée}
         \subsection{Ordres monomiaux}
@@ -124,14 +121,14 @@
             \end{enumerate}
             
             \begin{algorithm}
-                \caption{Réalise la division euclidienne multivariée de $f$ par $f_1, \cdots, f_r$}
+                \caption{Réalise la division multivariée de $f$ par $f_1, \cdots, f_r$}
                 \begin{algorithmic}
                     \Function{Division multivariée}{$f , f_1, \cdots, f_r \in k[x_1, \cdots, x_n]$}
                         \State $g \gets f$
                         \State $Q_1, \cdots, Q_r \gets 0$
                         \State $R \gets 0$
                         \While{$g \neq 0$}
-                            \State $b = True$
+                            \State $b \gets True$
                             \State $i \gets 1$
                             \While{$b$ \textbf{and} $i \leq r$}
                                 \If{$\mathrm{LT}(f_i) \mid \mathrm{LT}(g)$}
@@ -142,7 +139,7 @@
                                 \State $i \gets i + 1$
                             \EndWhile
                             \If{b}
-                                \State $h = LT(g)$
+                                \State $h \gets LT(g)$
                                 \State $g \leftarrow g - h$
                                 \State $R \leftarrow R + h$
                             \EndIf
@@ -165,39 +162,6 @@
                 \end{align*}
                 et aucun des termes de $R$ n'est divisible par $\mathrm{LT}(f_i)$ vu que l'on ajoute que des termes divisibles par aucun des $\mathrm{LT}(f_i)$ dans l'algorithme. Finalement, l'algorithme termine puisque à chaque étape de la boucle while principale, le multidegré de $g$ diminue strictement au vu des calculs effectués et du fait que $\leq$ est une relation d'ordre monomiale.
             \end{remq}
-            % \textbf{Algorithme}
-            % \begin{enumerate}
-            %     \item Initialisation : $f^{(0)} := f$, $Q_1^{(0)} , \cdots, Q_r^{(0)} = 0$, $R^{(0)} = 0$.
-            %     \item Etapte $m \geq 1$ : Si $f^{(m-1)} = 0$, alors $Q_i := Q_i^{(m_1)}$ et $R = R^{(m-1)}$, terminer l'algo. Sinon, si $\mathrm{LT}(f_1) \mid \mathrm{LT}(f^{(m_1)})$, effectuer :
-            %     \begin{align*}
-            %         &f^{(m)} \leftarrow f^{(m-1)} - \frac{\mathrm{LT}(f^{(m-1)})}{\mathrm{LT}(f_1)} f_1 \\
-            %         &Q_1^{(m)} \leftarrow Q_1^{(m-1)} + \frac{\mathrm{LT}(f^{(m-1)})}{\mathrm{LT}(f_1)} \\
-            %         &Q_i^{(m)} \leftarrow Q_i^{(m_1)},\, i \neq 1 \\
-            %         &R^{(m)} \leftarrow R^{(m-1)}
-            %     \end{align*}
-            %     Sinon si $\mathrm{LT}(f_2) \mid \mathrm{LT}(f^{(m-1)})$, effectuer
-            %     \begin{align*}
-            %         &f^{(m)} \leftarrow f^{(m-1)} - \frac{\mathrm{LT}(f^{(m-1)})}{\mathrm{LT}(f_2)} f_2 \\
-            %         &Q_2^{(m)} \leftarrow Q_2^{(m-1)} + \frac{\mathrm{LT}(f^{(m-1)})}{\mathrm{LT}(f_2)} \\
-            %         &Q_i^{(m)} \leftarrow Q_i^{(m_1)},\, i \neq 2 \\
-            %         &R^{(m)} \leftarrow R^{(m-1)}
-            %     \end{align*}
-            %     sinon si $\mathrm{LT}(f_3) \mid \mathrm{LT}(f^{(m-1)})$, effectuer ... \\
-            %     sinon si $\mathrm{LT}(f_r) \mid \mathrm{LT}(f^{(m-1)})$, effectuer ... \\
-            %     sinon effectuer
-            %     \begin{align*}
-            %         & f^{(m)} \leftarrow f^{(m-1)} - \mathrm{LT}(f^{(m-1)}) \\
-            %         & R^{(m)} \leftarrow R^{(m-1)} + \mathrm{LT}(f^{(m-1)}) \\
-            %         & Q_i^{(m)} \leftarrow Q_i^{(m-1)}
-            %     \end{align*}
-            % \end{enumerate}
-            % \begin{remq}
-            %     A la fin de l'étape $m \geq 0$,
-            %     \begin{align*}
-            %         f^{(m)} + \sum Q_i^{(m)} f_i + R^{(m)} = f
-            %     \end{align*}
-            %     Si $f^{(m)} = 0$, alors on a bien $\sum Q_i^{(m)} f_i + R^{(m)} = f$ et alors $R^{(m)} = 0$ ou aucun des termes de $R^{(n)}$ n'est divisible par $\mathrm{LT}(f_1), \cdots, \mathrm{LT}(f_r)$. La procédure s'arrête : sinon, on aurait $f^{(0)},f^{(1)}, \cdots$ avec $\mathrm{mdeg} f^{(0)} > \mathrm{mdeg} f^{(1)} > \cdots$ et ainsi $\{\alpha \mid \exists m \in \mathbb{N} ,\, \alpha = \mathrm{mdeg} f^{(m-1)}\}$ n'a pas d'éléments minimal.
-            % \end{remq}
             \begin{nota}
                 Le reste obtenu s'écrira $\bar f^{f_1, \cdots, f_t}$. Si $F = \{f_1, \cdots, f_r\}$, on écrira $\bar f^F$.
             \end{nota}
@@ -216,517 +180,209 @@
             \end{expl}
 
     \section{Bases de Gröbner}
-        \subsection{Définition}
-            \begin{defi} (Base de Gröbner, 1)
-                \label{grob_1}
-                Soit $I \subrel{id} k[x_1, \cdots, x_n]$ non nul. Une base de Gröbner de $I$ est un ensemble fini $G \subseteq I$ tq
-                \begin{enumerate}
-                    \item $I = (G)$,
-                    \item $f \in I \iff \bar f^G = 0$
-                \end{enumerate}
-            \end{defi}
-            Par convention, $\emptyset$ est une base de Gröbner de l'idéal nul.
-            \begin{expl}
-                \begin{enumerate}
-                    \item Si $0 \neq g \in k[x]$, alors $\{g\}$ est une BDG (base de Gröbner) de $(g)$.
-                    \item Si $0 \neq g \in k[x_1, \cdots, x_n]$, alors $\{g\}$ est une BDG de $(g)$.
-                \end{enumerate}
-            \end{expl}
-            Comment peut-on avoir $f \in (f_1, \cdots, f_r)$ mais $\bar f^{f_1, \cdots, f_r} \neq 0$ ? Il faut qu'à une étape de la division, $\mathrm{LT}(f)$ ne soit pas divisible par aucun des $\mathrm{LT}(f_i)$. 
-        
-        \subsection{Idéaux monomiaux}
-            \begin{defi} (Idéal monomial)
-                Un idéal $I \subrel{id} k[x_1, \cdots, x_n]$ est monomial s'il existe des monômes $m_1, \cdots, m_r$ tq $I = (m_1, \cdots, m_r)$ (par convention $\{0\}$ est monomial).
-            \end{defi}
-            \begin{prop}
-                \label{lemme_nul}
-                Soient $m_1, \cdots, m_r \in k[x_1, \cdots, x_n]$ des monömes, alors 
-                \begin{align*}
-                    m \in (m_1, \cdots, m_r) \iff m \text{ est divisible par l'un des } m_i
-                \end{align*}
-            \end{prop}
-            \begin{proof}
-                Si $m$ est divisible par l'un des $m_i$, il est clair que $m \in (m_1, \cdots, m_r)$. Pour prouver l'implication réciproque, supposons que $m \in (m_1, \cdots, m_r)$. Alors on peut écrire
-                \begin{align*}
-                    m = \sum_{i = 1}^r a_i m_i
-                \end{align*}
-                avec $a_i \in k[x_1, \cdots, x_n]$. Maintenant écrivons chaque $a_i$ comme
-                \begin{align*}
-                    a_i(x) = \sum_{\alpha \in \mathbb{N}^n} \lambda_\alpha^i x^{\alpha}
-                \end{align*}
-                Alors
-                \begin{align*}
-                    m = \sum_{i = 1}^r \sum_{\alpha \in \mathbb{N}^n} \lambda_\alpha^i x^{\alpha} m_i
-                \end{align*}
-                Maintenant comme $m$ est un monome, il va exister $i, \alpha$ tels que $m = \lambda x^\alpha m_i$, donc $m_i \mid m$.
-            \end{proof}
-            Soient $f_1, \cdots, f_r \in k[x_1, \cdots, x_n]$. $\mathrm{LT}(f)$ divisible par l'un des $\mathrm{LT}(f_1), \cdots, \mathrm{LT}(f_r)$ si et seulement si $\mathrm{LT}(f) \in (\{\mathrm{LT}(f_i)\})$ d'après la proposition précédente. \\
-            \begin{nota}
-                Soit $E \subseteq k[x_1, \cdots, x_n]$, on note
-                \begin{align*}
-                    \mathrm{LT}(E) := \{\mathrm{LT}(f) \mid f \in E\}
-                \end{align*}
-            \end{nota}
-            \begin{defi} (Base de Gröbner, 2)
-                Une base de Gröbner d'un idéal $I \subrel{id} k[x_1, \cdots, x_n]$ est un ensemble (fini) $G \subseteq I$ tq $(\mathrm{LT}(I)) = (\mathrm{LT}(G))$
-            \end{defi}
-            \begin{theo}
-                Les deux définitions de bases de Gröbner sont équivalentes.
-            \end{theo}
-            \begin{proof}
-                def 1 $\Rightarrow$ def 2 : Soit $f \in I$ si $\mathrm{LT}(f) \notin (\mathrm{LT}(G))$, alors $\mathrm{LT}(f)$ n'est divisible par aucun des $\mathrm{LT}(g)$, $g \in G$ donc $\bar f^G \neq 0$. \\
-                def 2 $\Rightarrow$ def 1 : Notons $G = \{g_1, \cdots, g_r\}$. Soit $f \in I$, on veut que $\bar f^G = 0$. Il suffit de montrer que le reste est nul à chaque étape de l'algo de division. Or à l'étape $0$ il l'est, puis en supposant qu'il l'est à l'étape $m$, on a
-                \begin{align*}
-                    f = g + \sum Q_i g_i \in I
-                \end{align*}
-                et donc $g \in I$. Ainsi $LT(g) \in (LT(I)) = (LT(G))$ et donc il existe un $g_i$ tel que $LT(g_i) \mid LT(g)$ daprès \ref{lemme_nul}, et ainsi le reste est inchangé à cette étape.
-                % Or
-                % \begin{align*}
-                %     f - \sum Q_i^{(m)} g_i - R^{(m)} = f^{(m)}
-                % \end{align*}
-                % et $f - \sum Q_i^{(m)} g_i \in I$. Si $R^{(m)}$, alors $f^{(m)} \in I$, donc $\mathrm{LT}(f^{(m)}) \in (\mathrm{LT}(G))$. D'où $R^{(m+1)} = 0$ puis récurrence.
-            \end{proof}
-            \begin{theo}
-                Tout $I \subrel{id} k[x_1, \cdots, x_n]$ admet une base de Gröbner.
-            \end{theo}
-            \begin{proof}
-                On cherche $G \subrel{fini} I$ tq $(\mathrm{LT}(G)) = (\mathrm{LT}(I))$. D'après \ref{base_de_hilbert}, $\exists H \subrel{fini} \mathrm{LT}(I)$ tq $(H) = (\mathrm{LT}(I))$. Notons $h_1, \cdots, h_r$ des polynômes de $I$ dont les termes dominants sont les éléments de $H$. Alors $\{h_1, \cdots, h_r\}$ est une BDG de $I$.
-            \end{proof}
+        \begin{defi} (Base de Gröbner, 1)
+            \label{grob_1}
+            Soit $I \subrel{id} k[x_1, \cdots, x_n]$ non nul. Une base de Gröbner de $I$ est un ensemble fini $G \subseteq I$ tq
+            \begin{enumerate}
+                \item $I = (G)$,
+                \item $f \in I \iff \bar f^G = 0$
+            \end{enumerate}
+        \end{defi}
+        Par convention, $\emptyset$ est une base de Gröbner de l'idéal nul.
+        \begin{expl}
+            \begin{enumerate}
+                \item Si $0 \neq g \in k[x]$, alors $\{g\}$ est une BDG (base de Gröbner) de $(g)$.
+                \item Si $0 \neq g \in k[x_1, \cdots, x_n]$, alors $\{g\}$ est une BDG de $(g)$.
+            \end{enumerate}
+        \end{expl}
+        Comment peut-on avoir $f \in (f_1, \cdots, f_r)$ mais $\bar f^{f_1, \cdots, f_r} \neq 0$ ? Il faut qu'à une étape de la division, $\mathrm{LT}(f)$ ne soit pas divisible par aucun des $\mathrm{LT}(f_i)$. 
+        \begin{defi} (Idéal monomial)
+            Un idéal $I \subrel{id} k[x_1, \cdots, x_n]$ est monomial s'il existe des monômes $m_1, \cdots, m_r$ tq $I = (m_1, \cdots, m_r)$ (par convention $\{0\}$ est monomial).
+        \end{defi}
+        \begin{prop}
+            \label{lemme_nul}
+            Soient $m_1, \cdots, m_r \in k[x_1, \cdots, x_n]$ des monömes, alors 
+            \begin{align*}
+                m \in (m_1, \cdots, m_r) \iff m \text{ est divisible par l'un des } m_i
+            \end{align*}
+        \end{prop}
+        \begin{proof}
+            Si $m$ est divisible par l'un des $m_i$, il est clair que $m \in (m_1, \cdots, m_r)$. Pour prouver l'implication réciproque, supposons que $m \in (m_1, \cdots, m_r)$. Alors on peut écrire
+            \begin{align*}
+                m = \sum_{i = 1}^r a_i m_i
+            \end{align*}
+            avec $a_i \in k[x_1, \cdots, x_n]$. Maintenant écrivons chaque $a_i$ comme
+            \begin{align*}
+                a_i(x) = \sum_{\alpha \in \mathbb{N}^n} \lambda_\alpha^i x^{\alpha}
+            \end{align*}
+            Alors
+            \begin{align*}
+                m = \sum_{i = 1}^r \sum_{\alpha \in \mathbb{N}^n} \lambda_\alpha^i x^{\alpha} m_i
+            \end{align*}
+            Maintenant comme $m$ est un monome, il va exister $i, \alpha$ tels que $m = \lambda x^\alpha m_i$, donc $m_i \mid m$.
+        \end{proof}
+        Soient $f_1, \cdots, f_r \in k[x_1, \cdots, x_n]$. $\mathrm{LT}(f)$ divisible par l'un des $\mathrm{LT}(f_1), \cdots, \mathrm{LT}(f_r)$ si et seulement si $\mathrm{LT}(f) \in (\{\mathrm{LT}(f_i)\})$ d'après la proposition précédente. \\
+        \begin{nota}
+            Soit $E \subseteq k[x_1, \cdots, x_n]$, on note
+            \begin{align*}
+                \mathrm{LT}(E) := \{\mathrm{LT}(f) \mid f \in E\}
+            \end{align*}
+        \end{nota}
+        \begin{defi} (Base de Gröbner, 2)
+            Une base de Gröbner d'un idéal $I \subrel{id} k[x_1, \cdots, x_n]$ est un ensemble (fini) $G \subseteq I$ tq $(\mathrm{LT}(I)) = (\mathrm{LT}(G))$
+        \end{defi}
+        \begin{theo}
+            Les deux définitions de bases de Gröbner sont équivalentes.
+        \end{theo}
+        \begin{proof}
+            def 1 $\Rightarrow$ def 2 : Soit $f \in I$ si $\mathrm{LT}(f) \notin (\mathrm{LT}(G))$, alors $\mathrm{LT}(f)$ n'est divisible par aucun des $\mathrm{LT}(g)$, $g \in G$ donc $\bar f^G \neq 0$. \\
+            def 2 $\Rightarrow$ def 1 : Notons $G = \{g_1, \cdots, g_r\}$. Soit $f \in I$, on veut que $\bar f^G = 0$. Il suffit de montrer que le reste est nul à chaque étape de l'algo de division. Or à l'étape $0$ il l'est, puis en supposant qu'il l'est à l'étape $m$, on a
+            \begin{align*}
+                f = g + \sum Q_i g_i \in I
+            \end{align*}
+            et donc $g \in I$. Ainsi $LT(g) \in (LT(I)) = (LT(G))$ et donc il existe un $g_i$ tel que $LT(g_i) \mid LT(g)$ daprès \ref{lemme_nul}, et ainsi le reste est inchangé à cette étape.
+            % Or
+            % \begin{align*}
+            %     f - \sum Q_i^{(m)} g_i - R^{(m)} = f^{(m)}
+            % \end{align*}
+            % et $f - \sum Q_i^{(m)} g_i \in I$. Si $R^{(m)}$, alors $f^{(m)} \in I$, donc $\mathrm{LT}(f^{(m)}) \in (\mathrm{LT}(G))$. D'où $R^{(m+1)} = 0$ puis récurrence.
+        \end{proof}
+        \begin{theo}
+            Tout $I \subrel{id} k[x_1, \cdots, x_n]$ admet une base de Gröbner.
+        \end{theo}
+        \begin{proof}
+            On cherche $G \subrel{fini} I$ tq $(\mathrm{LT}(G)) = (\mathrm{LT}(I))$. D'après \ref{base_de_hilbert}, $\exists H \subrel{fini} \mathrm{LT}(I)$ tq $(H) = (\mathrm{LT}(I))$. Notons $h_1, \cdots, h_r$ des polynômes de $I$ dont les termes dominants sont les éléments de $H$. Alors $\{h_1, \cdots, h_r\}$ est une BDG de $I$.
+        \end{proof}
 
     \section{Algorithme de Buchberger}
-        \subsection{Critère de Buchberger}
-            \begin{defi}
-                $f,g \in k[x_1, \cdots, x_n]$, alors
+        \begin{defi}
+            $f,g \in k[x_1, \cdots, x_n]$, alors
+            \begin{align*}
+                S(f,g) := \frac{\mathrm{ppcm} (\mathrm{LM}(f), \mathrm{LM}(g))}{\mathrm{LT}(f)}f - \frac{\mathrm{ppcm} (\mathrm{LM}(f), \mathrm{LM}(g))}{\mathrm{LT}(g)}g
+            \end{align*}
+        \end{defi}
+        \begin{theo} (Critère de Buchberger)
+            Soit $G = \{g_1, \cdots, g_r\} \subseteq k[x_1, \cdots, x_r]$. Alors $G$ est une BDG de $(G)$ si et seulement si $\forall g,h \in G$, $\overline{S(g,h)}^G = 0$
+        \end{theo}
+        \begin{proof}
+            $\Rightarrow$ : $G$ BDF, $f,g \in G$. Comme $S(f,g) \in I$, alors $\overline{S(f,g)}^G = 0$. \\
+            $\Leftarrow$ : Supposons que pour tout $g,h \in G$, alors $\overline{S(g,h)}^G = 0$. Soit $f \in I$, on veut mq $LT(f) \in (LT(G))$. Or $I = (g_1, \cdots, g_r)$. Donc il existe $q_1, \cdots, q_r \in k[x_1, \cdots, x_n]$ tq 
+            \begin{align*}
+                f = \sum_{i = 1}^r q_ig_i
+            \end{align*}
+            Alors $LM(f) \leq \max_i \{LM(q_ig_i)\} = \mathbb{M}$.
+            \begin{enumerate}
+                \item Si $LM(f) = \mathbb{M}$ : Alors $LM(f) = LT(q_ig_i)$ pour un certain $i$. Mais $LM(q_ig_i) = LM(q_i)LM(g_i)$ et donc $LM(f) \in (LT(G))$.
+                \item Si $LM(f) < \mathbb{M}$ : Soit $1 \leq i_1 < i_2 < \cdots < i_s \leq r$ les indices tels que $LM(q_{i_j}g_{i_j}) = \mathbb{M}$. Alors on peut réécrire $f$ comme
                 \begin{align*}
-                    S(f,g) := \frac{\mathrm{ppcm} (\mathrm{LM}(f), \mathrm{LM}(g))}{\mathrm{LT}(f)}f - \frac{\mathrm{ppcm} (\mathrm{LM}(f), \mathrm{LM}(g))}{\mathrm{LT}(g)}g
+                    f = \sum_{j = 1}^s LT(q_{i_j})g_{i_j} + \sum_{i = 1}^r q_i'g_i
                 \end{align*}
-            \end{defi}
-            \begin{theo} (Critère de Buchberger)
-                Soit $G = \{g_1, \cdots, g_r\} \subseteq k[x_1, \cdots, x_r]$. Alors $G$ est une BDG de $(G)$ si et seulement si $\forall g,h \in G$, $\overline{S(g,h)}^G = 0$
-            \end{theo}
-            \begin{proof}
-                $\Rightarrow$ : $G$ BDF, $f,g \in G$. Comme $S(f,g) \in I$, alors $\overline{S(f,g)}^G = 0$. \\
-                $\Leftarrow$ : Supposons que pour tout $g,h \in G$, alors $\overline{S(g,h)}^G = 0$. Soit $f \in I$, on veut mq $LT(f) \in (LT(G))$. Or $I = (g_1, \cdots, g_r)$. Donc il existe $q_1, \cdots, q_r \in k[x_1, \cdots, x_n]$ tq 
+                (et donc $LM(q_i'g_i) < \mathbb{M}$). Considérons $\sum_j LT(q_{i_j})g_{i_j}$, on peut l'exprimer en fonction des $S(g_{i_j}, g_{i_{j+1}})$. Pour le voir, notons $h_j = LT(q_{i_j})g_{i_j}$, alors
                 \begin{align*}
-                    f = \sum_{i = 1}^r q_ig_i
+                    \sum_j h_j = &LC(h_1)\left( \frac{h_1}{LC(h_1)} - \frac{h_2}{LC(h_2)} \right) \\
+                    &+ (LC(h_1) + LC(h_2))\left( \frac{h_2}{LC(h_2)} - \frac{h_3}{LC(h_3)} \right) \\
+                    &+ (LC(h_1) + LC(h_2) + LC(h_3))\left( \frac{h_3}{LC(h_3)} - \frac{h_4}{LC(h_4)} \right) \\
+                    & + \cdots \\
+                    &+(LC(h_1) + \cdots + LC(h_{s-1}))\left( \frac{h_{s-1}}{LC(h_{s-1})} - \frac{h_s}{LC(h_s)} \right) \\
+                    &+ (LC(h_1) + \cdots + LC(h_s))\frac{h_s}{LC(h_s)}
                 \end{align*}
-                Alors $LM(f) \leq \max_i \{LM(q_ig_i)\} = \mathbb{M}$.
-                \begin{enumerate}
-                    \item Si $LM(f) = \mathbb{M}$ : Alors $LM(f) = LT(q_ig_i)$ pour un certain $i$. Mais $LM(q_ig_i) = LM(q_i)LM(g_i)$ et donc $LM(f) \in (LT(G))$.
-                    \item Si $LM(f) < \mathbb{M}$ : Soit $1 \leq i_1 < i_2 < \cdots < i_s \leq r$ les indices tels que $LM(q_{i_j}g_{i_j}) = \mathbb{M}$. Alors on peut réécrire $f$ comme
-                    \begin{align*}
-                        f = \sum_{j = 1}^s LT(q_{i_j})g_{i_j} + \sum_{i = 1}^r q_i'g_i
-                    \end{align*}
-                    (et donc $LM(q_i'g_i) < \mathbb{M}$). Considérons $\sum_j LT(q_{i_j})g_{i_j}$, on peut l'exprimer en fonction des $S(g_{i_j}, g_{i_{j+1}})$. Pour le voir, notons $h_j = LT(q_{i_j})g_{i_j}$, alors
-                    \begin{align*}
-                        \sum_j h_j = &LC(h_1)\left( \frac{h_1}{LC(h_1)} - \frac{h_2}{LC(h_2)} \right) \\
-                        &+ (LC(h_1) + LC(h_2))\left( \frac{h_2}{LC(h_2)} - \frac{h_3}{LC(h_3)} \right) \\
-                        &+ (LC(h_1) + LC(h_2) + LC(h_3))\left( \frac{h_3}{LC(h_3)} - \frac{h_4}{LC(h_4)} \right) \\
-                        & + \cdots \\
-                        &+(LC(h_1) + \cdots + LC(h_{s-1}))\left( \frac{h_{s-1}}{LC(h_{s-1})} - \frac{h_s}{LC(h_s)} \right) \\
-                        &+ (LC(h_1) + \cdots + LC(h_s))\frac{h_s}{LC(h_s)}
-                    \end{align*}
-                    Or $\sum_j LC(h_j) = 0$ car $LM(f) < \mathbb{M}$, donc le dernier terme s'annule et donc on a bien
-                    \begin{align*}
-                        \sum_j h_j = \sum_{j = 1}^{s-1} \left(\sum_{k = 1}^j LC(h_k) \right) S(h_j,h_{j+1})
-                    \end{align*}
-                    \begin{remq}
-                        Si $f$ et $g$ sont de même multidegré,
-                        \begin{align*}
-                            S(f,g) := \frac{1}{\mathrm{LC}(f)}f - \frac{1}{\mathrm{LC}(g)}g
-                        \end{align*}
-                        Ainsi,
-                        \begin{align*}
-                            S(h_j, h_{j+1}) = \frac{1}{LC(h_j)}h_j - \frac{1}{LC(h_{j+1})}h_{j+1}
-                        \end{align*}
-                    \end{remq}
-                    De plus,
-                    \begin{align*}
-                        S(h_j, h_{j+1}) &= \frac{1}{LC(h_j)}h_j - \frac{1}{LC(h_{j+1})}h_{j+1} \\
-                        &= \frac{LT(q_{i_j})}{LC(q_{i_j}g_{i_j})}g_{i_j} - \frac{LT(q_{i_{j+1}})}{LC(q_{i_{j+1}}g_{i_{j+1}})}g_{i_{j+1}} \\
-                        &= \frac{LM(q_{i_j})}{LC(g_{i_j})}g_{i_j} - \frac{LM(q_{i_{j+1}})}{LC(g_{i_{j+1}})}g_{i_{j+1}} \\
-                        &= \frac{LM(g_{i_j}q_{i_j})}{LT(g_{i_j})}g_{i_j} - \frac{LM(g_{i_{j+1}}q_{i_{j+1}})}{LT(g_{i_{j+1}})}g_{i_{j+1}} \\
-                        &= m_j S(g_{i_j}, g_{i_{j+1}})
-                    \end{align*}
-                    pour un certain monôme $m_j$. Donc
-                    \begin{align*}
-                        f &= \sum_j LT(g_{i_j})g_{i_j} + \sum_i q_i'g_i \\
-                        &= \sum_j h_j + \sum_i q_i'g_i \\
-                        &= \sum_{j = 1}^{s-1} \left(\sum_{k = 1}^j LC(h_k) \right) S(h_j,h_{j+1}) + \sum_i q_i'g_i \\
-                        &= \sum_{j = 1}^{s-1} m_j \left(\sum_{k = 1}^j LC(h_k) \right) S(g_{i_j},g_{i_{j+1}}) + \sum_i q_i'g_i \\
-                    \end{align*}
-                    et $\max (LM(q_i'g_i)) < \mathbb{M}$. Par hypothèse, $\overline{S(g_{i_j}, g_{i_{j+1}})}^G = 0$. Donc l'algorithme de division multivariée donne 
-                    \begin{align*}
-                        S(g_{i_j}, g_{i_{j+1}}) = \sum_{i = 1}^r b_i^jg_i
-                    \end{align*}
-                    Par définition de l'algorithme, chaque $b_i^jq_i$ est de multidegré au plus $mdeg(S(g_{i_j}, g_{i_{j+1}}))$. Mais alors
-                    \begin{align*}
-                        \mathrm{mdeg}(m_j S(g_{i_j}, g_{i_{j+1}})) = \mathrm{mdeg}(S(h_j,h_{j+1})) < \mathbb{M}
-                    \end{align*}
-                    Donc
-                    \begin{align*}
-                        f &= \sum_{j = 1}^{s-1} \left(\sum_{k = 1}^j LC(h_k) \right) m_j S(g_{i_j},g_{i_{j+1}}) + \sum_i q_i'g_i \\        
-                        &= \sum c_ig_i                
-                    \end{align*}
-                    avec $LM(c_ig_i) < \mathbb{M}$. Par récurrence sur la différence entre $LM(f) - \mathbb{M}$, on peut conclure.
-                \end{enumerate}
-            \end{proof}
-            \begin{coro} (Algorithme de Buchberger)
-                Soit $I = (f_1, \cdots, f_r) \subrel{id} k[x_1, \cdots, x_n]$. Posons $G^0 = \{f_1, \cdots, f_r\}$ et pour $n \geq 1$, on définit
+                Or $\sum_j LC(h_j) = 0$ car $LM(f) < \mathbb{M}$, donc le dernier terme s'annule et donc on a bien
                 \begin{align*}
-                    G^n = G^{n-1} \cup \left\{\overline{S(f,g)}^{G^{n-1}} \mid f,g \in G^{n-1},\, \overline{S(f,g)}^{G^{n-1}} \neq 0\right\} 
+                    \sum_j h_j = \sum_{j = 1}^{s-1} \left(\sum_{k = 1}^j LC(h_k) \right) S(h_j,h_{j+1})
                 \end{align*}
-                Alors il existe $N \in \mathbb{N}$ tel que $n \geq N \Rightarrow G^n = G^N$. Dans ce cas, $G^N$ est une bdg de $I$.
-            \end{coro}
-            \begin{proof}
-                Si $G^n = G^{n+1}$, alors par le critère de Buchberger $G^n$ est une bdg. Il faut donc montrer que la suite $(G^n)$ est stationnaire. Supposons le contraire, alors pour tout $n \geq 0$, $\exists f,g \in G^n$ tq $\overline{S(f,g)}^{G^n} \neq 0$. Par définition de l'algorithme de division multivariée, aucun des termes de $\overline{S(f,g)}^{G^n}$ n'est dans $(LT(G^n))$. En particulier, $LT(\overline{S(f,g)}^{G^n}) \notin (LT(G^n))$. On a donc $(LT(G^n)) \nsubseteq (LT(G^{n+1}))$ et donc on obtiens une suite d'idéaux strictement croissante dans $k[x_1, \cdots, x_n]$, contradiction.
-            \end{proof}
-            \begin{remq}
-                L'algorithme de Buchberger n'est pas optimal. Pour des versions optimisées, voir les algorithmes F4 et F5 (Faugère)
-            \end{remq}
+                \begin{remq}
+                    Si $f$ et $g$ sont de même multidegré,
+                    \begin{align*}
+                        S(f,g) := \frac{1}{\mathrm{LC}(f)}f - \frac{1}{\mathrm{LC}(g)}g
+                    \end{align*}
+                    Ainsi,
+                    \begin{align*}
+                        S(h_j, h_{j+1}) = \frac{1}{LC(h_j)}h_j - \frac{1}{LC(h_{j+1})}h_{j+1}
+                    \end{align*}
+                \end{remq}
+                De plus,
+                \begin{align*}
+                    S(h_j, h_{j+1}) &= \frac{1}{LC(h_j)}h_j - \frac{1}{LC(h_{j+1})}h_{j+1} \\
+                    &= \frac{LT(q_{i_j})}{LC(q_{i_j}g_{i_j})}g_{i_j} - \frac{LT(q_{i_{j+1}})}{LC(q_{i_{j+1}}g_{i_{j+1}})}g_{i_{j+1}} \\
+                    &= \frac{LM(q_{i_j})}{LC(g_{i_j})}g_{i_j} - \frac{LM(q_{i_{j+1}})}{LC(g_{i_{j+1}})}g_{i_{j+1}} \\
+                    &= \frac{LM(g_{i_j}q_{i_j})}{LT(g_{i_j})}g_{i_j} - \frac{LM(g_{i_{j+1}}q_{i_{j+1}})}{LT(g_{i_{j+1}})}g_{i_{j+1}} \\
+                    &= m_j S(g_{i_j}, g_{i_{j+1}})
+                \end{align*}
+                pour un certain monôme $m_j$. Donc
+                \begin{align*}
+                    f &= \sum_j LT(g_{i_j})g_{i_j} + \sum_i q_i'g_i \\
+                    &= \sum_j h_j + \sum_i q_i'g_i \\
+                    &= \sum_{j = 1}^{s-1} \left(\sum_{k = 1}^j LC(h_k) \right) S(h_j,h_{j+1}) + \sum_i q_i'g_i \\
+                    &= \sum_{j = 1}^{s-1} m_j \left(\sum_{k = 1}^j LC(h_k) \right) S(g_{i_j},g_{i_{j+1}}) + \sum_i q_i'g_i \\
+                \end{align*}
+                et $\max (LM(q_i'g_i)) < \mathbb{M}$. Par hypothèse, $\overline{S(g_{i_j}, g_{i_{j+1}})}^G = 0$. Donc l'algorithme de division multivariée donne 
+                \begin{align*}
+                    S(g_{i_j}, g_{i_{j+1}}) = \sum_{i = 1}^r b_i^jg_i
+                \end{align*}
+                Par définition de l'algorithme, chaque $b_i^jq_i$ est de multidegré au plus $mdeg(S(g_{i_j}, g_{i_{j+1}}))$. Mais alors
+                \begin{align*}
+                    \mathrm{mdeg}(m_j S(g_{i_j}, g_{i_{j+1}})) = \mathrm{mdeg}(S(h_j,h_{j+1})) < \mathbb{M}
+                \end{align*}
+                Donc
+                \begin{align*}
+                    f &= \sum_{j = 1}^{s-1} \left(\sum_{k = 1}^j LC(h_k) \right) m_j S(g_{i_j},g_{i_{j+1}}) + \sum_i q_i'g_i \\        
+                    &= \sum c_ig_i                
+                \end{align*}
+                avec $LM(c_ig_i) < \mathbb{M}$. Par récurrence sur la différence entre $LM(f) - \mathbb{M}$, on peut conclure.
+            \end{enumerate}
+        \end{proof}
+        \begin{coro} (Algorithme de Buchberger)
+            Soit $I = (f_1, \cdots, f_r) \subrel{id} k[x_1, \cdots, x_n]$. Posons $G^0 = \{f_1, \cdots, f_r\}$ et pour $n \geq 1$, on définit
+            \begin{align*}
+                G^n = G^{n-1} \cup \left\{\overline{S(f,g)}^{G^{n-1}} \mid f,g \in G^{n-1},\, \overline{S(f,g)}^{G^{n-1}} \neq 0\right\} 
+            \end{align*}
+            Alors il existe $N \in \mathbb{N}$ tel que $n \geq N \Rightarrow G^n = G^N$. Dans ce cas, $G^N$ est une bdg de $I$.
+        \end{coro}
+        \begin{proof}
+            Si $G^n = G^{n+1}$, alors par le critère de Buchberger $G^n$ est une bdg. Il faut donc montrer que la suite $(G^n)$ est stationnaire. Supposons le contraire, alors pour tout $n \geq 0$, $\exists f,g \in G^n$ tq $\overline{S(f,g)}^{G^n} \neq 0$. Par définition de l'algorithme de division multivariée, aucun des termes de $\overline{S(f,g)}^{G^n}$ n'est dans $(LT(G^n))$. En particulier, $LT(\overline{S(f,g)}^{G^n}) \notin (LT(G^n))$. On a donc $(LT(G^n)) \nsubseteq (LT(G^{n+1}))$ et donc on obtiens une suite d'idéaux strictement croissante dans $k[x_1, \cdots, x_n]$, contradiction.
+        \end{proof}
+        \begin{remq}
+            L'algorithme de Buchberger n'est pas optimal. Pour des versions optimisées, voir les algorithmes F4 et F5 (Faugère)
+        \end{remq}
 
     \section{Bases de Gröbner réduites, unicité}
         \begin{expl}
             $(x-y,y-z) = (x-z, y-z)$. Les deux couples de générateurs sont des bdg pour l'ordre lex.
         \end{expl}
-        \subsection{Définition}
-            \begin{defi} (bdg réduite)
-                Soit $G$ une bdg de $I \subrel{id} k[x_1, \cdots, x_n]$. Cette base est réduite si
-                \begin{enumerate}
-                    \item Pour tout $g \in G$, $LC(g) = 1$
-                    \item Pour tout $g,h \in G$ distincts, aucun monôme de $g$ n'est divisible par $LT(h)$.
-                \end{enumerate}
-            \end{defi}
-            \begin{theo}
-                \label{1.5.1}
-                Tout idéal $I \subrel{id} k[x_1, \cdots, x_n]$ admet une unique bdg réduite.
-            \end{theo}
-            \begin{remq}
-                La bdg réduite dépend de l'ordre monomial !
-            \end{remq}
-            On aura besoin d'outils de réduction.
-            \begin{lemm}
-                Soit $G = \{g_1, \cdots, g_r\}$ une bdg de $I$ idéal.
-                \begin{enumerate}
-                    \item Si $1 \leq i,j \leq r$ distincts sont tq $LT(g_i) \mid LT(g_j)$, alors $G \bs \{g_j\}$ est une bdg de $I$
-                    \item Si $h_1, \cdots, h_r \in I$ sont tq $\mathrm{mdeg}(h_i) = \mathrm{mdeg}(g_i)$, alors $H = (h_1, \cdots, h_r)$ est une bdg de $I$.
-                \end{enumerate}
-            \end{lemm}
-            \begin{proof}
-                \begin{enumerate}
-                    \item Comme $G$ est une bdg, $(LT(G)) = (LT(I))$. Maintenant si $LT(g_i) \mid LT(g_j)$, alors $(LT(G \bs \{g_j\})) = (LT(G))$ et donc $G \bs \{g_j\}$ est une bdg.
-                    \item $(LT(G)) = (LT(H))$ vu que $LM(G) = LM(H)$.
-                \end{enumerate}
-            \end{proof}
-            \begin{proof} (\ref{1.5.1})
-                Soit $G = (g_1, \cdots, g_r)$ une bdg de $I$.
-                \begin{enumerate}
-                    \item Divisons chaque $g_i$ par $LC(g_i)$. On peut donc supposer que $LC(g_i) = 1$.
-                    \item Chaque fois que $LT(g_i) \mid LT(g_j)$, on peut toujours retirer $g_j$ et toujours avoir une bdg. On peut donc supposer que $\forall i \neq j$, $LT(g_i) \nmid LT(g_j)$.
-                    \item Enfin, pour chaque $i$, considérons $\bar g_i^{G \bs \{g_i\}} \in I$, et par définition aucun monôme de $\bar g_i^{G \bs \{g_i\}}$ n'est divisible par un des $LT(g_j)$, et $LT\left(\bar g_i^{G \bs \{g_i\}}\right) = LT(g_i)$. Par le $2$ du lemme, alors $\left(\bar g_1^{G \bs \{g_1\}}, \cdots, \bar g_r^{G \bs \{g_r\}}\right)$ est une bdg, qui de plus est réduite.
-                \end{enumerate}
-                Ceci prouve l'existence d'une bdg réduite pour $I$. Reste à montrer l"unicité : soient $G,G'$ deus bdg réduites de $I$. Soit $g \in G$, il existe $g' \in G'$ tel que $LT(g') \mid LT(g)$. De même, il existe $g'' \in G$ tel que $LT(g'') \mid LT(g')$, et ainsi $LT(g'') \mid LT(g)$, donc $g'' = g$, et donc $LT(g') = LT(g)$. Ainsi on a montré que $LT(G) = LT(G')$. Considérons maintenant $g - g' \in I$, en particulier $\overline{g - g'}^G = 0$. Notons que si $h \in G \bs \{g\}$, alors aucun des termes de $g$ n'est divisible par $LT(h)$. De même pour $g'$, car $LT(G) = LT(G')$. De même aucun monôme de $g - g'$ n'est divisible par $LT(g)$ car $LT(g) = LT(g')$ donc $LT(g - g') < LT(g)$. D'où $\overline{g - g'}^G = g- g' = 0$ donc $g = g'$.
-            \end{proof}
-
-    \section{Théorie de l'élimination}
-        \subsection{Définition}
-            \begin{defi}
-                Soit $E \subseteq k[x_1, \cdots, x_n]$. On pose
-                \begin{enumerate}
-                    \item $E_1 = E \cap k[x_2, \cdots, x_n]$
-                    \item $E_2 = E \cap k[x_3, \cdots, x_n]$
-                    \item $\cdots$
-                    \item $E_{n-1} = E \cap k[x_n]$
-                    \item $E_n = E \cap k$
-                \end{enumerate}
-                Si $E = I$ est un idéal, les $I_i$ sont appelés idéaux d'élimination de $I$.
-            \end{defi}
-            \begin{expl}
-                $I = (x-y+1, x+y)$. Alors $I_1 = (2y - 1)$. $I_2 = \{0\}$.
-            \end{expl}
-            \begin{theo} (Théorème d'élimination)
-                Soit $I \subrel{id} k[x_1, \cdots, x_n]$, soit $<$ l'ordre lex avec $x_1 > \cdots > x_n$. Soit $G$ une bdg de $I$. Pour chaque $l \in \lcc 1,n \rcc$, une base de Gröbner de $I_l$ est $G_l$.
-            \end{theo}
-            \begin{proof}
-                Clairement, $G_l \subseteq I_l$ donc $(LT(G_l)) \subseteq (LT(I_l))$. Il faut montrer $\supseteq$. Soit $f \in I_l$. Alors $f \in I$, d'où $LT(f) \in (LT(G))$. On sait que $f \in k[x_{l+1}, \cdots, x_n]$. Soit $g \in G$ tq $LT(g) \mid LT(f)$. D'où $LT(g) \in k[x_{l+1}, \cdots, x_n]$. Comme $<$ est l'ordre lex, on en déduite que $g \in k[x_{l+1}, \cdots, x_n]$. Donc $g \in G_l$ et $LT(f) \in (LT(G_l))$.
-            \end{proof}
-            Par conséquent, une bdg pour l'ordre lex contient des éléments qui font intervenir de moins en moins de variables.
-
-        \subsection{Application 1 : Intersection d'idéaux}
-            Problème : $I = (f_1, \cdots, f_r)$, $J = (g_1, \cdots, g_s)$. Calculer des générateurs de $I \cap J$. Pour cela, on ajoute une variable $t$. 
-            \begin{nota}
-                SI $I \subrel{id} k[x_1, \cdots, x_n]$ et $f \in k[t]$, on pose
-                \begin{align*}
-                    fI = (fp \mid p \in I) \subrel{id} k[t, x_1, \cdots, x_n]
-                \end{align*}
-            \end{nota}
-            \begin{theo}
-                Avec les notations ci-dessus,
-                \begin{align*}
-                    I \cap J = (tI + (1 - t)J) \cap k[x_1, \cdots, x_n]
-                \end{align*}
-            \end{theo}
-            \begin{proof}
-                $\subseteq$ : Soit $f \in I \cap J$, alors $f = tf + (1 - t)f \in (tI + (1 - t)J)$, puis $f \in k[x_1, \cdots, x_n]$. \\
-                $\supseteq$ : Soit $f \in (tI + (1-t)J) \cap k[x_1, \cdots, x_n]$. Posons
-                \begin{align*}
-                    \begin{array}{cccc}
-                        \varepsilon_\lambda : & k[t,x_1, \cdots, x_n] & \to & k[x_1, \cdots, x_n] \\
-                        & h & \mapsto & h(\lambda, x_1, \cdots, x_n) \\
-                    \end{array}
-                \end{align*}
-                Remarquons alors que $\varepsilon_0(tI) = \{0\}$, $\varepsilon_1(tI) = I$. De même, $\varepsilon_0((1-t)J) = J$, $\varepsilon_1((1-t)J) = \{0\}$. Ecrivons $f = f' + f''$ avec $f' \in tI$, $f'' \in (1 - t)J$. Alors $\varepsilon_0(f) = \varepsilon_0(f'') \in J$. $\varepsilon_1(f) = \varepsilon_1(f') \in I$. Et $\varepsilon_0(f) = \varepsilon_1(f) = f$ vu que $f \in k[x_1, \cdots, x_n]$.
-            \end{proof}
-            \begin{coro}
-                Si $I = (f_1, \cdots, f_r)$, $J = (g_1, \cdots, g_s)$. Alors une bdf de $I \cap J$ pour l'ordre lex est obtenue en calculant une bdg de $(tI + (1 - t)J) \subrel{id} k[t, x_1, \cdots, x_n]$ et en élimnant $t$ (i.e. en prenant l'intersection avec $k[x_1, \cdots, x_n]$).
-            \end{coro}
-            
-        \subsection{Application 2 : extension}
-            Soit $k$ un corps algébriquement clos. On veut montrer le théorème suivant :
-            \begin{theo} (Théorème d'extension)
-                Soit $I = (f_1, \cdots, f_r) \subrel{id} k[x_1, \cdots, x_n]$. Notons
-                \begin{align*}
-                    f_i(x_1, \cdots, x_n) = g_i(x_2, \cdots, x_n)x_1^{N_1} + h_i
-                \end{align*}
-                où $\deg_{x_1} h_i < N_i$. Alors soit $(a_2, \cdots, a_n) \in V(I_1)$ tel que $(a_2, \cdots, a_n) \notin V(g_1, \cdots, g_r)$, il existe $a_1 \in k$ tel que $(a_1, \cdots, a_n) \in V(I)$.
-            \end{theo}
-            Pour cela, nous aurons besoin des résultants.
-
-            \subsubsection{Résultants}
-                On veut une façon de déterminer si deux polynômes ont un facteur non trivial en commun. \textbf{Idée :} soient $f,g \in k[x]$ de degré $d,e > 0$ respectivement. Alors $f$ et $g$ ont un facteur commun non constant ssi $\exists \alpha, \beta \in k[x]$ tq 
-                \begin{enumerate}
-                    \item $\alpha, \beta \neq 0$
-                    \item $\alpha f + \beta g = 0$
-                    \item $\deg \alpha < e$, $\deg \beta < d$.
-                \end{enumerate}
-                $f = \sum_{i = 0}^d a_ix^i$, $g = \sum_{i = 0}^e b_i x^i$, $\alpha = \sum_{i = 0}^{e-1} \alpha_i x^i$, $\beta = \sum_{i = 0}^{d-1} \beta_i x^i$. Il suffit de vérifier si
-                \begin{align*}
-                    (\alpha_0 + \alpha_1x + \cdots + \alpha_{e-1}x^{e-1})f + (\beta_0 + \beta_1x + \cdots + \beta_{d-1}x^{d-1})g = 0
-                \end{align*}
-                admet une solution non nulle en les $\alpha_i, \beta_i$. Ce système est donné par la matrice de Sylvester
-                \begin{align*}
-                    Syl(f,g,x) =
-                    \begin{bmatrix}
-                        \alpha_0 & 0 & \cdots & 0 & \beta_0 & 0 & \cdots & 0 \\
-                        \alpha_1 & \alpha_0 & \ddots & \vdots & \beta_1 & \beta_0 & \ddots & \vdots \\
-                        \vdots & \alpha_1 & \ddots & 0 & \vdots & \beta_1 & \ddots & 0 \\
-                        \alpha_{d-1} & \vdots & \ddots & \alpha_0 & \beta_{e-1} & \vdots & \ddots & \beta_0 \\
-                        \alpha_d & \alpha_{d-1} & & \alpha_1 & \beta_e & \beta_{e-1} & & \beta_1 \\
-                        0 & \alpha_d & \ddots & \vdots & 0 & \beta_e & \ddots & \vdots \\
-                        \vdots & \ddots & \ddots & \alpha_{d-1} & \vdots & \ddots & \ddots & \beta_{e-1} \\
-                        0 & \cdots & 0 & \alpha_d & 0 & \cdots & 0 & \beta_e \\
-                    \end{bmatrix}
-                    \in \mathrm{M}_{d+e}(k)
-                \end{align*}
-                \begin{defi}
-                    Le résultant de $f$ et $g$ est $Res(f,g,x) := \det Syl(f,g,x)$
-                \end{defi}
-                \begin{prop}
-                    $Res(f,g,x) = 0 \iff f$ et $g$ ont un facteur non constant en commun.
-                \end{prop}
-                \begin{prop}
-                    Fixons $d,e \geq 1$. Il existe $A,B \in \mathbb{Z}[X_0, \cdots, X_d, Y_0, \cdots,n Y_e, x]$ tq pour tout $f,g \in k[x]$ avec $\deg f , \deg g = d,e$, on a 
-                    \begin{align*}
-                        Res(f,g,x) = A(a_0, \cdots, a_d, b_0, \cdots, b_e, x) f +  B(a_0, \cdots, a_d, b_0, \cdots, b_e, x) g
-                    \end{align*}
-                \end{prop}
-                \begin{proof}
-                    $Syl(f,g,x)$ est la matrice de l'application linéaire 
-                    \begin{align*}
-                        \begin{array}{cccc}
-                            \varphi : & k[x]_{<e} \times k[x]_{<d} & \to & k[x]_{<e + d}\\
-                            & (\alpha, \beta) & \mapsto & \alpha f + \beta g \\
-                        \end{array}
-                    \end{align*}
-                    dans les bases canoniques de $k[x]_{<e}, k[x]_{<d}$. Soit $M$ la transposée de la comatrice de $Syl(f,g,x)$. Alors par définition,
-                    \begin{align*}
-                        Syl(f,g,x) M = Res(f,g,x) I_{d+e}
-                    \end{align*}
-                    donc
-                    \begin{align*}
-                        Syl(f,g,x) M \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix} = \begin{bmatrix} Res(f,g,x) \\ 0 \\ \vdots \\ 0 \end{bmatrix}
-                    \end{align*}
-                    Maintenant $M$ times vecteur est un vecteur dont les coord sont des polynômes évalués en les $a_i$ et $b_j$. Ainsi
-                    \begin{align*}
-                        \varphi(P_0 + P_1X + \cdots + P_{e-1}X^{e-1}, Q_0 + Q_1X + \cdots + Q_{d-1}X^{d-1}) = Res(f,g,x)
-                    \end{align*}
-                    où $P_i, Q_j \in \mathbb{Z}[a_i, b_j]$. 
-                    \begin{align*}
-                        \Rightarrow (P_0 + P_1X + \cdots + P_{e-1}X^{e-1}) f + (Q_0 + Q_1X + \cdots + Q_{d-1}X^{d-1}) g = Res(f,g,x)
-                    \end{align*}
-                    Ainsi on pose $A = P_0 + P_1X + \cdots + P_{e-1}X^{e-1}$, $B = Q_0 + Q_1X + \cdots + Q_{d-1}X^{d-1}$.
-                \end{proof}
-                \begin{remq}
-                    La proposition et sa preuve restent vraies si on remplace $k$ par un anneau commutatif.
-                \end{remq}
-            
-            \subsubsection{Théorème d'extension}
-                $f,g \in k[x_1, \cdots, x_n]$, alors $Res(f,g,x_1) \in k[x_2, \cdots, x_n]$. Notons $I = (f_1, \cdots, f_r) \subrel{id} k[x_1, \cdots, x_n]$, pour tout $i$
-                \begin{align*}
-                    f_i = g_i(x_2, \cdots, x_n) x_1^{N_1} + \text{ termes de } \deg_{x_1} < N_1
-                \end{align*}
-                \begin{lemm}
-                    \label{lemm161}
-                    Le théorème d'extension est vrai pour $n = 2$.
-                \end{lemm}
-                \begin{proof}
-                    Notons $\deg f_1 = d$, $\deg f_2 = e$. Alors il existe $A,B \in \mathbb{Z}[X_0, \cdots, X_d, Y_0, \cdots, Y_e, x_1, \cdots, x_n]$. Alors
-                    \begin{align*}
-                        Res(f_1, f_2, x_1) = &A(a_0, \cdots, a_d, b_0, \cdots, b_e, x_2, \cdots, x_n, x_1) f_1 + \\
-                        &B(a_0, \cdots, a_d, b_0, \cdots, b_e, x_2, \cdots, x_n, x_1) f_2
-                    \end{align*}
-                    Le membre de droite de cette égalité est dans $I$, et $Res(f_1, f_2, x_1) \in k[x_1, \cdots, x_n]$. Ainsi $Res(f_1, f_2, x_1) \in I \cap k[x_2, \cdots, x_n] = I_1$. Soit $(c_2, \cdots, c_b) \in V(I_1)$. En particulier, $Res(f_1, f_2, x_1)(c_2, \cdots, c_n) = 0$. On cherche $c_1 \in k$ solution commune de $f_1(x_1, c_2, \cdots, c_n) = 0$ et $f_2(x_1, c_2, \cdots, c_n)$. Comme $k$ est algébriquement clos, $f_1(x_1, c_2, \cdots, c_n)$ et $f_2(x_1, c_2, \cdots, c_n)$ ont un zéro commun si et seulement si leur pgcd est non trivial ssi leur résultat s'annule. Maintenant 
-                    \begin{align*}
-                        Res(f_1(x_1, c_2, \cdots, c_n), f_2(x_1, c_2, \cdots, c_n), x_1) = Res(f_1(x_1, \cdots, x_n), f_1(x_1, \cdots, x_n), x_1)(c_2, \cdots, c_n)
-                    \end{align*}
-                    En effet, on a supposé que $(c_2, \cdots, c_n) \notin V(g_1, g_2)$, et alors deux cas se présentent : 
-                    \begin{enumerate}
-                        \item aucun des $g_i$ ne s'annule en $(c_2, \cdots, c_n)$, dans ce cas
-                        \begin{align*}
-                            \deg_{x_1} f_i(x_1, c_2, \cdots, c_n) = \deg_{x_1} f(x_1, \cdots, x_n)
-                        \end{align*}
-                        et donc l'égalité précédente est vraie.
-                        \item l'un des $g_i$ s'annule en $(c_2, \cdots, c_n)$. Sans perte de généralité, supposons que $g_2$ s'annule (et donc $g_1$ ne s'annule pas) en $(c_2, \cdots, c_n)$. En remplaçant $f_2$ par $f_2' = f_2 + x_1^Nf_1$, avec $N >> 0$ ($N \geq \deg_{x_1}f_2$), on se ramène au cas 1 en remarquant que $f_1,f_2$ one une solution commune en $c_1$ si et seulement si $f_1, f_2'$ ont une solution commune en $c_1$.
-                    \end{enumerate}
-                    d'où $f_1(x_1, c_2, \cdots, c_n)$ et $f_2(x_1, c_2, \cdots, c_n)$ ont un zéro communt $c_1$.
-                \end{proof}
-                \begin{defi}
-                    Soient $f_1, \cdots, f_r \in k[x_1, \cdots, x_n]$. Considérons 
-                    \begin{align*}
-                        u_2f_2 + \cdots + u_rf_r \in k[x_1, \cdots, x_n, u_2, \cdots, u_r]
-                    \end{align*}
-                    Alors
-                    \begin{align*}
-                        Res(f_1, u_2f_2 + \cdots + u_rf_r, x_1) = \sum_{\alpha \in \mathbb{N}^{r-1}} h_\alpha(x_2, \cdots, x_n) u^\alpha \in k[x_2, \cdots, x_n, u_2, \cdots, u_r]
-                    \end{align*}
-                    et les $h_\alpha \in k[x_1, \cdots, x_n]$ sont les résultants généralisés de $f_1, \cdots, f_r$ par rapport à $x_1$.
-                \end{defi}
-                \begin{proof} (Théorème d'extension)
-                    On cherche une racine commune aux $f_i(x_1, c_2, \cdots, c_n)$. Le cas $r = 2$ a été fait dans le lemme \ref{lemm161}. Ainsi supposons que $r \geq 3$, et supposons sans perte de généralité que $g_1(c_2, \cdots, c_n) \neq 0$. On a
-                    \begin{align*}
-                        Res(f_1, u_2f_2 + \cdots + u_rf_r, x_1) = \sum_{\alpha \in \mathbb{N}^{r-1}} h_\alpha(x_2, \cdots, x_n) u^\alpha 
-                    \end{align*}
-                    Montrons que $h_{\alpha} \in I_1$, pour tout $\alpha \in \mathbb{N}^{r-1}$. Par la proposition, il existe
-                    \begin{align*}
-                        \tilde A, \tilde B \in \mathbb{Z}[u_2, \cdots, u_r, x_1, \cdots, x_n, X_0, \cdots, X_d, Y_0, \cdots, Y_e]
-                    \end{align*}
-                    tq 
-                    \begin{align*}
-                        Af_A + B(u_2f_2 + \cdots + u_rf_r) = Res(f_1, u_2f_2 + \cdots + u_rf_r, x_1)
-                        = \sum_{\alpha \in \mathbb{N}^{r-1}} h_\alpha(x_2, \cdots, x_n) u^\alpha 
-                    \end{align*}
-                    où $A,B$ sont des évaluations de $\tilde A$ et $\tilde B$. Ecrivons
-                    \begin{align*}
-                        &A = \sum_{\alpha} A_\alpha u^\alpha \\
-                        &B = \sum_{\alpha} B_\alpha u^\alpha \\
-                    \end{align*}
-                    Alors
-                    \begin{align*}
-                        \sum_\alpha h_\alpha u^\alpha &= \sum_\alpha (\underbrace{A_\alpha f_1}_{\in I}) u^\alpha + \sum_{i = 2}^r \sum_\beta (\underbrace{B_\beta f_i}_{\in I}) u^{\beta + e_i} 
-                    \end{align*}
-                    où $e_i = (0, \cdots, 0, 1, 0, \cdots, 0)$ (le $1$ est à la $i$-ème position). Par comparaison des coeffs devant chaque $u^\alpha$, on obtient que $h_\alpha \in I$ pour tout $\alpha \in \mathbb{N}^{r-1}$. Par définition, $h_\alpha \in k[x_2, \cdots, x_n]$ donc $h_\alpha \in I_1$. En particulier, $h_\alpha(c_2, \cdots, c_n) = 0$ pour tout $\alpha \in \mathbb{N}^{r-1}$.
-                    \begin{enumerate}
-                        \item Supposons que $g_2(c_2, \cdots, x_n) \neq 0$ et $\deg_{x_1} f_2 > \max(\deg_{x_1}(f_i))_{3 \leq i \leq r}$. Alors
-                        \begin{align*}
-                            \deg_{x_1}(u_2f_2 + \cdots + u_rf_r) = \deg_{x_1}((u_2f_2 + \cdots + u_rf_r)(c_2, \cdots, c_n))
-                        \end{align*}
-                        Alors 
-                        \begin{align*}
-                            0 = Res(f_1, u_2f_2 + \cdots + &u_rf_r, x_1)(c_2, \cdots, c_n) = \\
-                            &Res(f_1(c_2, \cdots, c_n), u_2f_2(c_2, \cdots, c_n) + \cdots + u_rf_r(c_2, \cdots, c_n), x_1)
-                        \end{align*}
-                        Alors $f_1(x_1, c_2, \cdots, c_n)$ et $\sum_{i = 2}^r u_if_i(x_1, c_2, \cdots, c_n)$ ont un facteur en commun non constant dans $k[u_2, \cdots, u_r][x_1]$. Comme $f_1(x_1, c_2, \cdots, c_n) \in k[x_1]$, ce facteur commun $D(x_1)$ est dans $k[x_1]$. En évaluant $u_j$ en $1$ et $u_k$ en $0$ pour $k \neq j$, on obtient que $D(x_1) \mid f_j(x_2, c_2, \cdots, c_n)$ pour chaque $j$. Ainsi il existe $c_1 \in k$ tq $f_i(c_1, \cdots, c_n) = 0$ pour tout $i$ (on prend une racine de $D$, qui existe car $k = \bar k$).
-                        \item On se ramène au cas 1 en remplaçant $f_2$ par $x_1^Nf_1 + f_2$ avec $N$ suffisament grand.
-                    \end{enumerate}
-                \end{proof}
-
-        \subsection{Application 3 : variétés paramétrées}
-            Une variété est $V(I)$, $I \subrel{id} k[x_1, \cdots, x_n]$. Paramètres ? $x = t$, $y = 2t$ est une paramtrisation d'une variété $V(y - 2x)$. Donnons un autre exemple : $x = t^2$, $y = t^3$ est la paramétrisation de $V(y^2 - x^3)$. Un dernier exemple : $x = s^2 + t^2$, $y = s^2 - t^2$, $z = st$. Il est difficile de savoir directement si c'est une variété. Formalisme : on a des équations polynomiales 
-            \begin{align*}
-                \begin{cases}
-                    x_1 = f_1(t_1, \cdots, t_m) \\
-                    \vdots \\
-                    x_n = f_n(t_1, \cdots, t_m) \\
-                \end{cases}
-            \end{align*}
-            De façon équivalente, on a un morphisme de variétés
-            \begin{align*}
-                \begin{array}{cccc}
-                    F : & \mathbb{A}^m & \to & \mathbb{A}^n \\
-                    & (t_1, \cdots, t_m) & \mapsto & (f_1(t_1, \cdots, t_m), \cdots, f_n(t_1, \cdots, t_m)) \\
-                \end{array}
-            \end{align*}
-            Quetion : quelle est la plus petite variété contenant $F(\mathbb{A}^m)$ ? Idée : considérer le graphe de $F$ : $\{(\underline{t}, F(\underline{t})) \in \mathbb{A}^m \times \mathbb{A}^n\}$. C'est l'ensemble $V(x_1 - f_1, \cdots, x_n - f_n) \subseteq \mathbb{A}^m \times \mathbb{A}^n$. Considérons le diagramme commutatif
-            \begin{figure}[H]
-                \centering
-                \begin{tikzcd}
-                    & \mathbb{A}^m \times \mathbb{A}^n \arrow[rd, "p"] &              \\
-\mathbb{A}^m \arrow[rr, "F"'] \arrow[ru, "i", hook] &                                                  & \mathbb{A}^n
-\end{tikzcd}
-            \end{figure}
-            où $i$ est l'inclusion
-            \begin{align*}
-                \begin{array}{cccc}
-                    i : & \mathbb{A}^m & \to & \mathbb{A}^m \times \mathbb{A}^n \\
-                    & t & \mapsto & (t, f(t))\\
-                \end{array}
-            \end{align*}
-            et $p$ la projection sur la deuxième coordonnée.
-            \begin{theo} \label{implicitisation} (Implicitisation)
-                Soit $k$ un corps infini, notons \linebreak $I = (x_i - f_i \mid 1 \leq i \leq n) \subrel{id} k[t_1, \cdots, t_m, x_1, \cdots, x_n]$. Alors $\overline{F(\mathbb{A}^m)} = V(I_m)$ où $I_m$ est l'idéal d'élimination $I \cap k[x_1, \cdots, x_n]$.
-            \end{theo}
-            On montre d'abord le cas où $k = \bar k$.
-            \begin{theo} (Théorème de cloture)
-                Supposons que $k$ est algébriquement clos. Soit $I = (f_1, \cdots, f_r) \subrel{id} k[x_1, \cdots, x_n]$. Soit $1 \leq l \leq n$ un entier et considérons $I_l$. Enfin soit
-                \begin{align}
-                    \begin{array}{cccc}
-                        \pi_l : & \mathbb{A}^n & \to & \mathbb{A}^{n-l} \\
-                        & (x_1, \cdots, x_n) & \mapsto & (x_{l+1}, \cdots, x_n) \\
-                    \end{array}
-                \end{align}
-                Alors $\overline{\pi_l(V(I))} = V(I_l)$.  
-            \end{theo}
-            \begin{proof}
-                Découle du nullstellensatz : déja, $\pi_l(V(I)) \subseteq(I_l)$. En effet, si $(a_1, \cdots, a_n) \in V(I)$, alors $\pi_l(a_1, \cdots, a_n) = (a_{l+1}, \cdots, a_n)$. Mais si $g \in I_l$, alors $g \in I$ donc $g(a_1, \cdots, a_n) = 0$ puis $g$ ne fait pas intervenir les $l$ premières variables. Ainsi $(a_{l+1}, \cdots, a_n) \in V(I_l)$. Soit $f \in I(\pi_l(V(I))) \subseteq k[x_{l+1}, \cdots, x_n]$, puis considérons $f$ comme élément de $k[x_1, \cdots, x_n]$. Alors $f \in I(V(I))$ puisque $f$ ne fait pas intervenir les $l$ première variables. Ainsi $\exists N > 0$ tel que $f^N \in I$. Mais $f$ ne fait pas intervenir les $l$ premières variables, donc $f^N \in I_l$. et ainsi $f \in \sqrt{I_l} = I(V(I_l))$. Donc $I(\pi_l(V(I))) \subseteq I(V(I_l))$.  On applique $V$ : 
-                \begin{align*}
-                    V(I_l) \supseteq V(I(\pi_l(V(I)))) \supseteq V(I(V(I_l))) \supseteq V(\sqrt{I_l}) = V(I_l)
-                \end{align*}
-                donc toutes ces inclusions sont des égalités. 
-            \end{proof}
-            \begin{proof} (\ref{implicitisation})
-                \item \textbf{Cas 1 : $k$ algébriquement clos} On veut montrer que $\overline{F(\mathbb{A}^n)} = V(I_m)$ où $I = (x_i - f_i)$. Le théorème de cloture appliqué à $p$ et $V(I)$ : $\overline{p(V(I))} = V(I_m)$. Mais $p(V(I)) = F(\mathbb{A}^n)$.
-                \item \textbf{Cas 2 : $k$ n'est pas algébriquement clos} Soit $\bar k$ sa clôture algébrique. Le morphisme $F : \mathbb{A}^m_k \to \mathbb{A}^n_k$ s'étend naturellement en un morphisme $\bar F : \mathbb{A}^n_{\bar k} \to \mathbb{A}^m_{\bar k}$ qui envoie $\underline{t}$ sur $\underline{f}(\underline{t})$. Notons $\bar I = (x_i - f_i) \subrel{id} \bar k[x_1, \cdots, x_n]$. Par ce qui précède, $\overline{\bar F(\mathbb{A}^n_{\bar k})} = V((\bar I)_m)$. Or les générateurs de $(\bar I)_m$ dans une BDG pour l'odre lex sont dans $k[x_1, \cdots, x_n]$, et ainsi $(\bar I)_m = \overline{I_m}$. Finalement, on a (comme précédemment) que $F(\mathbb{A}^m_k) \subseteq V(I_m)$. Supposons que $V(J)$ est une autre variété tq $F(\mathbb{A}^m_k) \subseteq V(J) \subseteq V(I_m)$ où $J \subrel{id} k[x_1, \cdots, x_n]$. Prenons $g \in J$, alors $g \circ F \in k[t_1, \cdots, t_m]$. Alors $g \circ F$ s'annule sur $\mathbb{A}^m$ (car $F(\mathbb{A}^m_k) \subseteq V(J)$). Comme le corps est ifini, $g \circ F = 0$. En particulier, $g \circ F$, vu comme élément de $\bar K[t_1, \cdots, t_n]$ s'annule sur $\mathbb{A}^m_{\bar k}$ et est donc nul. Donc
-                \begin{align*}
-                    \bar F(\mathbb{A}^m_{\bar k}) \subseteq V(\bar J)
-                \end{align*}
-                Or $\overline{\bar F(\mathbb{A}^n_{\bar k})} = V(\bar I_m)$. Ainsi $V(\bar I_m) \subseteq V(\bar J)$, donc $V(I_m) \subseteq V(J)$.
-            \end{proof}
-
-    \section{Changements de bases de Grobner}
-        \begin{defi}
-            Soit $M \in M_{m,n}(\mathbb{R})$. On définit une relation $<_M$ sur $\mathbb{N}^n$ de la façon suivante :
-            \begin{align*}
-                \alpha <_M \beta &\iff M \alpha <_{lex} M \beta \\
-            \end{align*}
+        \begin{defi} (bdg réduite)
+            Soit $G$ une bdg de $I \subrel{id} k[x_1, \cdots, x_n]$. Cette base est réduite si
+            \begin{enumerate}
+                \item Pour tout $g \in G$, $LC(g) = 1$
+                \item Pour tout $g,h \in G$ distincts, aucun monôme de $g$ n'est divisible par $LT(h)$.
+            \end{enumerate}
         \end{defi}
-        \begin{expl}
-            Sur $k[x_1, x_2, x_3]$, $I_3$ convient pour $<_{lex}$,
-            \begin{align*}
-                \begin{bmatrix}
-                    1 & 1 & 1 \\
-                    1 & 0 & 0 \\
-                    0 & 1 & 0 \\
-                    0 & 0 & 1 \\
-                \end{bmatrix}
-            \end{align*}
-            convient pour $<_{deglex}$,
-            \begin{align*}
-                \begin{bmatrix}
-                    1 & 1 & 1 \\
-                    0 & 0 & -1 \\
-                    0 & -1 & 0 \\
-                    -1 & 0 & 0 &\\
-                \end{bmatrix}
-            \end{align*}
-            convient pour $<_{degrevlex}$.
-        \end{expl}
+        \begin{theo}
+            \label{1.5.1}
+            Tout idéal $I \subrel{id} k[x_1, \cdots, x_n]$ admet une unique bdg réduite.
+        \end{theo}
+        \begin{remq}
+            La bdg réduite dépend de l'ordre monomial !
+        \end{remq}
+        On aura besoin d'outils de réduction.
+        \begin{lemm}
+            Soit $G = \{g_1, \cdots, g_r\}$ une bdg de $I$ idéal.
+            \begin{enumerate}
+                \item Si $1 \leq i,j \leq r$ distincts sont tq $LT(g_i) \mid LT(g_j)$, alors $G \bs \{g_j\}$ est une bdg de $I$
+                \item Si $h_1, \cdots, h_r \in I$ sont tq $\mathrm{mdeg}(h_i) = \mathrm{mdeg}(g_i)$, alors $H = (h_1, \cdots, h_r)$ est une bdg de $I$.
+            \end{enumerate}
+        \end{lemm}
+        \begin{proof}
+            \begin{enumerate}
+                \item Comme $G$ est une bdg, $(LT(G)) = (LT(I))$. Maintenant si $LT(g_i) \mid LT(g_j)$, alors $(LT(G \bs \{g_j\})) = (LT(G))$ et donc $G \bs \{g_j\}$ est une bdg.
+                \item $(LT(G)) = (LT(H))$ vu que $LM(G) = LM(H)$.
+            \end{enumerate}
+        \end{proof}
+        \begin{proof} (\ref{1.5.1})
+            Soit $G = (g_1, \cdots, g_r)$ une bdg de $I$.
+            \begin{enumerate}
+                \item Divisons chaque $g_i$ par $LC(g_i)$. On peut donc supposer que $LC(g_i) = 1$.
+                \item Chaque fois que $LT(g_i) \mid LT(g_j)$, on peut toujours retirer $g_j$ et toujours avoir une bdg. On peut donc supposer que $\forall i \neq j$, $LT(g_i) \nmid LT(g_j)$.
+                \item Enfin, pour chaque $i$, considérons $\bar g_i^{G \bs \{g_i\}} \in I$, et par définition aucun monôme de $\bar g_i^{G \bs \{g_i\}}$ n'est divisible par un des $LT(g_j)$, et $LT\left(\bar g_i^{G \bs \{g_i\}}\right) = LT(g_i)$. Par le $2$ du lemme, alors $\left(\bar g_1^{G \bs \{g_1\}}, \cdots, \bar g_r^{G \bs \{g_r\}}\right)$ est une bdg, qui de plus est réduite.
+            \end{enumerate}
+            Ceci prouve l'existence d'une bdg réduite pour $I$. Reste à montrer l"unicité : soient $G,G'$ deus bdg réduites de $I$. Soit $g \in G$, il existe $g' \in G'$ tel que $LT(g') \mid LT(g)$. De même, il existe $g'' \in G$ tel que $LT(g'') \mid LT(g')$, et ainsi $LT(g'') \mid LT(g)$, donc $g'' = g$, et donc $LT(g') = LT(g)$. Ainsi on a montré que $LT(G) = LT(G')$. Considérons maintenant $g - g' \in I$, en particulier $\overline{g - g'}^G = 0$. Notons que si $h \in G \bs \{g\}$, alors aucun des termes de $g$ n'est divisible par $LT(h)$. De même pour $g'$, car $LT(G) = LT(G')$. De même aucun monôme de $g - g'$ n'est divisible par $LT(g)$ car $LT(g) = LT(g')$ donc $LT(g - g') < LT(g)$. D'où $\overline{g - g'}^G = g- g' = 0$ donc $g = g'$.
+        \end{proof}

@@ -1,4 +1,43 @@
 \chapter{TD2}
+    \section{Exercice 1}
+        \begin{question}{1)}
+            Montrons que $D(f) \cap D(g) = D(fg)$ : en passant au complémentaire, il faut montrer que $V(fg) = V(f) \cup V(g)$, ce que l'on sait vrai d'après le cours.
+        \end{question}
+        \begin{question}{2)}
+            Soit $U = \mathbb{A}^n \bs V(I)$ un ouvert de $\mathbb{A}^n$, avec $I \subrel{id} k[x_1, \cdots, x_n]$. Alors
+            \begin{align*}
+                V(I) &= V\left( \bigcup_{f \in I} (f) \right) \\
+                &= \bigcap_{f \in I} V((f))
+            \end{align*}
+            donc finalement
+            \begin{align*}
+                U = \bigcup_{f \in I} D(f)
+            \end{align*}
+            en passant au complémentaire.
+        \end{question}
+        \begin{question}{3)}
+            $D(f) = \emptyset \iff V((f)) = \mathbb{A}^n_k \iff \forall x \in k^n,\, f(x) = 0 \iff f = 0$, la dernière équivalence provenant du fait que $|k| = \infty$ (résultat que l'on a prouvé par récurrence en td).
+        \end{question}
+        \begin{question}{4)}
+            On utilise les questions précédentes : comme les ensembles $D(f)$ forment une base pour la topologie de $\mathbb{A}^n$ (question 2), et que $U,V \neq \emptyset$, pour tout $x \in U$, $y \in V$, il existe $f,g \in k[x_1, \cdots, x_n]$ tels que $x \in D(f) \subseteq U$ et $y \in D(g) \subseteq V$. Maintenant $D(f) \cap D(g) = D(fg)$ (question 1) mais alors si $D(f) \cap D(g) = \emptyset$, alors $fg = 0$ (question 3) donc $f = 0$ ou $g = 0$ et donc $D(f) = \emptyset$ ou $D(g) = \emptyset$, absurde. Ainsi, $D(f) \cap D(g)$ est non vide, et donc $U \cap V \neq \emptyset$.
+        \end{question}
+
+    \section{Exercice 2}
+        On a
+        \begin{align*}
+            \bigcup_{i \in I} D(P_i) &= \mathbb{A}^n \bs \bigcap_{i \in I} V(P_i) \\
+            &= \mathbb{A}^n \bs V(\bigcup_{i \in I} \{P_i\}) \\
+            &= \mathbb{A}^n \bs V((P_1, \cdots, P_r)) \\
+        \end{align*}
+        mais $1 \in (P_1, \cdots, P_r)$ donc
+        \begin{align*}
+            \bigcup_{i \in I} D(P_i) &= \mathbb{A}^n \bs V(k[X_1, \cdots, X_n]) \\
+            &= \mathbb{A}^n \bs \emptyset = \mathbb{A}^n \\
+        \end{align*}
+
+    \section{Exercice 3}
+        Considérons l'ouvert $U = \mathbb{A}^n \bs V$. Alors comme les $D(f)$ forment une base pour la topologie de $\mathbb{A}^n$, il existe $f \in k[X_1, \cdots, X_n]$ tel que $x \in D(f) \subseteq U$. Mais alors $f(x) \neq 0$ comme $x \in D(f)$, puis $V = \mathbb{A}^n \bs U \subseteq \mathbb{A}^n \bs D(f) = V(f)$ donc pour tout $y \in V$, $f(y) = 0$. Ainsi quitte a renormaliser $f$ (en $f/f(x)$), il existe $f \in k[X_1, \cdots, X_n]$ tel que $f(x) = 1$ et $f(y) = 0$ pour tout $y \in V$.
+
     \section{exercice 4}
         Soient $V_1, V_2 \subseteq X$ des fermés tels que $X = V_1 \cup V_2$. Alors $U_1 = (V_1 \cap U_1) \cup (V_2 \cap U_1)$ et $U_2 = (V_1 \cap U_2) \cup (V_2 \cap U_2)$. Maintenant, par irrécuctibilité de $U_1$ et $U_2$, 4 cas se présentent :
         \begin{enumerate}
@@ -6,7 +45,85 @@
             \item $U_1 = (V_2 \cap U_1)$, $U_2 = (V_2 \cap U_2)$. Alors $U_1, U_2 \subseteq V_2$ et ainsi $X \subseteq V_2$.
             \item $U_1 = (V_1 \cap U_1)$, $U_2 = (V_2 \cap U_2)$. Ainsi $U_1 \subseteq V_1$ et $U_2 \subseteq V_2$. Maintenant considérons $X \bs U_1 \subseteq U_2$ et $F_1 \cap U_2 \subseteq U_2$. Alors
             \begin{align*}
-                (F_1 \cap U_2) \cup (X \bs U_1) &= (F_1 \cap U_2) \cup (U_2 \bs (U_1 \cap U_2)) \supseteq (U_1 \cap U_2) \cup (U_2 \bs (U_1 \cap U_2)) = U_2
+                (V_1 \cap U_2) \cup (X \bs U_1) &= (V_1 \cap U_2) \cup (U_2 \bs (U_1 \cap U_2)) \supseteq (U_1 \cap U_2) \cup (U_2 \bs (U_1 \cap U_2)) = U_2
             \end{align*}
-            donc finalement $U_2 = (F_1 \cap U_2) \cup (X \bs U_1)$. Mais alors soit $U_2 = $
+            donc finalement $U_2 = (V_1 \cap U_2) \cup (X \bs U_1)$. Mais alors soit $U_2 = V_1 \cap U_2$ du fait que $U_1 \cap U_2 \neq \emptyset$ et donc forcément $U_2 \neq X \bs U_1$. Ainsi $U_2 \subseteq V_1$ donc $X \subseteq V_1$.
+            \item Le dernier cas $U_1 = (V_2 \cap U_1)$, $U_2 = (V_1 \cap U_2)$ se traite comme le précédent, en inversant $V_1$ et $V_2$.
         \end{enumerate}
+        Dans tous les cas, $X$ est irréductible.
+
+    \section{Exercice 5}
+        \begin{question}{1.}
+            \item Si $\sqrt{I} = \sqrt{J}$, $V(I) = V(\sqrt{I}) = V(\sqrt{J}) = V(J)$.
+            \item Si $V(I) = V(J)$, alors $\sqrt{I} = I(V(I)) = I(V(J)) = \sqrt{J}$ d'après le nullstellensatz.
+        \end{question}
+        \begin{question}{2.}
+            \begin{align*}
+                &V(I(V_1 \cap V_2)) = V_1 \cap V_2 \\
+                &V(\sqrt{I(V_1) + I(V_2)}) = V(I(V_1) + I(V_2)) = V(I(V_1)) \cap V(I(V_2)) = V_1 \cap V_2 \\
+            \end{align*}
+            donc $I(V_1 \cap V_2) = \sqrt{I(V_1 \cap V_2)} = \sqrt{I(V_1) + I(V_2)}$.
+        \end{question}
+
+    \section{Exercice 6}
+        \begin{question}{1.}
+            L'application est régulière : en considérant les polynômes $P := X^2 - 1, Q := X(X^2 - 1) \in k[X]$, alors $f(t) = (P(t), Q(t))$. Elle n'est cependant pas bijective, par exemple $-1$ et $1$ ont la même image par $f$.
+        \end{question}
+        \begin{question}{2.}
+            Le foncteur $k[-]$ est pleinement fidèle, donc il préserve et réfléchis les isomorphismes. Ainsi $f^* = k[f]$ n'est pas un isomorphisme, puisque $f$ n'est n'est pas un, n'étant pas bijectif.
+        \end{question}
+        \begin{question}{3.}
+            Montrons que $k[V]$ n'est pas factoriel, alors comme $k[\mathbb{A}^1] \simeq k[X]$ est factoriel, on ne peut pas avoir $k[V] \simeq k[X]$. Par définition,
+            \begin{align*}
+                k[V] = k[X,Y]/I(V)
+            \end{align*}
+            Calculons $I(V)$ : pour cela, dans un premier temps montrons que $V = \{(t^2 - 1, t(t^2 - 1)) \mid t \in k \} =: W$ :
+            \begin{enumerate}
+                \item Soit $(x,y) \in W$, alors il existe $t \in k$ tel que $(x,y) = (t^2 - 1, t(t^2 - 1))$. Mais
+                \begin{align*}
+                    (t(t^2 - 1))^2 - (t^2 - 1)^2(t^2 - 1 + 1)= 0
+                \end{align*}
+                donc $(x,y) \in V$.
+                \item Soit $(x,y) \in V$, alors $y^2 - x^2(x+1) = 0$. Si $x = 0$, alors $y = 0$ et en prenant $t = 1 \in k$, on a bien $(x,y) = (t^2 - 1, t(t^2 - 1))$. Sinon, posons $t = y/x$, alors 
+                \begin{align*}
+                    &t^2 - 1 = \left( \frac yx \right)^2 - 1 = x \\
+                    &t(t^2 - 1) = \frac yx x = y \\
+                \end{align*}
+            \end{enumerate}
+            Ainsi on a bien $V = W$. Finalement, prouvons que $I(V) = (Y^2 - X^2(X + 1))$ : $\supseteq$ est toujours vraie, montrons $\subseteq$. Soit $P \in I(V)$, alors \cor{A finir, préciser si le corps est infini ? algébriquement clos ?}
+        \end{question}
+        \begin{question}{4.}
+            Comme $k[W]$ n'est pas isomorphe à $k[\mathbb{A}^1]$, toujours du fait que $k[-]$ est pleinement fidèle, $W$ et $\mathbb{A}^1$ ne sont pas isomorphes.
+        \end{question}
+
+    \section{Exercice 7}
+        Pour que cet exercice soit juste, il faut supposer que $k$ est infini. Remarquons qu'en toute généralité, on a toujours $k[V] \simeq k[\mathbb{A}^1]$ mais $k[\mathbb{A}^1]$ n'est pas forcément isomorphe à $k[T]$ si $k$ n'est pas infini (considérer par exemple $k = \mathbb{F}_2$).
+        \begin{enumerate}
+            \item Première méthode : $f$ est un isomorphisme, d'inverse
+            \begin{align*}
+                \begin{array}{cccc}
+                    g : & V & \to & \mathbb{A}^1 \\
+                    & (x,y,z) & \mapsto & x \\
+                \end{array}
+            \end{align*}
+            Ainsi $f^* : k[V] \to k[\mathbb{A}^1]$ est un isomorphisme d'inverse $g^*$ par fonctorialité de $^*$. Finalement, comme $k$ est infini, $k[\mathbb{A}^1] \simeq k[T]$ (voir les exercices précédents, les fonctions polynomiales s'identifient aux polynômes dans ce cas).
+            \item Deuxième méthode : montrons que
+            \begin{align*}
+                \begin{array}{cccc}
+                    \varphi : & k[X,Y,Z] & \to & k[T] \\
+                    & X & \mapsto & T \\
+                    & Y & \mapsto & T^2 \\
+                    & Z & \mapsto & T^3 \\
+                \end{array}
+            \end{align*}
+            est un isomorphisme est de noyau $I(V)$ : si $P \in \ker \varphi$, alors $P(T,T^2,T^3) = 0$ et ainsi pour tout $(x,y,z) \in V$, $\exists t \in k$ tel que $(x,y,z) = (t,t^2,t^3)$ et donc $P(t,t^2,t^3) = 0$ et $P \in I(V)$. Réciproquement, si $P \in I(V)$, alors pour tout $t \in k$, $P(t, t^2, t^3) = 0$. Ainsi comme $k$ est infini, $P(T,T^2,T^3) = 0 \in k[T]$ et $P \in \ker \varphi$. Pour terminer, remarquons que $\varphi$ est surjective, ce qui prouve que $k[V] = k[X,Y,Z]/I(V) = k[X,Y,Z]/\ker \varphi \simeq k[T]$.
+        \end{enumerate}
+
+    \section{Exercice 8}
+        \cor{A faire}
+    
+    \section{Exercice 9}
+        Soient $V_1, V_2$ des fermés de $\overline{f(X)}$ tels que $\overline{f(X)} = V_1 \cap V_2$. Comme $\overline{f(X)}$ est fermé, $V_1$ et $V_2$ sont des fermés de $Y$, et donc $f^{-1}(V_1), f^{-1}(V_2)$ sont des fermés de $X$. Maintenant comme $f(X) \subseteq V_1 \cup V_2$, on a $X = f^{-1}(V_1) \cup f^{-1}(V_2)$, et donc sans perte de généralité on peut supposer que $X = f^{-1}(V_1)$. Finalement, $f(X) \subseteq V_1 \subseteq \overline{f(X)}$, et donc $V_1 = \overline{f(X)}$.
+
+    \section{Exercice 10}
+        \cor{Hw2}

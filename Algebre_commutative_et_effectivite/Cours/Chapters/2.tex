@@ -1,0 +1,272 @@
+\chapter{Théorie de l'élimination}
+    \begin{defi} (Idéaux d'élimination)
+        Soit $E \subseteq k[x_1, \cdots, x_n]$. On pose
+        \begin{enumerate}
+            \item $E_1 = E \cap k[x_2, \cdots, x_n]$
+            \item $E_2 = E \cap k[x_3, \cdots, x_n]$
+            \item $\cdots$
+            \item $E_{n-1} = E \cap k[x_n]$
+            \item $E_n = E \cap k$
+        \end{enumerate}
+        Si $E = I$ est un idéal, les $I_i$ sont appelés idéaux d'élimination de $I$.
+    \end{defi}
+    \begin{expl}
+        $I = (x-y+1, x+y)$. Alors $I_1 = (2y - 1)$. $I_2 = \{0\}$.
+    \end{expl}
+    \begin{theo} (Théorème d'élimination)
+        Soit $I \subrel{id} k[x_1, \cdots, x_n]$, soit $<$ l'ordre lex avec $x_1 > \cdots > x_n$. Soit $G$ une bdg de $I$. Pour chaque $l \in \lcc 1,n \rcc$, une base de Gröbner de $I_l$ est $G_l$.
+    \end{theo}
+    \begin{proof}
+        Clairement, $G_l \subseteq I_l$ donc $(LT(G_l)) \subseteq (LT(I_l))$. Il faut montrer $\supseteq$. Soit $f \in I_l$. Alors $f \in I$, d'où $LT(f) \in (LT(G))$. On sait que $f \in k[x_{l+1}, \cdots, x_n]$. Soit $g \in G$ tq $LT(g) \mid LT(f)$. D'où $LT(g) \in k[x_{l+1}, \cdots, x_n]$. Comme $<$ est l'ordre lex, on en déduite que $g \in k[x_{l+1}, \cdots, x_n]$. Donc $g \in G_l$ et $LT(f) \in (LT(G_l))$.
+    \end{proof}
+    Par conséquent, une bdg pour l'ordre lex contient des éléments qui font intervenir de moins en moins de variables.
+
+    \section{Application 1 : Intersection d'idéaux}
+        Problème : $I = (f_1, \cdots, f_r)$, $J = (g_1, \cdots, g_s)$. Calculer des générateurs de $I \cap J$. Pour cela, on ajoute une variable $t$. 
+        \begin{nota}
+            SI $I \subrel{id} k[x_1, \cdots, x_n]$ et $f \in k[t]$, on pose
+            \begin{align*}
+                fI = (fp \mid p \in I) \subrel{id} k[t, x_1, \cdots, x_n]
+            \end{align*}
+        \end{nota}
+        \begin{theo}
+            Avec les notations ci-dessus,
+            \begin{align*}
+                I \cap J = (tI + (1 - t)J) \cap k[x_1, \cdots, x_n]
+            \end{align*}
+        \end{theo}
+        \begin{proof}
+            $\subseteq$ : Soit $f \in I \cap J$, alors $f = tf + (1 - t)f \in (tI + (1 - t)J)$, puis $f \in k[x_1, \cdots, x_n]$. \\
+            $\supseteq$ : Soit $f \in (tI + (1-t)J) \cap k[x_1, \cdots, x_n]$. Posons
+            \begin{align*}
+                \begin{array}{cccc}
+                    \varepsilon_\lambda : & k[t,x_1, \cdots, x_n] & \to & k[x_1, \cdots, x_n] \\
+                    & h & \mapsto & h(\lambda, x_1, \cdots, x_n) \\
+                \end{array}
+            \end{align*}
+            Remarquons alors que $\varepsilon_0(tI) = \{0\}$, $\varepsilon_1(tI) = I$. De même, $\varepsilon_0((1-t)J) = J$, $\varepsilon_1((1-t)J) = \{0\}$. Ecrivons $f = f' + f''$ avec $f' \in tI$, $f'' \in (1 - t)J$. Alors $\varepsilon_0(f) = \varepsilon_0(f'') \in J$. $\varepsilon_1(f) = \varepsilon_1(f') \in I$. Et $\varepsilon_0(f) = \varepsilon_1(f) = f$ vu que $f \in k[x_1, \cdots, x_n]$.
+        \end{proof}
+        \begin{coro}
+            Si $I = (f_1, \cdots, f_r)$, $J = (g_1, \cdots, g_s)$. Alors une bdf de $I \cap J$ pour l'ordre lex est obtenue en calculant une bdg de $(tI + (1 - t)J) \subrel{id} k[t, x_1, \cdots, x_n]$ et en élimnant $t$ (i.e. en prenant l'intersection avec $k[x_1, \cdots, x_n]$).
+        \end{coro}
+        
+    \section{Application 2 : extension}
+        Soit $k$ un corps algébriquement clos. On veut montrer le théorème suivant :
+        \begin{theo} (Théorème d'extension)
+            Soit $I = (f_1, \cdots, f_r) \subrel{id} k[x_1, \cdots, x_n]$. Notons
+            \begin{align*}
+                f_i(x_1, \cdots, x_n) = g_i(x_2, \cdots, x_n)x_1^{N_1} + h_i
+            \end{align*}
+            où $\deg_{x_1} h_i < N_i$. Alors soit $(a_2, \cdots, a_n) \in V(I_1)$ tel que $(a_2, \cdots, a_n) \notin V(g_1, \cdots, g_r)$, il existe $a_1 \in k$ tel que $(a_1, \cdots, a_n) \in V(I)$.
+        \end{theo}
+        Pour cela, nous aurons besoin des résultants.
+
+        \subsection{Résultants}
+            On veut une façon de déterminer si deux polynômes ont un facteur non trivial en commun. \textbf{Idée :} soient $f,g \in k[x]$ de degré $d,e > 0$ respectivement. Alors $f$ et $g$ ont un facteur commun non constant ssi $\exists \alpha, \beta \in k[x]$ tq 
+            \begin{enumerate}
+                \item $\alpha, \beta \neq 0$
+                \item $\alpha f + \beta g = 0$
+                \item $\deg \alpha < e$, $\deg \beta < d$.
+            \end{enumerate}
+            $f = \sum_{i = 0}^d a_ix^i$, $g = \sum_{i = 0}^e b_i x^i$, $\alpha = \sum_{i = 0}^{e-1} \alpha_i x^i$, $\beta = \sum_{i = 0}^{d-1} \beta_i x^i$. Il suffit de vérifier si
+            \begin{align*}
+                (\alpha_0 + \alpha_1x + \cdots + \alpha_{e-1}x^{e-1})f + (\beta_0 + \beta_1x + \cdots + \beta_{d-1}x^{d-1})g = 0
+            \end{align*}
+            admet une solution non nulle en les $\alpha_i, \beta_i$. Ce système est donné par la matrice de Sylvester
+            \begin{align*}
+                Syl(f,g,x) =
+                \begin{bmatrix}
+                    a_0 & 0 & \cdots & 0 & b_0 & 0 & \cdots & 0 \\
+                    a_1 & a_0 & \ddots & \vdots & b_1 & b_0 & \ddots & \vdots \\
+                    \vdots & a_1 & \ddots & 0 & \vdots & b_1 & \ddots & 0 \\
+                    a_{d-1} & \vdots & \ddots & a_0 & b_{e-1} & \vdots & \ddots & b_0 \\
+                    a_d & a_{d-1} & & a_1 & b_e & b_{e-1} & & b_1 \\
+                    0 & a_d & \ddots & \vdots & 0 & b_e & \ddots & \vdots \\
+                    \vdots & \ddots & \ddots & a_{d-1} & \vdots & \ddots & \ddots & b_{e-1} \\
+                    0 & \cdots & 0 & a_d & 0 & \cdots & 0 & b_e \\
+                \end{bmatrix}
+                \in \mathrm{M}_{d+e}(k)
+            \end{align*}
+            \begin{defi}
+                Le résultant de $f$ et $g$ est $Res(f,g,x) := \det Syl(f,g,x)$
+            \end{defi}
+            \begin{prop}
+                $Res(f,g,x) = 0 \iff f$ et $g$ ont un facteur non constant en commun.
+            \end{prop}
+            \begin{prop}
+                Fixons $d,e \geq 1$. Il existe $A,B \in \mathbb{Z}[X_0, \cdots, X_d, Y_0, \cdots, Y_e, x]$ tq pour tout $f,g \in k[x]$ avec $\deg f , \deg g = d,e$, on a 
+                \begin{align*}
+                    Res(f,g,x) = A(a_0, \cdots, a_d, b_0, \cdots, b_e, x) f +  B(a_0, \cdots, a_d, b_0, \cdots, b_e, x) g
+                \end{align*}
+            \end{prop}
+            \begin{proof}
+                $Syl(f,g,x)$ est la matrice de l'application linéaire 
+                \begin{align*}
+                    \begin{array}{cccc}
+                        \varphi : & k[x]_{<e} \times k[x]_{<d} & \to & k[x]_{<e + d}\\
+                        & (\alpha, \beta) & \mapsto & \alpha f + \beta g \\
+                    \end{array}
+                \end{align*}
+                dans les bases canoniques de $k[x]_{<e}, k[x]_{<d}$. Soit $M$ la transposée de la comatrice de $Syl(f,g,x)$. Alors par définition,
+                \begin{align*}
+                    Syl(f,g,x) M = Res(f,g,x) I_{d+e}
+                \end{align*}
+                donc
+                \begin{align*}
+                    Syl(f,g,x) M \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix} = \begin{bmatrix} Res(f,g,x) \\ 0 \\ \vdots \\ 0 \end{bmatrix}
+                \end{align*}
+                Maintenant $M$ times vecteur est un vecteur dont les coord sont des polynômes évalués en les $a_i$ et $b_j$. Ainsi
+                \begin{align*}
+                    \varphi(P_0 + P_1X + \cdots + P_{e-1}X^{e-1}, Q_0 + Q_1X + \cdots + Q_{d-1}X^{d-1}) = Res(f,g,x)
+                \end{align*}
+                où $P_i, Q_j \in \mathbb{Z}[a_i, b_j]$. 
+                \begin{align*}
+                    \Rightarrow (P_0 + P_1X + \cdots + P_{e-1}X^{e-1}) f + (Q_0 + Q_1X + \cdots + Q_{d-1}X^{d-1}) g = Res(f,g,x)
+                \end{align*}
+                Ainsi on pose $A = P_0 + P_1X + \cdots + P_{e-1}X^{e-1}$, $B = Q_0 + Q_1X + \cdots + Q_{d-1}X^{d-1}$.
+            \end{proof}
+            \begin{remq}
+                La proposition et sa preuve restent vraies si on remplace $k$ par un anneau commutatif.
+            \end{remq}
+        
+        \subsection{Théorème d'extension}
+            $f,g \in k[x_1, \cdots, x_n]$, alors $Res(f,g,x_1) \in k[x_2, \cdots, x_n]$. Notons $I = (f_1, \cdots, f_r) \subrel{id} k[x_1, \cdots, x_n]$, pour tout $i$
+            \begin{align*}
+                f_i = g_i(x_2, \cdots, x_n) x_1^{N_1} + \text{ termes de } \deg_{x_1} < N_1
+            \end{align*}
+            \begin{lemm}
+                \label{lemm161}
+                Le théorème d'extension est vrai pour $n = 2$.
+            \end{lemm}
+            \begin{proof}
+                Notons $\deg f_1 = d$, $\deg f_2 = e$. Alors il existe $A,B \in \mathbb{Z}[X_0, \cdots, X_d, Y_0, \cdots, Y_e, x_1, \cdots, x_n]$. Alors
+                \begin{align*}
+                    Res(f_1, f_2, x_1) = &A(a_0, \cdots, a_d, b_0, \cdots, b_e, x_2, \cdots, x_n, x_1) f_1 + \\
+                    &B(a_0, \cdots, a_d, b_0, \cdots, b_e, x_2, \cdots, x_n, x_1) f_2
+                \end{align*}
+                Le membre de droite de cette égalité est dans $I$, et $Res(f_1, f_2, x_1) \in k[x_1, \cdots, x_n]$. Ainsi $Res(f_1, f_2, x_1) \in I \cap k[x_2, \cdots, x_n] = I_1$. Soit $(c_2, \cdots, c_b) \in V(I_1)$. En particulier, $Res(f_1, f_2, x_1)(c_2, \cdots, c_n) = 0$. On cherche $c_1 \in k$ solution commune de $f_1(x_1, c_2, \cdots, c_n) = 0$ et $f_2(x_1, c_2, \cdots, c_n)$. Comme $k$ est algébriquement clos, $f_1(x_1, c_2, \cdots, c_n)$ et $f_2(x_1, c_2, \cdots, c_n)$ ont un zéro commun si et seulement si leur pgcd est non trivial ssi leur résultat s'annule. Maintenant 
+                \begin{align*}
+                    Res(f_1(x_1, c_2, \cdots, c_n), f_2(x_1, c_2, \cdots, c_n), x_1) = Res(f_1(x_1, \cdots, x_n), f_1(x_1, \cdots, x_n), x_1)(c_2, \cdots, c_n)
+                \end{align*}
+                En effet, on a supposé que $(c_2, \cdots, c_n) \notin V(g_1, g_2)$, et alors deux cas se présentent : 
+                \begin{enumerate}
+                    \item aucun des $g_i$ ne s'annule en $(c_2, \cdots, c_n)$, dans ce cas
+                    \begin{align*}
+                        \deg_{x_1} f_i(x_1, c_2, \cdots, c_n) = \deg_{x_1} f(x_1, \cdots, x_n)
+                    \end{align*}
+                    et donc l'égalité précédente est vraie.
+                    \item l'un des $g_i$ s'annule en $(c_2, \cdots, c_n)$. Sans perte de généralité, supposons que $g_2$ s'annule (et donc $g_1$ ne s'annule pas) en $(c_2, \cdots, c_n)$. En remplaçant $f_2$ par $f_2' = f_2 + x_1^Nf_1$, avec $N >> 0$ ($N \geq \deg_{x_1}f_2$), on se ramène au cas 1 en remarquant que $f_1,f_2$ one une solution commune en $c_1$ si et seulement si $f_1, f_2'$ ont une solution commune en $c_1$.
+                \end{enumerate}
+                d'où $f_1(x_1, c_2, \cdots, c_n)$ et $f_2(x_1, c_2, \cdots, c_n)$ ont un zéro communt $c_1$.
+            \end{proof}
+            \begin{defi}
+                Soient $f_1, \cdots, f_r \in k[x_1, \cdots, x_n]$. Considérons 
+                \begin{align*}
+                    u_2f_2 + \cdots + u_rf_r \in k[x_1, \cdots, x_n, u_2, \cdots, u_r]
+                \end{align*}
+                Alors
+                \begin{align*}
+                    Res(f_1, u_2f_2 + \cdots + u_rf_r, x_1) = \sum_{\alpha \in \mathbb{N}^{r-1}} h_\alpha(x_2, \cdots, x_n) u^\alpha \in k[x_2, \cdots, x_n, u_2, \cdots, u_r]
+                \end{align*}
+                et les $h_\alpha \in k[x_1, \cdots, x_n]$ sont les résultants généralisés de $f_1, \cdots, f_r$ par rapport à $x_1$.
+            \end{defi}
+            \begin{proof} (Théorème d'extension)
+                On cherche une racine commune aux $f_i(x_1, c_2, \cdots, c_n)$. Le cas $r = 2$ a été fait dans le lemme \ref{lemm161}. Ainsi supposons que $r \geq 3$, et supposons sans perte de généralité que $g_1(c_2, \cdots, c_n) \neq 0$. On a
+                \begin{align*}
+                    Res(f_1, u_2f_2 + \cdots + u_rf_r, x_1) = \sum_{\alpha \in \mathbb{N}^{r-1}} h_\alpha(x_2, \cdots, x_n) u^\alpha 
+                \end{align*}
+                Montrons que $h_{\alpha} \in I_1$, pour tout $\alpha \in \mathbb{N}^{r-1}$. Par la proposition, il existe
+                \begin{align*}
+                    \tilde A, \tilde B \in \mathbb{Z}[u_2, \cdots, u_r, x_1, \cdots, x_n, X_0, \cdots, X_d, Y_0, \cdots, Y_e]
+                \end{align*}
+                tq 
+                \begin{align*}
+                    Af_A + B(u_2f_2 + \cdots + u_rf_r) = Res(f_1, u_2f_2 + \cdots + u_rf_r, x_1)
+                    = \sum_{\alpha \in \mathbb{N}^{r-1}} h_\alpha(x_2, \cdots, x_n) u^\alpha 
+                \end{align*}
+                où $A,B$ sont des évaluations de $\tilde A$ et $\tilde B$. Ecrivons
+                \begin{align*}
+                    &A = \sum_{\alpha} A_\alpha u^\alpha \\
+                    &B = \sum_{\alpha} B_\alpha u^\alpha \\
+                \end{align*}
+                Alors
+                \begin{align*}
+                    \sum_\alpha h_\alpha u^\alpha &= \sum_\alpha (\underbrace{A_\alpha f_1}_{\in I}) u^\alpha + \sum_{i = 2}^r \sum_\beta (\underbrace{B_\beta f_i}_{\in I}) u^{\beta + e_i} 
+                \end{align*}
+                où $e_i = (0, \cdots, 0, 1, 0, \cdots, 0)$ (le $1$ est à la $i$-ème position). Par comparaison des coeffs devant chaque $u^\alpha$, on obtient que $h_\alpha \in I$ pour tout $\alpha \in \mathbb{N}^{r-1}$. Par définition, $h_\alpha \in k[x_2, \cdots, x_n]$ donc $h_\alpha \in I_1$. En particulier, $h_\alpha(c_2, \cdots, c_n) = 0$ pour tout $\alpha \in \mathbb{N}^{r-1}$.
+                \begin{enumerate}
+                    \item Supposons que $g_2(c_2, \cdots, x_n) \neq 0$ et $\deg_{x_1} f_2 > \max(\deg_{x_1}(f_i))_{3 \leq i \leq r}$. Alors
+                    \begin{align*}
+                        \deg_{x_1}(u_2f_2 + \cdots + u_rf_r) = \deg_{x_1}((u_2f_2 + \cdots + u_rf_r)(c_2, \cdots, c_n))
+                    \end{align*}
+                    Alors 
+                    \begin{align*}
+                        0 = Res(f_1, u_2f_2 + \cdots + &u_rf_r, x_1)(c_2, \cdots, c_n) = \\
+                        &Res(f_1(c_2, \cdots, c_n), u_2f_2(c_2, \cdots, c_n) + \cdots + u_rf_r(c_2, \cdots, c_n), x_1)
+                    \end{align*}
+                    Alors $f_1(x_1, c_2, \cdots, c_n)$ et $\sum_{i = 2}^r u_if_i(x_1, c_2, \cdots, c_n)$ ont un facteur en commun non constant dans $k[u_2, \cdots, u_r][x_1]$. Comme $f_1(x_1, c_2, \cdots, c_n) \in k[x_1]$, ce facteur commun $D(x_1)$ est dans $k[x_1]$. En évaluant $u_j$ en $1$ et $u_k$ en $0$ pour $k \neq j$, on obtient que $D(x_1) \mid f_j(x_2, c_2, \cdots, c_n)$ pour chaque $j$. Ainsi il existe $c_1 \in k$ tq $f_i(c_1, \cdots, c_n) = 0$ pour tout $i$ (on prend une racine de $D$, qui existe car $k = \bar k$).
+                    \item On se ramène au cas 1 en remplaçant $f_2$ par $x_1^Nf_1 + f_2$ avec $N$ suffisament grand.
+                \end{enumerate}
+            \end{proof}
+
+    \section{Application 3 : variétés paramétrées}
+        Une variété est $V(I)$, $I \subrel{id} k[x_1, \cdots, x_n]$. Paramètres ? $x = t$, $y = 2t$ est une paramtrisation d'une variété $V(y - 2x)$. Donnons un autre exemple : $x = t^2$, $y = t^3$ est la paramétrisation de $V(y^2 - x^3)$. Un dernier exemple : $x = s^2 + t^2$, $y = s^2 - t^2$, $z = st$. Il est difficile de savoir directement si c'est une variété. Formalisme : on a des équations polynomiales 
+        \begin{align*}
+            \begin{cases}
+                x_1 = f_1(t_1, \cdots, t_m) \\
+                \vdots \\
+                x_n = f_n(t_1, \cdots, t_m) \\
+            \end{cases}
+        \end{align*}
+        De façon équivalente, on a un morphisme de variétés
+        \begin{align*}
+            \begin{array}{cccc}
+                F : & \mathbb{A}^m & \to & \mathbb{A}^n \\
+                & (t_1, \cdots, t_m) & \mapsto & (f_1(t_1, \cdots, t_m), \cdots, f_n(t_1, \cdots, t_m)) \\
+            \end{array}
+        \end{align*}
+        Quetion : quelle est la plus petite variété contenant $F(\mathbb{A}^m)$ ? Idée : considérer le graphe de $F$ : $\{(\underline{t}, F(\underline{t})) \in \mathbb{A}^m \times \mathbb{A}^n\}$. C'est l'ensemble $V(x_1 - f_1, \cdots, x_n - f_n) \subseteq \mathbb{A}^m \times \mathbb{A}^n$. Considérons le diagramme commutatif
+        \begin{figure}[H]
+            \centering
+            \begin{tikzcd}
+                & \mathbb{A}^m \times \mathbb{A}^n \arrow[rd, "p"] &              \\
+    \mathbb{A}^m \arrow[rr, "F"'] \arrow[ru, "i", hook] &                                                  & \mathbb{A}^n
+    \end{tikzcd}
+        \end{figure}
+        où $i$ est l'inclusion
+        \begin{align*}
+            \begin{array}{cccc}
+                i : & \mathbb{A}^m & \to & \mathbb{A}^m \times \mathbb{A}^n \\
+                & t & \mapsto & (t, f(t))\\
+            \end{array}
+        \end{align*}
+        et $p$ la projection sur la deuxième coordonnée.
+        \begin{theo} \label{implicitisation} (Implicitisation)
+            Soit $k$ un corps infini, notons \linebreak $I = (x_i - f_i \mid 1 \leq i \leq n) \subrel{id} k[t_1, \cdots, t_m, x_1, \cdots, x_n]$. Alors $\overline{F(\mathbb{A}^m)} = V(I_m)$ où $I_m$ est l'idéal d'élimination $I \cap k[x_1, \cdots, x_n]$.
+        \end{theo}
+        On montre d'abord le cas où $k = \bar k$.
+        \begin{theo} (Théorème de cloture)
+            Supposons que $k$ est algébriquement clos. Soit $I = (f_1, \cdots, f_r) \subrel{id} k[x_1, \cdots, x_n]$. Soit $1 \leq l \leq n$ un entier et considérons $I_l$. Enfin soit
+            \begin{align}
+                \begin{array}{cccc}
+                    \pi_l : & \mathbb{A}^n & \to & \mathbb{A}^{n-l} \\
+                    & (x_1, \cdots, x_n) & \mapsto & (x_{l+1}, \cdots, x_n) \\
+                \end{array}
+            \end{align}
+            Alors $\overline{\pi_l(V(I))} = V(I_l)$.  
+        \end{theo}
+        \begin{proof}
+            Découle du nullstellensatz : déja, $\pi_l(V(I)) \subseteq(I_l)$. En effet, si $(a_1, \cdots, a_n) \in V(I)$, alors $\pi_l(a_1, \cdots, a_n) = (a_{l+1}, \cdots, a_n)$. Mais si $g \in I_l$, alors $g \in I$ donc $g(a_1, \cdots, a_n) = 0$ puis $g$ ne fait pas intervenir les $l$ premières variables. Ainsi $(a_{l+1}, \cdots, a_n) \in V(I_l)$. Soit $f \in I(\pi_l(V(I))) \subseteq k[x_{l+1}, \cdots, x_n]$, puis considérons $f$ comme élément de $k[x_1, \cdots, x_n]$. Alors $f \in I(V(I))$ puisque $f$ ne fait pas intervenir les $l$ première variables. Ainsi $\exists N > 0$ tel que $f^N \in I$. Mais $f$ ne fait pas intervenir les $l$ premières variables, donc $f^N \in I_l$. et ainsi $f \in \sqrt{I_l} = I(V(I_l))$. Donc $I(\pi_l(V(I))) \subseteq I(V(I_l))$.  On applique $V$ : 
+            \begin{align*}
+                V(I_l) \supseteq V(I(\pi_l(V(I)))) \supseteq V(I(V(I_l))) \supseteq V(\sqrt{I_l}) = V(I_l)
+            \end{align*}
+            donc toutes ces inclusions sont des égalités. 
+        \end{proof}
+        \begin{proof} (\ref{implicitisation})
+            \item \textbf{Cas 1 : $k$ algébriquement clos} On veut montrer que $\overline{F(\mathbb{A}^n)} = V(I_m)$ où $I = (x_i - f_i)$. Le théorème de cloture appliqué à $p$ et $V(I)$ : $\overline{p(V(I))} = V(I_m)$. Mais $p(V(I)) = F(\mathbb{A}^n)$.
+            \item \textbf{Cas 2 : $k$ n'est pas algébriquement clos} Soit $\bar k$ sa clôture algébrique. Le morphisme $F : \mathbb{A}^m_k \to \mathbb{A}^n_k$ s'étend naturellement en un morphisme $\bar F : \mathbb{A}^n_{\bar k} \to \mathbb{A}^m_{\bar k}$ qui envoie $\underline{t}$ sur $\underline{f}(\underline{t})$. Notons $\bar I = (x_i - f_i) \subrel{id} \bar k[x_1, \cdots, x_n]$. Par ce qui précède, $\overline{\bar F(\mathbb{A}^n_{\bar k})} = V((\bar I)_m)$. Or les générateurs de $(\bar I)_m$ dans une BDG pour l'odre lex sont dans $k[x_1, \cdots, x_n]$, et ainsi $(\bar I)_m = \overline{I_m}$. Finalement, on a (comme précédemment) que $F(\mathbb{A}^m_k) \subseteq V(I_m)$. Supposons que $V(J)$ est une autre variété tq $F(\mathbb{A}^m_k) \subseteq V(J) \subseteq V(I_m)$ où $J \subrel{id} k[x_1, \cdots, x_n]$. Prenons $g \in J$, alors $g \circ F \in k[t_1, \cdots, t_m]$. Alors $g \circ F$ s'annule sur $\mathbb{A}^m$ (car $F(\mathbb{A}^m_k) \subseteq V(J)$). Comme le corps est ifini, $g \circ F = 0$. En particulier, $g \circ F$, vu comme élément de $\bar K[t_1, \cdots, t_n]$ s'annule sur $\mathbb{A}^m_{\bar k}$ et est donc nul. Donc
+            \begin{align*}
+                \bar F(\mathbb{A}^m_{\bar k}) \subseteq V(\bar J)
+            \end{align*}
+            Or $\overline{\bar F(\mathbb{A}^n_{\bar k})} = V(\bar I_m)$. Ainsi $V(\bar I_m) \subseteq V(\bar J)$, donc $V(I_m) \subseteq V(J)$.
+        \end{proof}
