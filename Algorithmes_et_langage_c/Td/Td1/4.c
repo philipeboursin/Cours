@@ -11,14 +11,14 @@ void print_bits(unsigned a)
 
 int reverse(unsigned int a)
 {
-    unsigned int m11 = 0x00ff00ff;
-    unsigned int m12 = m11 << 8;
-    unsigned int m21 = 0x0f0f0f0f;
-    unsigned int m22 = m21 << 4;
-    unsigned int m31 = 858993459;
-    unsigned int m32 = m31 << 2;
-    unsigned int m41 = 1431655765;
-    unsigned int m42 = m41 << 1;
+    unsigned int m11 = 0b00000000111111110000000011111111;
+    unsigned int m12 = 0b11111111000000001111111100000000;
+    unsigned int m21 = 0b00001111000011110000111100001111;
+    unsigned int m22 = 0b11110000111100001111000011110000;
+    unsigned int m31 = 0b00110011001100110011001100110011;
+    unsigned int m32 = 0b11001100110011001100110011001100;
+    unsigned int m41 = 0b01010101010101010101010101010101;
+    unsigned int m42 = 0b10101010101010101010101010101010;
     a = (a << 16) ^ (a >> 16);
     a = ((a & m11) << 8) ^ ((a & m12) >> 8);
     a = ((a & m21) << 4) ^ ((a & m22) >> 4);

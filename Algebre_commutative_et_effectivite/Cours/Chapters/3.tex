@@ -1,28 +1,307 @@
 \chapter{Changements de bases de Grobner}
-    \begin{defi}
-        Soit $M \in M_{m,n}(\mathbb{R})$. On définit une relation $<_M$ sur $\mathbb{N}^n$ de la façon suivante :
-        \begin{align*}
-            \alpha <_M \beta &\iff M \alpha <_{lex} M \beta \\
-        \end{align*}
-    \end{defi}
-    \begin{expl}
-        Sur $k[x_1, x_2, x_3]$, $I_3$ convient pour $<_{lex}$,
-        \begin{align*}
-            \begin{bmatrix}
-                1 & 1 & 1 \\
-                1 & 0 & 0 \\
-                0 & 1 & 0 \\
-                0 & 0 & 1 \\
-            \end{bmatrix}
-        \end{align*}
-        convient pour $<_{deglex}$,
-        \begin{align*}
-            \begin{bmatrix}
-                1 & 1 & 1 \\
-                0 & 0 & -1 \\
-                0 & -1 & 0 \\
-                -1 & 0 & 0 &\\
-            \end{bmatrix}
-        \end{align*}
-        convient pour $<_{degrevlex}$.
-    \end{expl}
+    \section{Ordres matriciels}
+        \begin{defi}
+            Soit $M \in M_{m,n}(\mathbb{R})$. On définit une relation $<_M$ sur $\mathbb{N}^n$ de la façon suivante :
+            \begin{align*}
+                \alpha <_M \beta &\iff M \alpha <_{lex} M \beta \\
+            \end{align*}
+        \end{defi}
+        \begin{expl}
+            Sur $k[x_1, x_2, x_3]$, $I_3$ convient pour $<_{lex}$,
+            \begin{align*}
+                \begin{bmatrix}
+                    1 & 1 & 1 \\
+                    1 & 0 & 0 \\
+                    0 & 1 & 0 \\
+                    0 & 0 & 1 \\
+                \end{bmatrix}
+            \end{align*}
+            convient pour $<_{deglex}$,
+            \begin{align*}
+                \begin{bmatrix}
+                    1 & 1 & 1 \\
+                    0 & 0 & -1 \\
+                    0 & -1 & 0 \\
+                    -1 & 0 & 0 &\\
+                \end{bmatrix}
+            \end{align*}
+            convient pour $<_{degrevlex}$.
+        \end{expl}
+        \begin{remq}
+            \begin{align*}
+                \begin{bmatrix}
+                    1 & 0 & 0 \\
+                    -1 & 1 & 0 \\
+                    -1 & -1 & 1 \\
+                \end{bmatrix}
+            \end{align*}
+            convient aussi pour $lex$.
+        \end{remq}
+        \begin{defi} (Noyau à droite)
+            Le noyau à droite de $M \in M_{m,n}(\mathbb{R})$ est
+            \begin{align*}
+                \ker M := \{v \in \mathbb{R}^n \mid Mv = 0\}
+            \end{align*}
+        \end{defi}
+        \begin{prop}
+            Soit $M \in M_{m,n}(\mathbb{R})$, alors
+            \begin{enumerate}
+                \item $\forall \alpha, \beta, \gamma \in \mathbb{N}^n$,
+                \begin{align*}
+                    \alpha <_M \beta \iff \alpha + \gamma <_M \beta + \gamma
+                \end{align*}
+                \item Si $\ker M \cap \mathbb{Z} = \{0\}$, alors $\forall \alpha \neq \beta \in \mathbb{N}^n$, $(\alpha <_M \beta) \lor (\beta <_M \alpha)$.
+                \item S'il existe une matrice $T \in M_{m,m}(\mathbb{R})$ triangulaire inférieure dont les coefficients diagonaux sont strictements positifs et t.q. $TM \in M_{m,n}(\mathbb{R}_{\geq 0})$, alors $\forall \alpha \in \mathbb{N}^n$, $0 \leq_M \alpha$.
+            \end{enumerate}
+        \end{prop}
+        \begin{proof}
+            \begin{enumerate}
+                \item
+                \begin{align*}
+                    \alpha <_M \beta &\iff M \alpha <_{lex} M \beta \\
+                    &\iff M \alpha + M \gamma <_{lex} M \beta + M \gamma \\
+                    &\iff M(\alpha + \gamma) <_{lex} M(\beta + \gamma) \\
+                    &\iff \alpha + \gamma <_M \beta + \gamma \\ 
+                \end{align*}
+                \item Soient $\alpha \neq \beta \in \mathbb{N}^n$, alors
+                \begin{align*}
+                    \alpha <_M \beta \lor \beta <_M \alpha &\iff M \alpha <_{lex} M \beta \lor M \beta <_{lex} M \alpha \\
+                    &\iff M \alpha \neq M \beta \iff \alpha - \beta \notin \ker M
+                \end{align*}
+                et comme $\ker M \cap \mathbb{Z}^n = 0$ et $\alpha \neq \beta$, alors $\alpha - \beta \notin \ker M$ est toujours vraie.
+                \item Notons $w_i$ les lignes de $M$. $TM$ est obtenue en effectuant les opérations suivantes :
+                \begin{itemize}
+                    \item Remplacer $w_1$ par un multiple strictement positif de $w_1$.
+                    \item Remplacer $w_2$ par un multiple strictement positif de $w_2$ plus une combinaison linéaire de $W_1$.
+                    \item Remplacer $w_3$ par un multiple strictement positif de $w_3$ plus une combinaison linéaire de $w_1, w_2$.
+                    \item $\vdots$
+                \end{itemize}
+                Pour comparer $\alpha, \beta \in \mathbb{N}^n$ pour $<_M$ on calcule
+                \begin{align*}
+                    &M \alpha =
+                    \begin{bmatrix}
+                        w_1 \cdot \alpha \\
+                        \vdots \\
+                        w_b \cdot \alpha
+                    \end{bmatrix}
+                    ,\, M \beta =
+                    \begin{bmatrix}
+                        w_1 \cdot \beta \\
+                        \vdots \\
+                        w_b \cdot \beta
+                    \end{bmatrix} \\
+                \end{align*}
+                Montrons que $<_M = <_{TM}$. Notons $T = (T_{ij})_{1 \leq i,j \leq m}$. Alors
+                \begin{align*}
+                    TM =
+                    \begin{bmatrix}
+                        t_{11} w_1 \\
+                        t_{21} w_1 + t_{22} w_2 \\
+                        t_{31} w_1 + t_{32} w_2 + t_{33} w_3 \\
+                        \vdots \\
+                    \end{bmatrix}
+                \end{align*}
+                Maintenant
+                \begin{align*}
+                    \alpha <_M \beta &\iff 
+                    \begin{cases}
+                        w_1 \alpha < w_2 \beta \\
+                        \text{ou alors } w_1\alpha = w_1 \beta \text{ et } w_2 \alpha < w_2 \beta \\
+                        \text{ou alors } w_1\alpha = w_1 \beta \text{ et } w_2 \alpha = w_2 \beta \text{ et } w_3 \alpha < w_3 \beta \\
+                        \vdots
+                    \end{cases} \\
+                    &\iff 
+                    \begin{cases}
+                        t_{11} w_1 \alpha < t_{11} w_1 \beta \\
+                        \text{ou alors } t_{11} w_1 \alpha = t_{11} w_1 \beta \text{ et } t_{22} w_2 \alpha + \cor{t_{21} w_1 \alpha} < t_{22} w_2 \beta + \cor{t_{21} w_1 \beta} \\
+                        \vdots 
+                    \end{cases} \\
+                    &\iff TM \alpha <_{lex} TM \beta \iff \alpha <_{TM} \beta
+                \end{align*}
+                et aini $<_M = <_{TM}$. Maintenant comme $TM \in M_{m,n}(\mathbb{R}_{\geq 0})$, pour tout $\alpha \in \mathbb{N}^n$, $TM\alpha \in \mathbb{R}^n_{\geq 0}$ et donc $0 \leq_{TM} \alpha$, d'où $0 \leq_M \alpha$.
+            \end{enumerate}
+        \end{proof}
+        \begin{coro}
+            Pour tout $T$ triangulaire inférieure avec coefficients diagonaux strictement positifs, alors $<_{TM} = <_M$.
+        \end{coro}
+        \begin{coro}
+            Si une ligne de $M$ est combinaison linéaire des lignes au dessus, alors la retirer ne change pas l'ordre matriciel.
+        \end{coro}
+        \begin{coro}
+            Tout ordre matriciel est égal à un ordre matriciel $<_M$, où $M$ a au plus $n$ lignes.
+        \end{coro}
+        \begin{expl}
+            $M = \begin{bmatrix} 1 & \sqrt{2} \end{bmatrix}$ définit un ordre monomial.
+        \end{expl}
+        \begin{coro}
+            Tout ordre monomial matriciel est égal à $<_M$ où $M$ a exactement $n$ lignes.
+        \end{coro}
+        \begin{proof}
+            D'après le corolaire précédent, on peut prendre $M$ avec moins de $n$ lignes. Mais alors rajouter des lignes de zéros ne change pas l'ordre.
+        \end{proof}
+        \begin{remq}
+            Si $n \geq 2$, alors $k[x_1, \cdots, x_n]$ admet une infinité d'ordres monomiaux. Par exemple, pour $n = 2$, pour tout $a \in \mathbb{N}$, on définit
+            \begin{align*}
+                M_a =
+                \begin{bmatrix}
+                    1 & a \\
+                    0 & 1 \\
+                \end{bmatrix}
+            \end{align*}
+            Alors $y >_{M_a} x^a$ et $y <_{M_a} x^{a+1}$, donc les $<_{M_a}$ définissent une infinité d'ordre monomiaux différents.
+        \end{remq}
+        \begin{theo} (Robbiano, 1985)
+            Tout ordre monomial est un ordre matriciel.
+        \end{theo}
+        \begin{proof}
+            Soit $<$ un ordre monomial sur $\mathbb{N}^n$.
+            \item \textbf{Etape 1 :} $<$ s'étend en un unique ordre total additif sur $\mathbb{Z}^n$ : si $\alpha, \beta \in \mathbb{Z}^n$, alors $\exists \gamma \in \mathbb{Z}^n$ tel que $\alpha + \gamma, \beta + \gamma \in \mathbb{N}^n$. On pose ainsi
+            \begin{align*}
+                \alpha < \beta \iff \alpha + \gamma < \beta + \gamma 
+            \end{align*}
+            Clairement, cette définition ne dépend pas du choix de $\gamma$. Donc $<$ est étendu en un ordre total à $\mathbb{Z}^n$.
+            \item \textbf{Etape 2 :} L'ordre total additif $<$ sur $\mathbb{Z}^n$ s'étend en un unique ordre total additif sur $\mathbb{Q}^n$ : si $\alpha, \beta \in \mathbb{Q}^n$, alors $\exists \lambda \in \mathbb{N}^n$ tq $\lambda \alpha, \lambda \beta \in \mathbb{Z}^n$. Ainsi on pose 
+            \begin{align*}
+                \alpha < \beta \iff \lambda \alpha < \lambda \beta
+            \end{align*}
+            Ceci ne dépend pas de $\lambda$, et on a ainsi étendu $<$ à un ordre total additif sur $\mathbb{Q}^n$.
+            \item \textbf{Etape 3 :} Soient
+            \begin{align*}
+                &H_- =  \{v \in \mathbb{Q}^n \mid v < 0\} \\
+                &H_+ =  \{v \in \mathbb{Q}^n \mid v > 0\} \\
+            \end{align*}
+            Ainsi $\mathbb{Q}^n = H_- \sqcup \{0\} \sqcup H_+$. Alors considérons les adhérences $\bar H_-$, $\bar H_+$, puis $I_0 = \bar H_- \cap \bar H_+$. Montrons que $I_0$ est un sev de $\mathbb{R}^n$ de codimension $1$.
+            \begin{itemize}
+                \item $H_+, H_-$ sont stables pas somme.
+                \item $H_+, H_-$ sont stables par produit par des éléments de $\mathbb{Q}_{>0}$.
+                \item L'opération $\sigma : v \mapsto -v$ est une bijection de $H_+$ dans $H_-$.
+            \end{itemize}
+            Ainsi
+            \begin{itemize}
+                \item $\bar H_+, \bar H_-$ sont stables par somme.
+                \item $\bar H_+, \bar H_-$ sont stables par produits par des éléments de $\mathbb{R}_{\geq 0}$.
+                \item $\sigma : v \mapsto -v$ induit une bijection entre $\bar H_+$ et $\bar H_-$.
+            \end{itemize}
+            Par conséquent, $I_0$ est stable par somme et produit par un réél quelconque. Comme $I_0 \neq \emptyset$, car $0 \in I_0$, ceci donne que $I_0$ est un sev de $\mathbb{R}^n$. Montrons que $\dim I_0 = n - 1$ en montrant que $I_0 \neq \mathbb{R}^n$, et que $\mathbb{R}^n \bs I_0$ n'est pas connexe. Puisque $\mathbb{Q}_{> 0}^n \cap H_- = \emptyset$, on obtiens que $I_0 \neq \mathbb{R}^n$. De plus, $\mathbb{R}^n \bs I_0 = (\bar H_+ \bs I_0) \sqcup (\bar H_- \bs I_0)$, et ces deux composantes sont des fermés, donc $\mathbb{R}^n \bs I_0$ n'est pas connexe.
+            \item \textbf{Etape 4 :} Soit $w_1$ un vecteur non nul, orthogonal à $I_0$ tel que pour tout $h \in \bar H_+$, alors $\bra w_1,h \ket\geq 0$ ($w_1$ existe quitte à le multiplier par $-1$, et est unique à produit par $\mathbb{R}_{>0}$ près). Alors pour tout $v \in \mathbb{R}^n$,
+            \begin{itemize}
+                \item $v \in \bar H_+ \iff \bra w_1, v \ket \geq 0$
+                \item $v \in \bar H_- \iff \bra w_1, v \ket \leq 0$
+                \item $v \in I_0 \iff \bra w_1, v \ket = 0$
+            \end{itemize}
+            Si $v,v' \in \mathbb{Q}^n$, alors $v < v' \iff v - v' < 0 \iff v - v' \in H_- \Leftarrow \bra w_1, v - v' \ket < 0$. Le vecteur $w_1$ sera la première ligne d'une matrice $M$ telle que $<_M = <$ sur $\mathbb{N}^n$.
+            \item \textbf{Etape 5 :} Si $\bra v - v', w_1 \ket = 0$, alors $v - v' \in I_0$. Soit $G_1 = I_0 \cap \mathbb{Q}^n$, alors $G_1$ est une $\mathbb{Q}$-ev de dimension au plus $n-1$. Posons 
+            \begin{align*}
+                &H_{1,+} = \{v \in G_1 \mid v > 0 \} \\
+                &H_{1,-} = \{v \in G_1 \mid v < 0 \} \\
+            \end{align*}
+            $I_1 = \bar H_{1,+} \cap \bar H_{1,-}$. Comme pour $I_0$, on montre que $I_1$ est un sev de codim $1$ dans $\bar G_1$. Soit $w_2$ un vecteur orthogonal à $I_1$ dans $\bar G_1$ tq $\forall h \in \bar H_{1,r}$, $\bra w_2, h \ket \geq 0$. On a donc
+            \begin{align*}
+                \alpha <_{\begin{bmatrix} w_1 \\ w_2 \end{bmatrix}} \beta \Rightarrow
+                \begin{cases}
+                    w_1\alpha < w_1 \beta \\
+                    \text{ou } w_1\alpha = w_1 \beta \text{ et } w_2 \alpha < w_2 \beta \\
+                    \text{ou } w_1 \alpha = w_1 \beta \text{ et } w_2 \alpha = w_2 \beta
+                \end{cases}
+            \end{align*}
+            \item \textbf{Etape 6 :} On pose $G_2 = \mathbb{Q}^n \cap I_1$. et ainsi de suite. On construit au plus $n$ vecteur $w_1, \cdots, w_m$ tq
+            \begin{align*}
+                \alpha <_{\begin{bmatrix} w_1 \\ \vdots \\ w_m \end{bmatrix}} \beta \iff \alpha < \beta
+            \end{align*}
+        \end{proof}
+        \begin{nota}
+            \begin{itemize}
+                \item $<$ ordre monomial, $E \subseteq k[x_1, \cdots, x_n]$. Alors
+                \begin{align*}
+                    LT_<(E) := \{LT_<(f) \mid f \in E\}
+                \end{align*}
+                \item \begin{align*}
+                    Mon(E) = \{(LT_<(E)) \mid < \text{ ordre monomial}\}
+                \end{align*}
+            \end{itemize}
+        \end{nota}
+        \begin{theo}
+            Soit $I \subrel{id} k[x_1, \cdots, x_n]$. Alors $Mon(I)$ est fini.
+        \end{theo}
+        \begin{proof}
+            Supposons le contraire, pour chaque $J \in Mon(I)$, soit $<^J$ un ordre monomial tel que $J = (LT_{<^J}(I))$. Soit
+            \begin{align*}
+                \Sigma = \{<^J \mid J \in Mon(I)\}
+            \end{align*}
+            Par le théorème de la base de Hilbert  il existe $f_1, \cdots, f_r \in I$ tq $I = (f_1, \cdots, f_r)$. Chaque $f_i$ n'a qu'un nombre fini de termes, puisque $\Sigma$ est infini, $\exists \Sigma_1 \subseteq \Sigma$ infini tel que $\forall i \in \lcc 1,r \rcc$, $LT_<(f_i)$ prend la même valeur pour tout $< \in \Sigma_1$. Posons
+            \begin{align*}
+                J := (LT_<(f_1), \cdots, LT_<(f_r))
+            \end{align*}
+            pour $< \in \Sigma_1$. Montrons que $\{f_1, \cdots, f_r\}$ n'est pas une bdg de $I$, pour $< \in \Sigma_1$. Si c'était le cas, alors ce serait une bdg pour tout $<' \in \Sigma_1$ : 
+            \begin{align*}
+                (LT_<(I)) = (LT_<(f_i)) = (LT_{<'}(f_i)) \subseteq (LT_{<'}(I))
+            \end{align*}
+            puis si un monôme $m$ est dans $(LT_{<'}(I))$ mais pas dans $(LT_<(I))$, alors la division de $m$ par $f_1, \cdots, f_r$ donne un reste non nul, pour $<$ comme pour $<'$. Mais si $m = LT_{<'}(f)$, $f \in I$, alors le reste de la dibision de $f$ par $f_1, \cdots, f_r$ pour $<$ est nul. Ce reste contient pourtant le terme $m$, contradiction. Donc $\{f_1, \cdots, f_r\}$ est une bdg pour tout $<' \in \Sigma_1$, donc pour tout $<, <' \in \Sigma_1$, 
+            \begin{align*}
+                (LT_<(I)) = (LT_{<'}(I))
+            \end{align*}
+            mais par définition de $\Sigma_1$, si $< \neq <'$, alors $(LT_<(I)) \neq (LT_{<'}(I))$, contradiction. Ainsi $\{f_1, \cdots, f_r\}$ n'est pas une bdg pour $I$ et pour $< \in \Sigma_I$. Il existe donc $f_{r+1} \in I$ tq $LT_<(f_{r+1}) \notin (LT_<(f_i))$. Alors $\exists \Sigma_2 \subseteq \Sigma_1$ infini tel que les valeurs de $LT_<(f_i)$, $i \in \lcc 1,r+1 \rcc$, sont les mêmes pour tout $< \in \Sigma_2$. Comme plus haut, on mq $(f_1, \cdots, f_{r+1})$ n'est pas une bdg de $I$ pour $< \in \Sigma_2$. Donc $\exists f_{r+2} \in I$ tel que $LT_<(f_{r+2}) \notin (LT_<(f_1), \cdots, LT_<(f_{r+1}))$ pour $< \in \Sigma_2$. Ainsi on construit par récurrence une famille d'ensembles infinis $\Sigma \supseteq \Sigma_1 \supseteq \Sigma_2 \supseteq \cdots$ et des éléments $f_1, f_2, \cdots$ pour $<_i \in \Sigma_i$ tels que 
+            \begin{align*}
+                (LT_{<_1}(f_1), \cdots, LT_{<_1}(f_{r+1})) \nsubseteq (LT_{<_2}(f_1), \cdots, LT_{<_1}(f_{r+2})) \supseteq \cdots 
+            \end{align*}
+            ce qui contredit la noethérianité de $k[x_1, \cdots, x_n]$.
+        \end{proof}
+
+        \begin{defi} (Base de grobner marquée)
+            Soit $I \subrel{id} k[x_1, \cdots, x_n]$. Une base de grobner marquée pour $I$ est un ensemble de polynômes $\{g_1, \cdots, g_r\} \subseteq I$ et un choix de monôme $m_i$ de $g_i$ tel qu'il existe un ordre monomial $<$ pour lequel $\{g_1, \cdots, g_r\}$ est la base de grobner réduite et $m_i = LT_<(g_i)$.
+        \end{defi}
+        \begin{coro}
+            L'ensemble des bdg marquée de $I$ est en bijection avec $Mon(I)$, et est donc fini.
+        \end{coro}
+        \begin{proof}
+            Soit $\{(g_1,m_1), \cdots, (g_r,m_r)\}$ une badg marquée de $I$. Supposons que $<, <'$ sont deux ordres monomiaux pour lesquels $\{(g_1, m_1), \cdots, (g_r, m_r)\}$ est la base de grobner marquée. Alors
+            \begin{align*}
+                (LT_<(I)) = (LT_{<'}(I))
+            \end{align*}
+            En effet, $(LT_<(I)) = (LT_<(g_i)) = (m_i) = (LT_{<'}(g_i)) = (LT_{<'}(I))$. On a donc défini une application
+            \begin{align*}
+                \begin{array}{cccc}
+                    \phi : & \{\text{bdg marquées}\} & \to & Mon(I) \\
+                    & \{(g_i,m_i)\} & \mapsto & (LT_<(I)) \\
+                \end{array}
+            \end{align*}
+            où $<$ est un ordre pour lequel $\{(g_i, m_i)\}$ est une bdg marquée. On définit une inverse $\psi$ à $\phi$ : Soit $J \in Mon(I)$, puis soient $<, <'$ tq $J = (LT_<(I)) = (LT_{<'}(I))$. Alors $<$ et $<'$ définissent la même bdg marquée de $I$. Soit $\{(g_i,m_i)\}$ la base de groebner marquée pour $<$. Ainsi
+            \begin{align*}
+                (LT_<(g_i)) &= (LT_<(I)) \\
+                &= (LT_{<'}(I)) \supseteq (LT_{<'}(g_i))
+            \end{align*}
+            Pour chaque $i$, $LT_{<'}(g_i)$ est divisible par l'un des $LT_<(g_j)$, mais comme $(g_i)$ est une bdg réduite, ceci entraine que $LT_{<'}(g_i) = LT_<(g_i)$. En particulier $(g_i, m_i)$ est une bdg, réduite et marquée pour l'ordre $<'$. On a donc défini
+            \begin{align*}
+                \begin{array}{cccc}
+                    \psi : & Mon(I) & \to & \{\text{bdg marquées}\} \\
+                    & J & \mapsto & \{(g_i, m_i)\}\\
+                \end{array}
+            \end{align*}
+            et il est clair que $\phi$ et $\psi$ sont mutuellement inverses.
+        \end{proof}
+        \begin{coro}
+            Il existe un ensemble fini $\mathcal{U} \subseteq I$ tel que $\mathcal{U}$ est une bdg de $I$, quelque soit l'ordre monomial.
+        \end{coro}
+        \begin{defi}
+            Ce $\mathcal{U}$ est appelé base de grobner universelle.
+        \end{defi}
+
+        \begin{defi}
+            \begin{enumerate}
+                \item Un cône dans $\mathbb{R}^n$ est un ensemble ayant la forme
+                \begin{align*}
+                    C(v_1, \cdots, v_r) := \left\{ \sum_{finie} \lambda_i v_i \mid \lambda_i \geq 0 \right\}
+                \end{align*}
+                De façon équivalente, un cône est une intersection de demi espaces fermés.
+                \item Un hyperplan de définition d'un cône $C$ est hyperplan $H = v^\bot$ tel que $v \cdot C \geq 0$.
+                \item Une face d'un cône $C$ est une intersection de $\mathcal{C}$ avec l'un de ses hyperplans de définition. Remarquons que les faces d'un cône sont des cônes.
+                \item La dimension d'un cône est la dimension du sous-espace de $\mathbb{R}^n$ qu'il engendre.
+                \item Les faces de dimension $1$ de $C$ sont les rayons de $\mathcal{C}$.
+                \item Les faces de codimension $1$ de $C$ sont les facettes de $\mathcal{C}$.
+                \item Un éventail est un ensemble $\mathcal{F}$ de cônes tels que
+                \begin{itemize}
+                    \item $C \in \mathcal{F} \Rightarrow$ toute face de $C$ est dans $\mathcal{F}$.
+                    \item $C,C' \in \mathcal{F} \Rightarrow C \cap C' \in \mathcal{F}$ et est une face de $C$ et $C'$.
+                \end{itemize}
+            \end{enumerate}
+        \end{defi}

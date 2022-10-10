@@ -1,12 +1,15 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
-#define ith(x,i) (x>>(i-1))&1
-#define tki(t,i,j) ith(t[i],j)
+#define CI(v, i) (v ^= (1 << (i - 1)))
+#define CIJ(M, i, j) CI(M[i], j)
+#define GI(v, i) (v >> (i - 1)) & 1
+#define GIJ(M, i, j) GI(M[i], j)
 
 // Taille des matrices/vecteurs
-int n = 5;
-int m = 8*(int)sizeof(unsigned int);
+int n = 3;
+int m = 3;
+// int m = 8*(int)sizeof(unsigned int);
 
 //// PARTIE 1
 // Affichage d'un vecteur classique (en ligne)
@@ -51,45 +54,67 @@ void Mv(int M[n][n], int v[], int res[])
     for (int i = 0; i < n; i++)
     {
         int inter = 0;
-        for (int j = 0; j < n; j++) inter += M[i][j] & v[j];
+        for (int j = 0; j < n; j++) inter ^= M[i][j] & v[j];
         res[i] = inter;
+    }
+}
+
+// Produit matrice^n vecteur
+void Mkv(int M[n][n], int v[], int res[], int k)
+{
+    int inter[n];
+    for (int i = 0; i < n; i++) res[i] = v[i];
+    for (int i = 0; i < k; i++)
+    {
+        for (int j = 0; j < n; j++) inter[j] = res[j];
+        Mv(M, inter, res);
     }
 }
 
 
 //// PARTIE 2
 // Affiche une matrice de unsigned int
-void print_mat_bis(unsigned int t[m])
+void print_mat_bis(unsigned int M[])
 {
     for (int i = 0; i < m; i++)
     {
-        for (int j = 0; j < m; j++) printf("%d", tki(t,i,j));
-        printf("\n");
+        printf("[");
+        for (int j = 0; j < m - 1; j++) printf("%d, ", GIJ(M, i, j));
+        printf("%d]\n", GIJ(M, i, m));
     }
 }
 
 // Affiche en binaire un unsigned int
 void print_vect_bis(unsigned int v)
 {
-    for (int i = 0; i < m; i++) printf("%d", ith(v,i));
-    printf("\n");
+    printf("[");
+    for (int i = 0; i < m - 1; i++) printf("%d, ", GI(v,i));
+    printf("%d]\n", GI(v, m));
 }
 
 // Remplis une matrice de ui de manière aléatoire
-void rand_mat_bis(unsigned int t[m])
+void rand_mat_bis(unsigned int M[m])
 {
     srand(time(NULL));
     for (int i = 0; i < m; i++)
     {
-        t[i] = (rand() << 1) ^ (rand() & 1);
+        for (int j = 0; j < m; j++)
+        {
+            if (rand() & 1) CIJ(M, i, j);
+        }
     }
 }
 
 // Fabrique un unsigned int aléatoire
 unsigned int rand_vect_bis()
 {
+    unsigned int v;
     srand(time(NULL));
-    return (unsigned int)(rand() << 1) ^ (rand() & 1);
+    for (int i = 0; i < m; i++)
+    {
+        if (rand() & 1) CI(v, i);
+    }
+    return v;
 }
 
 
@@ -110,15 +135,20 @@ int main()
     Mv(M, v, res);
     printf("M*v = \n");
     print_vect(res);
+    Mkv(M, v, res, 10);
+    printf("(M^k)*v = \n");
+    print_vect(res);
+
 
     // PARTIE 2
     printf("\n--PARTIE 2-- \n");
-    unsigned int t[m];
-    rand_mat_bis(t);
-    printf("matrice d'unsigned int aléatoire t = \n");
-    print_mat_bis(t);
-    printf("unsigned int aléatoire v = \n");
-    print_vect_bis(rand_vect_bis());
+    unsigned int Mb[m];
+    unsigned int vb = rand_vect_bis();
+    rand_mat_bis(Mb);
+    printf("Matrice aléatoire M = \n");
+    print_mat_bis(Mb);
+    printf("Vecteur aléatoire v = \n");
+    print_vect_bis(vb);
 
     //PARTIE 3
     printf("\n--PARTIE 3-- \n");
