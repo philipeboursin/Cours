@@ -165,7 +165,7 @@
 
     \section{Singularités}
         \subsection{Points singuliers, variétés lisses}
-            Soit $V \subseteq \mathbb{A}^n_k$ une variété affine. Notons $d = \dim V$, et soit $I(V) = (P_1, \cdots, P_r) \subrel{id} k[X_1, \cdots, X_n]$. On a $d \geq n - r$. Considérons le morphisme
+            Soit $V \subseteq \mathbb{A}^n_k$ une variété affine. Notons $d = \dim V$, et soit $I(V) = (P21, \cdots, P_r) \subrel{id} k[X_1, \cdots, X_n]$. On a $d \geq n - r$. Considérons le morphisme
             \begin{align*}
                 \begin{array}{cccc}
                     \varphi : & \mathbb{A}^n & \to & \mathbb{A}^r \\
@@ -396,3 +396,197 @@
                     \item Cas particulier : $a = (0,0)$, alors $T_a^\mathrm{geom} V = V(x)$. Maintenant $k[V] \simeq k[X]$, et $k[V]_a = k[x,y]_{(x,y)} \simeq k[x]/(x)$. Finalement, $\mathfrak{m} = (X/1)$ et donc $\dim_k \mathfrak{m}/\mathfrak{m}^2 = 1$ ($X/1$ est une base de ce $k$-ev). Ainsi $\dim T_aV = 1$ en $0$.
                 \end{enumerate}
             \end{expl}
+            Soit $a \in V$, considérons l'application
+            \begin{align*}
+                \begin{array}{cccc}
+                    \tau_a : & \mathbb{A}^n & \to & \mathbb{A}^n \\
+                    & x & \mapsto & x - a \\
+                \end{array}
+            \end{align*}
+            C'est un isomorphisme, et alors on peut considérer l'image par $\tau_a$ de $T_a^\mathrm{geom}V$. On va montrer que c'est un $k$-ev isomorphe à $T_a(V)$ l'espace tangent de Zariski. On va ensuite montrer que $\dim T_a^\mathrm{geom}V = n - rk d\varphi(a)$. Rappelons que pour tout $a \in V$, $rk d\varphi(a) \leq n-d$ avec $d = \dim V$, avec égalité ssi $a$ est un point régulier. Ainsi les deux points précédent nous permettent de conclure que $\dim T_aV = \dim T_a^\mathrm{geom}V \geq d$ avec égalité si et seulement si $a$ est un point régulier.
+            % \begin{theo}
+            %     $(A, \mathfrak{m})$ anneau local noethérien, alors 
+            %     \begin{align*}
+            %         \dim_j \mathfrak{m}/\mathfrak{m}^2 \geq \dim A
+            %     \end{align*}
+            %     avec égalité si et seulement si $m = (x_1, \cdots, x_d)$ avec $d = \dim A$ (dans ce cas on dit que $(A, \mathfrak{m})$ est un anneau régulier)
+            % \end{theo}
+            \begin{expl}
+                $k = \bar k$, $char k = 0$. Soit $V = V(Y^2 - X^3) \subseteq \mathbb{A}^2$, on a $\dim V = 1$. Ainsi
+                \begin{align*}
+                    &\frac{\partial P}{\partial X} = -3X^2 \\
+                    &\frac{\partial P}{\partial Y} = 2Y \\
+                \end{align*}
+                Alors $(a,b) \in V$ est singulier si et seulement si $(a,b) = 0$. Maintenant soit $(a,b) \in V$, alors
+                \begin{align*}
+                    T_a^\mathrm{geom}V = \{(x,y) \in \mathbb{A}^2 \mid -3a^2(x-a) + 2b(Y - b) = 0\}
+                \end{align*}
+                droite dans $\mathbb{A}^2$ si $(a,b) \neq 0$. Si $(a,b) = 0$, alors $T_0^\mathrm{geom}V = \mathbb{A}^2$ est de dimension $2$. On peut aussi calculer l'espace tangent de Zariski :
+                \begin{align*}
+                    K[V]_{(a,b)} &= \left( k[X,Y]/(Y^2 - X^3) \right)_{(X-a, Y-b)} \\
+                    &= k[x,y]_{(x-a, y-b)} \\ 
+                    &= \left\{ \frac PQ \mid P,Q \in k[x,y],\, Q(a,b) \neq 0 \right\}
+                \end{align*}
+                Alors on peut voir que $\mathfrak{m}_{(a,b)} = (x-a,y-b) \subseteq K[V]_{(a,b)}$. Maintenant $(x-a, y-b)$ engendre $\mathfrak{m}/\mathfrak{m}^2$ en tant que $k$-ev, donc $\dim_k \mathfrak{m}/\mathfrak{m}^2 \leq 2$. Maintenant si $(a,b) \neq 0$, alors $\{x-a, y-b\}$ n'est pas libre modulo $\mathfrak{m}^2$ : en effet, dans $k[x,y]$,
+                \begin{align*}
+                    3a^2(x-a) - 2b(y-b) = (y - b)^2 - 3a(x - a)^2 - (x - a) ^3 \in \mathfrak{m}^2
+                \end{align*}
+                et $3a, 2b \neq 0,0$. Maintenant, si $(a,b) = 0$, alors $\mathfrak{m} := \mathfrak{m}_0 = (x,y)$, montrons que $\{x,y\}$ est libre sur $k$ modulo $\mathfrak{m}^2$. Soient $\alpha, \beta \in k$ tels que $\alpha x + \beta y = 0$ mod $\mathfrak{m}^2$. Ainsi $\alpha x + \beta y \in \mathfrak{m}^2 \subseteq k[V]_0$, et donc il existe $P_i/Q_i \in k[V]_0$ avec 
+                \begin{align*}
+                    \alpha x + \beta y = \frac{P_1}{Q_1}x^2 + \frac{P_2}{Q_2}xy + \frac{P_3}{Q_3}y^2
+                \end{align*}
+                dans $k[V]_0$. Maintenant $Q_i(0) \ne 0$, donc $\exists Q \in k[x,y]$ tel que $Q(0) \neq 0$ et $Q(\alpha x + \beta y) \in (x^2, xy, y^2)$ dans $k[x,y]$ cette fois. Ainsi $\exists R_i \in k[x,y]$ tels que 
+                \begin{align*}
+                    Q(X,Y)(\alpha X + \beta Y) - R_1X^2 - R_2XY - R_3Y^2 \in I(V) = (Y^2 - X^3)
+                \end{align*}
+                dans $k[X,Y]$. Ainsi $Q(X,Y)(\alpha X + \beta Y) \in (X^2, XY, Y^2)$ car $Y^2 - X^3 \in (X^2, XY, Y^2)$. Remarquons qu'en général, si $P \in k[X_1, \cdots, X_n]$, alors $P^0 = 0 \iff P \in (X_1, \cdots, X_n)$, $P^0 = P^1 = 0 \iff P \in (X_1, \cdots, X_n)^2$. Mais alors $Q$ a un terme constant car $Q(0) = 0$, et donc le terme linéaire de $Q(\alpha X + \beta Y)$ doit etre $Q^0(\alpha X + \beta Y)$ et doit être $0$ car $Q(\alpha X + \beta Y) \in (X,Y)^2$. Ainsi $Q^0\alpha, Q^0 \beta = 0 \in k$ et donc $\alpha, \beta = 0$ ce qui prouve la liberté de $\{x,y\}$.
+            \end{expl}
+            \begin{remq}
+                $\mathfrak{m}_a/\mathfrak{m}_a^2 \simeq M_a/M_a^2$ où $M_a = \ker ev_a : k[V] \to k \subrel{id} k[V]$.
+            \end{remq}
+            Soit $a \in V$, notons
+            \begin{align*}
+                H_\alpha := \{x \in \mathbb{A}^n \mid \sum \alpha^j (x_j - a_j) = 0\} \subseteq \mathbb{A}^2
+            \end{align*}
+            Remarquons alors que $a \in H_\alpha$. Alors on a
+            \begin{align*}
+                \tau_a(H_\alpha) = \{z \in \mathbb{A}^n \mid \sum \alpha^jz_j = 0\} \subseteq \mathbb{A}^n
+            \end{align*}
+            et c'est un sev de $k^n$. Ainsi 
+            \begin{align*}
+                \tau_a(T_a^\mathrm{geom}V) = \{z \in k^n \mid \forall i \in \lcc 1,r \rcc,\, \sum_j \frac{\partial P_i}{\partial X_j}(a) z_x = 0\}
+            \end{align*}
+            Si $V = V(P_1, \cdots, P_r)$. C'est le noyau de l'application $k^n \to k^r$ correspondant à la matrice jacobienne $d \varphi(a)$, et ainsi $\dim T_a^\mathrm{geom}V = n - rk d \varphi(a)$. \\
+            Montrons maintenant que $\tau_a(T_a^\mathrm{geom}V) \simeq T_aV$ en tant que $k$-ev. On peut supposer que $a = 0 \in \mathbb{A}^n_k$, montrons que 
+            \begin{align*}
+                \Hom_k(T_a^\mathrm{geom}V, k) \simeq \mathfrak{m}/\mathfrak{m}^2
+            \end{align*}
+            On note $x_i = [X_i] \in k[V]$, $M = (x_1, \cdots, x_n)$.
+            \begin{exo}
+                $\mathfrak{m}/\mathfrak{m}^2 \simeq M/M^2$ en tant que $k$-ev ($\mathfrak{m}$ est l'image de $M$ par $k[V] \to k[V]_a$ où $M = (x_i - a_i)$) 
+            \end{exo}
+            Aisni prouver le point précédent reviens a prouver qu'il existe un isom
+            \begin{align*}
+                M/M^2 \simeq \Hom_k(T_a^\mathrm{geom}V, k) 
+            \end{align*}
+            Notons ainsi $V = V(P_1, \cdots, P_r)$, $W := T_a^\mathrm{geom}V$. Comme $a = 0 \in V$, alors $P_i(0) = 0$ pour tout $i$. Alors soit
+            \begin{align*}
+                \begin{array}{cccc}
+                    \varphi : & M & \to & \Hom_k(W,k) \\
+                    & [P] & \mapsto & P^1_{|W} : x \in W \mapsto P^1(x) \in k \\
+                \end{array}
+            \end{align*}
+            \begin{enumerate}
+                \item Montrons que $\varphi$ est bien définie : soient $P,Q \in k[X_1, \cdots, X_n]$ tels que $[P] = [Q]$, alors $P - Q \in I(V)$. Mais écrivons $P,Q = P^1,Q^1 + \cdots + P^d,Q^e$ avec $P^i,Q^j$ homogènes. Alors $P-Q = (P^1 - Q^1) + \cdots$ et $(P - Q)^1 = P^1 - Q^1$. Maintenant $P - Q \in I(V) \Rightarrow P^1 - Q^1 \in I(W)$ et donc $P^1 - Q^1$ est nul sur $W$. Précisons l'implication précédente : si $R \in I(V)$, alors $R^1 \in I(W)$. EN effet, écrivons $R = \sum P_iQ_i$, puis écrivons $P_i = P_i^1 + P_i^2 + \cdots$, $Q_i = Q_i^0 + Q_i^1 + \cdots$. Mais alors $(P_iQ_i)^1 = P_i^1Q_i^0$ donc $R^1 = \sum P_i^1Q_i^0 \in I(W)$.
+                \item Montrons que $\varphi$ est surjective. Soit $f : W \to k$ $k$-linéaire. Alors $\exists \tilde f : k^n \to k$ $k$-linéaire telle que $\tilde f_{|W} = f$, puis 
+                \begin{align*}
+                    \tilde f(x) = \sum \alpha_i x_i
+                \end{align*}
+                Ainsi $\varphi([\sum \alpha_i X_i]) = \tilde f_{|W} = f$.
+                \item Montrons que $\ker \varphi = M^2$ : \cor{flemme}   
+            \end{enumerate}
+
+    \section{Courbes algébriques affines}
+        $k$ corps algébriquement clos. Une courbes est une variété affine de dimension $1$. $a \in C$ dans une courbe est régulier ssi $\dim \mathfrak{m}_a/\mathfrak{m}_a^2 = 1$.
+        \begin{defi}
+            Un anneau de valuation discrète (DVR) est un anneau local $(A, \mathfrak{m})$ tel que $A$ intègre et principal, et pas un corps;
+        \end{defi}
+        En particulier, un tel anneau est
+        \begin{enumerate}
+            \item noethérien
+            \item $\mathfrak{m} = (t)$ (on appelle $t \in A$ une uniformisante). Un tel $t$ est irréductible.
+            \item factoriel 
+            \item $\dim A = 1$ \\
+        \end{enumerate}
+        \begin{prop}
+            $(A, \mathfrak{m})$ DVR, $K = \Frac A$, $\mathfrak{m} = (t)$.
+            \begin{enumerate}
+                \item Les idéaux non nuls de $A$ sont les $\mathfrak{m}^i = (t^i)$, $i \in \mathbb{N}$.
+                \item $\bigcap_{i \geq 0} \mathfrak{m}^i = \{0\}$
+                \item $\forall x \in k \bs 0$, $\exists ! n \in \mathbb{Z}$ tel que $x = t^nu$, $u \in A^\times$ et l'application
+                \begin{align*}
+                    \begin{array}{cccc}
+                        v : & K \bs 0 & \to & \mathbb{Z} \\
+                        & x & \mapsto & v(x) = n \\
+                    \end{array}
+                \end{align*}
+                satisfait 
+                \begin{align*}
+                    \begin{cases}
+                        v(xy) = v(x) + v(y) \\
+                        v(x + y) \geq \min \{v(x), v(y)\} \\
+                    \end{cases}
+                \end{align*}
+                ($v$ est une valuation de $K$)
+            \end{enumerate}
+            De plus,
+            \begin{align*}
+                &A = \{x \in k \bs 0 \mid v(x) \geq 0\} \cup \{0\} \\
+                &\mathfrak{m} = \{x \in k \bs 0 \mid v(x) > 0\} \cup \{0\} \\
+            \end{align*}
+        \end{prop}
+        \begin{exo}
+            Si $v : K \bs 0 \to \mathbb{Z}$ est une valuation d'un corps $K$, alors $A = \{x \in K \bs 0 \mid v(x) \geq 0\} \cup \{0\}$ est un DVR d'idéal maximal $\{x \in K \bs 0 \mid v(x) > 0\} \cup \{0\}$.
+        \end{exo}
+        \begin{proof}
+            \begin{enumerate}
+                \item $A$ factoriel, $t$ irréductible. Pour tout $x \in A \bs 0$, $\exists N \geq 0$ maximal avec la propriété que $t^N \mid x$ dans $A$. Alors $x = t^Ny$, $y \in A^\times$ (vu que $A$ est local donc $A^\times = A \bs \mathfrak{m}$, et $N$ est maximal). Maintenant soit $I \subrel{id} A$ idéal, alors $\exists x \in A$ non nul tq $I = (x)$; Alors on a que $x = t^Ny$ avec $y \in \mathbb{A}^x$, et donc $I = (t^N)$.
+                \item On a $0 \subseteq \mathfrak{m}^i \nsubseteq \mathfrak{m}^{i-1} \subseteq A$. Alors soit $x \in \bigcap_{\mathbb{N}} \mathfrak{m}^i$ non nul. Alors $x = t^Ny$, $y \in A^\times$. Mais $x \in \mathfrak{m}^{N+1}$ donc $t^{N+1} \mid t^Ny$ absurde.
+                \item Soit $x \in K \bs 0$. Alors $x = y/z$, $y,z \in A$ et $z \neq 0$. Alors $\exists N,M \in \mathbb{N}$ t.q. $y = t^Nu$, $z = t^Mv$ avec $u,v \in A^\times$. Ainsi $x = t^{N-M}(uv^{-1})$. Maintenant vérifions que la valuation est bien définie : si $x = t^iu = t^jv$, alors ops $i > j$ et alors $t^{i-j} \in \mathbb{A}^\times$, absurde. Anis $i = j$ et $u = v$. Il est finalement facile de voir que $v$ est une valuation.
+            \end{enumerate}
+        \end{proof}
+        \begin{theo}
+            $C$ courbe, $a \in C$. Alors $a \in C$ est un point régulier ssi $k[V]_a$ est un DVR.
+        \end{theo}
+        \begin{theo}
+            $C$ courbe affine. $C$ est lisse ssi $k[C]$ est untégralement clos dans $k(C)$.
+        \end{theo}
+        \begin{defi}
+            $A$ anneau intègre, $K = \mathrm{Frac} A$. Alors
+            \begin{enumerate}
+                \item $x \in K$ est entier sur $A$ s'il existe $P \in A[X]$ unistaire tel que $P(x) = 0$ (dans $K$).
+                \item $A$ intégralement clos dans $K$ si $x \in K$ entier sur $A$ implique que $x \in A$.
+            \end{enumerate}
+        \end{defi}
+        \begin{expl}
+            \begin{enumerate}
+                \item $\mathbb{Z}$ est intégralement clos dans $\mathbb{Q}$.
+                \item $\mathbb{Z}[i]$ est intégralement clos dans $\mathbb{Q}$.
+                \item $A = k[X,Y]/(Y^2 - X^3) = k[x,y]$ n'est pas intégralement clos. Par exemple, $y/x$ est entier sur $A$ car $(y/x)^2 - x = 0$ mais pas dans $A$.
+            \end{enumerate}
+        \end{expl}
+        \begin{theo}
+            $A$ intègre. $A$ intégralement clos ssi $A_\mathfrak{p}$ est intégralement clos, pour tout $\mathfrak{p} \subrel{premier} A$.
+        \end{theo}
+        \begin{theo}
+            $A$ anneau local intègre, $\dim A = 1$. Alors $A$ intégralement clos ssi $A$ est un DVR
+        \end{theo}
+        \begin{defi}
+            $A$ anneau de dedekind si intègre, noeth, intégralement clos, de dimension $1$.
+        \end{defi}
+        \begin{expl}
+            $\mathbb{Z}$, $\mathbb{Z}[i]$, $k[C]$ pour $C$ une courbe lisse.
+        \end{expl}
+        \begin{theo}
+            $C$ courbe affine.
+            \begin{align*}
+                Sing(C) = \{a \in C \mid a \text{ singulier} \}
+            \end{align*}
+            est un ensemble propre de $C$
+        \end{theo}
+        \begin{exo}
+            $Sing(C)$ est un sous-ensemble algébrique.
+        \end{exo}
+        \begin{prop}
+            $C$ courbe affine. Les sous-ensemblers propres de $C$ sont finis.
+        \end{prop}
+        \begin{coro}
+            $|Sing(C)| < \infty$
+        \end{coro}
+        \begin{proof} (proposition)
+            Soit $V \subseteq C \subseteq \mathbb{A}^n$ ensemble algébrique propre. OPS $V$ irréductible(sinon on considère une composante de $V$). Alors $V \nsubseteq C$ implique que $I(C) \nsubseteq I(V) \subseteq k[X_1, \cdots, X_n]$. Montrons que $I(V) = \mathfrak{m}_a$, $a \in \mathbb{A}^n$. Maintenant
+            \begin{align*}
+                0 \subseteq I(V)/I(C) \subseteq k[C]
+            \end{align*}
+            est un idéal premier. Mais $\dim k[C] = 1$, donc $I(V)/I(C)$ est maximal, donc $I(V)$ maximal. Ainsi $I(V) = \mathfrak{m}_a$ car $k = \bar k$, donc $V$ doit être un point.
+        \end{proof}
