@@ -1,0 +1,105 @@
+\chapter{Courbes algébriques affines}
+    \section{Rappels d'algèbre commutative}
+        $k$ corps algébriquement clos. Une courbes est une variété affine de dimension $1$. $a \in C$ dans une courbe est régulier ssi $\dim \mathfrak{m}_a/\mathfrak{m}_a^2 = 1$.
+        \begin{defi}
+            Un anneau de valuation discrète (DVR) est un anneau local $(A, \mathfrak{m})$ tel que $A$ intègre et principal, et pas un corps;
+        \end{defi}
+        En particulier, un tel anneau est
+        \begin{enumerate}
+            \item noethérien
+            \item $\mathfrak{m} = (t)$ (on appelle $t \in A$ une uniformisante). Un tel $t$ est irréductible.
+            \item factoriel 
+            \item $\dim A = 1$ \\
+        \end{enumerate}
+        \begin{prop}
+            $(A, \mathfrak{m})$ DVR, $K = \Frac A$, $\mathfrak{m} = (t)$.
+            \begin{enumerate}
+                \item Les idéaux non nuls de $A$ sont les $\mathfrak{m}^i = (t^i)$, $i \in \mathbb{N}$.
+                \item $\bigcap_{i \geq 0} \mathfrak{m}^i = \{0\}$
+                \item $\forall x \in k \bs 0$, $\exists ! n \in \mathbb{Z}$ tel que $x = t^nu$, $u \in A^\times$ et l'application
+                \begin{align*}
+                    \begin{array}{cccc}
+                        v : & K \bs 0 & \to & \mathbb{Z} \\
+                        & x & \mapsto & v(x) = n \\
+                    \end{array}
+                \end{align*}
+                satisfait 
+                \begin{align*}
+                    \begin{cases}
+                        v(xy) = v(x) + v(y) \\
+                        v(x + y) \geq \min \{v(x), v(y)\} \\
+                    \end{cases}
+                \end{align*}
+                ($v$ est une valuation de $K$)
+            \end{enumerate}
+            De plus,
+            \begin{align*}
+                &A = \{x \in k \bs 0 \mid v(x) \geq 0\} \cup \{0\} \\
+                &\mathfrak{m} = \{x \in k \bs 0 \mid v(x) > 0\} \cup \{0\} \\
+            \end{align*}
+        \end{prop}
+        \begin{exo}
+            Si $v : K \bs 0 \to \mathbb{Z}$ est une valuation d'un corps $K$, alors $A = \{x \in K \bs 0 \mid v(x) \geq 0\} \cup \{0\}$ est un DVR d'idéal maximal $\{x \in K \bs 0 \mid v(x) > 0\} \cup \{0\}$.
+        \end{exo}
+        \begin{proof}
+            \begin{enumerate}
+                \item $A$ factoriel, $t$ irréductible. Pour tout $x \in A \bs 0$, $\exists N \geq 0$ maximal avec la propriété que $t^N \mid x$ dans $A$. Alors $x = t^Ny$, $y \in A^\times$ (vu que $A$ est local donc $A^\times = A \bs \mathfrak{m}$, et $N$ est maximal). Maintenant soit $I \subrel{id} A$ idéal, alors $\exists x \in A$ non nul tq $I = (x)$; Alors on a que $x = t^Ny$ avec $y \in \mathbb{A}^x$, et donc $I = (t^N)$.
+                \item On a $0 \subseteq \mathfrak{m}^i \nsubseteq \mathfrak{m}^{i-1} \subseteq A$. Alors soit $x \in \bigcap_{\mathbb{N}} \mathfrak{m}^i$ non nul. Alors $x = t^Ny$, $y \in A^\times$. Mais $x \in \mathfrak{m}^{N+1}$ donc $t^{N+1} \mid t^Ny$ absurde.
+                \item Soit $x \in K \bs 0$. Alors $x = y/z$, $y,z \in A$ et $z \neq 0$. Alors $\exists N,M \in \mathbb{N}$ t.q. $y = t^Nu$, $z = t^Mv$ avec $u,v \in A^\times$. Ainsi $x = t^{N-M}(uv^{-1})$. Maintenant vérifions que la valuation est bien définie : si $x = t^iu = t^jv$, alors ops $i > j$ et alors $t^{i-j} \in \mathbb{A}^\times$, absurde. Anis $i = j$ et $u = v$. Il est finalement facile de voir que $v$ est une valuation.
+            \end{enumerate}
+        \end{proof}
+        \begin{theo}
+            $C$ courbe, $a \in C$. Alors $a \in C$ est un point régulier ssi $k[V]_a$ est un DVR.
+        \end{theo}
+        \begin{theo}
+            $C$ courbe affine. $C$ est lisse ssi $k[C]$ est untégralement clos dans $k(C)$.
+        \end{theo}
+        \begin{defi}
+            $A$ anneau intègre, $K = \mathrm{Frac} A$. Alors
+            \begin{enumerate}
+                \item $x \in K$ est entier sur $A$ s'il existe $P \in A[X]$ unistaire tel que $P(x) = 0$ (dans $K$).
+                \item $A$ intégralement clos dans $K$ si $x \in K$ entier sur $A$ implique que $x \in A$.
+            \end{enumerate}
+        \end{defi}
+        \begin{expl}
+            \begin{enumerate}
+                \item $\mathbb{Z}$ est intégralement clos dans $\mathbb{Q}$.
+                \item $\mathbb{Z}[i]$ est intégralement clos dans $\mathbb{Q}$.
+                \item $A = k[X,Y]/(Y^2 - X^3) = k[x,y]$ n'est pas intégralement clos. Par exemple, $y/x$ est entier sur $A$ car $(y/x)^2 - x = 0$ mais pas dans $A$.
+            \end{enumerate}
+        \end{expl}
+        \begin{theo}
+            $A$ intègre. $A$ intégralement clos ssi $A_\mathfrak{p}$ est intégralement clos, pour tout $\mathfrak{p} \subrel{premier} A$.
+        \end{theo}
+        \begin{theo}
+            $A$ anneau local intègre, $\dim A = 1$. Alors $A$ intégralement clos ssi $A$ est un DVR
+        \end{theo}
+        \begin{defi}
+            $A$ anneau de dedekind si intègre, noeth, intégralement clos, de dimension $1$.
+        \end{defi}
+        \begin{expl}
+            $\mathbb{Z}$, $\mathbb{Z}[i]$, $k[C]$ pour $C$ une courbe lisse.
+        \end{expl}
+        \begin{theo}
+            $C$ courbe affine.
+            \begin{align*}
+                Sing(C) = \{a \in C \mid a \text{ singulier} \}
+            \end{align*}
+            est un ensemble propre de $C$
+        \end{theo}
+        \begin{exo}
+            $Sing(C)$ est un sous-ensemble algébrique.
+        \end{exo}
+        \begin{prop}
+            $C$ courbe affine. Les sous-ensemblers propres de $C$ sont finis.
+        \end{prop}
+        \begin{coro}
+            $|Sing(C)| < \infty$
+        \end{coro}
+        \begin{proof} (proposition)
+            Soit $V \subseteq C \subseteq \mathbb{A}^n$ ensemble algébrique propre. OPS $V$ irréductible(sinon on considère une composante de $V$). Alors $V \nsubseteq C$ implique que $I(C) \nsubseteq I(V) \subseteq k[X_1, \cdots, X_n]$. Montrons que $I(V) = \mathfrak{m}_a$, $a \in \mathbb{A}^n$. Maintenant
+            \begin{align*}
+                0 \subseteq I(V)/I(C) \subseteq k[C]
+            \end{align*}
+            est un idéal premier. Mais $\dim k[C] = 1$, donc $I(V)/I(C)$ est maximal, donc $I(V)$ maximal. Ainsi $I(V) = \mathfrak{m}_a$ car $k = \bar k$, donc $V$ doit être un point.
+        \end{proof}

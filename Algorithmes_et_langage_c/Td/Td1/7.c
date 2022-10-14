@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<stdlib.h>
 
 unsigned int hamming_weight(unsigned int v)
 {
@@ -20,20 +21,20 @@ unsigned int hamming_weight(unsigned int v)
     return v;
 }
 
-int str_to_int(char* s)
+unsigned int hamming_weight_bis(unsigned int v)
 {
-    int res = 0;
-    while (*s)
+    int i = 0;
+    while (v != 0)
     {
-        res = res*10 + *s - '0';
-        s++;
+        i++;
+        v = v & (v - 1);
     }
-    return res;
+    return i;
 }
 
 int main(int n, char** argv)
 {
-    unsigned int v = str_to_int(argv[1]);
+    unsigned int v = atoi(argv[1]);
     // unsigned int v = 0b10100100010110100101001010;
-    printf("%d\n", hamming_weight(v));
+    printf("%d\n", hamming_weight_bis(v));
 }

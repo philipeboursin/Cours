@@ -151,7 +151,7 @@
             \end{theo}
             \begin{expl}
                 \begin{enumerate}
-                    \item $A = \mathbb{Z}$, $\mathfrak{p} = p \mathbb{Z}$ avec $p$ premier; Alors $ht \mathfrak{p} = 1$, $\mathfrak{A}/p = \mathbb{F}_p$ est de dimension $0$.
+                    \item $A = \mathbb{Z}$, $\mathfrak{p} = p \mathbb{Z}$ avec $p$ premier; Alors $ht \mathfrak{p} = 1$, $A/ \mathfrak{p} = \mathbb{F}_p$ est de dimension $0$.
                     \item $A = k[X_1, \cdots, X_n]$, $\mathfrak{p} = (X_1, \cdots, X_s)$ avec $s \in \lcc 1,n \rcc$. $ht \mathfrak{p} = s$, $A/\mathfrak{p} \simeq k[X_{s+1}, \cdots, X_n]$, $\dim A/\mathfrak{p} = n-s$.
                     \item La dimension peut être infinie : par exemple $A = k[\mathbb{N}]$.
                 \end{enumerate}
@@ -164,126 +164,126 @@
             \end{theo}
 
     \section{Singularités}
-        \subsection{Points singuliers, variétés lisses}
-            Soit $V \subseteq \mathbb{A}^n_k$ une variété affine. Notons $d = \dim V$, et soit $I(V) = (P21, \cdots, P_r) \subrel{id} k[X_1, \cdots, X_n]$. On a $d \geq n - r$. Considérons le morphisme
-            \begin{align*}
-                \begin{array}{cccc}
-                    \varphi : & \mathbb{A}^n & \to & \mathbb{A}^r \\
-                    & x & \mapsto & (P_1(x), \cdots, P_r(x)) \\
-                \end{array}
-            \end{align*}
-            En particulier, $\varphi_{|V} = 0$.
-            \begin{nota}
-                On note
-                \begin{align*}
-                    d \varphi (x) = 
-                    \begin{bmatrix}
-                        \frac{\partial P_1}{\partial X_1}(x) & \cdots & \frac{\partial P_1}{\partial X_n}(x) \\
-                        \vdots & & \vdots \\
-                        \frac{\partial P_r}{\partial X_1}(x) & \cdots & \frac{\partial P_r}{\partial X_n}(x) \\
-                    \end{bmatrix}
-                    \in M_{r, n}(k)
-                \end{align*}
-                la matrice jacobienne de $\varphi$ en $x$.
-            \end{nota}
-            \begin{defi}
-                $a \in V$ est un point régulier (ou encore non singulier) de $V$ si 
-                \begin{align*}
-                    rk (d \varphi(a)) = n - d
-                \end{align*}
-                Si $rk (d \varphi(a)) < n - d$, on dit que $a$ est un point singulier de $V$.
-            \end{defi}
-            \begin{remq}
-                \begin{enumerate}
-                    \item $\forall a \in V$, $rk (d \varphi(a)) \leq n - d$
-                    \item La définition précédente ne dépend pas du choix de $P_1, \cdots, P_r$
-                \end{enumerate}
-            \end{remq}
-            \begin{defi}
-                $V$ est lisse si $\forall a \in V$, $a$ est un point régulier.
-            \end{defi}
-            \begin{expl}
-                \begin{enumerate}
-                    \item $\mathbb{A}^n$ est lisse.
-                    \item $V = V(f) \subseteq \mathbb{A}^n$, pour $f \in k[X_1, \cdots, X_n]$ irréductible est une variété affine de dimension $n-1$?. Alors
-                    \begin{align*}
-                        d \varphi =
-                        \begin{bmatrix}
-                            \frac{\partial f}{X_1}, \cdots, \frac{\partial f}{X_n}
-                        \end{bmatrix}
-                    \end{align*}
-                    Ainsi $a \in V(f)$ est singuler ssi $rk (d \varphi(a)) = 0$ ssi $\frac{\partial f}{X_1}(a) = \cdots = \frac{\partial f}{X_n}(a) = 0$.
-                    \item Si $f = XY - 1$, $V = V(f) \subseteq \mathbb{A}^2$. Alors $\frac{\partial f}{X} = Y$ et $\frac{\partial f}{Y} = X$, alors $a \in V$ singulier si $a_2 = a_1 = 0$, mais $a \in V \iff a_1a_2 = 1$, donc tout point de $V$ est régulier et $V$ est donc lisse.
-                    \item $f = Y^2 - X^3$, $V := V(f) \subseteq \mathbb{A}^2$. Si $char \, k \neq 2,3$, alors $a \in V$ singulier ssi $a = (0,0)$. 
-                    \item $f = Y^2 - X(X-1)(X - \lambda)$, $\lambda \in k$ ("courbe ellipitique" si $\lambda \neq 0,1$). $f = Y^2 - X^3 + (\lambda + 1)X^2 - \lambda X$. Alors
-                    \begin{align*}
-                        & \frac{\partial f}{\partial X} = -3X^2 + 2(\lambda + 1)X - \lambda \\
-                        & \frac{\partial f}{\partial Y} = 2Y \\
-                    \end{align*}
-                    et donc $(a,b) \in V(f)$ singulier ssi
-                    \begin{align*}
-                        &\begin{cases}
-                        -3x^2 + 2(\lambda + 1)x - \lambda = 0 \\
-                        2y = 0 \\
-                        y^2 = x(x-1)(x - \lambda) \\
-                        \end{cases}
-                        &\iff 
-                        \begin{cases}
-                            y = 0 \\
-                            x = 0,1,\lambda \\
-                            -3x^2 + 2(\lambda + 1)x - \lambda = 0 \\
-                        \end{cases}
-                    \end{align*}
-                    Alors
-                    \begin{enumerate}
-                        \item Si $x = 0$, $\lambda = 0$ et $(0,0)$ est le seul point singulier.
-                        \item Si $x = 1$, alors $\lambda = 1$ et $(1,0)$ est le seul point singulier.
-                        \item Si $x = \lambda$, alors $\lambda = 0,1$ et donc c'est les cas précédents.
-                    \end{enumerate}
-                    Ainsi si $\lambda \neq 0,1$, alors $V(f)$ est lisse.
-                \end{enumerate}
-            \end{expl}
-
-    \section{Anneau des fonctions régulières en un point}
-        Soit $V \subseteq \mathbb{A}^n_k$ une variété affine, $a \in V$. Par définition,
+        Soit $V \subseteq \mathbb{A}^n_k$ une variété affine. Notons $d = \dim V$, et soit $I(V) = (P_1, \cdots, P_r) \subrel{id} k[X_1, \cdots, X_n]$. On a $d \geq n - r$. Considérons le morphisme
         \begin{align*}
-            k[V] = \frac{k[X_1, \cdots, X_n]}{I(V)}
+            \begin{array}{cccc}
+                \varphi : & \mathbb{A}^n & \to & \mathbb{A}^r \\
+                & x & \mapsto & (P_1(x), \cdots, P_r(x)) \\
+            \end{array}
         \end{align*}
-        puis $k(V) = \Frac k[V]$.
+        En particulier, $\varphi_{|V} = 0$.
+        \begin{nota}
+            On note
+            \begin{align*}
+                d \varphi (x) = 
+                \begin{bmatrix}
+                    \frac{\partial P_1}{\partial X_1}(x) & \cdots & \frac{\partial P_1}{\partial X_n}(x) \\
+                    \vdots & & \vdots \\
+                    \frac{\partial P_r}{\partial X_1}(x) & \cdots & \frac{\partial P_r}{\partial X_n}(x) \\
+                \end{bmatrix}
+                \in M_{r, n}(k)
+            \end{align*}
+            la matrice jacobienne de $\varphi$ en $x$.
+        \end{nota}
         \begin{defi}
-            $\alpha \in k(V)$ est bien définie au point $a \in V$ si $\exists f,g \in k[V]$ telles que $\alpha = f/g \in k(V)$ et $g(a) \neq 0$. Dans ce cas, la valeur de $\alpha$ en $a$ est définie comme $\alpha(a) := f(a)/g(a) \in k$.
+            $a \in V$ est un point régulier (ou encore non singulier) de $V$ si 
+            \begin{align*}
+                rk (d \varphi(a)) = n - d
+            \end{align*}
+            Si $rk (d \varphi(a)) < n - d$, on dit que $a$ est un point singulier de $V$.
         \end{defi}
         \begin{remq}
-            En général, pour $\alpha \in k(V)$, on peut toujours écrire $\alpha = f/g$ mais $f$ et $g$ ne sont pas uniques.
-        \end{remq}
-        \begin{expl}
-            $V = V(Y^2 - X^3) \subseteq \mathbb{A}^2$; Alors $k[V] = k[x,y]$ avec $y^2 = x^3$. Alors 
-            \begin{align*}
-                \frac yx = \frac{x^2}y \in k(V)
-            \end{align*}
-        \end{expl}
-        \begin{prop}
-            Soit $\alpha \in k(V)$ bien définie en $a \in V$. Alors $\alpha(a)$ est bien définie.
-        \end{prop}
-        \begin{proof}
-            Si $\alpha = f/g = f'/g'$ avec $f,g,f',g' \in k[V]$ et $g(a), g'(a) \neq 0$. Alors $fg' - f'g = 0 \in k[V]$ et donc $f(a)g'(a) - f'(a)g(a) = 0$, ce qui implique que
-            \begin{align*}
-                \frac{f(a)}{g(a)} = \frac{f'(a)}{g'(a)} \in k
-            \end{align*}
-        \end{proof}
-        \begin{nota}
-            \begin{align*}
-                k[V]_a := \{\alpha \in k(V) \mid \alpha \text{ est définie en } a \}
-            \end{align*}
-            C'est un sous anneau de $k(V)$, dit anneau local de fonctions régulières autour de $a$.
-        \end{nota}
-        \begin{remq}
             \begin{enumerate}
-            \item $k \subseteq k[V] \subseteq k[V]_a \subseteq k(V)$
-            \item $a \in V \iff I(V) \subseteq \mathfrak{m}_a$. Si $g \in k[V]$, $g(a) = 0 \iff g \in \mathfrak{m}_a/I(V) \subrel{max} k[V]$.
-            \item $k[V]_a$ est la localisation de $k[V]$ en $S = A \bs \mathfrak{p}$, où $\mathfrak{p} = \mathfrak{m}_a/I(V)$. 
+                \item $\forall a \in V$, $rk (d \varphi(a)) \leq n - d$
+                \item La définition précédente ne dépend pas du choix de $P_1, \cdots, P_r$
             \end{enumerate}
         \end{remq}
+        \begin{defi}
+            $V$ est lisse si $\forall a \in V$, $a$ est un point régulier.
+        \end{defi}
+        \begin{expl}
+            \begin{enumerate}
+                \item $\mathbb{A}^n$ est lisse.
+                \item $V = V(f) \subseteq \mathbb{A}^n$, pour $f \in k[X_1, \cdots, X_n]$ irréductible est une variété affine de dimension $n-1$?. Alors
+                \begin{align*}
+                    d \varphi =
+                    \begin{bmatrix}
+                        \frac{\partial f}{X_1}, \cdots, \frac{\partial f}{X_n}
+                    \end{bmatrix}
+                \end{align*}
+                Ainsi $a \in V(f)$ est singuler ssi $rk (d \varphi(a)) = 0$ ssi $\frac{\partial f}{X_1}(a) = \cdots = \frac{\partial f}{X_n}(a) = 0$.
+                \item Si $f = XY - 1$, $V = V(f) \subseteq \mathbb{A}^2$. Alors $\frac{\partial f}{X} = Y$ et $\frac{\partial f}{Y} = X$, alors $a \in V$ singulier si $a_2 = a_1 = 0$, mais $a \in V \iff a_1a_2 = 1$, donc tout point de $V$ est régulier et $V$ est donc lisse.
+                \item $f = Y^2 - X^3$, $V := V(f) \subseteq \mathbb{A}^2$. Si $char \, k \neq 2,3$, alors $a \in V$ singulier ssi $a = (0,0)$. 
+                \item $f = Y^2 - X(X-1)(X - \lambda)$, $\lambda \in k$ ("courbe ellipitique" si $\lambda \neq 0,1$). $f = Y^2 - X^3 + (\lambda + 1)X^2 - \lambda X$. Alors
+                \begin{align*}
+                    & \frac{\partial f}{\partial X} = -3X^2 + 2(\lambda + 1)X - \lambda \\
+                    & \frac{\partial f}{\partial Y} = 2Y \\
+                \end{align*}
+                et donc $(a,b) \in V(f)$ singulier ssi
+                \begin{align*}
+                    &\begin{cases}
+                    -3x^2 + 2(\lambda + 1)x - \lambda = 0 \\
+                    2y = 0 \\
+                    y^2 = x(x-1)(x - \lambda) \\
+                    \end{cases}
+                    &\iff 
+                    \begin{cases}
+                        y = 0 \\
+                        x = 0,1,\lambda \\
+                        -3x^2 + 2(\lambda + 1)x - \lambda = 0 \\
+                    \end{cases}
+                \end{align*}
+                Alors
+                \begin{enumerate}
+                    \item Si $x = 0$, $\lambda = 0$ et $(0,0)$ est le seul point singulier.
+                    \item Si $x = 1$, alors $\lambda = 1$ et $(1,0)$ est le seul point singulier.
+                    \item Si $x = \lambda$, alors $\lambda = 0,1$ et donc c'est les cas précédents.
+                \end{enumerate}
+                Ainsi si $\lambda \neq 0,1$, alors $V(f)$ est lisse.
+            \end{enumerate}
+        \end{expl}
+
+    \section{Espace tangent}
+        \subsection{Anneau des fonctions régulières en un point}
+            Soit $V \subseteq \mathbb{A}^n_k$ une variété affine, $a \in V$. Par définition,
+            \begin{align*}
+                k[V] = \frac{k[X_1, \cdots, X_n]}{I(V)}
+            \end{align*}
+            puis $k(V) = \Frac k[V]$.
+            \begin{defi}
+                $\alpha \in k(V)$ est bien définie au point $a \in V$ si $\exists f,g \in k[V]$ telles que $\alpha = f/g \in k(V)$ et $g(a) \neq 0$. Dans ce cas, la valeur de $\alpha$ en $a$ est définie comme $\alpha(a) := f(a)/g(a) \in k$.
+            \end{defi}
+            \begin{remq}
+                En général, pour $\alpha \in k(V)$, on peut toujours écrire $\alpha = f/g$ mais $f$ et $g$ ne sont pas uniques.
+            \end{remq}
+            \begin{expl}
+                $V = V(Y^2 - X^3) \subseteq \mathbb{A}^2$; Alors $k[V] = k[x,y]$ avec $y^2 = x^3$. Alors 
+                \begin{align*}
+                    \frac yx = \frac{x^2}y \in k(V)
+                \end{align*}
+            \end{expl}
+            \begin{prop}
+                Soit $\alpha \in k(V)$ bien définie en $a \in V$. Alors $\alpha(a)$ est bien définie.
+            \end{prop}
+            \begin{proof}
+                Si $\alpha = f/g = f'/g'$ avec $f,g,f',g' \in k[V]$ et $g(a), g'(a) \neq 0$. Alors $fg' - f'g = 0 \in k[V]$ et donc $f(a)g'(a) - f'(a)g(a) = 0$, ce qui implique que
+                \begin{align*}
+                    \frac{f(a)}{g(a)} = \frac{f'(a)}{g'(a)} \in k
+                \end{align*}
+            \end{proof}
+            \begin{nota}
+                \begin{align*}
+                    k[V]_a := \{\alpha \in k(V) \mid \alpha \text{ est définie en } a \}
+                \end{align*}
+                C'est un sous anneau de $k(V)$, dit anneau local de fonctions régulières autour de $a$.
+            \end{nota}
+            \begin{remq}
+                \begin{enumerate}
+                \item $k \subseteq k[V] \subseteq k[V]_a \subseteq k(V)$
+                \item $a \in V \iff I(V) \subseteq \mathfrak{m}_a$. Si $g \in k[V]$, $g(a) = 0 \iff g \in \mathfrak{m}_a/I(V) \subrel{max} k[V]$.
+                \item $k[V]_a$ est la localisation de $k[V]$ en $S = A \bs \mathfrak{p}$, où $\mathfrak{p} = \mathfrak{m}_a/I(V)$. 
+                \end{enumerate}
+            \end{remq}
 
         \subsection{Anneaux locaux}
             Rappelons que si $A$ est un anneau, $S = A \bs \mathfrak{p}$, l'image $S^{-1} \mathfrak{p}$ de $\mathfrak{p}$ par le morphisme canonique $A \to S^{-1}A$ est l'unique idéal maximal de $S^{-1}A$. En effet, $S^{-1} A \bs S^{-1}\mathfrak{p}$ sont des inversibles de $S^{-1}A$. Ainsi $S^{-1}A$ est un anneau local. 
@@ -327,20 +327,19 @@
                 où $\dim A$ est la dimension e krull de $A$. De plus, si on a égalité (on note $d = \dim A$), alors $\mathfrak{m} = (x_1, \cdots ,x_d)$ avec $x_i \in A$, et on dit que $(A, \mathfrak{m})$ est un anneau régulier.
             \end{theo}
         
-    \section{Espace tangent}
-        Soit $V$ une variété affine, $a \in V$, on note $A = k[V]_a$. L'idéal maximal de $A$ est $\mathfrak{m} = \{\alpha \in A \mid \alpha(a) = 0\}$.
-        \begin{exo}
-            Considérons le morphisme
-            \begin{align*}
-                \begin{array}{cccc}
-                    ev : & k[V]_a & \to & k \\
-                    & \alpha & \mapsto & ev(\alpha) = \alpha(a) \\
-                \end{array}
-            \end{align*}
-            Alors $\ker(ev) = \mathfrak{m}$ idéal maximal de $k[V]_a$, et $k[V]_a/\mathfrak{m} \simeq k$
-        \end{exo}
-        
         \subsection{Espace tangent de Zariski}
+            Soit $V$ une variété affine, $a \in V$. Comme $k[V]_a$ est la localisation de $k[V]$ en l'idéal maximal $\mathfrak{m}_a/I(V)$. C'est donc un anneau local d'idéal maximal noté 
+            $\mathfrak{m}$.
+            \begin{exo}
+                Considérons le morphisme
+                \begin{align*}
+                    \begin{array}{cccc}
+                        ev_a : & k[V]_a & \to & k \\
+                        & \alpha & \mapsto & ev_a(\alpha) = \alpha(a) \\
+                    \end{array}
+                \end{align*}
+                Alors $\ker(ev) = \mathfrak{m}$ idéal maximal de $k[V]_a$, et $k[V]_a/\mathfrak{m} \simeq k$
+            \end{exo}
             \begin{defi}
                 $V \subseteq \mathbb{A}^n$ variété affine, $a \in V$. Soit $A = k[V]_a$ l'anneau local associé à $a$. L'espace tangent de $V$ en $a$ est le $k$-ev
                 \begin{align*}
@@ -348,6 +347,9 @@
                 \end{align*}
                 l'espace tangent à $V$ en $a$.
             \end{defi}
+            \begin{remq}
+                $\mathfrak{m}_a/\mathfrak{m}_a^2 \simeq M_a/M_a^2$ où $M_a = \ker ev_a : k[V] \to k \subrel{id} k[V]$.
+            \end{remq}
             \begin{theo}
                 \cor{
                     $\dim k[V] = \dim k[V]_a$
@@ -403,14 +405,30 @@
                     & x & \mapsto & x - a \\
                 \end{array}
             \end{align*}
-            C'est un isomorphisme, et alors on peut considérer l'image par $\tau_a$ de $T_a^\mathrm{geom}V$. On va montrer que c'est un $k$-ev isomorphe à $T_a(V)$ l'espace tangent de Zariski. On va ensuite montrer que $\dim T_a^\mathrm{geom}V = n - rk d\varphi(a)$. Rappelons que pour tout $a \in V$, $rk d\varphi(a) \leq n-d$ avec $d = \dim V$, avec égalité ssi $a$ est un point régulier. Ainsi les deux points précédent nous permettent de conclure que $\dim T_aV = \dim T_a^\mathrm{geom}V \geq d$ avec égalité si et seulement si $a$ est un point régulier.
-            % \begin{theo}
-            %     $(A, \mathfrak{m})$ anneau local noethérien, alors 
-            %     \begin{align*}
-            %         \dim_j \mathfrak{m}/\mathfrak{m}^2 \geq \dim A
-            %     \end{align*}
-            %     avec égalité si et seulement si $m = (x_1, \cdots, x_d)$ avec $d = \dim A$ (dans ce cas on dit que $(A, \mathfrak{m})$ est un anneau régulier)
-            % \end{theo}
+            C'est un isomorphisme, et alors on peut considérer l'image par $\tau_a$ de $T_a^\mathrm{geom}V$. Elle est alors munie d'une structure canonique d'espace vectoriel. Alors on a les deux résultats suivants :
+            \begin{theo}
+                \label{theo353}
+                Pour tout $a \in V$,
+                \begin{align*}
+                    \tau_a(T_a^\mathrm{geom}V) \simeq T_aV
+                \end{align*}
+            \end{theo}
+            \begin{theo}
+                \label{theo354}
+                Pour tout $a \in V$,
+                \begin{align*}
+                    \dim T_a^\mathrm{geom}V = n - rk d\varphi(a)
+                \end{align*}
+            \end{theo}
+            Ces deux théorèmes permettent de faire le lien entre les deux notions d'espace tangent, ainsi qu'entre leur dimension et la notion de point régulier. Nous résumons cela dans le corollaire suivant :
+            \begin{coro}
+                \label{coro351}
+                Soit $a \in V$. Alors $\dim T_aV = \dim T_a^\mathrm{geom}V \geq d$, avec égalité si et seulement si $a$ est un point régulier.
+            \end{coro}
+            \begin{proof} (\ref{coro351})
+                Ce résultat découle directement du fait que $rk d\varphi(a) \leq n-d$, avec égalité si et seulement si $a$ est régulier, par définition.
+            \end{proof}
+            Avant de prouver les deux théorèmes précédents, vérifions les sur un exemple :
             \begin{expl}
                 $k = \bar k$, $char k = 0$. Soit $V = V(Y^2 - X^3) \subseteq \mathbb{A}^2$, on a $\dim V = 1$. Ainsi
                 \begin{align*}
@@ -441,9 +459,7 @@
                 \end{align*}
                 dans $k[X,Y]$. Ainsi $Q(X,Y)(\alpha X + \beta Y) \in (X^2, XY, Y^2)$ car $Y^2 - X^3 \in (X^2, XY, Y^2)$. Remarquons qu'en général, si $P \in k[X_1, \cdots, X_n]$, alors $P^0 = 0 \iff P \in (X_1, \cdots, X_n)$, $P^0 = P^1 = 0 \iff P \in (X_1, \cdots, X_n)^2$. Mais alors $Q$ a un terme constant car $Q(0) = 0$, et donc le terme linéaire de $Q(\alpha X + \beta Y)$ doit etre $Q^0(\alpha X + \beta Y)$ et doit être $0$ car $Q(\alpha X + \beta Y) \in (X,Y)^2$. Ainsi $Q^0\alpha, Q^0 \beta = 0 \in k$ et donc $\alpha, \beta = 0$ ce qui prouve la liberté de $\{x,y\}$.
             \end{expl}
-            \begin{remq}
-                $\mathfrak{m}_a/\mathfrak{m}_a^2 \simeq M_a/M_a^2$ où $M_a = \ker ev_a : k[V] \to k \subrel{id} k[V]$.
-            \end{remq}
+
             Soit $a \in V$, notons
             \begin{align*}
                 H_\alpha := \{x \in \mathbb{A}^n \mid \sum \alpha^j (x_j - a_j) = 0\} \subseteq \mathbb{A}^2
@@ -485,108 +501,3 @@
                 Ainsi $\varphi([\sum \alpha_i X_i]) = \tilde f_{|W} = f$.
                 \item Montrons que $\ker \varphi = M^2$ : \cor{flemme}   
             \end{enumerate}
-
-    \section{Courbes algébriques affines}
-        $k$ corps algébriquement clos. Une courbes est une variété affine de dimension $1$. $a \in C$ dans une courbe est régulier ssi $\dim \mathfrak{m}_a/\mathfrak{m}_a^2 = 1$.
-        \begin{defi}
-            Un anneau de valuation discrète (DVR) est un anneau local $(A, \mathfrak{m})$ tel que $A$ intègre et principal, et pas un corps;
-        \end{defi}
-        En particulier, un tel anneau est
-        \begin{enumerate}
-            \item noethérien
-            \item $\mathfrak{m} = (t)$ (on appelle $t \in A$ une uniformisante). Un tel $t$ est irréductible.
-            \item factoriel 
-            \item $\dim A = 1$ \\
-        \end{enumerate}
-        \begin{prop}
-            $(A, \mathfrak{m})$ DVR, $K = \Frac A$, $\mathfrak{m} = (t)$.
-            \begin{enumerate}
-                \item Les idéaux non nuls de $A$ sont les $\mathfrak{m}^i = (t^i)$, $i \in \mathbb{N}$.
-                \item $\bigcap_{i \geq 0} \mathfrak{m}^i = \{0\}$
-                \item $\forall x \in k \bs 0$, $\exists ! n \in \mathbb{Z}$ tel que $x = t^nu$, $u \in A^\times$ et l'application
-                \begin{align*}
-                    \begin{array}{cccc}
-                        v : & K \bs 0 & \to & \mathbb{Z} \\
-                        & x & \mapsto & v(x) = n \\
-                    \end{array}
-                \end{align*}
-                satisfait 
-                \begin{align*}
-                    \begin{cases}
-                        v(xy) = v(x) + v(y) \\
-                        v(x + y) \geq \min \{v(x), v(y)\} \\
-                    \end{cases}
-                \end{align*}
-                ($v$ est une valuation de $K$)
-            \end{enumerate}
-            De plus,
-            \begin{align*}
-                &A = \{x \in k \bs 0 \mid v(x) \geq 0\} \cup \{0\} \\
-                &\mathfrak{m} = \{x \in k \bs 0 \mid v(x) > 0\} \cup \{0\} \\
-            \end{align*}
-        \end{prop}
-        \begin{exo}
-            Si $v : K \bs 0 \to \mathbb{Z}$ est une valuation d'un corps $K$, alors $A = \{x \in K \bs 0 \mid v(x) \geq 0\} \cup \{0\}$ est un DVR d'idéal maximal $\{x \in K \bs 0 \mid v(x) > 0\} \cup \{0\}$.
-        \end{exo}
-        \begin{proof}
-            \begin{enumerate}
-                \item $A$ factoriel, $t$ irréductible. Pour tout $x \in A \bs 0$, $\exists N \geq 0$ maximal avec la propriété que $t^N \mid x$ dans $A$. Alors $x = t^Ny$, $y \in A^\times$ (vu que $A$ est local donc $A^\times = A \bs \mathfrak{m}$, et $N$ est maximal). Maintenant soit $I \subrel{id} A$ idéal, alors $\exists x \in A$ non nul tq $I = (x)$; Alors on a que $x = t^Ny$ avec $y \in \mathbb{A}^x$, et donc $I = (t^N)$.
-                \item On a $0 \subseteq \mathfrak{m}^i \nsubseteq \mathfrak{m}^{i-1} \subseteq A$. Alors soit $x \in \bigcap_{\mathbb{N}} \mathfrak{m}^i$ non nul. Alors $x = t^Ny$, $y \in A^\times$. Mais $x \in \mathfrak{m}^{N+1}$ donc $t^{N+1} \mid t^Ny$ absurde.
-                \item Soit $x \in K \bs 0$. Alors $x = y/z$, $y,z \in A$ et $z \neq 0$. Alors $\exists N,M \in \mathbb{N}$ t.q. $y = t^Nu$, $z = t^Mv$ avec $u,v \in A^\times$. Ainsi $x = t^{N-M}(uv^{-1})$. Maintenant vérifions que la valuation est bien définie : si $x = t^iu = t^jv$, alors ops $i > j$ et alors $t^{i-j} \in \mathbb{A}^\times$, absurde. Anis $i = j$ et $u = v$. Il est finalement facile de voir que $v$ est une valuation.
-            \end{enumerate}
-        \end{proof}
-        \begin{theo}
-            $C$ courbe, $a \in C$. Alors $a \in C$ est un point régulier ssi $k[V]_a$ est un DVR.
-        \end{theo}
-        \begin{theo}
-            $C$ courbe affine. $C$ est lisse ssi $k[C]$ est untégralement clos dans $k(C)$.
-        \end{theo}
-        \begin{defi}
-            $A$ anneau intègre, $K = \mathrm{Frac} A$. Alors
-            \begin{enumerate}
-                \item $x \in K$ est entier sur $A$ s'il existe $P \in A[X]$ unistaire tel que $P(x) = 0$ (dans $K$).
-                \item $A$ intégralement clos dans $K$ si $x \in K$ entier sur $A$ implique que $x \in A$.
-            \end{enumerate}
-        \end{defi}
-        \begin{expl}
-            \begin{enumerate}
-                \item $\mathbb{Z}$ est intégralement clos dans $\mathbb{Q}$.
-                \item $\mathbb{Z}[i]$ est intégralement clos dans $\mathbb{Q}$.
-                \item $A = k[X,Y]/(Y^2 - X^3) = k[x,y]$ n'est pas intégralement clos. Par exemple, $y/x$ est entier sur $A$ car $(y/x)^2 - x = 0$ mais pas dans $A$.
-            \end{enumerate}
-        \end{expl}
-        \begin{theo}
-            $A$ intègre. $A$ intégralement clos ssi $A_\mathfrak{p}$ est intégralement clos, pour tout $\mathfrak{p} \subrel{premier} A$.
-        \end{theo}
-        \begin{theo}
-            $A$ anneau local intègre, $\dim A = 1$. Alors $A$ intégralement clos ssi $A$ est un DVR
-        \end{theo}
-        \begin{defi}
-            $A$ anneau de dedekind si intègre, noeth, intégralement clos, de dimension $1$.
-        \end{defi}
-        \begin{expl}
-            $\mathbb{Z}$, $\mathbb{Z}[i]$, $k[C]$ pour $C$ une courbe lisse.
-        \end{expl}
-        \begin{theo}
-            $C$ courbe affine.
-            \begin{align*}
-                Sing(C) = \{a \in C \mid a \text{ singulier} \}
-            \end{align*}
-            est un ensemble propre de $C$
-        \end{theo}
-        \begin{exo}
-            $Sing(C)$ est un sous-ensemble algébrique.
-        \end{exo}
-        \begin{prop}
-            $C$ courbe affine. Les sous-ensemblers propres de $C$ sont finis.
-        \end{prop}
-        \begin{coro}
-            $|Sing(C)| < \infty$
-        \end{coro}
-        \begin{proof} (proposition)
-            Soit $V \subseteq C \subseteq \mathbb{A}^n$ ensemble algébrique propre. OPS $V$ irréductible(sinon on considère une composante de $V$). Alors $V \nsubseteq C$ implique que $I(C) \nsubseteq I(V) \subseteq k[X_1, \cdots, X_n]$. Montrons que $I(V) = \mathfrak{m}_a$, $a \in \mathbb{A}^n$. Maintenant
-            \begin{align*}
-                0 \subseteq I(V)/I(C) \subseteq k[C]
-            \end{align*}
-            est un idéal premier. Mais $\dim k[C] = 1$, donc $I(V)/I(C)$ est maximal, donc $I(V)$ maximal. Ainsi $I(V) = \mathfrak{m}_a$ car $k = \bar k$, donc $V$ doit être un point.
-        \end{proof}
