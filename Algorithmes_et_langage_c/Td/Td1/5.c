@@ -253,9 +253,6 @@ unsigned int parity(unsigned int v)
     v = (v >> 2) ^ v;
     v = (v >> 1) ^ v;
     return v & 1;
-    // int res = 0;
-    // for (int i = 0; i < m; i++) res ^= GI(v, i);
-    // return res;
 }
 
 void parity_tab(unsigned int T[C])
