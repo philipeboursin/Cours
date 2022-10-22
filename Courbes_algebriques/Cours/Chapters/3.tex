@@ -75,14 +75,14 @@
             \begin{expl}
                 \begin{enumerate}
                     \item $\dim \mathbb{A}_k^n = n$ : $V = \mathbb{A}_k^n$, $k[V] = k[X_1, \cdots, X_n]$. $I(V) = \{0\}$. Ainsi $k(V) = k(X_1, \cdots, X_n)$. Et $\{X_1, \cdots, X_n\}$ est une base de transcendance de $k(V)$, donc $\dim V = n$.
-                    \item $V = \{(x,y) \mid xy = 1\} \subseteq \mathbb{A}^1$. Alors $V = V(XY - 1)$ est irréductible; Ainsi $V$ est une variété affine. $k[V] = k[X,Y]/(XY - 1) = k[x,y]$ où $x = [X]$, $y = [Y]$ (et $xy = 1$). $k(V) = \mathrm{Frac} (k[x,y]) =: k(x,y)$. Maintenant $k(x,y) = k(x)$ vu que $y = 1/x$. Maintenant $\{x\}$ est une base de trascendance de $k(x)$ : sinon il existe $P \in k[X]$ non nul tel que $P(x) = 0 \in k(x)$, et en particulier dans $k[x] \subseteq k[V]$. Ainsi $P \in I(V)$ donc $P(X) = (XY - 1)Q(X,Y)$ dans $k[X,Y]$ avec $Q \in k[X,Y]$, ce qui est absudre puisque $\deg_YP = 0$. Ainsi $\dim V = 1$
+                    \item $V = \{(x,y) \mid xy = 1\} \subseteq \mathbb{A}^1$. Alors $V = V(XY - 1)$ est irréductible; Ainsi $V$ est une variété affine. $k[V] = k[X,Y]/(XY - 1) = k[x,y]$ où $x = [X]$, $y = [Y]$ (et $xy = 1$). $k(V) = \mathrm{Frac} (k[x,y]) =: k(x,y)$. Maintenant $k(x,y) = k(x)$ vu que $y = 1/x$. Maintenant $\{x\}$ est une base de trascendance de $k(x)$ : sinon il existe $P \in k[X]$ non nul tel que $P(x) = 0 \in k(x)$, et en particulier dans $k[x] \subseteq k[V]$. Ainsi $P \in I(V)$ donc $P(X) = (XY - 1)Q(X,Y)$ dans $k[X,Y]$ avec $Q \in k[X,Y]$, ce qui est absude puisque $\deg_YP = 0$. Ainsi $\dim V = 1$
                 \end{enumerate} 
             \end{expl}
             \begin{lemm}
                 ($k = \bar k$) Soit $f \in k[X_1, \cdots, X_n]$ irréductible. Alors $V := V(f) \subseteq \mathbb{A}_k^n$ est une variété affine de dimension $n-1$.
             \end{lemm}
             \begin{proof}
-                $f$ non constant. On peut supposer que $\deg_{X_n}(f) > 0$. Notons $k[V] = k[x_1, \cdots, x_n]$. Ainsi $f(x_1, \cdots, x_n) = 0$ vu que $I(V) = (f)$. . Maoitenant $k \subseteq k(x_1, \cdots, x_{n-1}) \subseteq k(x_1, \cdots, x_{n-1})(x_n)$ est algébrique car $f(x_1, \cdots, x_n) = 0$. Montrons que $\{x_1, \cdots, x_{n-1}\}$ sont algébriquement indépendants sur $k$ : si $g \in k[X_1, \cdots, X_{n-1}]$ tel que $g(x_1, \cdots, x_{n-1}) = 0$ dans $k(V)$ (donc dans $k[V]$). Alors $g(x_1, \cdots, x_{n-1}) \in I(V) = (f)$ mais $\deg_{X_n} g = 0$, absurde.
+                $f$ non constant. On peut supposer que $\deg_{X_n}(f) > 0$. Notons $k[V] = k[x_1, \cdots, x_n]$. Ainsi $f(x_1, \cdots, x_n) = 0$ vu que $I(V) = (f)$. . Maoitenant $k \subseteq k(x_1, \cdots, x_{n-1}) \subseteq k(x_1, \cdots, x_{n-1})(x_n)$ est algébrique car $f(x_1, \cdots, x_n) = 0$. Montrons que $\{x_1, \cdots, x_{n-1}\}$ sont algébriquement indépendants sur $k$ : si $g \in k[X_1, \cdots, X_{n-1}]$ tel que $g(x_1, \cdots, x_{n-1}) = 0$ dans $k(V)$ (donc dans $k[V]$). Alors $g(x_1, \cdots, x_{n-1}) \in I(V) = (f)$ mais $\deg_{X_n} g = 0$, donc $g$ est nul.
             \end{proof}
             \begin{remq}
                 \label{rq113}

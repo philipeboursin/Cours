@@ -1,1 +1,167 @@
 \chapter{TD3}
+    \section{Exercice 1}
+        Remarquons que pour parler de dimension, $V$ doit être non vide (sinon $k[V] = \{0\}$ et parler de corps des fractions d'un tel anneau n'a aucun sens). Ainsi supposons le :
+        \begin{enumerate}
+            \item Si $V = \{a\} \subseteq \mathbb{A}^n$, alors $V = V(\mathfrak{m}_a)$, où $\mathfrak{m}_a = (X_i - a_i,\, 1 \leq i \leq n)$. Mais alors $k[V] \simeq k$, et ainsi $\dim V = \mathrm{trdeg}_kk = 0$.
+            \item Réciproquement, supposons que $\mathrm{trdeg}_k k(V) = 0$. Alors $k(V)$ est algébrique sur $k$, mais $k$ est algébriquement clos donc toutes ses extensions algébriques sont triviales, i.e. $k(V) \simeq k$. Maitenant, au vu de la suite de morphismes d'anneau $k \injectivearrow k[V] \injectivearrow k(V) \simeq k$, $k[V]$ doit être un corps, i.e. $I(V)$ doit être un idéal maximal. Mais $k = \bar k$ et donc $I(V) = \mathfrak{m}_a$ pour un certain $a \in \mathbb{A}^n$, et ainsi $V = V(I(V)) = V(\mathfrak{m}_a) = \{a\}$ est un point.
+        \end{enumerate}
+
+    \section{Exercice 2}
+        \begin{enumerate}
+            \item $d = 0$ : $F_1 = X, F_2 = Y, F_3 = Z$. Alors $V = 0$ est un point donc d'après l'exercice précédent elle est de dimension $0$.
+            \item $d = 1$ : $F_1 = F_2 = X, F_3 = Y$. Alors $k[V] \simeq k[Z]$ est de degré de transcendance $1$ sur $k$.
+            \item $d = 2$ : $F_1 = F_2 = F_3 = X$. Alors $k[V] \simeq k[Y,Z]$ est de degré de transcendance $2$ sur $k$.
+            \item $d = 3$ : $F_1 = F_2 = F_3 = 0$. Alors $V = \mathbb{A}^3$ est de dimension $3$.
+        \end{enumerate}
+
+    \section{Exercice 3}
+        \begin{question}{1.}
+            Notons $k[V] = k[x,y]$, $k(V) = k(x,y)$ ($x,y = [X],[Y]$). Montrons que $\{x\}$ est une base de transcendance de $k(v)$ sur $k$. Déja, soit $P \in k[T]$ tel que $P(x) = 0$, alors $P([X]) = [P(X)] = 0$ et donc $P(X) \in I(V) = (X - Y)$. Ainsi $P = Q(X - Y)$, mais $\deg_Y P = 0$, donc $Q$ est forcément nul, et donc $P = 0$, ce qui prouve que $\{x\}$ est algébriquement indépendante. Finalement, $k(x,y)$ est algébrique sur $k(x)$, puisque $x - y = 0$ dans $k(x,y)$. On conclut donc que $\dim V = 1$.
+        \end{question}
+        \begin{question}{2.}
+            Notons $k[V] = k[x,y,z]$. Sans démonstration, une base de transcendance de $k(x,y,z)$ est $\{y,z\}$, donc $V$ est de dimension $2$.
+        \end{question}
+        \begin{question}{3.}
+            Il est facile de voir que $V = \{0\}$ (si $k$ est infini), et donc $I(V) = (X,Y)$. Ainsi, $k(x,y) = k[x,y] = k$ est algébrique sur $k$, ce qui prouve que $\dim V = 0$.
+        \end{question}
+        \begin{question}{4.}
+            \cor{Ces questions cassent les couilles antisash}
+        \end{question}
+
+    \section{Exercice 4}
+
+    \section{Exercice 5}
+
+    \section{Exercice 6}
+        Si deux variétés sont isomorphes, alors leurs algèbres de fonctions régulières sont isomorphes. La dimension d'une variété étant égale à la dimension de Krull de leurs algèbres de fonctions régulières, deux variétés isomorphes sont de même dimension. Pour terminer l'exercice, considérons les isomorphismes
+        \begin{align*}
+            \begin{array}{cccc}
+                & \mathbb{A}^1 & \to & V(X - Y) \subseteq \mathbb{A}^2 \\
+                & x & \mapsto & (x, x) \\
+            \end{array}
+        \end{align*}
+        \begin{align*}
+            \begin{array}{cccc}
+                & \mathbb{A}^2 & \to & V(X - Y) \subseteq \mathbb{A}^3 \\
+                & (x,y) & \mapsto & (x, x, y) \\
+            \end{array}
+        \end{align*}
+        Ainsi $V(X - Y) \subseteq \mathbb{A}^2$ est de dimension $1$, alors que $V(X - Y) \subseteq \mathbb{A}^3$ est de dimension $2$ et donc ne peuvent être isomorphes.
+
+    \section{Exercice 7}
+
+    \section{Exercice 8}
+        \begin{question}{1.}
+            Comme $k$ est algébriquement clos et de caractéristique différente de $2$, soit $\varphi$ une forme bilinéaire, alors il existe une base orthonormale $(e_1, \cdots, e_n)$ de $k^n$ telle que $\varphi(e_i, e_j) = 0$ pour tout $i \neq j$. Maintenant soit $P \in k[X_1, \cdots, X_n]$ un polynôme homogène de degré $2$. On peut lui associer une forme bilinéaire $\varphi_P$ donnée par $\varphi_P(x,y) = $
+        \end{question} 
+
+    \section{Exercice 9}
+        \begin{question}{1.}
+            Soient $V,W \subseteq \mathbb{A}^n, \mathbb{A}^m$. Montrons que leur produit est une variété affine de $\mathbb{A}^{n+m}$. On a déjà vu dans un TD précédent que le produit d'ensemble algébriques est un ensemble algébrique. Il faut donc montrer que $V \times W$ est irréductible. Pour cela, remarquons dans un premier temps que pour tout $x \in V$, alors $\{x\} \times W \subseteq V \times W \subseteq \mathbb{A}^{n + m}$ est un fermé de $V \times W$ (du fait que la topologie sur $V \times W$ est induite par celle de $\mathbb{A}^{n + m}$ et que $\{x\} \times W$ est un ensemble algébrique donc fermé de $\mathbb{A}^{n + m}$) et de plus, $\{x\} \times W \simeq W$ en tant qu'ensembles algébriques, et donc en tant qu'espace topologiques, vu que les morphismes sont continus pour la topologie de Zariski (et bien sur on a aussi $V \times \{y\} \subseteq V \times W \subseteq \mathbb{A}^{n + m}$ est un fermé de $V \times W$ et est isomorphe à $V$). Alors supposons que $V \times W = F_1 \cup F_2$ avec $F_1, F_2$ des fermés de $V \times W$. Condidérons alors les ensembles
+            \begin{align*}
+                V_i = \{x \in V \mid \{x\} \times W \subseteq F_1\}
+            \end{align*}
+            \begin{enumerate}
+                \item $V = V_1 \cup V_2$ : soit $x \in V$, alors
+                \begin{align*}
+                    \{x\} \times W = ((\{x\} \times W) \cap F_1) \cup ((\{x\} \times W) \cap F_2)
+                \end{align*}
+                puis $\{x\} \times W$ est un fermé de $V \times W$, et donc les $(\{x\} \times W) \cap F_i$ sont des fermés de $\{x\} \times W$. Maintenant $W \simeq \{x\} \times W$ en tant qu'espaces topologiques, donc $\{x\} \times W$ est irréductible, et donc soit $\{x\} \times W \subseteq F_1$, soit $\{x\} \times W \subseteq F_2$, i.e. $x \in V_1$ ou $x \in V_2$. 
+                \item Remarquons que 
+                \begin{align*}
+                    V_i = \bigcap_{y \in W} \{x \in V \mid (x,y) \in F_i\}
+                \end{align*}
+                Ainsi il suffit de montrer que our tout $y \in W$, $\{x \in V \mid (x,y) \in F_i\}$ est un fermé de $V$ : $V \simeq V \times \{y\}$, et par cet isomorphisme $\{x \in V \mid (x,y) \in F_i\}$ est envoyé sur $V \times \{y\} \cap F_1$, qui est un fermé de $V \times \{y\}$. Cela permet de conclure sur le fait que $V_i$ est un fermé de $V$.
+            \end{enumerate}
+            Ainsi, par irréductibilité de $V$, on a $V = V_1$ ou $V = V_2$, qui implique que $V \times W = F_1$ ou $V \times W = F_2$, prouvant que $V \times W$ est irréductible.
+        \end{question}
+        \begin{question}{2.}
+            Soient $V,W$ des ensembles algébriques. Montrons que $k[V \times W] \simeq k[V] \otimes_k k[W]$. Avant cela, montrons un lemme intermédiaire :
+            \begin{lemm}
+                Soient $A,B$ des $C$-algèbres, $I,J$ des idéaux de $A,B$ respectivement. Alors
+                \begin{align*}
+                    A/I \otimes B/J \simeq (A \otimes B)/(I \otimes B + A \otimes J)
+                \end{align*}
+            \end{lemm}
+            \begin{proof}
+                Montrons que le morphisme
+                \begin{align*}
+                    \begin{array}{cccc}
+                        \phi : & A/I \otimes B/J & \to & (A \otimes B)/(I \otimes B + A \otimes J) \\
+                        & [a] \otimes [b] & \mapsto & [a \otimes b] \\
+                    \end{array}
+                \end{align*}
+                est un isomorphisme. Remarquons juste rapidement que ce morphisme est bien défini, car induit par les morphismes $A/I \to (A \otimes B)/(I \otimes B + A \otimes J)$ et $B/J \to (A \otimes B)/(I \otimes B + A \otimes J)$ eux même induits par $A \to A \otimes B \to (A \otimes B)/(I \otimes B + A \otimes J)$ et $B \to A \otimes B \to (A \otimes B)/(I \otimes B + A \otimes J)$, qui passent bien au quotient par $I$ et $J$ respectivement. Alors soit
+                \begin{align*}
+                    \begin{array}{cccc}
+                        \psi : & A \otimes B & \to & A/I \otimes B/I\\
+                        & a \otimes b & \mapsto & [a] \otimes [b] \\
+                    \end{array}
+                \end{align*}
+                alors si $x \in A \otimes B$ est dans $I \otimes B + A \otimes J$, on peut l'écrire comme un somme
+                \begin{align*}
+                    x = \sum_n i_n \otimes b_n + \sum_m a_m \otimes j_m
+                \end{align*}
+                Mais alors
+                \begin{align*}
+                    \psi(x) = \sum_n [i_n] \otimes [b_n] + \sum_m [a_m] \otimes [j_m] = 0
+                \end{align*}
+                donc $\psi$ induit une application $\tilde \psi : (A \otimes B)/(I \otimes B + A \otimes J) \to A/I \otimes B/J$ qui envoie $[a \otimes b]$ sur $[a] \otimes [b]$. Il est finalement facile de voir que $\tilde \psi$ et $\phi$ sont inverses l'une de l'autre, prouvant l'isomorphisme.
+            \end{proof}
+            Ainsi 
+            \begin{align*}
+                k[V] \otimes_k k[W] \simeq k[X_1, \cdots, X_n] \otimes k[Y_1, \cdots, Y_n] / (I(V) \otimes B + A \otimes I(W))
+            \end{align*}
+            mais on sait que $k[X_1, \cdots, X_n] \otimes k[Y_1, \cdots, Y_nm \simeq k[X_1, \cdots, X_n, Y_1, \cdots, Y_m]$, et $(I(V) \otimes B + A \otimes I(W))$ est envoyé sur l'idéal engendré par $I(V)$ et $I(W)$ vu comme des sous ensembles de $k[X_1, \cdots, X_n, Y_1, \cdots, Y_m]$ par cet isomorphisme. Ainsi il suffit de montrer que $(I(V) \cup I(W)) = I(V \times W)$ :
+            \begin{enumerate}
+                \item $\subseteq$ : clair.
+                \item $\supseteq$ : Soit $R \in I(V \times W)$. Alors on peut écrire
+                \begin{align*}
+                    R = \sum_{i = 1}^r P_iQ_i
+                \end{align*}
+                avec $P_i \in k[X_1, \cdots, X_n]$ et $Q_i \in k[Y_1, \cdots, Y_m]$. Maintenant soit $P_i \in I(V)$ pour tout $i$ et alors on a terminé, soit il existe $i$ tel que $P_i \notin I(V)$. Quitte a réindexer, OPS que $i = 1$. Alors il existe $x \in V$ tel que $P_1(x) \neq 0$. Maintenant $\sum P_i(x) Q_i \in k[Y_1, \cdots, Y_m]$ est dans $I(W)$, car $R(x,y) = 0$ pour tout $(x,y) \in V \times W$. Et alors
+                \begin{align*}
+                    R' := \frac{P_1}{P_1(x)} \sum P_i(x) Q_i \in (I(V) \cup I(W))
+                \end{align*}
+                puis $R \in (I(V) \cup I(W))$ si et seulement si $R - R' \in (I(V) \cup I(W))$. Mais
+                \begin{align*}
+                    R - R' &= \sum_{i = 1}^r \left(P_i - \frac{P_1}{P_1(x)}P_i(x) \right) Q_i \\
+                    &= \sum_{i = 2}^r P'_iQ_i \\
+                \end{align*}
+                où $P'_i \in k[X_1, \cdots, X_n]$. Ainsi en itérant ce procédé, soit on va tomber sur le premier cas, soit on va finir par arriver sur le cas $R = 0$, qui est bien dans l'idéal $(I(V) \cup I(W))$.
+            \end{enumerate}
+        \end{question}
+        \begin{question}{3.}
+            Si $k$ est algébriquement clos, alors on a une équivalence de catégories (donnée par le foncteur $k[-]$) entre la catégorie des variétés affines et des algèbres de tf intègres. Ainsi soient $A,B$ des $k$-alg de tf intègres, il existe $V,W$ des variétés affines telles que $k[V] \simeq A$, $k[W] \simeq B$. Mais alors
+            \begin{align*}
+                A \otimes_k B \simeq k[V] \otimes_k k[W] \simeq k[V \times W]
+            \end{align*}
+            puis d'après la question $1$, $V \times W$ est une variété affine et donc $k[V \times W]$ est intègre. Cela prouve au passage que la catégorie des $k$-alg de tf intègres admet un objet satisfaisant la propriété universelle de coproduit, et ainsi par équivalence de catégorie $V \times W$ satisgait la propriété universelle du produit dans la catégorie des variétés affines.
+        \end{question}
+        \begin{question}{4.}
+            \begin{align*}
+                \mathbb{C} \otimes_\mathbb{R} \mathbb{C} \simeq \mathbb{R}[X]/(X^2 + 1) \otimes_\mathbb{R} \mathbb{C} \simeq \mathbb{C}[X]/(X^2 + 1)
+            \end{align*}
+            mais ce dernier anneau n'est pas intègre puisque $(X - i)(X + i) = X^2 + 1$.
+        \end{question}
+
+    \section{Exercice 10}
+        Considérons le fermé $V(XY) \subseteq \mathbb{A}^2$. Alors $V(XY) = \{(t,0) \mid t \in k\} \cup \{(0,t) \mid t \in k\}$. Supposons alors que $V(XY) = V(I) \times V(J)$, comme $(t,0) \in V(XY)$, on doit avoir $t \in V(I)$, pour tout $t \in k$ i.e. $V(I) = \mathbb{A}^1$. De même, on doit avoir $V(J) = \mathbb{A}^1$, mais $\mathbb{A}^1 \times \mathbb{A}^1 = \mathbb{A}^2 \neq V(XY)$.
+
+    \section{Exercice 11}
+        Dans un premier temps, soit $f_i \in k[X_1, \cdots, X_n]$ tels que $\varphi(a) = (f_1(a), \cdots, f_i(a))$. Alors montrer que $\varphi$ est continue revient à montrer que $\tilde \varphi : \mathbb{A}^n \to \mathbb{A}^l$ définie par $\tilde \varphi(a) = (f_1(a), \cdots, f_i(a))$ pour tout $a \in \mathbb{A}^n$ est continue. En effet, soit $Z$ un fermé de $W$, alors $Z = Z' \cap W$ pour $Z$ un fermé de $\mathbb{A}^l$. Maintenant $\varphi^{-1}(Z) = \tilde \varphi^{-1}(Z') \cap V$ et est donc un fermé si et seulement si $\tilde \varphi^{-1}(Z')$ est un fermé. On peut donc se ramener au cas $\varphi : \mathbb{A}^n \to \mathbb{A}^l$. Ainsi considérons un fermé $V(J) \subrel{fermé} \mathbb{A}^l$, posons $I := k[\varphi](J)$, et montrons que $\varphi^{-1}(V(J)) = V(I)$.
+        \begin{enumerate}
+            \item $\subseteq$ : soit $x \in \varphi^{-1}(V(J))$, alors pour tout $P \in I$, il existe $Q \in J$ tel que $P = k[\varphi](Q)$. Maintenant
+            \begin{align*}
+                P(x) &= k[\varphi](Q)(x) = Q(\varphi(x)) = 0
+            \end{align*}
+            puisque $Q \in J$ et $\varphi(x) \in V(J)$.
+            \item $\supseteq$ : Soit $x \in V(I)$, alors pour tout $Q \in J$, $k[\varphi](Q) \in I$ et donc
+            \begin{align*}
+                Q(\varphi(x)) = k[\varphi](Q)(x) = 0 \\
+            \end{align*}
+            et donc $\varphi(x) \in V(J)$.
+        \end{enumerate}
+
+    \section{Exercice 12}
+        Soit $E \subseteq \mathbb{A}^n$. Montrons que $V(I(E)) = \bar E$ : déja, si $x \in E$, alors soit $P \in I(E)$, $P(x) = 0$ et ainsi $x \in V(I(E))$. Ensuite, soit $E \subseteq V(J)$ un ensemble algébrique, alors $J \subseteq I(V(J))$, et $I(V(J)) \subseteq I(E)$, donc $J \subseteq I(E)$ et finalement $V(I(E)) \subseteq V(J)$, ce qui prouve que $\bar E = V(I(E))$.

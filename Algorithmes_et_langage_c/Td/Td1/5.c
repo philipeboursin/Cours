@@ -8,11 +8,12 @@
 #define GI(v, i) (v >> i) & 1
 #define GIJ(M, i, j) GI(M[i], j)
 
+#define TP16 65536
+
 //// VARIABLES GLOBALES
 // Taille des matrices/vecteurs
 int n = 16;
 int m = 16;
-int C = 65536;
 
 
 //// PARTIE 1
@@ -47,9 +48,9 @@ void partie_2_et_4();
 // Calcule la parité d'un unsigned int
 unsigned int parity(unsigned int v);
 // Calcule un tableau qui contient la parité de tous les vecteurs de 16 bits
-void parity_tab(unsigned int T[C]);
+void parity_tab(unsigned int T[TP16]);
 // Calcule la parité d'un vecteur binaire de moins de 32 bits
-unsigned int parity_bis(unsigned int T[C], unsigned int v);
+unsigned int parity_bis(unsigned int T[TP16], unsigned int v);
 // Tests de la partie 3
 void partie_3();
 
@@ -57,9 +58,9 @@ void partie_3();
 // Produit matrice vecteur en utiliant parity
 unsigned int Mv_naive(unsigned int M[m], unsigned int v);
 // Produit matrice vecteur en utilisant le tableau des parités précalculées
-unsigned int Mv_16(unsigned int T[C], unsigned int M[m], unsigned int v);
+unsigned int Mv_16(unsigned int T[TP16], unsigned int M[m], unsigned int v);
 // Produit matrice vecteur en utilisant parity_bis
-unsigned int Mv_opt(unsigned int T[C], unsigned int M[m], unsigned int v);
+unsigned int Mv_opt(unsigned int T[TP16], unsigned int M[m], unsigned int v);
 // Tests de la partie 5
 void partie_5();
 
@@ -253,14 +254,15 @@ unsigned int parity(unsigned int v)
     v = (v >> 2) ^ v;
     v = (v >> 1) ^ v;
     return v & 1;
+    // return __builtin_popcount(v) & 1; // Compiler avec -march=native pour faire marcher celui la
 }
 
-void parity_tab(unsigned int T[C])
+void parity_tab(unsigned int T[TP16])
 {
-    for (int i = 0; i < C; i++) T[i] = parity(i);
+    for (int i = 0; i < TP16; i++) T[i] = parity(i);
 }
 
-unsigned int parity_bis(unsigned int T[C], unsigned int v)
+unsigned int parity_bis(unsigned int T[TP16], unsigned int v)
 {
     unsigned int a = T[(v << 16) >> 16];
     return a ^ T[v >> 16];
@@ -268,7 +270,7 @@ unsigned int parity_bis(unsigned int T[C], unsigned int v)
 
 void partie_3()
 {
-    unsigned int T[C];
+    unsigned int T[TP16];
     parity_tab(T);
     unsigned int v = 0;
 
@@ -306,7 +308,7 @@ unsigned int Mv_naive(unsigned int M[m], unsigned int v)
     return res;
 }
 
-unsigned int Mv_16(unsigned int T[C], unsigned int M[m], unsigned int v)
+unsigned int Mv_16(unsigned int T[TP16], unsigned int M[m], unsigned int v)
 {
     unsigned int res = 0;
     if (m != 16) printf("Taille de matrice non compatible");
@@ -320,7 +322,7 @@ unsigned int Mv_16(unsigned int T[C], unsigned int M[m], unsigned int v)
     return res;
 }
 
-unsigned int Mv_opt(unsigned int T[C], unsigned int M[m], unsigned int v)
+unsigned int Mv_opt(unsigned int T[TP16], unsigned int M[m], unsigned int v)
 {
     unsigned int res = 0;
     for (int i = 0; i < m; i++)
@@ -336,7 +338,7 @@ void partie_5()
     unsigned int res;
     unsigned int v = 3; // [1,1,0]
     unsigned int M[3] = {1, 0, 4}; // [[1,0,0],[0,0,0],[0,0,1]]
-    unsigned int T[C];
+    unsigned int T[TP16];
     parity_tab(T);
     
     printf("Produit matrice vecteur naif\n");
@@ -352,7 +354,7 @@ void partie_5()
     printf("Produit matrice vecteur de taille 16 en utilisant un tableau précalculé des parités des vecteurs de taille 16\n");
     m = 16;
     unsigned int N[m];
-    v = C - 1;
+    v = TP16 - 1;
     for (int i = 0; i < m; i++)
     {
         N[i] = 1 << i;
@@ -419,7 +421,7 @@ void test2(int test_it)
 void test3(int test_it)
 {
     unsigned int M[m];
-    unsigned int T[C];
+    unsigned int T[TP16];
     unsigned int v = rand_vect_bis();
     unsigned int res;
 
@@ -437,7 +439,7 @@ void test3(int test_it)
 void test4(int test_it)
 {
     unsigned int M[m];
-    unsigned int T[C];
+    unsigned int T[TP16];
     unsigned int v = rand_vect_bis();
     unsigned int res;
 
@@ -454,9 +456,9 @@ void test4(int test_it)
 
 void partie_6()
 {
-    int test_it = 10000000;
+    int test_it = 200000000;
     m = 16;
-    test4(test_it);
+    test2(test_it);
 }
 
 
