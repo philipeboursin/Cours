@@ -19,19 +19,47 @@
             Notons $k[V] = k[x,y]$, $k(V) = k(x,y)$ ($x,y = [X],[Y]$). Montrons que $\{x\}$ est une base de transcendance de $k(v)$ sur $k$. Déja, soit $P \in k[T]$ tel que $P(x) = 0$, alors $P([X]) = [P(X)] = 0$ et donc $P(X) \in I(V) = (X - Y)$. Ainsi $P = Q(X - Y)$, mais $\deg_Y P = 0$, donc $Q$ est forcément nul, et donc $P = 0$, ce qui prouve que $\{x\}$ est algébriquement indépendante. Finalement, $k(x,y)$ est algébrique sur $k(x)$, puisque $x - y = 0$ dans $k(x,y)$. On conclut donc que $\dim V = 1$.
         \end{question}
         \begin{question}{2.}
-            Notons $k[V] = k[x,y,z]$. Sans démonstration, une base de transcendance de $k(x,y,z)$ est $\{y,z\}$, donc $V$ est de dimension $2$.
+            Notons $k[V] = k[x,y,z]$. Montrons que $\{y,z\}$ est une base de transcendance de $k(x,y,z)$ : dans $k(x,y,z)$, $x = y$, donc ce corps est une extension algébrique de $k(y,z)$. Motrons maintenant que $\{y,z\}$ est algébriquement indépendante. Soit $P \in k[Y,Z]$ tel que $P(y,z) = 0$, alors $P(y,z) = [P] \in k[V]$ où $P$ est vu comme un élément de $k[X,Y,Z]$. Ainsi $P \in I(V)$ donc $P = Q(X - Y)$ avec $Q \in k[X,Y,Z]$. Mais comme $P$ n'a aucun terme faisant intervenir $X$, $Q$ doit forcément être nul, et donc $P$ aussi, ce qui prouve l'indépendance algébrique de $\{y,z\}$ sur $k$. Ainsi $\dim V = 2$.
         \end{question}
         \begin{question}{3.}
-            Il est facile de voir que $V = \{0\}$ (si $k$ est infini), et donc $I(V) = (X,Y)$. Ainsi, $k(x,y) = k[x,y] = k$ est algébrique sur $k$, ce qui prouve que $\dim V = 0$.
+            Il est facile de voir que $V = \{0\}$, et donc $I(V) = (X,Y)$ (si $k$ est infini, ce qui est le cas si $k = \bar k$). Ainsi, $k(x,y) = k[x,y] = k$ est algébrique sur $k$, ce qui prouve que $\dim V = 0$.
         \end{question}
         \begin{question}{4.}
-            \cor{Ces questions cassent les couilles antisash}
+            Ici, $(X - Y, Z)$ est un idéal premier puisque c'est le noyau du morphisme
+            \begin{align*}
+                \begin{array}{cccc}
+                    & k[X,Y,Z] & \to & k[T] \\
+                    & X & \mapsto & T \\
+                    & Y & \mapsto & T \\
+                    & Z & \mapsto & 0 \\
+                \end{array}
+            \end{align*}
+            Ainsi $I(V) = (X - Y, Z)$. Maintenant calculons une base de transcendance de $k(V) = k(x,y,z)$ : montrons que $\{x\}$ covient. Déjà, $k(x,y,z)$ est algébrique sur $k(x)$, puisque $z = 0$ et $x - y = 0$ dans ce corps. Maintenant si $P \in k[X]$ est tel que $P(x) = 0$, alors cette égalité est aussi vraie dans $k[V]$ et alors $P(x) = [P] = 0$, donc $P \in I(V)$. Ainsi il existe $Q_1, Q_2 \in k[X,Y,Z]$ tels que $P = Q_1(X - Y) + Q_2Z$. Réalisons la division euclidienne de $Q_1$ par $Z$, alors $Q_1 = AZ + B$ avec $B \in k[X,Y]$. Mais alors $B$ doit être nul car sinon $P = B(X - Y) + Z(A(X - Y) + Q_2)$ et si $A(X - Y) + Q_2$ est non nul, on a un problème pour le degré en $Z$, et sinon on a un problème pour le degré en $Y$. Ainsi $Q_1 = ZA$. Alors $P = Z((X - Y) + Q_2)$, et au vu du degré en $Z$ on doit avoir que $(X - Y)A + Q_2 = 0$, et donc $P = 0$. Ainsi $\{x\}$ est algébriquement indépendante, donc une base de transcendance et $\dim V = 1$.
+        \end{question}
+        \begin{question}{5.}
+            On a déjà vu dans un exercice précedent que comme $Y^5$ n'est pas un carré dans $k[Y]$, $X^2 - Y^5$ est irréductible. Ainsi $I(V) = (X^2 - Y^5)$, et alors notons $k(x,y) = k(V)$, montrons que $\{x\}$ est une base de transcendance. Déjà, $k(x,y)$ est algébrique sur $k(x)$ puisque $y^5 = x^2$ dans ce corps. Maintenant, soit $P \in k[X]$ tel que $P(x) = 0 \in k(x,y)$. Alors cette équation peut être relevée dans $k[x,y]$, et alors $P(x) = [P] = 0$ dans cet anneau, donc $P \in I(V)$. Alors il existe $Q \in k[X,Y]$ tel que $P = Q(X^2 - Y^5)$, mais en regardant le degré en $Y$, on conclut que $Q = 0$ et donc $P = 0$. Donc $\{x\}$ est algébriquement indépendante, c'est une base de transcendance de $k(x,y)$ sur $k$, donc $\dim V = 1$.
         \end{question}
 
     \section{Exercice 4}
+        Pour calculer la dimension de $\mathfrak{m}_a/\mathfrak{m}_a^2$, on peut calculer la dimension de l'espace tangent géométrique $T_a^\mathrm{geom}$. Notons $P_1 = X^2 - Y^3, P_2 = Y^2 - Z^3$, on a 
+        \begin{align*}
+            P_1^1 &= \frac{\partial P_1}{\partial X}(0)X + \frac{\partial P_1}{\partial Y}(0)Y + \frac{\partial P_1}{\partial Z}(0)Z = 0 \\
+            P_1^1 &= \frac{\partial P_2}{\partial X}(0)X + \frac{\partial P}{\partial Y}(0)Y +_2 \frac{\partial P_2}{\partial Z}(0)Z = 0 \\
+        \end{align*}
+        Ainsi $T_a^\mathrm{geom} = V(0,0) = \mathbb{A}^3$. C'est un espace vectoriel de dimension $3$, donc la dimension de $\mathfrak{m}_a/\mathfrak{m}_a^2$ en tant que $k$-ev vaut $3$.
 
     \section{Exercice 5}
-
+        \begin{question}{1.}
+            Calculons la dimension de $V$ : en supposant que $k = \bar k$, $I(V) = \sqrt{(X^2 + Y^2 - 1)}$. Remarquons alors que $X^2 + Y^2 - 1$ est un polynôme irréductible \cor{(à prouver si possible)}. Ceci implique que $I(V) = (X^2 + Y^2 - 1)$ et que $V$ est bien une variété affine. Montrons qu'elle est de dimension $1$ : condidérons $k(x,y)$ le corps des fractions de $k[V] = k[x,y]$, $x,y = [X],[Y]$. Alors $k(x,y)$ est algébrique sur $k(x)$, puisque $x^2 + y^2 - 1 = 0$ dans ce corps. Ensuite $\{x\}$ est algébriquement indépendante sur $k$, car sinon on aurait $P \in k[T]$ tel que $P(x) = 0$ dans $k(x,y)$, donc dans $k[v]$, ce qui veut dire que $P(x) = [P(X)] = 0$ donc $P(X) \in I(V)$. Maintenant en regardant le degré en $Y$ on voit facilement que $P = 0$, ce qui prouve que $\{x\}$ est algébriquement indépendante sur $k$. \\ 
+            Pour trouver les points singuliers, calculons la jacobienne associée a $X^2 + Y^2 - 1$ : elle vaut
+            \begin{align*}
+                \begin{bmatrix}
+                    2X & 2Y \\
+                \end{bmatrix}
+            \end{align*}
+            Alors $(x,y) \in V$ est un point singulier si et seulement si le rang de cette matrice est strictement inférieur à $2 - 1 = 1$, i.e. de rang $0$, i.e. nulle. Donc forcément $(x,y)  = (0,0)$, mais ce point n'est pas dans $V$, d'où $V$ est une courbe régulière.
+        \end{question}
+        
     \section{Exercice 6}
         Si deux variétés sont isomorphes, alors leurs algèbres de fonctions régulières sont isomorphes. La dimension d'une variété étant égale à la dimension de Krull de leurs algèbres de fonctions régulières, deux variétés isomorphes sont de même dimension. Pour terminer l'exercice, considérons les isomorphismes
         \begin{align*}
@@ -49,6 +77,18 @@
         Ainsi $V(X - Y) \subseteq \mathbb{A}^2$ est de dimension $1$, alors que $V(X - Y) \subseteq \mathbb{A}^3$ est de dimension $2$ et donc ne peuvent être isomorphes.
 
     \section{Exercice 7}
+        Tout d'abord, faisons quelques calculs préliminaire.
+        \begin{enumerate}
+            \item $V = \{(t,t^2,t^4) \mathbb{A}^3 \mid t \in k\}$ : il est clair que pour tout $t \in k$, $(t,t^2,t^3) \in V(X^2 - Y, Y^2 - Z)$. Réciproquement, soit $(x,y,z) \in V(X^2 - Y, Y^2 - Z)$, alors forcément $y = x^2$ et $z = y^2 = x^4$. Ainsi, il existe $t \in k$ (on prend $x$) tel que $(x,y,z) = (t,t^2,t^4)$.
+            \item $I(V) = (X^2 - Y, Y^2 - Z)$ : si $k$ est infini, alors $\supseteq$ est ok, il faut montrer $\subseteq$ : si $P \in I(V)$, alors écrivons $P = Q_1(X^2 - Y) + Q_2(Y^2 - Z) + R$ les divisions successives de $P$ par $Y$ et $Z$. Au vu du degré des diviseurs, $R \in k[X]$. Alors en évaluant en $(t,t^2,t^4)$, on obtiens que $R(t) = 0$ pour tout $t \in k$ donc $P = 0$ puisque le corps est infini, et donc $P \in (X^2 - Y, Y^2 - Z)$.
+            \item $(X^2 - Y, Y^2 - Z)$ est un idéal premier : on voit facilement que $k[X,Y,Z]/(X^2 - Y, Y^2 - Z) \simeq k[X]$ qui est intègre.
+            \item Comme $k[V] \simeq k[T]$, on a directement que 
+        \end{enumerate}
+        Maintenant montrons que $V$ est une courbe lisse :
+        \begin{enumerate}
+            \item En calculant 
+        \end{enumerate}
+        \cor{pas clair ce que ça veut dire deux méthodes : on peut calculer la jacobienne et montrer qu'il n'y a aucun points singuliers, calculer l'espage tangent géométrique et montrer que sa dimension vaut toujours la dimension de la variété, trouver un isomorphisme avec $\mathbb{A}^1$ ...}
 
     \section{Exercice 8}
         \begin{question}{1.}
