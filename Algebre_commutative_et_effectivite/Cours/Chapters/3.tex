@@ -305,3 +305,253 @@
                 \end{itemize}
             \end{enumerate}
         \end{defi}
+
+        %Cours du 24/10
+        \begin{defi}
+            Soit $w \in \mathbb{R}^n_+$. Le $w$ degré d'un monôme $x^\alpha$ est $\deg_w x^\alpha = w \cdot \alpha$. Un polynôme est $w$-homogène si tous ses termes ont le même $w$-degré. Si $0 \neq F \in k[X_1, \cdots, X_n]$, on pose 
+            \begin{align*}
+                LT_w(f) = \sum \text{termes de $f$ de $w$-degré maximal}
+            \end{align*}
+            Si $E \subseteq k[X_1, \cdots, X_n]$, $LT_w(E) = \{LT_w(f) \mid f \in E\}$.
+        \end{defi}
+        \begin{nota}
+            Si $<_M$ est un ordre monomial, on écrira $LT_M$ au lieu de $LT_{<M}$.
+        \end{nota}
+        \begin{prop}
+            Soit $<_M$ un ordre monomial, soit $w \in \mathbb{R}_+^n$. Posons
+            \begin{align*}
+                \bar M :=
+                \begin{bmatrix}
+                    w \\
+                    M \\
+                \end{bmatrix}
+            \end{align*}
+            de sorte que $<_{\bar M}$ soit un ordre monomial.
+            \begin{enumerate}
+                \item $\forall f \in k[X_1, \cdots, X_n]$, $LT_{\bar M}(f) = LT_M(LT_w(f))$
+                \item Si $I \subrel{id} k[X_1, \cdots, X_n]$, alors
+                \begin{align*}
+                    \bra LT_M \bra LT_w(I) \ket \ket = \bra LT_{\bar M}(I) \ket
+                \end{align*}
+                \item Si $\bar G$ est une bdg de $I$ pour $<_{\bar M}$, alors $LT_w(\bar G)$ est une bgd de $\bra LT_w(I) \ket$ pour $<_M$.
+            \end{enumerate}
+        \end{prop}
+        \begin{lemm}
+            Soit $w \in \mathbb{R}_+^n$. Tout polynôme $f \in k[X_1, \cdots, X_n]$ s'écrit de façon unique comme 
+            \begin{align*}
+                f = \sum_{d \in \mathbb{n}} f_{(d)}
+            \end{align*}
+            où $f_{(d)}$ est homogène de $w$-degré $d$.
+        \end{lemm}
+        \begin{proof}
+            \cor{Exercice}
+        \end{proof}
+        \begin{proof}
+            \begin{enumerate}
+                \item \cor{Exercice}
+                \item $\supseteq$ : 
+                \begin{align*}
+                    \bra LT_{\bar M}(I) \ket = \bra LT_M LT_w(I) \ket \subseteq \bra LT_M \bra LT_w(I) \ket \ket 
+                \end{align*}
+                $\subseteq$ : Il suffit de montrer que $LT_M \bra LT_w(I) \ket \subseteq \bra LT_{\bar M}(I) \ket$. Soit $f \in \bra LT_w(I) \ket$. Alors 
+                \begin{align*}
+                    f = \sum_{i = 1}^r q_i LT_w(f_i)
+                \end{align*}
+                avec $q_i \in k[X_1, \cdots, X_n]$, $f_i \in I$.
+                \begin{align*}
+                    f &= \sum_{d \in \mathbb{N}} \sum_{i = 1}^r (q_i LT_w(f_i))_{(d)} \\
+                    &= \sum_d \sum_{i = 1}^r (q_i)_{(d - \deg_w LT_w f_i)} LT_w(f_i) \\
+                \end{align*}
+                Si $\sum_{i = 1}^r (q_i)_{(d - \deg_w LT_w f_i)} LT_w(f_i) \neq 0$, alors
+                \begin{align*}
+                    \sum_{i = 1}^r (q_i)_{(d - \deg_w LT_w f_i)} LT_w(f_i) = LT_w \left( \sum_{i = 1}^r (q_i)_{(d - \deg_w LT_w f_i)} f_i \right) \in LT_w(I) 
+                \end{align*}
+                Si $\deg_w LT_M(f) = d$, alors
+                \begin{align*}
+                    LT_M(f) = LT_M \left( \sum (q_i)_{(d - \deg_w LT_w f_i)} LT_w(f_i) \right) \in LT_M LT_w(I) = LT_{\bar M}(I)
+                \end{align*}
+                \item
+                \begin{align*}
+                    \bra LT_M \bra LT_w(I) \ket \ket &= \bra LT_{\bar M}(I) \ket \\
+                    &= \bra LT_{\bar M}(\bar G) \ket \\
+                    &= \bra LT_M LT_w(\bar G) \ket
+                \end{align*}
+            \end{enumerate}
+        \end{proof}
+        \begin{prop}
+            Soit $<$ un ordre monomial. Soit $I \subrel{id} k[X_1, \cdots, X_n]$. Soit $B$ l'ensemble des monômes qui ne sont pas dans $\bra LT_<(I) \ket$. Soit $\pi : k[X_1, \cdots, X_n] \surjectivearrow k[X_1, \cdots, X_n]$, alors $\pi(B)$ est un base du $k$-ev $k[X_1, \cdots, X_n]/I$.
+        \end{prop}
+        \begin{proof}
+            Soit $G$ une bdg de $I$ pour $<$. Si $0 \neq f \in k[X_1, \cdots, X_n]$, $\bar f^G$ est combinaison linéaire des éléments de $B$. Or $\pi(f) = \pi(\bar f^G)$, d'où $\pi(f)$ est combinaison linéaire des éléments de $\pi(B)$. De plus, $\pi(B)$ est libre car aucu,e combinaison linéaire d'éléments de $B$ n'est dans $I$.
+        \end{proof}
+        \begin{coro}
+            Si $< \neq <'$ sont deux ordres monomiaux, alors on ne peut pas avoir $\bra LT_<(I) \ket \nsubseteq \bra LT_{<'}(I) \ket$.
+        \end{coro}
+        \begin{proof}
+            Si on avait une inclusion stricte, alors on aurait que $B' \nsubseteq B$, et donc $\pi(B') \nsubseteq \pi(B)$ sont deux bases du même espace vectoriel, impossible.
+        \end{proof}
+        \begin{defi}
+            Soit $I \subrel{id} k[X_1, \cdots, X_n]$. Soit $w \in \mathbb{R}_+^n$.
+            \begin{align}
+                C[w] := \left\{ w' \in \mathbb{R}_+^n \mid \bra LT_w(I) \ket = \bra LT_{w'}(I) \ket \right\}
+            \end{align}
+        \end{defi}
+        \begin{prop}
+            Soit $<_M$ un ordre monomial, et
+            \begin{align*}
+                \bar M =
+                \begin{bmatrix}
+                    w \\
+                    M \\
+                \end{bmatrix}
+            \end{align*}
+            Soit $\bar G$ la bdg réduite de $I$ pour $w_{\bar M}$. Alors
+            \begin{align*}
+                C[w] = \{w' \in \mathbb{R}_+^n \mid \forall g \in \bar G,\, LT_w(g) = LT_{w'}(g) \}
+            \end{align*}
+        \end{prop}
+        \begin{proof}
+            \item $\subset$ : Soit $w' \in C[w]$. Alors $\bra LT_w(I) \ket = \bra LT_{w'} (I) \ket$. Par la prop précédente, $LT_w(\bar G)$ est ma bdg réduite de $\bra LT_w(I) \ket$ pour $<_M$. Soit $g \in \bar G$,
+            \begin{align*}
+                \overline{LT_w'(g)}^{LT_w(\bar G)} = 0
+            \end{align*}
+            Alors $LT_M LT_{w'}(g) \in \bra LT_M LT_w(\bar G) \ket = \bra LT_{\bar M}(\bar G) \ket$. Comme $\bar G$ est réduite, le seul terme de $g$ qui soit dans $\bra LT_{\bar M}(\bar G) \ket$ est $LT_{\bar M}(g)$. Donc
+            \begin{align*}
+                LT_M LT_{w'}(g) = LT_{\bar M}(g) = LT_M LT_w (g)
+            \end{align*}
+            $LT_w(g) = LT_M LT_w(g) = h$, $LT_{w'}(g) = LT_M LT_{w'}(g) + h' = LT_M LT_{w}(g) + h'$. Donc $LT_w(g) - LT_{w'}(g) = h - h'$. Or $LT_w(g) - LT_{w'}(g) \in \bra LT_w(I) \ket$. Donc $\overline{h - h'}^{LT_w(\bar G)} = 0$. Or aucun des termes de $h$ ou $h'$ n'est divisible par un élément de $LT_M LT_w(\bar G) = LT_{\bar M}(\bar G)$. D'où $h - h' = 0$, et $h=h'$. Donc $LT_w(g) = LT_{w'}(g)$. Ceci montre $\subseteq$.
+            \item $\supseteq$ : Soit $w' \in \mathbb{R}^n_+$ tq $\forall g \in \bar G$, $LT_w(g) = LT_{w'}(g)$. Alors 
+            \begin{align*}
+                \bra LT_w(I) \ket = \bra LT_w(\bar G) \ket = \bra LT_{w'}(\bar G) \ket \subseteq \bra LT_{w'}(I) \ket 
+            \end{align*}
+            Si l'inclusion était stricte, alors on aurait $\bra LT_M \bra LT_w(I) \ket \ket \nsubseteq \bra LT_M \bra LT_{w'}(I) \ket \ket$ (en effet, si $J \subseteq J'$ et $\bra LT_M(J) \ket = \bra LT_M(J') \ket$, alors une bdg de $J$ pour $<_M$ est forcément une bdg de $J'$ pour $J'$, et donc $J = J'$). Maintenant
+            \begin{align*}
+                \bra LT_{\bar M}(I) \ket = \bra LT_M \bra LT_w(I) \ket \ket \nsubseteq \bra LT_M \bra LT_{w'}(I) \ket \ket = \bra LT_{\begin{bmatrix} w \\ M \end{bmatrix}}(I) \ket
+            \end{align*}
+            contradiction avec le corollaire précédent. Donc $\bra LT_w(I) \ket = \bra LT_{w'}(I) \ket$, d'où $w' \in C[w]$.
+        \end{proof}
+        \begin{coro}
+            $C[w]$ est un cône relativement ouvert, i.e. une intersection de demi-espaces ouverts et d'hyperplans.
+        \end{coro}
+        \begin{proof}
+            Soient $<_M$ un ordre monomial, $\bar M = \begin{bmatrix} w \\ M \end{bmatrix}$, $\bar G$ une bdg réduite de $I$ pour $<_{\bar M}$. Alors
+            \begin{align*}
+                C[w] = \{w' \in \mathbb{R}_+^n \mid \forall g \in \bar G,\, LT_w(g) = LT_{w'}(g) \}
+            \end{align*}
+            Donc
+            \begin{align*}
+                w' \in C[w] &\iff \forall g \in \bar G,\, LT_w(g) = LT_{w'}(g) \\
+                &\iff \forall g \in \bar G,
+                \begin{cases}
+                    \text{Si $x^\alpha$ et $x^\beta$ sont deux monômes de $LT_w(g)$, alors $w' \cdot \alpha = w' \cdot \beta$} \\
+                    \text{Si $x^\alpha$ est monôme de $LT_w(g)$ et $x^\beta$ est un monôme de $g$ mais pas} \\
+                    \text{de $LT_w(g)$, alors $w' \cdot \alpha > w' \cdot \beta$} \\
+                \end{cases} \\
+                &\iff
+                \begin{cases}
+                    w' \in (\alpha - \beta)^\bot \\
+                    w'\cdot (\alpha - \beta) > 0 \\
+                \end{cases}
+            \end{align*}
+        \end{proof}
+        \begin{expl}
+            $I = \bra y^3 - xy, x^2 - y \ket$. $y^3 - xy, x^2 - y$ bdg réduite pour degrevlex (matrice associée
+            \begin{align*}
+                \begin{bmatrix}
+                    1 & 1 \\
+                    0 & -1 \\
+                    -1 & 0 \\
+                \end{bmatrix}
+            \end{align*})
+            $w = (1,1)$. $v = (v_1, v_2) \in C[w]$, on a 
+            \begin{align*}
+                \begin{cases}
+                    v \cdot (0,3) > v \cdot (1,1) \\
+                    v \cdot (2,0) > v \cdot (0,1) \\
+                \end{cases}
+                \iff \begin{cases}
+                    -v_1 + 2v_2 > 0 \\
+                    2v_1 - v_2 > 0 \\
+                \end{cases}
+            \end{align*}
+        \end{expl}
+        \begin{coro}
+            $\overline{C[w]}$ est un cone.
+        \end{coro}
+        \begin{proof}
+            $\overline{C[w]}$ est défini en remplaçant les inégalités strictes du dernier corollaire par des $\leq$.
+        \end{proof}
+        \begin{defi}
+            On définit l'éventail de groebner $GF(I)$ comme l'ensemble des $\overline{C[w]}$.
+        \end{defi}
+        \begin{theo}
+            $GF(I)$ est un éventail fini.
+        \end{theo}
+        \begin{proof}
+            Il faut montrer que
+            \begin{enumerate}
+                \item Toute face de $\overline{C[w]}$ a la forme $\overline{C[w']}$
+                \item $\overline{C[w]} \cap \overline{C[w]}$ est une face de $\overline{C[w]}$ et $\overline{C[w']}$.
+                \item $GF(I)$ est fini \cor{(On le montrera plus tard)}.
+            \end{enumerate}
+            Prouvons les deux premiers points :
+            \begin{enumerate}
+                \item Soit $F$ une face de $\overline{C[w]}$. $F$ est défini en remplaçant certaines des inégalités "$>0$" dans la définition de $C[w]$ par "$=0$". Soit $w' \in F$, pour tout $g \in \bar G$, les termes de $LT_w(g)$ sont tous des termes de $LT_{w'}(g)$. Posons
+                \begin{align*}
+                    \overline{\overline{M}} = \begin{bmatrix} w' \\ w \\ M \end{bmatrix}
+                \end{align*}
+                Alors
+                \begin{align}
+                    \bra LT_{\overline{\overline{M}}}(I) \ket &= \bra LT_{w'} \bra LT_{\bar M}(I) \ket \ket \\
+                    &= \bra LT_{w'} \bra LT_{\bar M}(\bar G) \ket \ket \\
+                    &= \bra LT_{\bar M}(\bar G) \ket \\
+                    &= \bra LT_{\bar M}(I) \ket
+                \end{align}
+                (3.3) = (3.4) : $f \in \bra LT_{\bar M}(\bar G) \ket$, alors
+                \begin{align*}
+                    &\sum_{i = 1}^r g_i LT_{\bar M}(g_i) = \sum_{d \geq 0} \sum_i (g_i)_{d - \deg_{w'}LT_{\bar M}(g_i)} LT_{\bar M}(g_i) \\
+                    \Rightarrow &LT_{w'}(f) = \sum_i (g_i)_{d - \deg_{w'}LT_{\bar M}(g_i)} LT_{\bar M}(g_i) \in \bra LT_{\bar M}(\bar G) \ket 
+                \end{align*}
+                En particulier, $\bar G$ est une bdg pour $w_{\overline{\overline{M}}}$. Donc
+                \begin{align*}
+                    C[w'] = \{w'' \in \mathbb{R}_+^n \mid \forall g \in \bar G,\, LT_{w'}(g) = LT_{w''}(g) \}
+                \end{align*}
+                Si $w'$ est "génériqueé (i.e. que toute inégalité définissant $F$ est stricte pour $w'$). Alors $\overline{C[w']} = F$ car $w'' \in \overline{C[w']}$ ssi $w''$ satisfaisant aux mêmes (in)égalités que $w'$.
+                \item Soient $w,w' \in \mathbb{R}_+^n$. Condiréons $\overline{C[w]} \cap \overline{C[w']}$. Si $w'' \in \overline{C[w]} \cap \overline{C[w']}$, alors $\overline{C[w'']}$ est une face de $\overline{C[w]}$ et de $\overline{C[w']}$, par ce qui précède. Prenons $w''$ dans l'intérieur relatif, on obtiens que $\overline{C[w'']} = \overline{C[w]} \cap \overline{C[w']}$.
+            \end{enumerate}
+        \end{proof}
+        \begin{remq}
+            En sage, on dispose de la procédure \mintinline{python}{groebner_fan()}
+        \end{remq}
+
+        \section{Le cône maximal d'une bdg marquée}
+            Soit $G = \{(g_i, x^{\alpha_i})\}_{1 \leq i \leq r}$ une bdgm. Écrivons
+            \begin{align*}
+                g_i = x^{\alpha_i} + \sum_{\beta \neq \alpha_i} c_{i, \beta} x^\beta
+            \end{align*}
+            Fixons $<_M$ ordre monomial pour lequel $g$ est la bdgm. Notons $w$ la première ligne de $M$. Alors $\forall i \in \lcc 1,r \rcc$, $\forall \beta$ tq $c_{i, \beta} \neq 0$,
+            \begin{align*}
+                w \cdot \alpha_i \geq w \cdot w \cdot \beta \iff w \cdot (\alpha_i - \beta) \geq 0
+            \end{align*}
+            \begin{lemm}
+                Il existe $w' \in \mathbb{R}^n_+$ tel que $\forall i \in \lcc 1,r \rcc$, $\forall \beta \neq \alpha_i$ t.q. $c_{i, \beta} \neq 0$,
+                \begin{align*}
+                    w' \cdot \alpha_i > w' \cdot \beta
+                \end{align*}
+                Alors $G$ est une bdgm pour $<_{\begin{bmatrix} w' \\ M \end{bmatrix}}$
+            \end{lemm}
+            \begin{proof}
+                On peut modifier $w$ ainsi : S'il existe $i, \beta$ tq $c_{i, \beta} \neq 0$ mais $w \cdot \alpha_i = w \cdot \beta$. Alors $w \in (\alpha_i - \beta)^\bot$. Soit $v \in \mathbb{R}^n$ t.q. $v \cdot (\alpha_i - \beta) > 0$. Alors $(w + \varepsilon v) \cdot (\alpha_i - \beta) > 0$ pour tout $\varepsilon > 0$. Pour que les autres inégalités soient respectées, il sufit de prendre $0 < \varepsilon$ petit. On montre que si $w \cdot (\alpha_j - \beta') = 0$, on peut choisir $v$ non-nul dans $(\alpha_j - \beta')^\bot$.
+            \end{proof}
+            \begin{defi}
+                Avec les notations précédentes, le cône de $G$ est $C_G := C[w']$.
+            \end{defi}
+            \begin{remq}
+                $C_G$ est de dimension $n$, car c'est l'intersection d'un nombre fini de demi-espaces ouverts. En particulier, $\bar C_G$ est un cône maximal de l'éventail de Groebner. De plus, tout cône maximal de $GF(I)$ a cette forme. Tout cône a la forme $\overline{C[w]}$. Par ce qui précède, on peut trouver $w'' \in \mathbb{R}^n_+$ tel que $\bar G$ est la bdg pour $\begin{bmatrix} w'' \\ M \end{bmatrix}$ et $LT_{w''}(g)$ sont dest monômes. Donc $\overline{C[w]} \subseteq \overline{C[w'']}$. Comme $\overline{C[w'']}$ est de dimension $n$, tous les cônes maximaux de $GF(I)$ sont de dimension $n$ et ont la forme $\overline{C[w'']}$.
+            \end{remq}
+            \begin{coro}
+                $GF(I)$ est fini.
+            \end{coro}
+            \begin{expl}
+                $k[x,y]$, $I = \bra x^2 - y, xy - y^3, y^5 - y^2 \ket$. Calculons $GF(I)$ : ses cônes maximaux ont la forme $\bar C_G$.
+            \end{expl}
