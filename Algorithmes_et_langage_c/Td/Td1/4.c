@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-void print_bits(unsigned a)
+void print_bits(unsigned int a)
 {
     for (int i = 0; i < 32; i++)
     {
