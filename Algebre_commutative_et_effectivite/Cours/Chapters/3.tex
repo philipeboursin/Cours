@@ -72,7 +72,7 @@
                 \item Notons $w_i$ les lignes de $M$. $TM$ est obtenue en effectuant les opérations suivantes :
                 \begin{itemize}
                     \item Remplacer $w_1$ par un multiple strictement positif de $w_1$.
-                    \item Remplacer $w_2$ par un multiple strictement positif de $w_2$ plus une combinaison linéaire de $W_1$.
+                    \item Remplacer $w_2$ par un multiple strictement positif de $w_2$ plus une combinaison linéaire de $w_1$.
                     \item Remplacer $w_3$ par un multiple strictement positif de $w_3$ plus une combinaison linéaire de $w_1, w_2$.
                     \item $\vdots$
                 \end{itemize}
@@ -170,7 +170,7 @@
                 &H_- =  \{v \in \mathbb{Q}^n \mid v < 0\} \\
                 &H_+ =  \{v \in \mathbb{Q}^n \mid v > 0\} \\
             \end{align*}
-            Ainsi $\mathbb{Q}^n = H_- \sqcup \{0\} \sqcup H_+$. Alors considérons les adhérences $\bar H_-$, $\bar H_+$, puis $I_0 = \bar H_- \cap \bar H_+$. Montrons que $I_0$ est un sev de $\mathbb{R}^n$ de codimension $1$.
+            Ainsi $\mathbb{Q}^n = H_- \sqcup \{0\} \sqcup H_+$. Alors considérons les adhérences $\bar H_-$, $\bar H_+$ dans $\mathbb{R}$, puis $I_0 = \bar H_- \cap \bar H_+$. Montrons que $I_0$ est un sev de $\mathbb{R}^n$ de codimension $1$.
             \begin{itemize}
                 \item $H_+, H_-$ sont stables pas somme.
                 \item $H_+, H_-$ sont stables par produit par des éléments de $\mathbb{Q}_{>0}$.
@@ -209,6 +209,8 @@
                 \alpha <_{\begin{bmatrix} w_1 \\ \vdots \\ w_m \end{bmatrix}} \beta \iff \alpha < \beta
             \end{align*}
         \end{proof}
+
+    \section{Bases de Gröbner marquées, universelles}
         \begin{nota}
             \begin{itemize}
                 \item $<$ ordre monomial, $E \subseteq k[x_1, \cdots, x_n]$. Alors
@@ -286,6 +288,7 @@
             Ce $\mathcal{U}$ est appelé base de grobner universelle.
         \end{defi}
 
+    \section{Éventail de Gröbner}
         \begin{defi}
             \begin{enumerate}
                 \item Un cône dans $\mathbb{R}^n$ est un ensemble ayant la forme
@@ -339,16 +342,16 @@
         \begin{lemm}
             Soit $w \in \mathbb{R}_+^n$. Tout polynôme $f \in k[X_1, \cdots, X_n]$ s'écrit de façon unique comme 
             \begin{align*}
-                f = \sum_{d \in \mathbb{n}} f_{(d)}
+                f = \sum_{d \in \mathbb{N}} f_{(d)}
             \end{align*}
             où $f_{(d)}$ est homogène de $w$-degré $d$.
         \end{lemm}
         \begin{proof}
-            \cor{Exercice}
+            On construit une telle décomposition en réunissant les monômes de même $w$-degré. Pour l'unicité, il suffit de remarquer que deux monômes de $w$-degré différent sont forcément différents.
         \end{proof}
         \begin{proof}
             \begin{enumerate}
-                \item \cor{Exercice}
+                \item Notons $x^\alpha = LT_M(LT_w(f))$, puis considérons un autre terme $x^\beta$ de $f$ (avec $\alpha \neq \beta$). Déjà, $x^\alpha$ est de $w$-degré maximal, puisque c'est un monôme de $LT_w(f)$. Alors si $w \cdot \beta < w \cdot \alpha$, on a bien $\alpha >_{\bar M} \beta$. Sinon, $w \cdot \beta = w \cdot \alpha$, donc $x^\beta$ est un terme de $LT_w(f)$, mais donc $\alpha >_M \beta$ par définition de $\alpha$. Et alors on a encore $\alpha >_{\bar M} \beta$, donc finalement $x^\alpha = LT_{\bar M}(f)$.
                 \item $\supseteq$ : 
                 \begin{align*}
                     \bra LT_{\bar M}(I) \ket = \bra LT_M LT_w(I) \ket \subseteq \bra LT_M \bra LT_w(I) \ket \ket 

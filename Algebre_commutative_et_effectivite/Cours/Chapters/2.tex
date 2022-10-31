@@ -1,43 +1,44 @@
 \chapter{Théorie de l'élimination}
-    \begin{defi} (Idéaux d'élimination)
-        Soit $E \subseteq k[x_1, \cdots, x_n]$. On pose
-        \begin{enumerate}
-            \item $E_1 = E \cap k[x_2, \cdots, x_n]$
-            \item $E_2 = E \cap k[x_3, \cdots, x_n]$
-            \item $\cdots$
-            \item $E_{n-1} = E \cap k[x_n]$
-            \item $E_n = E \cap k$
-        \end{enumerate}
-        Si $E = I$ est un idéal, les $I_i$ sont appelés idéaux d'élimination de $I$.
-    \end{defi}
-    \begin{expl}
-        $I = (x-y+1, x+y)$. Alors $I_1 = (2y - 1)$. $I_2 = \{0\}$.
-    \end{expl}
-    \begin{theo} (Théorème d'élimination)
-        Soit $I \subrel{id} k[x_1, \cdots, x_n]$, soit $<$ l'ordre lex avec $x_1 > \cdots > x_n$. Soit $G$ une bdg de $I$. Pour chaque $l \in \lcc 1,n \rcc$, une base de Gröbner de $I_l$ est $G_l$.
-    \end{theo}
-    \begin{proof}
-        Clairement, $G_l \subseteq I_l$ donc $(LT(G_l)) \subseteq (LT(I_l))$. Il faut montrer $\supseteq$. Soit $f \in I_l$. Alors $f \in I$, d'où $LT(f) \in (LT(G))$. On sait que $f \in k[x_{l+1}, \cdots, x_n]$. Soit $g \in G$ tq $LT(g) \mid LT(f)$. D'où $LT(g) \in k[x_{l+1}, \cdots, x_n]$. Comme $<$ est l'ordre lex, on en déduite que $g \in k[x_{l+1}, \cdots, x_n]$. Donc $g \in G_l$ et $LT(f) \in (LT(G_l))$.
-    \end{proof}
-    Par conséquent, une bdg pour l'ordre lex contient des éléments qui font intervenir de moins en moins de variables.
+    \section{Théorème d'élimination}
+        \begin{defi} (Idéaux d'élimination)
+            Soit $E \subseteq k[x_1, \cdots, x_n]$. On pose
+            \begin{enumerate}
+                \item $E_1 = E \cap k[x_2, \cdots, x_n]$
+                \item $E_2 = E \cap k[x_3, \cdots, x_n]$
+                \item $\cdots$
+                \item $E_{n-1} = E \cap k[x_n]$
+                \item $E_n = E \cap k$
+            \end{enumerate}
+            Si $E = I$ est un idéal, les $I_i$ sont appelés idéaux d'élimination de $I$.
+        \end{defi}
+        \begin{expl}
+            $I = \bra x-y+1, x+y \ket$. Alors $I_1 = \bra 2y - 1 \ket$. $I_2 = \{0\}$.
+        \end{expl}
+        \begin{theo} (Théorème d'élimination)
+            Soit $I \subrel{id} k[x_1, \cdots, x_n]$, soit $<$ l'ordre lex avec $x_1 > \cdots > x_n$. Soit $G$ une bdg de $I$. Pour chaque $l \in \lcc 1,n \rcc$, une base de Gröbner de $I_l$ est $G_l$.
+        \end{theo}
+        \begin{proof}
+            Clairement, $G_l \subseteq I_l$ donc $\bra LT(G_l) \ket \subseteq \bra LT(I_l) \ket$. Il faut montrer $\supseteq$. Soit $f \in I_l$. Alors $f \in I$, d'où $LT(f) \in \bra LT(G) \ket$. On sait que $f \in k[x_{l+1}, \cdots, x_n]$. Soit $g \in G$ tq $LT(g) \mid LT(f)$. D'où $LT(g) \in k[x_{l+1}, \cdots, x_n]$. Comme $<$ est l'ordre lex, on en déduit que $g \in k[x_{l+1}, \cdots, x_n]$. Donc $g \in G_l$ et $LT(f) \in \bra LT(G_l) \ket$.
+        \end{proof}
+        Par conséquent, une bdg pour l'ordre lex contient des éléments qui font intervenir de moins en moins de variables.
 
     \section{Application 1 : Intersection d'idéaux}
-        Problème : $I = (f_1, \cdots, f_r)$, $J = (g_1, \cdots, g_s)$. Calculer des générateurs de $I \cap J$. Pour cela, on ajoute une variable $t$. 
+        Problème : $I = \bra f_1, \cdots, f_r \ket$, $J = \bra g_1, \cdots, g_s \ket$. Calculer des générateurs de $I \cap J$. Pour cela, on ajoute une variable $t$. 
         \begin{nota}
             SI $I \subrel{id} k[x_1, \cdots, x_n]$ et $f \in k[t]$, on pose
             \begin{align*}
-                fI = (fp \mid p \in I) \subrel{id} k[t, x_1, \cdots, x_n]
+                fI = \bra fp \mid p \in I \ket \subrel{id} k[t, x_1, \cdots, x_n]
             \end{align*}
         \end{nota}
         \begin{theo}
             Avec les notations ci-dessus,
             \begin{align*}
-                I \cap J = (tI + (1 - t)J) \cap k[x_1, \cdots, x_n]
+                I \cap J = \bra tI + (1 - t)J \ket \cap k[x_1, \cdots, x_n]
             \end{align*}
         \end{theo}
         \begin{proof}
-            $\subseteq$ : Soit $f \in I \cap J$, alors $f = tf + (1 - t)f \in (tI + (1 - t)J)$, puis $f \in k[x_1, \cdots, x_n]$. \\
-            $\supseteq$ : Soit $f \in (tI + (1-t)J) \cap k[x_1, \cdots, x_n]$. Posons
+            $\subseteq$ : Soit $f \in I \cap J$, alors $f = tf + (1 - t)f \in \bra tI + (1 - t)J \ket$, puis $f \in k[x_1, \cdots, x_n]$. \\
+            $\supseteq$ : Soit $f \in \bra tI + (1-t)J \ket \cap k[x_1, \cdots, x_n]$. Posons
             \begin{align*}
                 \begin{array}{cccc}
                     \varepsilon_\lambda : & k[t,x_1, \cdots, x_n] & \to & k[x_1, \cdots, x_n] \\
@@ -47,7 +48,7 @@
             Remarquons alors que $\varepsilon_0(tI) = \{0\}$, $\varepsilon_1(tI) = I$. De même, $\varepsilon_0((1-t)J) = J$, $\varepsilon_1((1-t)J) = \{0\}$. Ecrivons $f = f' + f''$ avec $f' \in tI$, $f'' \in (1 - t)J$. Alors $\varepsilon_0(f) = \varepsilon_0(f'') \in J$. $\varepsilon_1(f) = \varepsilon_1(f') \in I$. Et $\varepsilon_0(f) = \varepsilon_1(f) = f$ vu que $f \in k[x_1, \cdots, x_n]$.
         \end{proof}
         \begin{coro}
-            Si $I = (f_1, \cdots, f_r)$, $J = (g_1, \cdots, g_s)$. Alors une bdf de $I \cap J$ pour l'ordre lex est obtenue en calculant une bdg de $(tI + (1 - t)J) \subrel{id} k[t, x_1, \cdots, x_n]$ et en élimnant $t$ (i.e. en prenant l'intersection avec $k[x_1, \cdots, x_n]$).
+            Si $I = \bra f_1, \cdots, f_r \ket$, $J = \bra g_1, \cdots, g_s \ket$. Alors une bdg de $I \cap J$ pour l'ordre lex est obtenue en calculant une bdg de $\bra tI + (1 - t)J \ket \subrel{id} k[t, x_1, \cdots, x_n]$ et en éliminant $t$ (i.e. en prenant l'intersection avec $k[x_1, \cdots, x_n]$).
         \end{coro}
         
     \section{Application 2 : extension}

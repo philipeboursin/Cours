@@ -1,5 +1,5 @@
 \chapter{Bases de Gröbner}
-    Dans ce chapitre, tous les anneaux seront commutatifs. Fixons dès à présent un $k \in \mathbf{Fld}$ (on supposera toujours qu'on dispose d'algorithmes pour les opérations du corps). 
+    Dans ce chapitre, tous les anneaux sont supposés commutatifs. Fixons dès à présent un $k \in \mathbf{Fld}$ (on supposera toujours qu'on dispose d'algorithmes pour les opérations du corps). 
     \section{Préliminaires}
         \begin{defi} (Anneau noéthérien)
             Un anneau est noéthérien si toute suite croissante d'idéaux $I_0 \subseteq I_1 \subseteq I_2 \subseteq \cdots$ est stationnaire i.e. 
@@ -40,11 +40,11 @@
             \begin{align*}
                 I_n := \{a_n \in A \mid \exists a_0 + a_1x + \cdots + a_n x^n \in I\}
             \end{align*}
-            Il est facile de voir que $I_n \subrel{id} A$. Ensuite $(I_i)$ est croissante, car si $a_i \in I_i$ pour un $i \in \mathbb{N}$, alors $\exists f \in I$ tq le coefficient directeur de $f$ soit $a_i$. Mais alors $xf(x) \in I$ est de degré $i+1$ et son coefficient directeur est encore $a_i$, d'où $a_i \in I_{i+1}$. Ainsi cette suite d'idéaux est stationnaire ($A$ noeth). Notons $N \in \mathbb{N}$ tq $m \geq N \Rightarrow I_m = I_N$. Les idéaux $I_0, \cdots, I_N$ sont finiment engendrés, notons $\{a_{i,j}\}_{1 \leq j \leq r_i}$ des familles génératrices pour $I_i$, pour tout $i \in \lcc 0, N \rcc$. Pour chaque $a_{i,j}$, $\exists f_{ij} \in I$ tq $\mathrm{deg}(f_{ij}) \leq i$ et le terme de degré $i$ de $f_{i,j}$ est $a_{i,j}$ (par définition de $I_i$). Montrons que $I = (\{f_{i,j}\}_{0,1 \leq i,j \leq N,r_i})$ : soit $f \in I$,
+            Il est facile de voir que $I_n \subrel{id} A$. Ensuite $(I_i)$ est croissante, car si $a_i \in I_i$ pour un $i \in \mathbb{N}$, alors $\exists f \in I$ tq le coefficient directeur de $f$ soit $a_i$. Mais alors $xf(x) \in I$ est de degré $i+1$ et son coefficient directeur est encore $a_i$, d'où $a_i \in I_{i+1}$. Ainsi cette suite d'idéaux est stationnaire ($A$ noeth). Notons $N \in \mathbb{N}$ tq $m \geq N \Rightarrow I_m = I_N$. Les idéaux $I_0, \cdots, I_N$ sont finiment engendrés, notons $\{a_{i,j}\}_{1 \leq j \leq r_i}$ des familles génératrices pour $I_i$, pour tout $i \in \lcc 0, N \rcc$. Pour chaque $a_{i,j}$, $\exists f_{ij} \in I$ tq $\mathrm{deg}(f_{ij}) \leq i$ et le terme de degré $i$ de $f_{i,j}$ est $a_{i,j}$ (par définition de $I_i$). Montrons que $I = \bra \{f_{i,j}\}_{0,1 \leq i,j \leq N,r_i} \ket$ : soit $f \in I$,
             \begin{enumerate}
                 \item si $\mathrm{deg}(f) = 0$, alors posons $a \in A$ tq $f = ax^0$. Ainsi $a \in I_0$, ainsi $\exists b_1, \cdots, b_{r_0}$ tq $a = \sum_{i = 1}^{r_0} b_i a_{0,i}$. Or $f_{0,i} = a_{0,i}x^0$, ainsi $f = \sum_{i = 1}^{r_0} b_i f_{0,i}$.
                 \item Si $d = \mathrm{deg} f > 0$, notons $b$ le coeff directeur de $f$. Ainsi $b \in I_d$ \\
-                \textbf{Cas où $d \leq N$ :} On peut écrire $b = \sum_{i = 1}^{r_d} \lambda_i a_{d,i}$ avec $\lambda_i \in A$. Posons $S = \sum_{i = 1}^{r_d} \lambda_i f_{d,i}$, alors le coefficient directeur de $S$ est précisément $b$ (et $\mathrm{deg} S \leq d$). Ainsi $\mathrm{deg} (f-S) < d$, et $f - S \in I$. Par hypothèse de récurrence, $f - S \in (\{f_{i,j}\})$ et $S \in (\{f_{i,j}\})$, donc finalement $f \in (\{f_{i,j}\})$. \\
+                \textbf{Cas où $d \leq N$ :} On peut écrire $b = \sum_{i = 1}^{r_d} \lambda_i a_{d,i}$ avec $\lambda_i \in A$. Posons $S = \sum_{i = 1}^{r_d} \lambda_i f_{d,i}$, alors le coefficient directeur de $S$ est précisément $b$ (et $\mathrm{deg} S \leq d$). Ainsi $\mathrm{deg} (f-S) < d$, et $f - S \in I$. Par hypothèse de récurrence, $f - S \in \bra \{f_{i,j}\} \ket$ et $S \in \bra \{f_{i,j}\} \ket$, donc finalement $f \in \bra \{f_{i,j}\} \ket$. \\
                 \textbf{Cas où $d > N$ :} Notons $b$ le coeff directeur de $f$, $b \in I_d = I_N \Rightarrow b = \sum \lambda_i a_{N,i}$. Posons $T := \sum \lambda_i f_{N,i}X^{d-N}$ est de degré $d$ et de coeff directeur $b$, puis on conclut comme précedemment en regardant le polynômes $f - T$.
             \end{enumerate}
             Ainsi les idéaux de $A[x]$ sont finiment engendrés, donc $A[x]$ est noeth.
@@ -52,9 +52,9 @@
 
     \section{Division multivariée}
         \subsection{Ordres monomiaux}
-            Fixons $k \in \mathbf{Fld}$. Rappelons que si $I \subrel{id} k[x]$ non nul, alors $\exists g \in k[x]$ t.q. $I = (g)$ (car $k[x]$ est principal, euclidien). Soit $f \in k[x]$, alors $f \in (g) \iff g \mid f \iff $ le reste de la division euclidienne de $f$ par $g$ est nul (et on dispose d'un algorithme pour réaliser la division euclidienne). Question : peut-on généraliser à $k[x_1, \cdots, x_n]$ ? 
+            Fixons $k \in \mathbf{Fld}$. Rappelons que si $I \subrel{id} k[x]$ non nul, alors $\exists g \in k[x]$ t.q. $I = \bra g \ket$ (car $k[x]$ est principal, euclidien). Soit $f \in k[x]$, alors $f \in \bra g \ket \iff g \mid f \iff $ le reste de la division euclidienne de $f$ par $g$ est nul (et on dispose d'un algorithme pour réaliser la division euclidienne). Question : peut-on généraliser à $k[x_1, \cdots, x_n]$ ? 
             \begin{remq}
-                Soit $I \subrel{id} k[x]$, $I = (f_1, \cdots, f_r)$. Alors $I = (\mathrm{pgcd}(f_1, \cdots, f_r))$
+                Soit $I \subrel{id} k[x]$, $I = \bra f_1, \cdots, f_r \ket$. Alors $I = \bra \mathrm{pgcd}(f_1, \cdots, f_r) \ket$
             \end{remq}
             \begin{defi} (Ordre monomial)
                 \label{ordre_mono}
@@ -100,7 +100,7 @@
             \end{prop}
             \begin{proof}
                 4 $\Rightarrow$ 3 : Supposons qu'il existe $\alpha \in \mathbb{N}^n$ tq $\alpha < 0$, alors $2\alpha < \alpha$, $3\alpha < 2\alpha$ et ainsi de suite, donc $\cdots < 2\alpha < \alpha < 0$, mais alors $\{m\alpha \mid m \in \mathbb{N}\}$ n'a pas d'élément minimal, donc $\leq$ n'est pas un bon ordre. \\
-                3 $\Rightarrow$ 4 : Supposons qu'il existe $F \subseteq \mathbb{N}^n$ non vide et sans élément minimal. Alors considérons l'idéal $I = (x^\alpha \mid \alpha \in F)$, d'après le théorème de la base de Hilbert, il existe un sous-ensemble fini de $F$, noté $\{\alpha_1, \cdots, \alpha_r\}$ tel que $I = (x^{\alpha_1}, \cdots, x^{\alpha_r})$. Alors considérons $m = \min \{\alpha_1, \cdots, \alpha_r\}$, c'est un élément de $F$. Mais par hypothèse, il existe $\beta \in F$ tel que $\beta < s$. Mais comme $x^\beta \in I$, il existe $1 \leq i \leq r$ tel que $x^{\alpha_i} \mid x^\beta$, et ainsi $\beta - \alpha_i \in \mathbb{N}^n$. Mais $\beta - \alpha_i < 0$ car sinon on aurait $\beta \geq \alpha_i \geq m$. 
+                3 $\Rightarrow$ 4 : Supposons qu'il existe $F \subseteq \mathbb{N}^n$ non vide et sans élément minimal. Alors considérons l'idéal $I = \bra x^\alpha \mid \alpha \in F \ket$, d'après le théorème de la base de Hilbert, il existe un sous-ensemble fini de $F$, noté $\{\alpha_1, \cdots, \alpha_r\}$ tel que $I = \bra x^{\alpha_1}, \cdots, x^{\alpha_r}\ket$. Alors considérons $m = \min \{\alpha_1, \cdots, \alpha_r\}$, c'est un élément de $F$. Mais par hypothèse, il existe $\beta \in F$ tel que $\beta < s$. Mais comme $x^\beta \in I$, il existe $1 \leq i \leq r$ tel que $x^{\alpha_i} \mid x^\beta$, et ainsi $\beta - \alpha_i \in \mathbb{N}^n$. Mais $\beta - \alpha_i < 0$ car sinon on aurait $\beta \geq \alpha_i \geq m$. 
             \end{proof}
 
         \subsection{Algorithme de division multivariée}
@@ -184,30 +184,30 @@
             \label{grob_1}
             Soit $I \subrel{id} k[x_1, \cdots, x_n]$ non nul. Une base de Gröbner de $I$ est un ensemble fini $G \subseteq I$ tq
             \begin{enumerate}
-                \item $I = (G)$,
+                \item $I = \bra G \ket$,
                 \item $f \in I \iff \bar f^G = 0$
             \end{enumerate}
         \end{defi}
         Par convention, $\emptyset$ est une base de Gröbner de l'idéal nul.
         \begin{expl}
             \begin{enumerate}
-                \item Si $0 \neq g \in k[x]$, alors $\{g\}$ est une BDG (base de Gröbner) de $(g)$.
-                \item Si $0 \neq g \in k[x_1, \cdots, x_n]$, alors $\{g\}$ est une BDG de $(g)$.
+                \item Si $0 \neq g \in k[x]$, alors $\{g\}$ est une bdg (base de Gröbner) de $\bra g \ket$.
+                \item Si $0 \neq g \in k[x_1, \cdots, x_n]$, alors $\{g\}$ est une bdg de $\bra g \ket$.
             \end{enumerate}
         \end{expl}
-        Comment peut-on avoir $f \in (f_1, \cdots, f_r)$ mais $\bar f^{f_1, \cdots, f_r} \neq 0$ ? Il faut qu'à une étape de la division, $\mathrm{LT}(f)$ ne soit pas divisible par aucun des $\mathrm{LT}(f_i)$. 
+        Comment peut-on avoir $f \in \bra f_1, \cdots, f_r \ket$ mais $\bar f^{f_1, \cdots, f_r} \neq 0$ ? Il faut qu'à une étape de la division, $\mathrm{LT}(f)$ ne soit pas divisible par aucun des $\mathrm{LT}(f_i)$. 
         \begin{defi} (Idéal monomial)
-            Un idéal $I \subrel{id} k[x_1, \cdots, x_n]$ est monomial s'il existe des monômes $m_1, \cdots, m_r$ tq $I = (m_1, \cdots, m_r)$ (par convention $\{0\}$ est monomial).
+            Un idéal $I \subrel{id} k[x_1, \cdots, x_n]$ est monomial s'il existe des monômes $m_1, \cdots, m_r$ tq $I = \bra m_1, \cdots, m_r \ket$ (par convention $\{0\}$ est monomial).
         \end{defi}
         \begin{prop}
-            \label{lemme_nul}
-            Soient $m_1, \cdots, m_r \in k[x_1, \cdots, x_n]$ des monömes, alors 
+            \label{prop131}
+            Soient $m_1, \cdots, m_r \in k[x_1, \cdots, x_n]$ des monômes, alors 
             \begin{align*}
-                m \in (m_1, \cdots, m_r) \iff m \text{ est divisible par l'un des } m_i
+                m \in \bra m_1, \cdots, m_r \ket \iff m \text{ est divisible par l'un des } m_i
             \end{align*}
         \end{prop}
         \begin{proof}
-            Si $m$ est divisible par l'un des $m_i$, il est clair que $m \in (m_1, \cdots, m_r)$. Pour prouver l'implication réciproque, supposons que $m \in (m_1, \cdots, m_r)$. Alors on peut écrire
+            Si $m$ est divisible par l'un des $m_i$, il est clair que $m \in \bra m_1, \cdots, m_r \ket$. Pour prouver l'implication réciproque, supposons que $m \in \bra m_1, \cdots, m_r \ket$. Alors on peut écrire
             \begin{align*}
                 m = \sum_{i = 1}^r a_i m_i
             \end{align*}
@@ -221,7 +221,7 @@
             \end{align*}
             Maintenant comme $m$ est un monome, il va exister $i, \alpha$ tels que $m = \lambda x^\alpha m_i$, donc $m_i \mid m$.
         \end{proof}
-        Soient $f_1, \cdots, f_r \in k[x_1, \cdots, x_n]$. $\mathrm{LT}(f)$ divisible par l'un des $\mathrm{LT}(f_1), \cdots, \mathrm{LT}(f_r)$ si et seulement si $\mathrm{LT}(f) \in (\{\mathrm{LT}(f_i)\})$ d'après la proposition précédente. \\
+        Soient $f_1, \cdots, f_r \in k[x_1, \cdots, x_n]$. $\mathrm{LT}(f)$ divisible par l'un des $\mathrm{LT}(f_1), \cdots, \mathrm{LT}(f_r)$ si et seulement si $\mathrm{LT}(f) \in \bra \{\mathrm{LT}(f_i)\} \ket$ d'après la proposition précédente. \\
         \begin{nota}
             Soit $E \subseteq k[x_1, \cdots, x_n]$, on note
             \begin{align*}
@@ -229,18 +229,18 @@
             \end{align*}
         \end{nota}
         \begin{defi} (Base de Gröbner, 2)
-            Une base de Gröbner d'un idéal $I \subrel{id} k[x_1, \cdots, x_n]$ est un ensemble (fini) $G \subseteq I$ tq $(\mathrm{LT}(I)) = (\mathrm{LT}(G))$
+            Une base de Gröbner d'un idéal $I \subrel{id} k[x_1, \cdots, x_n]$ est un ensemble (fini) $G \subseteq I$ tq $\bra \mathrm{LT}(I) \ket = \bra \mathrm{LT}(G) \ket$
         \end{defi}
         \begin{theo}
             Les deux définitions de bases de Gröbner sont équivalentes.
         \end{theo}
         \begin{proof}
-            def 1 $\Rightarrow$ def 2 : Soit $f \in I$ si $\mathrm{LT}(f) \notin (\mathrm{LT}(G))$, alors $\mathrm{LT}(f)$ n'est divisible par aucun des $\mathrm{LT}(g)$, $g \in G$ donc $\bar f^G \neq 0$. \\
+            def 1 $\Rightarrow$ def 2 : Soit $f \in I$ si $\mathrm{LT}(f) \notin \bra \mathrm{LT}(G) \ket$, alors $\mathrm{LT}(f)$ n'est divisible par aucun des $\mathrm{LT}(g)$, $g \in G$ donc $\bar f^G \neq 0$. \\
             def 2 $\Rightarrow$ def 1 : Notons $G = \{g_1, \cdots, g_r\}$. Soit $f \in I$, on veut que $\bar f^G = 0$. Il suffit de montrer que le reste est nul à chaque étape de l'algo de division. Or à l'étape $0$ il l'est, puis en supposant qu'il l'est à l'étape $m$, on a
             \begin{align*}
                 f = g + \sum Q_i g_i \in I
             \end{align*}
-            et donc $g \in I$. Ainsi $LT(g) \in (LT(I)) = (LT(G))$ et donc il existe un $g_i$ tel que $LT(g_i) \mid LT(g)$ daprès \ref{lemme_nul}, et ainsi le reste est inchangé à cette étape.
+            et donc $g \in I$. Ainsi $LT(g) \in \bra LT(I) \ket = \bra LT(G) \ket$ et donc il existe un $g_i$ tel que $LT(g_i) \mid LT(g)$ daprès \ref{prop131}, et ainsi le reste est inchangé à cette étape.
             % Or
             % \begin{align*}
             %     f - \sum Q_i^{(m)} g_i - R^{(m)} = f^{(m)}
@@ -251,7 +251,7 @@
             Tout $I \subrel{id} k[x_1, \cdots, x_n]$ admet une base de Gröbner.
         \end{theo}
         \begin{proof}
-            On cherche $G \subrel{fini} I$ tq $(\mathrm{LT}(G)) = (\mathrm{LT}(I))$. D'après \ref{base_de_hilbert}, $\exists H \subrel{fini} \mathrm{LT}(I)$ tq $(H) = (\mathrm{LT}(I))$. Notons $h_1, \cdots, h_r$ des polynômes de $I$ dont les termes dominants sont les éléments de $H$. Alors $\{h_1, \cdots, h_r\}$ est une BDG de $I$.
+            On cherche $G \subrel{fini} I$ tq $\bra \mathrm{LT}(G) \ket = \bra \mathrm{LT}(I) \ket$. D'après \ref{base_de_hilbert}, $\exists H \subrel{fini} \mathrm{LT}(I)$ tq $\bra H \ket = \bra \mathrm{LT}(I) \ket$. Notons $h_1, \cdots, h_r$ des polynômes de $I$ dont les termes dominants sont les éléments de $H$. Alors $\{h_1, \cdots, h_r\}$ est une BDG de $I$.
         \end{proof}
 
     \section{Algorithme de Buchberger}
@@ -262,17 +262,17 @@
             \end{align*}
         \end{defi}
         \begin{theo} (Critère de Buchberger)
-            Soit $G = \{g_1, \cdots, g_r\} \subseteq k[x_1, \cdots, x_r]$. Alors $G$ est une BDG de $(G)$ si et seulement si $\forall g,h \in G$, $\overline{S(g,h)}^G = 0$
+            Soit $G = \{g_1, \cdots, g_r\} \subseteq k[x_1, \cdots, x_r]$. Alors $G$ est une BDG de $I := \bra G \ket$ si et seulement si $\forall g,h \in G$, $\overline{S(g,h)}^G = 0$
         \end{theo}
         \begin{proof}
             $\Rightarrow$ : $G$ BDF, $f,g \in G$. Comme $S(f,g) \in I$, alors $\overline{S(f,g)}^G = 0$. \\
-            $\Leftarrow$ : Supposons que pour tout $g,h \in G$, alors $\overline{S(g,h)}^G = 0$. Soit $f \in I$, on veut mq $LT(f) \in (LT(G))$. Or $I = (g_1, \cdots, g_r)$. Donc il existe $q_1, \cdots, q_r \in k[x_1, \cdots, x_n]$ tq 
+            $\Leftarrow$ : Supposons que pour tout $g,h \in G$, alors $\overline{S(g,h)}^G = 0$. Soit $f \in I$, on veut mq $LT(f) \in \bra LT(G) \ket$. Or $I = \bra g_1, \cdots, g_r \ket$. Donc il existe $q_1, \cdots, q_r \in k[x_1, \cdots, x_n]$ tq 
             \begin{align*}
                 f = \sum_{i = 1}^r q_ig_i
             \end{align*}
             Alors $LM(f) \leq \max_i \{LM(q_ig_i)\} = \mathbb{M}$.
             \begin{enumerate}
-                \item Si $LM(f) = \mathbb{M}$ : Alors $LM(f) = LT(q_ig_i)$ pour un certain $i$. Mais $LM(q_ig_i) = LM(q_i)LM(g_i)$ et donc $LM(f) \in (LT(G))$.
+                \item Si $LM(f) = \mathbb{M}$ : Alors $LM(f) = LT(q_ig_i)$ pour un certain $i$. Mais $LM(q_ig_i) = LM(q_i)LM(g_i)$ et donc $LM(f) \in \bra LT(G) \ket$.
                 \item Si $LM(f) < \mathbb{M}$ : Soit $1 \leq i_1 < i_2 < \cdots < i_s \leq r$ les indices tels que $LM(q_{i_j}g_{i_j}) = \mathbb{M}$. Alors on peut réécrire $f$ comme
                 \begin{align*}
                     f = \sum_{j = 1}^s LT(q_{i_j})g_{i_j} + \sum_{i = 1}^r q_i'g_i
@@ -332,14 +332,14 @@
             \end{enumerate}
         \end{proof}
         \begin{coro} (Algorithme de Buchberger)
-            Soit $I = (f_1, \cdots, f_r) \subrel{id} k[x_1, \cdots, x_n]$. Posons $G^0 = \{f_1, \cdots, f_r\}$ et pour $n \geq 1$, on définit
+            Soit $I = \bra f_1, \cdots, f_r \ket \subrel{id} k[x_1, \cdots, x_n]$. Posons $G^0 = \{f_1, \cdots, f_r\}$ et pour $n \geq 1$, on définit
             \begin{align*}
                 G^n = G^{n-1} \cup \left\{\overline{S(f,g)}^{G^{n-1}} \mid f,g \in G^{n-1},\, \overline{S(f,g)}^{G^{n-1}} \neq 0\right\} 
             \end{align*}
             Alors il existe $N \in \mathbb{N}$ tel que $n \geq N \Rightarrow G^n = G^N$. Dans ce cas, $G^N$ est une bdg de $I$.
         \end{coro}
         \begin{proof}
-            Si $G^n = G^{n+1}$, alors par le critère de Buchberger $G^n$ est une bdg. Il faut donc montrer que la suite $(G^n)$ est stationnaire. Supposons le contraire, alors pour tout $n \geq 0$, $\exists f,g \in G^n$ tq $\overline{S(f,g)}^{G^n} \neq 0$. Par définition de l'algorithme de division multivariée, aucun des termes de $\overline{S(f,g)}^{G^n}$ n'est dans $(LT(G^n))$. En particulier, $LT(\overline{S(f,g)}^{G^n}) \notin (LT(G^n))$. On a donc $(LT(G^n)) \nsubseteq (LT(G^{n+1}))$ et donc on obtiens une suite d'idéaux strictement croissante dans $k[x_1, \cdots, x_n]$, contradiction.
+            Si $G^n = G^{n+1}$, alors par le critère de Buchberger $G^n$ est une bdg. Il faut donc montrer que la suite $(G^n)_n$ est stationnaire. Supposons le contraire, alors pour tout $n \geq 0$, $\exists f,g \in G^n$ tq $\overline{S(f,g)}^{G^n} \neq 0$. Par définition de l'algorithme de division multivariée, aucun des termes de $\overline{S(f,g)}^{G^n}$ n'est dans $\bra LT(G^n) \ket$. En particulier, $LT \left(\overline{S(f,g)}^{G^n} \right) \notin \bra LT(G^n) \ket$. On a donc $\bra LT(G^n) \ket \nsubseteq \bra LT(G^{n+1}) \ket$ et donc on obtiens une suite d'idéaux strictement croissante dans $k[x_1, \cdots, x_n]$, contradiction.
         \end{proof}
         \begin{remq}
             L'algorithme de Buchberger n'est pas optimal. Pour des versions optimisées, voir les algorithmes F4 et F5 (Faugère)
@@ -347,7 +347,7 @@
 
     \section{Bases de Gröbner réduites, unicité}
         \begin{expl}
-            $(x-y,y-z) = (x-z, y-z)$. Les deux couples de générateurs sont des bdg pour l'ordre lex.
+            $\bra x-y,y-z \ket = \bra x-z, y-z \ket \subrel{id} k[x_1, \cdots, x_n]$. Les deux couples de générateurs sont des bdg de l'idéal qu'ils engendrent pour l'ordre lex, on n'a donc pas toujours unicité des bases de Gröbner.
         \end{expl}
         \begin{defi} (bdg réduite)
             Soit $G$ une bdg de $I \subrel{id} k[x_1, \cdots, x_n]$. Cette base est réduite si
@@ -368,21 +368,21 @@
             Soit $G = \{g_1, \cdots, g_r\}$ une bdg de $I$ idéal.
             \begin{enumerate}
                 \item Si $1 \leq i,j \leq r$ distincts sont tq $LT(g_i) \mid LT(g_j)$, alors $G \bs \{g_j\}$ est une bdg de $I$
-                \item Si $h_1, \cdots, h_r \in I$ sont tq $\mathrm{mdeg}(h_i) = \mathrm{mdeg}(g_i)$, alors $H = (h_1, \cdots, h_r)$ est une bdg de $I$.
+                \item Si $h_1, \cdots, h_r \in I$ sont tq $\mathrm{mdeg}(h_i) = \mathrm{mdeg}(g_i)$, alors $H = \{h_1, \cdots, h_r\}$ est une bdg de $I$.
             \end{enumerate}
         \end{lemm}
         \begin{proof}
             \begin{enumerate}
-                \item Comme $G$ est une bdg, $(LT(G)) = (LT(I))$. Maintenant si $LT(g_i) \mid LT(g_j)$, alors $(LT(G \bs \{g_j\})) = (LT(G))$ et donc $G \bs \{g_j\}$ est une bdg.
-                \item $(LT(G)) = (LT(H))$ vu que $LM(G) = LM(H)$.
+                \item Comme $G$ est une bdg, $\bra LT(G) \ket = \bra LT(I) \ket$. Maintenant si $LT(g_i) \mid LT(g_j)$, alors $\bra LT(G \bs \{g_j\}) \ket = \bra LT(G) \ket$ et donc $G \bs \{g_j\}$ est une bdg.
+                \item $\bra LT(G) \ket = \bra LT(H) \ket$ vu que $LM(G) = LM(H)$.
             \end{enumerate}
         \end{proof}
         \begin{proof} (\ref{1.5.1})
-            Soit $G = (g_1, \cdots, g_r)$ une bdg de $I$.
+            Soit $G = \{g_1, \cdots, g_r\}$ une bdg de $I$.
             \begin{enumerate}
                 \item Divisons chaque $g_i$ par $LC(g_i)$. On peut donc supposer que $LC(g_i) = 1$.
                 \item Chaque fois que $LT(g_i) \mid LT(g_j)$, on peut toujours retirer $g_j$ et toujours avoir une bdg. On peut donc supposer que $\forall i \neq j$, $LT(g_i) \nmid LT(g_j)$.
-                \item Enfin, pour chaque $i$, considérons $\bar g_i^{G \bs \{g_i\}} \in I$, et par définition aucun monôme de $\bar g_i^{G \bs \{g_i\}}$ n'est divisible par un des $LT(g_j)$, et $LT\left(\bar g_i^{G \bs \{g_i\}}\right) = LT(g_i)$. Par le $2$ du lemme, alors $\left(\bar g_1^{G \bs \{g_1\}}, \cdots, \bar g_r^{G \bs \{g_r\}}\right)$ est une bdg, qui de plus est réduite.
+                \item Enfin, pour chaque $i$, considérons $\bar g_i^{G \bs \{g_i\}} \in I$, et par définition aucun monôme de $\bar g_i^{G \bs \{g_i\}}$ n'est divisible par un des $LT(g_j)$, et $LT\left(\bar g_i^{G \bs \{g_i\}}\right) = LT(g_i)$. Par le $2$ du lemme, alors $\left\{ \bar g_1^{G \bs \{g_1\}}, \cdots, \bar g_r^{G \bs \{g_r\}} \right\}$ est une bdg, qui de plus est réduite.
             \end{enumerate}
             Ceci prouve l'existence d'une bdg réduite pour $I$. Reste à montrer l"unicité : soient $G,G'$ deus bdg réduites de $I$. Soit $g \in G$, il existe $g' \in G'$ tel que $LT(g') \mid LT(g)$. De même, il existe $g'' \in G$ tel que $LT(g'') \mid LT(g')$, et ainsi $LT(g'') \mid LT(g)$, donc $g'' = g$, et donc $LT(g') = LT(g)$. Ainsi on a montré que $LT(G) = LT(G')$. Considérons maintenant $g - g' \in I$, en particulier $\overline{g - g'}^G = 0$. Notons que si $h \in G \bs \{g\}$, alors aucun des termes de $g$ n'est divisible par $LT(h)$. De même pour $g'$, car $LT(G) = LT(G')$. De même aucun monôme de $g - g'$ n'est divisible par $LT(g)$ car $LT(g) = LT(g')$ donc $LT(g - g') < LT(g)$. D'où $\overline{g - g'}^G = g- g' = 0$ donc $g = g'$.
         \end{proof}

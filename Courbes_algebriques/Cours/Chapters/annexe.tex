@@ -1,0 +1,34 @@
+\appendix
+\chapter{}
+    \section{Localisation d'un anneau}
+        Soit $A \in \mathbf{CRings}$, et $S \subseteq A$ une partie multiplicative de $A$ ($1 \in S$, $x,y \in S \Rightarrow xy \in S$).
+        \begin{defi}
+            \label{localisation}
+            La localisation de $A$ en $S$, notée $S^{-1}A$, est définit par la propriété universelle
+            \begin{align*}
+                \Hom_{\mathbf{CRings}}(S^{-1}A, B) \simeq \{\varphi : A \to B \mid \varphi(S) \subseteq B^\times\}
+            \end{align*}
+        \end{defi}
+        On construit la localisation comme un quotient de $A \times S$ par la relation d'équivalence $(a,s) \sim (a',s') \iff as' = a's \in A$, et on note $\frac as$ les classes d'équivalence pour cette relation. La somme et le produit fonctionnent comme sur $\mathbb{Q}$.
+        \begin{expl}
+            \begin{enumerate}
+                \item Soit $A$ un anneau commutatif, $\mathfrak{p} \subrel{prm} A$. Alors $A \bs \mathfrak{p}$ est une partie multiplicative, du fait que $\mathfrak{p}$ ne peut pas être $A$ tout entier, donc $1 \notin \mathfrak{p}$, puis si $xy \in \mathfrak{p}$, alors $x \in \mathfrak{p}$ ou $y \in \mathfrak{p}$. On note $A_\mathfrak{p} := (A \bs \mathfrak{p})^{-1}A$.
+                \item Prenons toujours $A$ un anneau commutatif, et $f \in A$. Alors considérons $S := \{f^n \in A \mid n \in \mathbb{N}\}$. Alors c'est une partie multiplicative, et on note $A_f := S^{-1}A$. Remarquons que si $(f)$ est un idéal premier, alors $A_f$ n'est pas la même chose que $A_{(f)}$.
+            \end{enumerate}
+        \end{expl}
+        
+    \section{Théorie des corps}
+        \begin{defi} (Corps des fractions)
+            \label{Frac}
+            Soit $A$ un anneau. Le corps des fractions de $A$, noté $\Frac A$, est définit par la propriété universelle 
+            \begin{align*}
+                \Hom_{\mathbf{Fld}}(\Frac A, k) \simeq \{A \injectivearrow k \in \mathbf{CRings}\}
+            \end{align*}
+        \end{defi}
+        \begin{remq}
+            C'est un cas particulier de localisation, où la partie multiplicative choisie est $A \bs \{0\}$. Ainsi, on peut le construire comme 
+            \begin{align*}
+                \Frac A = \left\{ \frac{P}{Q} \mid (P,Q) \in A \times A \bs \{0\} \right\}
+            \end{align*}
+        \end{remq}
+
