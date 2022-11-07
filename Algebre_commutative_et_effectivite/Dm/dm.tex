@@ -29,39 +29,7 @@
         (Plus généralement on a $\pi(\sqrt{J}) = \sqrt{\pi(J)}$ pour tout $I \subseteq J \subrel{id} R$). Ainsi si $I = \sqrt{I}$, alors $\sqrt{(0)} = \pi(I) = \{0\}$, et si $\sqrt{(0)} = \{0\}$, $\pi(\sqrt{I}) = \{0\}$ et donc $\sqrt{I} \subseteq I$, d'où $\sqrt{I} = I$.
     \end{question}
     \begin{question}{2.}
-        Pour calculer la dimension d'un idéal, on calcule une famille génératrice de $I \cap k[y_1, \cdots, y_n]$ pour tout $\{y_1, \cdots, y_d\} \subseteq \{x_1, \cdots, x_n\}$, et on renvoie le plus grand $d$ tel que $I \cap k[y_1, \cdots, y_n] = \{0\}$ :
-        \begin{algorithm}
-            \caption{Calcule la dimension de l'idéal $I = \bra f_1, \cdots, f_r \ket \subrel{id} k[x_1, \cdots, x_n]$}
-            \begin{algorithmic}
-                \Function{Ideal dimension}{$f_1, \cdots, f_r \in k[x_1, \cdots, x_n]$}
-                    \State $G \gets$ Groebner$\_$basis$(f_1, \cdots, f_n)$
-                    \For{$\{y_1, \cdots y_d\} \subseteq \{x_1, \cdots, x_n\}$}
-                    \EndFor
-                    % \State $g \gets f$
-                    % \State $Q_1, \cdots, Q_r \gets 0$
-                    % \State $R \gets 0$
-                    % \While{$g \neq 0$}
-                    %     \State $b \gets True$
-                    %     \State $i \gets 1$
-                    %     \While{$b$ \textbf{and} $i \leq r$}
-                    %         \If{$\mathrm{LT}(f_i) \mid \mathrm{LT}(g)$}
-                    %             \State $g \gets g - \frac{\mathrm{LT}(g)}{\mathrm{LT}(f_i)} f_i$
-                    %             \State $Q_i \gets Q_i + \frac{\mathrm{LT}(g)}{\mathrm{LT}(f_i)}$
-                    %             \State $b \gets False$
-                    %         \EndIf
-                    %         \State $i \gets i + 1$
-                    %     \EndWhile
-                    %     \If{b}
-                    %         \State $h \gets LT(g)$
-                    %         \State $g \leftarrow g - h$
-                    %         \State $R \leftarrow R + h$
-                    %     \EndIf
-                    % \EndWhile
-                    % \State \Return $R,Q_1, \cdots, Q_r$
-                \EndFunction
-            \end{algorithmic}
-        \end{algorithm}
-        \cor{A finir}
+        Pour calculer la dimension d'un idéal, on calcule une famille génératrice de $I \cap k[y_1, \cdots, y_n]$ pour tout $\{y_1, \cdots, y_d\} \subseteq \{x_1, \cdots, x_n\}$, et on renvoie le plus grand $d$ tel que $I \cap k[y_1, \cdots, y_n] = \{0\}$. La famille génératrice est calculée en calculant une base de grobner de $I$ pour l'ordre lexicographique induit par $z_1 < \cdots z_{n - d} < y_1 < \cdots < y_n$, avec $\{z_1, \cdots, z_{n - d}\} = \{x_1, \cdots, x_n\} \bs \{y_1, \cdots, y_d\}$, et en éliminant les $n - d$ premières variables (c'est une base de grobner pour $k[y_1, \cdots, y_d] \cap I$ d'après le théorème d'élimination, donc en particulier une famille génératrice)
     \end{question}
     \begin{question}{3.}
         \label{q3}
@@ -84,7 +52,24 @@
 \section{Cas d'un idéal de dimension nulle}
     \begin{question}{1.}
         \item Pour calculer les $h_i$, on calcule une base de grobner $G$ pour $I$ et l'ordre lexicographique induit par $x_1 < x_2 < \cdots < x_{i-1} < x_{i+1} < \cdots < x_n < x_i$, puis on intersecte $G$ avec $k[x_i]$. Ainsi d'après le théorème d'élimination, $k[x_i] \cap G$ est une base de Groebner pour $k[x_i] \cap I$, donc en particulier un ensemble générateur. Il suffit alors de prendre le plus petit élément pour la relation de divisibilité dans $k[x_i] \cap G$. Remarquons que si la base $G$ calculée est réduite, alors on ne peut pas avoir deux éléments dans $G \cap k[x_i]$ (car si on a au moins deux éléments le terme dominant de l'un doit diviser le terme dominant de l'autre), ce qui contredit la définition d'une base de Groebner réduite. Ainsi dans ce cas il suffit de prendre un (le seul !) élément de $G \cap k[x_i]$.
-        \item \cor{PGCD du polynome et de sa dérivée ?}
+        \item Pour calculer les $\ell_i$, on calcule $h_i/\mathrm{gcd}(h_i, h_i')$. Pour prouver la correction de cette méthode, prouvons que si $k$ est un corps de caractéristique $0$ et $P = \lambda \prod_{i = 1}^s P_i^{\alpha_i} \in k[x]$ la décomposition d'un polynôme en irréductibles, alors
+        \begin{align*}
+            \mathrm{gcd}(P,P') = \prod_{i = 1}^s P_i^{\alpha_i - 1} =: Q
+        \end{align*}
+        Dans un premier temps, on travaille toujours à produit par une constante près, donc on peut supposer que $\lambda = 1$. Pour prouver l'affirmation précédente, alculons $P'$ :
+        \begin{align*}
+            P' &= \sum_{i = 1}^s \left(\alpha_i P_i^{\alpha_i - 1}\prod_{j \neq i} P_j^{\alpha_j}\right) \\
+            &= \sum_{i = 1}^s \alpha_i \frac P{P_i}
+        \end{align*}
+        Alors $Q$ divise $P$, puis $Q$ divise $P'$ comme $k$ est de caractéristique $0$, et ainsi $Q \mid \mathrm{gcd}(P, P')$. Et comme $\mathrm{gcd}(P,P') \mid P$, on a
+        \begin{align*}
+            \mathrm{gcd}(P, P') = \prod_{i = 1}^s P_i^{\beta_i}
+        \end{align*}
+        avec $\beta_i \in \{\alpha_i - 1, \alpha_i\}$. Maintenant s'il existe $1 \leq i \leq s$ tel que $\beta_i = \alpha_i$, alors $P_i^{\alpha_i}$ divise $\mathrm{gcd}(P,P')$ donc $P'$, or $P_i^{\alpha_i} \mid (P/P_j)$ pour tout $j \neq i$, et donc on aurait $P_i^{\alpha_i} \mid (P/P_i)$, absurde. On a donc finalement $\mathrm{gcd}(P,P') = Q$, et on a bien
+        \begin{align*}
+            \frac PQ = \prod_{i = 1}^s P_i
+        \end{align*}
+        qui est le plus grand diviseur sans facteurs carrés de $P$.
     \end{question}
     \begin{question}{2.}
         \label{q22}
@@ -92,18 +77,30 @@
     \end{question}
     \begin{question}{3.a.}
         \label{q3a}
-        Rappelons le théorème des restes chinois dans un anneau principal :
+        Rappelons le théorème des restes chinois dans un anneau :
         \begin{theo}
             \label{theo21}
-            Soit $R$ un anneau principal, puis $\{x_i\}_{1 \leq i \leq s} \subseteq R$ une famille d'éléments premiers entre eux deux à deux [$\bra x_i \ket + \bra x_j \ket = R$ pour tout $i \neq j$]. Notons $x = \prod_{i = 1}^s x_i$, alors
+            Soit $R$ un anneau, puis $(I_i)_{1 \leq i \leq s} \subseteq R$ une famille d'idéaux premiers entre eux deux à deux [$I_i + I_j = R$ pour tout $i \neq j$]. Notons $I = \prod_{i = 1}^s I_i$, alors
             \begin{align*}
-                R/\bra x \ket \simeq \prod_{i = 1}^s (R/\bra x_i \ket)
+                R/I \simeq \prod_{i = 1}^s (R/I_i)
             \end{align*}
         \end{theo}
         \begin{proof}
-            \cor{A faire ?}
+            Par récurrence, il suffit de le prouver pour $s = 2$. Ainsi considérons le morphisme canonique
+            \begin{align*}
+                \varphi : R \to R/I \times R/J
+            \end{align*}
+            Alors pour tout $x \in I$, $y \in J$, $\varphi(xy) = 0$, donc $IJ \subseteq \ker \varphi$, puis si $\varphi(r) = 0$, alors $r[I] = 0$ et $r[J] = 0$. On a donc $r \in I \cap J$, mais comme $I + J = R$, il existe $a \in I$, $b \in J$ tels que $a + b = 1$, et alors
+            \begin{align*}
+                r = r(a + b) = ra + rb \in IJ
+            \end{align*}
+            Ainsi $\ker \varphi = IJ$ et donc $R/IJ = R/I \times R/J$.
         \end{proof}
-        Or ici on peut écrire $\ell_1 = \lambda \prod_{i = 1}^s \ell_1^i$, où les $\ell_1^i$ sont irréductibles et différents deux à deux (donc premier entre eux deux à deux). Remarquons tout de suite que $\lambda$ n'a pas d'importance, puisque $\bra \ell \ket = \bra \ell/\lambda \ket$, et ainsi on peut supposer que $\lambda = 1$. Finalement, d'après le théorème, on a bien
+        Or ici on peut écrire $\ell_1 = \lambda \prod_{i = 1}^s \ell_1^i$, où les $\ell_1^i$ sont irréductibles et différents deux à deux (donc premier entre eux deux à deux). Ainsi $\langle \ell_1^i \rangle + \langle \ell_1^j \rangle = R$ pour tout $i \neq j$, puis
+        \begin{align*}
+            \prod_{i = 1}^s \bra \ell_1^i \ket = \bra \ell_1 \ket
+        \end{align*}
+        ($\prod_{i = 1}^s \bra \ell_1^i \ket$ est par définition engendré par $\prod_{i = 1}^s \ell_1^i = \ell_1/\lambda$). On a donc, d'après le théorème, que
         \begin{align*}
             k[x_1]/\bra \ell_1 \ket \simeq \prod_{i = 1}^s k[x_1]/\bra \ell_1^i \ket
         \end{align*}
@@ -141,7 +138,41 @@ A \times B \arrow[ru, "p"] \arrow[r] \arrow[rd, "q"'] & {(A \times B)[x]} \arrow
         \begin{align*}
             A[x]/\bra \ell \ket \times B[x]/\bra \ell \ket \simeq (A[x] \times B[x])/\bra (\ell, \ell) \ket
         \end{align*}
-        (Plus généralement on a $A/I \times B/J \simeq (A \times B)/(I \times J)$ avec $A,B$ des anneaux commutatifs et $I \subrel{id} A$, $J \subrel{id} B$). Maintenant \cor{A finir, de manière élémentaire si pas le temps}
+        (Plus généralement on a $A/I \times B/J \simeq (A \times B)/(I \times J)$ avec $A,B$ des anneaux commutatifs et $I \subrel{id} A$, $J \subrel{id} B$). Maintenant remarquons que le carré
+        \begin{figure}[H]
+            \centering
+            \begin{tikzcd}
+                {(A \times B)[x]} \arrow[r]           & {A[x] \times B[x]}           \\
+                {C[x]} \arrow[u, "\psi"] \arrow[r, "\Delta"'] & {C[x] \times C[x]} \arrow[u]
+                \end{tikzcd}
+        \end{figure}
+        est commutatif. En effet, le morphise du haut est induit par les morphismes $C[x] \to (A \times B)[x] \to A[x]$ et $C[x] \to (A \times B)[x] \to B[x]$, et celui du bas par les morphismes $C[x] \to C[x] \to A[x]$ et $C[x] \to C[x] \to B[x]$, il suffit donc de vérifier qu'ils sont égaux. Mais le diagramme
+        \begin{figure}[H]
+            \centering
+            \begin{tikzcd}
+                & {A[x]}                                \\
+{C[x]} \arrow[rd] \arrow[ru] \arrow[r] & {(A \times B)[x]} \arrow[d] \arrow[u] \\
+                & {B[x]}                               
+\end{tikzcd}
+        \end{figure}
+        commute puisque
+        \begin{figure}[H]
+            \centering
+            \begin{tikzcd}
+                & A                              \\
+C \arrow[rd] \arrow[r] \arrow[ru] & A \times B \arrow[u] \arrow[d] \\
+                & B                             
+\end{tikzcd}
+        \end{figure}
+        commute. Les morphismes $C[x] \to (A \times B)[x] \to A[x] \times B[x]$ et $C[x] \to C[x] \times C[x] \to A[x] \times B[x]$ sont donc égaux par lemme de Yoneda. Finalement, $\psi(\ell)$ correspond avec $(\ell,\ell)$ au travers de $(A \times B)[x] \simeq A[x] \times B[x]$, et donc
+        \begin{align*}
+            (A[x] \times B[x])/\bra (\ell, \ell) \ket \simeq (A \times B)[x]/\bra \psi(\ell) \ket
+        \end{align*}
+        Et alors par récurrence on obtiens le résultat pour toute famille finie de $C$-algèbres, et en particulier pour toutes famille d'extensions finies d'un corps $k$ :
+        \begin{align*}
+            \left( \prod_{i = 1}^s F_i \right)[x]/\bra \psi(\ell) \ket \simeq \prod_{i = 1}^s (F_i[x]/\bra \ell \ket)
+        \end{align*}
+        où $\psi$ est le morphisme canonique $k[x] \to \left(\prod_{i = 1}^s F_i\right)[x]$.
     \end{question}
     \begin{question}{3.d.}
         \label{q3d}
@@ -190,8 +221,8 @@ A \times B \arrow[ru, "p"] \arrow[r] \arrow[rd, "q"'] & {(A \times B)[x]} \arrow
     \end{question}
     \begin{question}{4.}
         \item Dans un premier temps, si $A,B$ sont des anneaux commutatifs, alors un idéal de $A \times B$ peut toujours s'écrire comme $I \times J$ avec $I,J \subrel{id} A,B$. En effet, si $K \subrel{id} A \times B$, alors considérons $I := \{i \in A \mid (i,0) \in K\}$, $J := \{j \in B \mid (0,j) \in  K\}$. Alors déjà, $K = I \times J$ puisque si $(i,j) \in K$, alors $(1,0) \times (i,j) = (i,0) \in K$ donc $i \in I$, puis de même, $j \in J$. Ensuite si $i \in I$, $j \in J$, alors $(i,j) = (i,0) + (0,j) \in K$. Enfin $I,J$ sont bien des idéaux du fait que $K$ est un idéal. Enfin, par récurrence, on a le même résultat pour un produit fini d'anneaux commutatifs.
-        \item Ensuite, considérons un produit de corps $S = \prod_{i = 1}^s K_i$, alors les idéaux des $K_i$ sont soit $K_i$ tout entier, soit $\{0\}$, et comme un idéal $I$ de $S$ est un produit d'idéaux des $K_i$, on peut l'écrire $I = \prod_{i = 1}^s I_i$ avec $I_i = K_i$ ou $\{0\}$. Ainsi un quotient d'un produit de corps est encore un produit de corps (du fait que l'on a toujours $(A \times B)/(I \times J) \simeq A/I \times B/J$ avec $I,J \subrel{id} A,B \in \mathbf{CRings}$). Mais si $x = (x_1, \cdots, x_s) \in S = \prod_{i = 1}^s K_i$ est un élément d'un produit de corps, tel que $x^N = 0$ pour un certain $N > 0$, alors $x_i^N = 0 \in K_i$ pour tout $i$ et donc $x_i = 0$ par intégrité de $K_i$, ce qui prouve que $x = 0$ et donc $S$ est réduit. 
-        \item Pour conclure, il faut remarquer que pour tout $A$ anneau commutatif, $I,J \subrel{id} A$, si on note $\pi : A \to A/I$, on a $A/(I + J) \simeq (A/I)/\pi(J)$. \cor{A faire ?}. Ainsi 
+        \item Ensuite, considérons un produit de corps $S = \prod_{i = 1}^s K_i$, alors les idéaux des $K_i$ sont soit $K_i$ tout entier, soit $\{0\}$, et comme un idéal $I$ de $S$ est un produit d'idéaux des $K_i$, on peut l'écrire $I = \prod_{i = 1}^s I_i$ avec $I_i = K_i$ ou $\{0\}$. Ainsi un quotient d'un produit de corps est encore un produit de corps (du fait que l'on a toujours $(A \times B)/(I \times J) \simeq A/I \times B/J$ avec $I,J \subrel{id} A,B \in \mathbf{CRings}$ et $\{0\} \times A \simeq A$). Mais si $x = (x_1, \cdots, x_s) \in S = \prod_{i = 1}^s K_i$ est un élément d'un produit de corps, tel que $x^N = 0$ pour un certain $N > 0$, alors $x_i^N = 0 \in K_i$ pour tout $i$ et donc $x_i = 0$ par intégrité de $K_i$, ce qui prouve que $x = 0$ et donc $S$ est réduit. 
+        \item Pour conclure, il faut remarquer que pour tout $A$ anneau commutatif, $I,J \subrel{id} A$, si on note $\pi : A \to A/I$, on a $A/(I + J) \simeq (A/I)/\pi(J)$. Ainsi 
         \begin{align*}
             R/I + \bra \ell_1, \cdots, \ell_n \ket \simeq (R/\bra \ell_1, \cdots, \ell_n \ket)/\pi(I)
         \end{align*}
@@ -204,7 +235,15 @@ A \times B \arrow[ru, "p"] \arrow[r] \arrow[rd, "q"'] & {(A \times B)[x]} \arrow
         \end{align*}
     \end{question}
     \begin{question}{6.}
-
+        Montrons que $I + \bra \ell_1, \ell_2 \ket = I$ : $\ell_i$ est le plus grand diviseur sans carré de $x_i^p - t$, $i = 1,2$. Mais $x^p - t$ est irréductible dans $k(t)[x]$ : considérons un corps de décomposition $L$ de $x^p - t$, notons $\alpha$ une racine de $x^p - t$ dans $L$. Alors $\alpha^p = t \in L$, et ainsi $x^p - t = (x - \alpha)^p$, et donc $x^p - t$ n'a qu'une racine dans $L$ de multiplicité $p$. Maintenant si $x^p - t = PQ \in k(t)[x]$ avec $P,Q$ non inversibles, alors $P = (x - \alpha)^i$ dans $L$, avec $1 \leq i < p$. Maintenant le terme devant $x^{i - 1}$ vaut $i\alpha$, donc on doit avoir $\alpha \in k(t)$. Mais alors on aurait $t = \alpha^p \in k(t)$, ce qui est absurde. En effet, sinon écrivons $\alpha = f/g$, on aurait $f^p = tg^p$, mais alors en dérivant les deux membres de cette égalit on aurait
+        \begin{align*}
+            g^p = g^p + ptg^{p-1}g' = pf^{p - 1}f' = 0
+        \end{align*}
+        et donc $g^p = 0$, d'où $t = 0$, absurde. Ainsi $h_1,h_2$ sont irréductibles et donc $\ell_i = h_i$, d'où $\ell_i \in I$,  $i = 1,2$ et donc $I = I + \bra \ell_1, \ell_2 \ket$. Enfin, 
+        \begin{align*}
+            (x_1 - x_2)^p = x_1^p - x_2^p = h_1 - h_2 \in I
+        \end{align*}
+        donc $x_1 - x_2 \in \sqrt{I}$, mais $x_1 - x_2 \notin I$. En effet, si on avait $P,Q \in k(t)[x_1, x_2]$ tels que $x_1 - x_2 = x_1^pP + x_2^pQ - t(P + Q)$, alors tous les monômes du terme de droite font intervenir soit $x_1^p$, soit $x_2^p$, soit $t$, donc aucun d'eux peut être égal à $x_1$ ou $x_2$, absurde. Ainsi $\sqrt{I} \neq I = I + \bra \ell_1, \ell_2 \ket$.
     \end{question}
     
 \section{Problème d'appartenance au radical}
