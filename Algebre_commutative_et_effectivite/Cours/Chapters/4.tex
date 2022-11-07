@@ -1,0 +1,136 @@
+\chapter{Sous-anneaux, polynômes symétriques, théorie des invariants}
+    \section{\cor{Sans nom pour le moment}}
+        Soient $f_1, \cdots, f_r \in k[x_1, \cdots, x_n]$. On s'est intéressés à la question d'appartenance $f \in \bra f_1, \cdots, f_r \ket$. On veut maintenant savoir si $f \in k[f_1, \cdots, f_r]$, où $k[f_1, \cdots, f_r]$ désigne l'image du morphisme 
+        \begin{align*}
+            \begin{array}{cccc}
+                \phi : & k[y_1, \cdots, y_r] & \to & k[x_1, \cdots, x_n] \\
+                & y_i & \mapsto & f_i \\
+            \end{array}
+        \end{align*}
+        \begin{expl}
+            Dans $k[x]$ $\bra x^2 \ket$ est très différent de $k[x^2]$.
+        \end{expl}
+        \begin{remq}
+            Un sous-anneau d'un anneau de polynômes n'est pas nécessairement finiment engendré. Par exemple, $k[x, xy, xy^2, \cdots] \subset k[x,y]$ n'est pas finiment engendré.
+        \end{remq}
+        \begin{prop}
+            Soient $f_1, \cdots, f_r \in k[x_1, \cdots, x_n]$, 
+            \begin{align*}
+                \phi : k[y_1, \cdots, y_r] \to k[x_1, \cdots, x_n]
+            \end{align*}
+            ,$<$ un ordre monomial sur $k[x_1, \cdots, x_nn y1, \cdots, y_r]$ tel que tout monôme faisant intervenir un $x_i$ est plus grand que tout monôme en les $y_j$ (par exemple $<_{lex}$), $J = \bra f_1 - y_1, \cdots, f_r - y_r \ket$, et $G = \{g_1, \cdots, g_s\}$ une bdg de $J$ pour $<$. Alors $f \in k[f_1, \cdots, f_r] \iff \overline{f}^G \in k[y_1, \cdots, y_r]$. Dans ce cas,
+            \begin{align*}
+                f = \phi(\overline{f}^G)
+            \end{align*}
+        \end{prop}
+        \begin{proof}
+            \item $\Leftarrow$ : Supposons que $\overline{f}^G \in k[y_1, \cdots, y_r]$, et soit 
+            \begin{align*}
+                f = \sum_{i = 1}^s q_ig_i + \overline{f}^G
+            \end{align*} 
+            le résultat de la division de $f$ par $G$. Alors on a
+            \begin{align*}
+                f = \phi(f) = \sum_{i = 1}^s \phi(q_i)\phi(g_i) + \phi(\overline{f}^G)
+            \end{align*}
+            et $\phi(g_i) = 0$ car $g_i \in \bra f_i - g_i \mid 1 \leq i \leq s \ket$, et ainsi $f = \phi(\overline{f}^G) \in k[f_1, \cdots, f_r]$.
+            \item $\Rightarrow$ : Supposons que $f \in k[f_1, \cdots, f_r]$. Supposons que $g_{u+1}, \cdots, g_s$ sont les éléments de $G$ tels que $LT(g_{u+1}), \cdots, LT(g_s) \in k[y_1, \cdots y_r]$. D'après l'hypothèse sur $<$, $g_{u+1}, \cdots, g_s \in k[y_1, \cdots, y_r]$. Soit $p \in k[y_1, \cdots, y_r]$ tel que $\phi(p) = f$. Montrons que $p = \overline{f}^G$. On dispose aussi d'un morphisme
+            \begin{align*}
+                \begin{array}{cccc}
+                    \Phi : & k[x_1, \cdots, x_n, y_1, \cdots, y_r] & \to & k[x_1, \cdots, x_n] \\
+                    & x_i & \mapsto & x_i \\
+                    & y_i & \mapsto & f_i \\
+                \end{array}
+            \end{align*}
+            On a que $\ker \Phi = J$. On a aussi que $\Phi(p) = f$. Aussi, on peut écrire
+            \begin{align*}
+                f = \sum_{i = 1}^s q_ig_i + \overline{f}^G
+            \end{align*}
+            d'où $f = \Phi(f) = \Phi(\overline{f}^G)$, et ainsi $p - \overline{f}^G \in \ker \Phi = J$. Donc $\overline{p - \overline{f}^G}^G = 0$ et ainsi $\overline{p}^G = \overline{\overline{f}^G}^G = \overline{f}^G$. Comme $p \in k[y_1, \cdots, y_r]$, $LT(p) \in k[y_1, \cdots, y_r] \in k[y1, \cdots, y_r]$ ne peut être divisible par $L(g_1), \cdots, LT(g_u)$ qui font intervenir les $x_i$. Comme les $g_{u + 1}, \cdots, g_s \in k[y_1, \cdots, y_s]$, on a bien que $\overline{p}^G \in k[y_1, \cdots, y_r]$ ce qui conclut la preuve.
+        \end{proof}
+        \begin{nota}
+            \begin{align*}
+                \begin{array}{cccc}
+                    \phi : & k[y_1, \dots, y_r] & \to & k[x_1, \cdots, x_n] \\
+                    & y_i & \mapsto & f_i \\
+                \end{array}
+            \end{align*}
+            $F = (f_1, \cdots, f_r)$. Alors on note $\ker \phi =: I_F$, $\ker \Phi = J_f$.
+        \end{nota}
+        \begin{prop}
+            \begin{align*}
+                I_F = J_F \cap k[y_1, \cdots, y_r]
+            \end{align*}
+        \end{prop}
+        \begin{proof}
+            Clairement, $\ker \phi = \ker \Phi \cap k[y_1, \cdots y_r]$.
+        \end{proof}
+        \begin{remq}
+            \begin{enumerate}
+            \item $k[f_1, \cdots, f_r] \simeq k[y_1, \cdots, y_r]/I_F$. 
+            \item D'après le \hyperref[implicitisation]{théorème d'implicitisation}, $V(I_F)$ est la variété paramétrée par les $f_i$.
+            \end{enumerate}
+        \end{remq}
+
+    \section{Polynômes symétriques}
+        L'action du groupe symétrique $\mathfrak{S}_n$ sur $\{1, \cdots, n\}$ induit une action sur $k[x_1, \cdots, x_n]$ donnée par $\sigma \in \mathfrak{S}_n$, $f \in k[x_1, \cdots, x_n]$, alors 
+        \begin{align*}
+            (f \cdot \sigma)(x_1, \cdots, x_n) = f(x_{\sigma(1)}, \cdots, x_{\sigma(n)})
+        \end{align*}
+        \begin{defi}
+            Un poynôme symétrique est un polynôme $f$ tel que $f \cdot \sigma = f$. L'ensemble des polynômes symétriques est $k[x_1, \cdots, x_n]^{\mathfrak{S}_n}$.
+        \end{defi}
+        \begin{expl}
+            Si $n = 3$, alors $x_1 + x_2 + x_3$, $x_1x_2 + x_1x_3 + x_2x_3$, $x_1x_2x_3$ sont des polynômes symétriques.
+        \end{expl}
+        \begin{prop}
+            $k[x_1, \cdots, x_n]^{\mathfrak{S}_n}$ est un sous-anneau de $k[x_1, \cdots, x_n]$.
+        \end{prop}
+        \begin{defi}
+            Pour $i \in \{1, \cdots, n\}$, le $i$ème polynôme symétrique élémentaire est
+            \begin{align*}
+                \sigma_i = \sum_{1 \leq j_1 < j_2 < \cdots < j_i \leq n} x_{j_1}x_{j_2} \cdots x_{j_i}
+            \end{align*}
+        \end{defi}
+        \begin{expl}
+            Si $n = 3$, $\sigma_1 = x_1 + x_2 + x_3$, $\sigma_2 = x_1x_2 + x_1x_3 + x_2x_3$, $\sigma_3 = x_1x_2x_3$.
+        \end{expl}
+        \begin{theo} (Théorème de structure des polynômes symétriques)
+            L'anneau $k[x_1, \cdots, x_n]^{\mathfrak{S}_n}$ est $k[\sigma_1, \cdots, \sigma_n]$. De plus, le morphisme
+            \begin{align*}
+                \begin{array}{cccc}
+                    \phi : & k[y_1, \cdots, y_n] & \to & k[x_1, \cdots, x_n] \\
+                    & y_i & \mapsto & \sigma_i \\
+                \end{array}
+            \end{align*}
+            est injectif d'image $k[x_1, \cdots, x_n]^{\mathfrak{S}_n}$.
+        \end{theo}
+        \begin{proof}
+            L'inclusion $k[\sigma_1, \cdots, \sigma_n] \subseteq k[x_1, \cdots, x_n]^{\mathfrak{S}_n}$ est évidente car les $\sigma_i$ sont symétriques. Montrons $\supseteq$ : Soit $f \in k[x_1, \cdots, x_n]^{\mathfrak{S}_n}$ non nul. Soit $< = <_{lex}$ avec $x_1 > x_1 > \cdots > x_n$. Posons $LT(f) = \lambda x_1^{a_1}x_2^{a_2} \cdots x_n^{a_n}$. Puisque $f$ est symétrique, tout monôme $x_{\sigma(1)}^{a_1} \cdots x_{\sigma(n)}^{a_n}$ ($\sigma \in \mathfrak{S}^n$) apparaît dans $f$. Donc $a_1 \geq a_2 \geq \cdots \geq a_n$. Considérons 
+            \begin{align*}
+                h = \lambda \sigma_1^{a_1 - a_2} \sigma_2^{a_2 - a_3} \cdots \sigma_{n - 1}^{a_{n - 1} - a_n} \sigma_n^{a_n}
+            \end{align*}
+            Alors $LT(h) = LT(f)$, donc $f = h + (f - h)$ et $f - h$ est symétrique de terme dominant $< LT(f)$ et $h \in k[\sigma_1, \cdots, \sigma_n]$. Par récurrence, $f \in k[\sigma_1, \cdots, \sigma_n]$. Il reste à montrer que $\phi$ est injectif : soit $g \in \ker \phi$, si $y_1^{b_1} \cdots y_n^{b_n}$ est un monôme de $g$, alors $\phi(y_1^{b_1}, \cdots, y_n^{b_n}) = \sigma_1^{b_1} \cdots \sigma_n^{b_n}$ apparaît dans $\phi(g)$. Son terme dominant est $x_1^{b_1 + \cdots + b_n}x_2^{b_2 + \cdots + b_n} \cdots x_n^{b_n}$. Mais la fonction
+            \begin{align*}
+                \begin{array}{cccc}
+                    & \mathbb{N}^n & \to & \mathbb{N}^n \\
+                    & (b_1, \cdots, b_n) & \mapsto & (b_1 + \cdots + b_n, b_2 + \cdots + b_n, \cdots, b_n) \\
+                \end{array}
+            \end{align*}
+            est injective, donc tous les termes de $g$ sont envoyés par $\phi$ sur des polynômes de termes dominants différents, leur somme ne peut donc s'annuler que si elle est vide, i.e. $g = 0$.
+        \end{proof}
+        \begin{coro}
+            L'écriture de $f \in k[x_1, \cdots, x_n]^{\mathfrak{S}_n}$ comme polynôme en les $\sigma_i$ est unique.
+        \end{coro}
+        \begin{expl}
+            Soit $n \geq 2$, et considérons
+            \begin{align*}
+                f = \prod_{1 \leq i < j \leq n} (x_i - x_j)^2
+            \end{align*}
+            C'est un polynômes en $n$ variables, qui est symétrique. Il existe donc $\Delta \in \mathbb{Z}[y_1, \cdots, y_n]$ tel que $f = \Delta(\sigma_1, \cdots, \sigma_n)$. On définit $\Delta$ comme le discriminant d'ordre $n$. Par exemple, dans $\mathbb{Z}[x_1, \cdots, x_n][T]$ considérons $P = \prod_{i = 1}^n (T - X_i)$. Alors le dixcriminant de $P$ est $\Delta$.
+        \end{expl}
+
+    \section{Théorie des invariants}
+        Supposons que $k$ est un corps de caractéristique nulle. On note $GL_n(k)$ le groupe des matrices $n \times n$ inversibles. Soit $L$ le sev de $k[x_1, \cdots, x_n]$ des polynômes homogènes de degré $1$. C'est un $k$ ev de dimension $n$ ayant pour base $(x_1, \cdots, x_n)$. Dans cette base, tout élément de $L$ s'écrit comme $\sum \lambda_ix_i$, et alors $GL_n(k)$ agit donc sur $L$ par multiplication à gauche sur $(\lambda_1, \cdots, \lambda_n)$. Ceci induit une action de $GL_n(k)$ sur tout $k[x_1, \cdots, x_n]$.
+        \begin{nota}
+            $(f.A)(x_1, \cdots, x_n) = f(A \cdot (x_1, \cdots, x_n))$
+        \end{nota}

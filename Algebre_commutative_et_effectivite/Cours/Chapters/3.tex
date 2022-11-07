@@ -558,3 +558,98 @@
             \begin{expl}
                 $k[x,y]$, $I = \bra x^2 - y, xy - y^3, y^5 - y^2 \ket$. Calculons $GF(I)$ : ses cônes maximaux ont la forme $\bar C_G$.
             \end{expl}
+
+        \section{Changement de base de Groebner}
+        Soit $I \subrel{id} k[x_1, \cdots, x_n]$
+        \begin{itemize}
+            \item Soit $G_0$ une bdg marquée de $I$ pour $<_{M_0}$, on note $w_0$ la première ligne de $M_0$, et on calcule $C_{G_0}$.
+            \item On cherche $G_1$ une bdg marquée de $I$ pour $<_{M_1}$, on note $w_1$ la première ligne de $M_1$.
+            \item On trace dans $GF(I)$ un segment de droite de $w_0$ à $w_1$. Soit $w_{der}$ de dernier point du segment $[w_0, w_1]$ qui soit toujours dans $\overline{C_{G_0}}$ (il existe et est unique par convexité de $\overline{C_{G_0}}$).
+            \item Posons
+            \begin{align*}
+                M_0' =
+                \begin{bmatrix}
+                    w_0 \\
+                    M_1 \\
+                \end{bmatrix}
+                ,\, M_{der} =
+                \begin{bmatrix}
+                    w_{der} \\
+                    M_1 \\
+                \end{bmatrix}
+            \end{align*}
+            et $G_0'$ et $G_{der}$ les base de Groebner associées.
+        \end{itemize}
+        Comment passer de $G_0$ à $G_0'$ ?
+        
+        \subsection{De $G_0$ à $G_0'$}
+            On sait que
+            \begin{itemize}
+                \item $LT_{w_0}(G_0)$ est une bdg réduite de $\bra LT_{w_0}(I) \ket$ pour $M_0$.
+                \item $LT_{w_0}(G_0')$ est une bdg réduite de $\bra LT_{w_0}(I) \ket$ pour $M_1$.
+            \end{itemize}
+            Soit $H = \{h_1, \cdots, h_s\}$ la bdg réduite de $\bra LT_{w_0}(I)\ket$ pour $M_1$.
+            \begin{remq}
+                La base de Groebner de $\bra LT_{w_0}(I) \ket = \bra LT_{w_0}(G_0) \ket$ est facile à calculer car les $LT_{w_0}(G_0)$ sont "presque des monômes".
+            \end{remq}
+            Ecrivons 
+            \begin{align*}
+                h_j = \sum_{g \in G_0} P_{j,g} LT_{w_0}(g)
+            \end{align*}
+            comme résultat de la division multivariée par $LT_{w_0}(G_0)$ pour $M_0$. Posons 
+            \begin{align*}
+                \overline{h_j} = \sum_{g \in G_0} P_{j,g} g \in I
+            \end{align*}
+            Alors $\overline{H} = \{\overline{h_1}, \cdots, \overline{h_s}\}$ est une bdg de $I$ pour $M_0'$. En effet, 
+            \begin{align*}
+                \bra LT_{M_0'}(I) \ket &= \bra LT_{M_1} \bra LT_{w_0}(I) \ket \ket \\
+                &= \bra LT_{M_1}(H) \ket \\
+                &= \bra LT_{M_0'}(\overline{H}) \ket \\
+            \end{align*}
+            Prenons $G_0'$ la bdg réduite qui est la réduction de $\overline{H}$.
+
+        \subsection{De $G_0'$ à $G_{der}$}
+            \begin{itemize}
+                \item $LT_{w_0}(G_0')$ est une bdg réduite de $\bra LT_{w_0}(I) \ket$ pour $M_1$.
+                \item $LT_{w_{der}}(G_0')$ est une bdg réduite de $\bra LT_{w_{der}}(I) \ket$ pour $M_0'$.
+            \end{itemize}
+            car $G_0'$ est une bdg de $I$ pour $\begin{bmatrix} w_{der} \\ M_0' \end{bmatrix}$. En effet, si $f \in I$, alors réalisons l'algorithme de division multivariée :
+            \begin{align}
+                f = \sum_{g \in G_0'} q_gg
+            \end{align}
+            Alors $LT_{M_0'}(f) = \max_{g \in G_0'}(LT_{M_0'} q_gg)$. Donc $LT_{w_{der}}(f)$ contiens $LT_{M_0'}(f)$ comme terme, car $w_{der} \in \overline{C_{G_0'}}$. On en déduit que
+            \begin{align*}
+                LT_{\begin{bmatrix} w_{der} \\ M_0' \end{bmatrix}}(f) = LT_{M_0'}(f)
+            \end{align*}
+            et ainsi
+            \begin{align*}
+                \bra LT_{M_0'}(I) \ket = \bra LT_{\begin{bmatrix} w_{der} \\ M_0' \end{bmatrix}}(I) \ket
+            \end{align*}
+            Finalement
+            \begin{align*}
+                \bra LT_{\begin{bmatrix} w_{der} \\ M_0' \end{bmatrix}}(I) \ket &= \bra LT_{M_0'}(I) \ket \\
+                &= \bra LT_{M_0'}(G_0') \ket \\
+                &= \bra LT_{M_0'} LT_{w_{der}} G_0' \ket \\
+                &= \bra LT_{\begin{bmatrix} w_{der} \\ M_0' \end{bmatrix}}(G_0') \ket
+            \end{align*}
+            Soit $H = \{h_1, \cdots, h_s\}$ une bdg de $\bra LT_{w_{der}}(I) \ket$ pour $M_{der}$.
+            \begin{remq}
+                Le calcul de $H$ est peu couteux, car les éléments de $LT_{w_{der}}(G_0')$ sont presque tous des monômes. Posons
+                \begin{align*}
+                    h_j = \sum_{g \in G_0'} P_{j,g}LT_{w_{der}}(g)
+                \end{align*}
+                (division multivariée), et
+                \begin{align*}
+                    \overline{h_j} = \sum_{g \in G_0'} P_{j,g}g \in I
+                \end{align*}
+                Alors $\overline{H} = \{\overline{h_1}, \cdots, \overline{h_s}\}$ est une bdg de $I$ pour $M_{der} = \begin{bmatrix} w_{der} \\ M_1 \end{bmatrix}$ :
+                \begin{align*}
+                    \bra LT_{M_{der}}(I) \ket &= \bra LT_{M_{der}} \bra LT_{w_{der}}(I) \ket \ket \\
+                    &= \bra LT_{M_{der}}(H) \ket \\
+                    &= \bra LT_{M_{der}}(\overline{H}) \ket \\
+                \end{align*}
+                Finalement, posons $G_{der}$ la réduction de $\overline{H}$.
+            \end{remq}
+
+        \subsection{$\overline{C_{G_{der}}}$ est plus proche de $w_1$ que $C_{G_0'}$}
+            Il suffit de voir que si on avance un peu sur le segment qui relie $w_{der}$ à $w_1$, on reste dans $\overline{C_{G_{der}}}$. Si $g \in G_{der}$, alors $LT_{M_{der}}(g)$ est un terme de $LG_{w_{der}}(g)$. Si on remplace $w_{der}$ par $w_{der} + \varepsilon(w_1 - w_{der})$, $0 < \varepsilon$ petit. Alors dans ce cas $LT_{M_{der}}(g)$ ne change pas. Ainsi on peut répéter les étapes précédentes jusqu'à obtenir $w_1$.
