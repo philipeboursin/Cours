@@ -202,11 +202,16 @@
                 \mathrm{div} f = \sum_{x \in C} v_x(f)x
             \end{align*}
         \end{defi}
+        \begin{nota}
+            \begin{align*}
+                div_0(f) &= \sum_{\substack{p \in C \\ p \text{ zéro de } f}} v_p(f)p \\
+                div_\infty(f) &= \sum_{\substack{g \in C \\ g \text{ pôle de } f}} -v_p(f)g
+            \end{align*}
+        \end{nota}
         \begin{remq}
             \begin{align*}
-                \mathrm{div} f = \sum_{\substack{p \in C \\ p \text{ zéro de } f}} n_pp - \sum_{\substack{g \in C \\ g \text{ pôle de } f}} n_gg
+                \mathrm{div} f = div_0(f) - div_\infty(f)             
             \end{align*}
-            où $n_p = v_p(f) > 0$, $-n_g = v_g(f) < 0$. 
         \end{remq}
         \begin{expl}
             $C = \mathbb{P}^1$, $f = \frac{X(2X - Y)}{(X - 3Y)^2}$.
@@ -221,7 +226,7 @@
         \end{theo}
         \begin{prop}
             \begin{enumerate}
-                \item $\mathrm{div} (fg) = \mathrm{div} f + \mathrm{div} g$ opur tous $f,g \in k(C)$ non nuls.
+                \item $\mathrm{div} (fg) = \mathrm{div} f + \mathrm{div} g$ pour tous $f,g \in k(C)$ non nuls.
                 \item $\mathrm{div} 1/f = - \mathrm{div} f$ $\forall f \in k(C)$, $f \neq 0$.
             \end{enumerate}
         \end{prop}
@@ -233,17 +238,219 @@
         \end{defi}
         \begin{prop}
             \begin{enumerate}
-                \item $Pr(C) \subrel{sg} Div(C)$
+                \item $Pr(C) \subseteq Div(C)$ est un sous-groupe.
                 \item \begin{align*}
                     \begin{array}{cccc}
                         div : & k(C)^\times & \to & Pr(C) \\
                         & f & \mapsto & div f \\
                     \end{array}
                 \end{align*}
-                est un morphisme de groupes, de noyau $k^\times$.
+                est un morphisme de groupes surjectif, de noyau $k^\times$.
             \end{enumerate}
         \end{prop}
         \begin{proof}
             soit $f \in k(C)^\times$ dans le noyau de $div$. Si $f$ n'est pas constante, alors $f$ a au moins un pôle et un zéro, et ainsi $div f \neq 0$.
         \end{proof}
-        
+        \begin{defi}
+            On définit le groupe de Picard de $C$ comme
+            \begin{align*}
+                Pic(C) = Div(C)/Pr(C) = Div(C)/\sim
+            \end{align*}
+        \end{defi}
+        \begin{nota}
+            Soient $D,D' \in Div(C)$, alors
+            \begin{align*}
+                D \sim D' \iff D - D' = \div(f) \in Pr(C)
+            \end{align*}
+            où $f\in k(C)^\times$. Cette relation d'équivalence est nommée "linéairement équivalents". On note $[D]$ la cladde de $D$ dans $Pic(C)$.
+        \end{nota}
+        \begin{theo}
+            \label{*}
+            $Pr(C) \subseteq Div^0(C)$, i.e. pour tout $f \in k(C)^\times$, $div(f)$ est de degré $0$, i.e. $\deg (div_0(f)) = \deg (div_\infty(f))$.
+        \end{theo}
+        \begin{remq}
+            $f \in k(C)$ non constante. Alors $\bar k = k \subseteq k(f)$ est purement transcendante, mais $\dim C = 1$, i.e. $tr \deg_kk(C) = 1$, donc $k(f) \subseteq k(C)$ est algébrique (et de type fini), i.e. $[k(C) : k(f)] < \infty$.
+        \end{remq}
+        \begin{theo}
+            \label{**}
+            $f \in k(C)^\times$ non constante. Alors
+            \begin{align*}
+                \deg(div_0(f)) = \deg(div_\infty(f)) = [k(C):k(f)]
+            \end{align*}
+        \end{theo}
+        \begin{remq}
+            $f \in k(C)^\times$ non constante, alors on peut définir
+            \begin{align*}
+                \begin{array}{cccc}
+                    F : & C & \dashrightarrow & \mathbb{P}^1 \\
+                    & x & \mapsto & [1, f(x)]\\
+                \end{array}
+            \end{align*}
+            et on a prouvé que si $C$ est lisse, alors $F$ est en réalité un morphisme (est bien défini).
+        \end{remq}
+        \begin{theo}
+            \label{***}
+            \begin{align*}
+                [k(C), k(f)] = \deg F
+            \end{align*}
+            où $\deg F$ est le nombre de points dans $F^{-1}(y)$ pour un $y \in \mathbb{P}^1$ point général.
+        \end{theo}
+        \begin{remq}
+            Si $[k(C),k(f)] = 1$, alors $F$ est en réalité un isomorphisme.
+        \end{remq}
+        \begin{remq}
+            $V,W$ variétés, et $V \dashrightarrow W$ birationelle ($\exists \emptyset \neq U_V \subseteq V,\, \emptyset \neq U_W \subseteq W$ ouverts, $U_V \simeq U_W$), alors $k(V) \simeq k(W)$. La réciproque est aussi vraie. Ainsi si $C$ est une courbe projective, $f \in k(C)^\times$ non constante, si $k(C) = k(f) \simeq k(\mathbb{P}^1)$, alors il existe une application birationnelle $C \dashrightarrow \mathbb{P}^1$.
+        \end{remq}
+        \begin{exo}
+            $C,C'$ courbes lisses, alors il existe une application birationnelle $C \dashrightarrow C'$ si et seulement si $C \simeq C'$.
+        \end{exo}
+        Une conséquence du théorème \ref{*} est que le morphisme $\deg$ passe au quotient par $Pr(C)$, i.e. le morphisme
+        \begin{align*}
+            \begin{array}{cccc}
+                \deg : & Pic(C) & \to & \mathbb{Z} \\
+                & [D] & \mapsto & \deg D\\
+            \end{array}
+        \end{align*}
+        est bien défini (et il est surjectif). Autrement dit, si $D \sim D'$, alors $\deg D = \deg D'$.
+        \begin{exo}
+            $C = \mathbb{P}^1$, alors pour tout $D \in Div^0(C)$, on a que $D$ est principal ($D = div f$ pour un $f \in k(\mathbb{P}^1)^\times$)
+        \end{exo}
+        \begin{defi}
+            On définit la variété de Picard comme
+            \begin{align*}
+                Pic^0(C) = Div^0/Pr(C)
+            \end{align*}
+            C'est un sous groupe de $Pic(C)$.
+        \end{defi}
+        \begin{remq}
+            Considérons le morphisme $\deg : Pic(C) \to \mathbb{Z}$. Alors $\ker(\deg) = Div^0(C)$. Ainsi si $C = \mathbb{P}^1$, $Pic^0(\mathbb{P}^1) = 0$ et ainsi $Pic(\mathbb{P}^1) \simeq \mathbb{Z}$.
+        \end{remq}
+        \begin{defi}
+            Un diviseur $D = \sum n_pp$ sur $C$ est effectif si $n_p \geq 0$ pour tout $p \in C$.
+        \end{defi}
+        \begin{nota}
+            On note $D \geq 0$ si $D$ est effectif, et $D' \geq D$ si $D - D' \geq 0$.
+        \end{nota}
+        \begin{nota}
+            $D \in Div(C)$, considérons
+            \begin{align*}
+                \mathcal{L}(D) = \{0\} \cup \{f \in k(C)^\times \mid div(f) + D \geq 0\}
+            \end{align*}
+            Plus explicitement, $D = \sum n_pp$, alors $f \in k(C)^\times$ est dans $\mathcal{L}(D)$ si et sulement si $n_p + v_p(f) \geq 0$.
+        \end{nota}
+        \begin{lemm} ($D = 0$)
+            \label{d=0}
+            \begin{align*}
+                \mathcal{L}(0) = k
+            \end{align*}
+        \end{lemm}
+        \begin{proof}
+            $\mathcal{L}(0) = \{0\} \cup \{f \in k(C)^\times \mid div(f) \geq 0\}$, or $div(f) = div_0(f) - div_\infty(f)$, et si $f \notin k$, alors $div_\infty(f) \neq 0$ donc $f \notin \mathcal{L}(0)$, et si $f \in k^\times$, alors on a bien $div(f) = 0$.
+        \end{proof}
+        \begin{expl}
+            $C = \mathbb{P}^1$, $p = [0,1] \in \mathbb{P}^1$, $n > 0$ entier. Notons $D = np$, alors 
+            \begin{align*}
+                \mathcal{L}(D) = \{0\} \cup \{f \in k(C)^\times \mid div(f) + np \geq 0\}
+            \end{align*}
+            Ainsi $f \in \mathcal{L}(D) \iff \forall g \neq p,\, v_p(f) \geq 0$ et $v_p(f) + n \geq 0$. Essayons de caractériser cela : $p \in \mathbb{A}^1 \subseteq \mathbb{P}^1$ où on identifie $\mathbb{A}^1$ avec l'ouvert $\{[x,1] \mid x \in \mathbb{A}^1\}$, et $k(\mathbb{P}^1) \simeq \mathbb{A}^1 = k(t)$. Ainsi $\mathcal{O}_p = k[\mathbb{A}^1]_0$ correspond donc aux fractions rationnelles dont le dénominateur ne s'annule pas en $0$. Remarquons alors que si $f = P/Q$, $P,Q \in k[t]$. Alors écrivons $P = t^nP'$, $Q = t^m Q'$, avec $P'(0) \neq 0$, $Q'(0) \neq 0$. Alors $f = t^{n - m}(P'/Q')$, et $v_p(f) = n - m$. On voudrait alors montrer que 
+            \begin{align*}
+                \mathcal{L}(np) = \left\{ \frac{P(t)}{t^n} \mid P \in k[t],\, \deg P \leq n \right\}
+            \end{align*}
+            Il faut d'abord montrer que $1/t^i \in \mathcal{L}(np)$ si $0 \leq i \leq n$ pour prouver $\supseteq$. Mais si $p = 0$, alors $v_p(1/t^i) = -i$, et donc $v_p(1/t^i) + n \geq 0$. Et si $g \neq 0$, alors $v_g(1/t^i) = 0$ (\cor{Exercice}). Maintenant si $g = \infty = [1,0]$, on doit changer de carte pour calculer $\mathcal{O}_g$ : on prend $y \in \mathbb{A}^1 \mapsto [1,y] \in \mathbb{P}^1$. Et par ce changement de carte $k(t) \simeq k(s)$ via $t \mapsto 1/s$, et alors $1/t^i \mapsto s^i$ qui est de $g$-valuation positive, et ainsi $\infty$ n'est pas un pôle de $1/t^i$. \cor{Le sens réciproque est laissé en exercice}
+        \end{expl}
+        \begin{prop}
+            \begin{enumerate}
+                \item $\mathcal{L}(D) \neq 0$ si et seulement si $\exists E \geq 0$ diviseur effectif tel que $D \sim E$.
+                \item $\mathcal{L}(D) \subseteq k(C)$ est un $k$-sev.
+                \item Si $D \geq D'$, alors $\mathcal{L}(D) \subseteq \mathcal{L}(D')$ et $\dim_k \mathcal{L}(D')/\mathcal{L}(D) \leq \deg D' - \deg D$.
+                \item Si $D' \sim D$, alors $\mathcal{L}(D) \simeq \mathcal{L}(D')$ dans $\mathbf{Vect}_k$.
+                \item Si $D \geq 0$, alors $\dim_k \mathcal{L}(D) \leq \deg(D) + 1$ (et en particulier $\mathcal{L}(D)$ est un $k$-ev de dimension finie)
+            \end{enumerate}
+        \end{prop}
+        \begin{proof}
+            \begin{enumerate}
+                \item $\mathcal{L}(D) \neq 0 \iff f \in k(C)^\times$ tel que $div(f) + D \geq 0$. Ainsi posons $E := div(f) + D \geq 0$, alors $E \sim D$ car $E - D = div(f)$. Pour le sens réciproque, si $E \geq 0$ et $E \sim D$, alors $\exists f \in k(C)^\times$ tel que $E - D = div(f)$, donc $0 \leq E = D + div(f)$ et ainsi $f \in \mathcal{L}(D) \bs \{0\}$.
+                \item Si $f,g \in \mathcal{L}(D)$, alors $f + g \in \mathcal{L}(D)$ : notons $D = \sum_{p \in C} n_pp$, $p_i \in C$, $n_i \in \mathbb{Z}$. Alors $f \in \mathcal{L}(D) \iff v_p(f) + n_p \geq 0$ pour tout $p \in C$. Soit $f,g \in \mathcal{L}(D)$, il faut montrer que $v_p(f + g) + n_p \geq 0$ pour tout $p \in C$. Mais on sait que $v_p(f + g) \geq \min \{v_p(f), v_p(g)\} \geq -n_p$ comme $f,g \in \mathcal{L}(D)$, et ainsi $f + g \in \mathcal{L}(D)$. Il faut ensuite montrer que si $f \in \mathcal{L}(D)$, $\lambda \in k$, alors $\lambda f \in \mathcal{L}(D)$ : si $\lambda = 0$, ok. Sinon, $v_p(\lambda f) = v_p(f) \geq n_p$ si $f \in \mathcal{L}(D)$.
+                \item Comme $D \geq D'$, alors $D' = D + E$ où $E \geq 0$. Maintenant si $f \in \mathcal{L}(D)$, alors $D' + div(f) = E + D + div(f)$ et $E, D + div(f) \geq 0$ donc $f \in \mathcal{L}(D')$. Pour le deuxième point, notons $D' = D + \sum_{i = 1} ^l n_iy_i$, $n_i \geq 0$. D'après le point précédent, on a $\mathcal{L}(D) \subseteq \mathcal{L}(D + y_1) \subseteq \mathcal{L}(D + 2y_1) \subseteq \cdots \subseteq \mathcal{L}(D)(D + n_1y_1) \subseteq \mathcal{L}(D)(D + n_1y_1 + y_2) + \cdots$. Comme $\deg D' - \deg D = \sum n_i$, il suffit de montrer que $\dim_k \mathcal{L}(D + y)/\mathcal{L}(D) \leq 1$ pour $y \in C$. Pour cela, considérons
+                \begin{align*}
+                    \begin{array}{cccc}
+                        \varphi : & \mathcal{L}(D + y) & \to & k \\
+                        & f & \mapsto & (t^{n_y + 1}f)(y)\\
+                    \end{array}
+                \end{align*}
+                où $D = n_yy + \sum_{p \neq y} n_pp$, $m_y = (t) \subseteq \mathcal{O}_y$. $\varphi$ est bien défini : si $f \in \mathcal{L}(D + y)$ est non nul, $v_y(f) + n_y + 1 \geq 0$ et donc $v_y(t^{n_y + 1}) \geq 0$ et ainsi $t^{n_y + 1}f \in k(C)^\times$ est bien défini en $y$. Maintenant $f \in \ker \varphi \iff v_y(t^{n_y + 1}f) > 0 \iff n_y + v_y(f) \geq 0$. Il faut donc vérifier que si $f \in \ker \varphi$, alors $f \in \mathcal{L}(D)$. En $y$, $v_y(f) + n_y \geq 0$, et sinon si $x \neq y$, $f \in \mathcal{L}(D + y) \Rightarrow v_x(f) + n_x \geq 0$ et ainsi au final $div(f) + D \geq 0$.
+                \item $D \sim D' \iff D' = D + div(f)$, où $f \in k(C)^\times$. Soit 
+                \begin{align*}
+                    \begin{array}{cccc}
+                        \varphi : & \mathcal{L}(D) & \to & \mathcal{L}(D') \\
+                        & g & \mapsto & \frac 1fg \\
+                    \end{array}
+                \end{align*}
+                alors $\varphi$ est bien défini : soit $g \in \mathcal{L}(D)$, alors $D + div(g) \geq 0$. Mais 
+                \begin{align*}
+                    div(g/f) + D' = div(g) - div(f) + D' = div(g) + D \geq 0
+                \end{align*}
+                puis $\varphi$ est $k$-linéaire. Par le même argument, l'application 
+                \begin{align*}
+                    \begin{array}{cccc}
+                        \psi : & \mathcal{L}(D') & \to & \mathcal{L}(D) \\
+                        & g & \mapsto & fg \\
+                    \end{array}
+                \end{align*}
+                est bien définie et $k$-linéaire, et est l'inverse de $\varphi$.
+                \item C'est un cas particulier du point (3) : on a que $\dim_k \mathcal{L}(D)/\mathcal{L}(0) \leq \deg D$, puis $\mathcal{L}(0) \simeq k$ donc $\dim \mathcal{L}(D) - 1 \leq \deg D$.
+            \end{enumerate}
+        \end{proof}
+        Ainsi on peut énoncer un corollaire du théorème \ref{*} :
+        \begin{coro}
+            \begin{enumerate}
+                \item Si $D \sim D'$, alors $\deg D = \deg D'$.
+                \item Si $\mathcal{L}(D) \neq 0$, alors $\deg D \geq 0$ (donc si $\deg D < 0$, alors $\mathcal{L}(D) = 0$)
+                \item Si $\deg D \geq -1$, alors $\dim \mathcal{L}(D) \leq \deg D + 1$.
+            \end{enumerate}
+        \end{coro}
+        \begin{proof}
+            \begin{enumerate}
+                \item Ok
+                \item $\mathcal{L}(D) \neq 0 \iff \exists E \geq 0$ tel que $E \sim D$. Mais alors $\deg E = \deg D \geq 0$ car $E \geq 0$.
+                \item Si $\mathcal{L}(D) = 0$, alors $0 \leq \deg D + 1$ si $\deg D \geq -1$. Ainsi on peut supposer que $\mathcal{L}(D) \neq 0$. Alors $\exists E \geq 0$ tel que $E \sim D$, donc $\deg E = \deg D$, et $\dim \mathcal{L}(D) = \dim \mathcal{L}(E)$. On a donc que $\sim \mathcal{L}(E) \leq \deg E + 1$ par le point (5) du lemme précédent, et ainsi $\dim \mathcal{L}(D) \leq \deg D + 1$.
+            \end{enumerate}
+        \end{proof}
+        \begin{nota}
+            $\dim D := \dim_k \mathcal{L}(D)$
+        \end{nota}
+        \begin{theo} (Riemann-Roch)
+            \label{RR}
+            $C$ courbe projective lisse, $k = \bar k$. Alors il existe un entier $g \geq 0$ (le genre de $C$) tel que 
+            \begin{enumerate}
+                \item Pour tout diviseur $D$ ur $C$, on a $\dim(D) \geq \deg(D) + 1 - g$
+                \item Si $\deg D \geq 2g - 1$, alors $\dim(D) = \deg(D) + 1 - g$
+            \end{enumerate}
+        \end{theo}
+        \begin{theo} (dualité de Serre)
+            $\exists$ diviseur $K_c$ (diviseur canonique) tel que $\deg(K_c) = 2g - 2$, et $\dim(D) - \dim(K_c - D) = \deg D + 1 - g$.
+        \end{theo}
+        \begin{theo}
+            $C$ courbe projective lisse sur $k = \bar k$. On a $g = 0 \iff C \simeq \mathbb{P}^1$
+        \end{theo}
+        \begin{proof}
+            \item $\Leftarrow$ : Montrer que $\dim(D) \geq \deg(D) + 1$ pour tout diviseur $D$, et $\sim(D) = \deg D + 1$ si $\deg D \geq -1$. On sait déja que si $\deg D \geq -1$, alors $\dim(D) \leq \deg(D) + 1$ (vrai pour tout $C$!). Il suffit donc de montrer $\dim D = \deg D + 1$ si $\deg D \geq -1$. Si $\deg D = -1$, alors $\mathcal{L}(D) = 0$ et donc $0 = -1 + 1$ ok. Ainsi on peut supposer que $\deg(D) = n \geq 0$. On a vu (exercice) que sur $\mathbb{P}^1$, si $\deg D = \deg D'$, alors $D \sim D'$. Ainsi si $\deg D = n$, alors $D \sim np$ avec $p \in \mathbb{P}^1$. Et ainsi $\dim(D) = \dim(np)$ mais on a aussi vu en exercice que $\mathcal{L}(np) = k + k1/t + \cdots + k1/t^n$ dont une base est les $1/t^i$, donc de dimension $n + 1$. On a donc $\dim D = \dim np = n + 1 = \deg D + 1$.
+            \item $\Rightarrow$ : Supposons que le genre $g$ de $C$ est $0$. Donc pour tout diviseur $D$ sur $C$ on a que $\dim D \geq \deg D + 1$ et $\dim D = \deg D + 1$ si $\deg D \geq -1$. Soit $D = p$, $p \in C$. Alors $\deg D = 1$, et $\dim(D) = \deg(D) + 1 = 2$. Et donc $\mathcal{L}(0) \nsubseteq \mathcal{L}(D)$ et donc il exists $f \in \mathcal{L}(D)$ non constante, et donc $\div_{\infty}(f) \neq 0$, mais comme $f \in \mathcal{L}(D)$, $div(f) + p \geq 0$, $\div_\infty = p$. Mais d'après le théorème \ref{**}, $\deg(div_\infty(f)) = \deg(div_0(f)) = [k(C): k(f)] = 1$ et donc $k(C) = k(f)$, mais $k(f) \simeq k(\mathbb{P}^1)$ et ainsi $C \simeq \mathbb{P}^1$ (du fait que si $C,C'$ sont des courbes lisses, alors $k(C) \simeq k(C') \iff C \simeq C'$)
+        \end{proof}
+        \begin{defi}
+            $C$ courbe elliptique est une courbe projective lisse de genre $g = 1$.
+        \end{defi}
+        \begin{theo}
+            $C$ courbe elliptique, $o \in C$ point. Soit 
+            \begin{align*}
+                \begin{array}{cccc}
+                    \varphi : & C & \to & Pic^0(C) \\
+                    & p & \mapsto & [p - o]\\
+                \end{array}
+            \end{align*}
+            Alors $\varphi$ est bijectif.
+        \end{theo}
+        \begin{proof}
+            \item Injective : supposons que $\varphi(p) = \varphi(g)$, $p,g \in C$ et $p \neq g$. Alors $[p - o] = [g - o]$, et ainsi $p - o \im g - o$ et donc $p \sim g$, i.e. $p - g = div(f)$, opur un $f \in k(C)^\times$. Maintenant $div_0(f) = p$, $div_\infty(f) = g$ est de degré $1$ donc $k(f) = k(C)$ (d'après \ref{**}). Ainsi $k(\mathbb{P}^1) \simeq k(C)$ et donc $\mathbb{P}^1 \simeq C$, absurde puisque $\mathbb{P}^1$ est de genre $0$.
+            \item Surjective : Soit $D \in Div^0(C)$, soit $D' = D + o$. Alors $D'$ est un diviseur de degré $1$ : d'après le \hyperref[RR]{le théorème de Riemann-Roch}, $\dim (D') = \deg(D') + 1 - 1  = 1$. Alors $\mathcal{L}(D') \neq 0$, et ainsi il exists $E \geq 0$ tel que $D' \sim E$. Mais $\deg E = \deg D' = 1$ donc $E = p$, $p \in C$. Et alors $D' \sim E = p$ d'où $D + o \sim p$ et donc $[D] = [p - o]$.
+        \end{proof}
