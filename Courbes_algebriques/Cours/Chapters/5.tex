@@ -3,81 +3,333 @@
         Soit $k \in \mathbf{Fld}$, $V$ un $k$ espace vectoriel tel que $1 \leq \dim V < \infty$.
         \begin{defi}
             L'espace projectif de $V$ est donné par
-            \begin{align}
+            \begin{align*}
                 \mathbb{P}(V) := \{L \subseteq V \mid \dim L = 1\}
-            \end{align}
+            \end{align*}
         \end{defi}
         Il est possible de représenter $\mathbb{P}(k^{n+1}) := \mathbb{P}^n_k$ de manière un peu plus explicite : considérons la relation d'équivalence sur $k^{n+1} \bs \{0\}$ suivante : 
         \begin{align*}
             x \sim y \iff \exists \lambda \in k \bs \{0\} \mid x = \lambda y
         \end{align*}
-        Alors $\mathbb{P}^n_k \simeq k^{n+1}/\sim$, via l'application
+        Alors $\mathbb{P}^n_k \simeq k^{n+1} \bs \{0\} /\sim$, via l'application
         \begin{align*}
             \begin{array}{cccc}
                 & k^{n+1}/\sim & \to & \mathbb{P}^n_k \\
                 & [x_0, \cdots, x_n] & \mapsto & \mathrm{vect}((x_0, \cdots, x_n))\\
             \end{array}
         \end{align*}
-        $\mathbb{A}^N \subseteq \mathbb{P}^n$ via 
-        \begin{align*}
-            \begin{array}{cccc}
-                & \mathbb{A}^N & \injectivearrow & \mathbb{P}^n \\
-                & x & \mapsto & [1, x] \\
-            \end{array}
-        \end{align*}
-        $V \subseteq \mathbb{A}^n$ variété affine, alors $\overline{V} \subseteq \mathbb{P}^n$ adhérence de $V$ dans $\mathbb{P}^n$ variété projective. Variété (quasiprojective): un ouvert d'une variété projective ou affine. $V$ variété, $k(V) = \{(U,f) \mid U \subrel{ouv} V,\, f : U \to k$ fonction régulière$\}/\sim$ où
-        \begin{align*}
-            (U,f) \sim (U', f') \iff f = f' \text{ sur } W \subseteq U \cap U'
-        \end{align*}
+        \begin{expl}
+            \begin{enumerate}
+                \item Si $n = 1$, alors on $\mathbb{P}^1_k = \{[x_0, x_1] \mid x_0 \neq 0 \text{ ou } x_1 \neq 0\}$. Remarquons alors que l'on dispose d'une application
+                \begin{align*}
+                    \begin{array}{cccc}
+                        & \mathbb{A}^1 & \to & \mathbb{P}^1 \\
+                        & x & \mapsto & [1,0] \\
+                    \end{array}
+                \end{align*}
+                qui est injective et d'image $\mathbb{P}^1 \bs \{[0,1]\}$. On appelle souvent $[1,0]$ le point à l'infini de $\mathbb{P}^1$, noté $[1,0] = \infty$, du fait que $\mathbb{P}^1 = \mathbb{A}^1 \cup \{\infty\}$ si on identifie $\mathbb{A}^1$ et l'image de l'application précédemment définie. On a en quelque sorte rajouté un point à $\mathbb{A}^1$ pour construire $\mathbb{P}^1$.
+                \item Si $n = 2$, $\mathbb{P}^n_k = \{[x,y,z] \mid x \neq 0 \lor y \neq 0 \lor z \neq 0\}$. Comme précédemment, on dipose d'une application injective
+                \begin{align*}
+                    \begin{array}{cccc}
+                        & \mathbb{A}^2 & \to & \mathbb{P}^2 \\
+                        & (x,y) & \mapsto & [x, y, 1] \\
+                    \end{array}	
+                \end{align*}
+                et si on identifie l'image de cette application avec $\mathbb{A}^2$, alors
+                \begin{align*}
+                    \mathbb{P}^2 = \mathbb{A}^2 \cup \{[x, y, 0] \mid x \neq 0 \lor y \neq 0\} = \mathbb{A}^2 \cup \mathcal{D}
+                \end{align*}
+                où $\mathcal{D}$ est appelée droite à l'infini.
+                \item Plus généralement, on dipose pour tout $i \in \lcc 0, n \rcc$ d'une application injective
+                \begin{align*}
+                    \begin{array}{cccc}
+                        u_i : & \mathbb{A}^n & \to & \mathbb{P}^n \\
+                        & (x_1, \cdots, x_n) & \mapsto & [x_1, \cdots, x_{i-1}, 1, x_i, \cdots, c_n]\\
+                    \end{array}
+                \end{align*}
+                et alors $\mathbb{P}^n \bs u_i(\mathbb{A}^n) = \{[x_1, \cdots, x_i, 0, x_{i+1}, \cdots, x_n]\}$. Si $i = 0$, on appelle cet ensemble hyperplan à l'infini.
+            \end{enumerate}
+        \end{expl}
+        \begin{defi}
+            Soit $[a] \in \mathbb{P}^n$, $a \in k^{n+1}$ et $F \in k[X_0, \cdots, X_n]$. Alors si pour tout $\lambda \in k^\times$, $F(\lambda a) = F(a)$, on dit que $F$ est bien défini en $[a]$ et on pose$F([a]) := F(a)$.
+        \end{defi}
         \begin{remq}
-            Si $U \subseteq V$ ouvert, $k(V) \simeq k(U)$. En particulier, si $V \subseteq  \mathbb{A}^n$ variété affine, alors
+            Pour tout $F \in k[X_0, \cdots, X_n]$, on peut décomposer $F$ comme $F = \sum F^i$ où les $F^i$ sont homogènes de degré $i$. Alors dans ce cas soit $[a] \in \mathbb{P}^n$, on a $F(\lambda a) = 0$ pour tout $\lambda \in k^\times$ si et seulement si $F^i(a) = 0$ pour tout $i$. \cor{Vrai que si le corps est infini ? Si le corps est infini, ça parraît vrai au vu de la gueule qu'un déterminant de vandermonde a}
+        \end{remq}
+        \begin{defi} (Ensemble algébrique projectif)
+            Soit $S \subseteq k[X_0, \cdots, X_n]$. On définit
             \begin{align*}
-                k(\overline{V}) \simeq k(V) \simeq \Frac k[V]
+                V(S) &:= \{[a] \in \mathbb{P}^n \mid \forall F \in S \text{ bien défini en } [a],\, F([a]) = 0\} \\
+                &= \{[a] \in \mathbb{P}^n \mid \forall F = \sum F^i \in S,\, F^i(a) = 0 \, \forall i\} \\
             \end{align*}
+        \end{defi}
+        \begin{remq}
+            Si $\tilde S = \{F^i \mid F \in S,\, F = \sum F^i\}$, alors $V(S) = V(\tilde S)$. Remarquons que $\tilde S$ ne contient que des polynômes homogènes, ainsi on peut toujours considérer des ensembles de polynômes homogènes pour définir un $V(S)$.
         \end{remq}
         \begin{expl}
-            $\mathbb{P}^1 = U_0 \cup U_1$, si $[1,t] = [s,1] \in U_0 \cap U_1$, alors $s = 1/t$. Alors $k(\mathbb{P}^1) \simeq k(t) \simeq k(s)$.
+            Soit $F \in k[X_0, \cdots, X_n]$ un polynôme homogène de degré $d > 0$. Alors dans ce cas $F$ est bien défini en tout $[a] \in \mathbb{P}^n$, et alors
+            \begin{align*}
+                V(F) = \{[a] \in \mathbb{P}^n \mid F(a) = 0\}
+            \end{align*}
+            On appelle un tel ensemble algébrique projectif une hypersurface de degré $d$. En particulier, si $d = 1$, en notant $F = \sum c_iX_i$, on obtiens que $V(F) = \{[a] \in \mathbb{P}^n \mid \sum c_ia_i = 0\}$. On appelle un tel ensemble un hyperplan. Si $n = 2$, ça correspond à de "droites".
         \end{expl}
-        \begin{defi} ($k = \bar k$)
-            $V$ variété, $\dim V = \mathrm{trdeg}_kk(V)$
-        \end{defi}
-        \begin{expl}
-            $k(\mathbb{P}^n) = k(\mathbb{A}^n)$, donc $\dim \mathbb{P}^n = \dim \mathbb{A}^n = n$.
-        \end{expl}
+        \begin{exo}
+            Pour tous $L_1, L_2 \subseteq \mathbb{P}^2$ droites telles que $L_1 \neq L_2$, alors $L_1 \cap L_2$ est un point.
+        \end{exo}
         \begin{remq}
-            $V$ variété, $U \subrel{ouv} V$, alors $\dim V = \dim U$.
+            Soit $f \in k[X_1, \cdots, X_n]$ que l'on décompose en homogènes $f = f_0 + \cdots + f_d$.  Alors $F = X_0^df^0 + \cdots + X_0f^{d-1} + f^d \in k[X_0, \cdots, X_n]$ (dit homogénéisation de $f$ en $X_0$) est un polynôme homogène de degré $d$, et alors $F(1,X_1, \cdots, X_n) = f(X_1, \cdots, X_n)$.
         \end{remq}
+        \begin{nota}
+            \begin{enumerate}
+                \item $\mathcal{U}_i = \{[x_0, \cdots, x_n] \mid x_i \neq 0\} \subseteq \mathbb{P}^n$. Ainsi on a $\mathbb{P}^n = \bigcup_{i = 0}^n \mathcal{U}_i$.
+                \item L'image du morphisme $u_i : \mathbb{A}^n \to \mathbb{P}^n$ définit précédemment est exactement $\mathcal{U}_i$. En effet, si $[x_0, \cdots, x_n] \in \mathcal{U}_i$, alors $x_i \neq 0$, et ainsi
+                \begin{align*}
+                    [x_0, \cdots, x_n] = [x_0/x_i, \cdots, x_{i-1}/x_i, 1, x_{i+1}/x_i, \cdots, x_n/x_i]
+                \end{align*}
+                qui est bien dans l'image de $u_i$.
+            \end{enumerate}
+        \end{nota}
+        Observons que si $F \in k[X_0, \cdots, X_n]$ est homogène de degré $d$, alors $u_0$ induit une bijection entre $V(f)$ et $V(F) \cap \mathcal{U}_0$, où $f(X_1, \cdots, X_n) = F(1, X_1, \cdots, X_n) \in k[X_1, \cdots, X_n]$. En effet, 
+        \begin{align*}
+            V(F) \cap \mathcal{U}_0 &= \{[a] \in \mathbb{P}^n \mid F(a) = 0 \land a_0 \neq 0\} \\
+            &= \{[1, b_1, \cdots, b_n] \in \mathbb{P}^n \mid F(1,b_1, \cdots, b_n) = 0\} \\
+            &= \{[1, b_1, \cdots, b_n] \in \mathbb{P}^n \mid f(b_1, \cdots, b_n) = 0\} \\
+            &= u_0(V(f)) \\
+        \end{align*}
+        Plus généralement, si $S \subseteq k[X_1, \cdots, X_n]$ , notons $\tilde S = \{X_0^df^0 + \cdots + f^d \in k[X_0, \cdots, X_n] \mid f \in S\}$. Alors on a $V(\tilde S) \cap \mathcal{U}_0 = u_0(V(S))$.
+
+    \section{Topologie de Zariski sur $\mathbb{P}^n$ et ses sous-ensembles algébriques projectifs}
         \begin{defi}
-            $V$ variété, $x \in V$. Alors
-            \begin{align*}
-                \mathcal{O}_x = \{(U, f) \in k(V) \mid U \subrel{ouv} V,\, x \in U,\, f : U \to k \text{ régulière}\} \subseteq k(V)
-            \end{align*}
-            est l'anneau des fonction rationnelles régulières en $x$.
+            Les fermés de la topologie de Zariski sur $\mathbb{P}^n$ sont les $V(S)$, $S \subseteq k[X_0, \cdots, X_n]$. Soit $T \subseteq k[X_0, \cdots, X_n]$, les fermés de la topologie de Zariski sur $V(T)$ sont les $V(S) \cap V(T)$, pour $S \subseteq k[X_0, \cdots, X_n]$ (topologie induite).
         \end{defi}
-        \begin{defi}
-            $V,W$ variétés. Une application rationnelle est la classe d'équivalence d'un morphhsime $\varphi : U_V \to W$ avec $U_V \subrel{ouv} V$ non vide, avec relation 
-            \begin{align*}
-                (\varphi : U_V \to W) \sim (\varphi' : U_V' \to W) \iff \varphi = \varphi' \text{ sur } \emptyset \neq D \subrel{ouv} U_V \cap U_V'
-            \end{align*}
+        \begin{remq}
+            Une manière équivalente de définir la topologie de Zariski sur $V(T)$, pour $T \subseteq k[X_0, \cdots, X_n]$ est de prendre les $V(E)$, $E \subseteq k[X_0, \cdots, X_n]$ tels que $V(E) \subseteq V(T)$.
+        \end{remq}
+        \begin{prop}
+            Soit $T \subseteq k[X_0, \cdots, X_n]$ un ensemble de polynômes homogènes. Alors $V(T) = V((T))$
+        \end{prop}
+        \begin{defi} (Idéal homogène)
+            Soit $I \subseteq k[X_0, \cdots, X_n]$. $I$ est un idéal homogène si pour tout $F \in I$ décomposé de manière unique en homogènes comme $F = \sum F^i$, alors $F^i \in I$.
         \end{defi}
         \begin{expl}
-            $V \to k = \mathbb{A}^1$ morphisme ssi fonction régulière. $V \to k$ application rationnelle ssi fonction rationnelle.
+            \begin{enumerate}
+                \item L'idéal $(Y^2 - X^3) \subseteq k[X,Y]$ n'est pas homogène. En effet, $X^3 \notin I$.
+                \item L'idéal $(Y^2 + X^2, Y^3 - XZ^2)$ est homogène, d'après le point suivant :
+                \item Si $T \subseteq k[X_0, \cdots, X_n]$ est un ensemble de polynômes homogènes, alors $(T)$ est un idéal homogène. \ajout{En effet, soit $P \in (T)$, alors on peut écrire $P = \sum Q_iT_i$ où $Q_i \in k[X_0, \cdots, X_n]$ et $T_i \in T$. Mais si on décompose les $Q_i = \sum a_\alpha X^\alpha$, et alors $P = \sum \sum a_\alpha^i T_iX^\alpha$. Les $P^k$ sont donc des sommes de $a_\alpha^i T_iX^\alpha$ où $|\alpha| + \deg T_i = k$, et sont donc des éléments de $(T)$.}
+            \end{enumerate}
         \end{expl}
+        \begin{prop}
+            \begin{enumerate}
+                \item $V(\emptyset) = \mathbb{P}^n$,
+                \item $V(1) = 0$,
+                \item $V(I) \cup V(J) = V(IJ)$, $\forall I,J \subseteq k[X_0, \cdots, X_n]$ idéaux homogènes,
+                \item \begin{align*}
+                    \bigcap_{i \in I} V(I_j) = V\left( \bigcup_{i \in I} I_i \right)
+                \end{align*}
+            \end{enumerate}
+        \end{prop}
+        \begin{defi} (Variété projective)
+            On appelle variété projective un ensemble algébrique projectif.
+        \end{defi}
         \begin{defi}
-            $V$ variété, $x \in V$. On note 
+            Soit $E \subseteq \mathbb{P}^n$. On définit 
             \begin{align*}
-                \mathfrak{m}_x = \{(U,f) \in \mathcal{O}_x \mid f(x) = 0\}
+                I(E) := (\{F \in k[X_0, \cdots, X_n] \text{ homogène } \mid F(a) = 0,\, \forall a \in E\})
             \end{align*}
         \end{defi}
         \begin{exo}
-            $\mathfrak{m}_x$ est un idéal maximal, seul idéal maximal de $\mathcal{O}_x$ qui est par conséquent un anneau local. Si $V$ est une variété affine, $\mathcal{O}_x \simeq k[V]_x$. Finalement, $\mathcal{O}_x$ dépends seulement sur un voisinage de $x$ (i.e. si $V,W$ variétés tq $x \in U_V \subrel{ouv} V$, $y \in U_W \subrel{ouv} W$ avec $U_V \simeq U_W$, alors $\mathcal{O}_{V,x} \simeq \mathcal{O}_{W,y}$).
+            $I(E)$ est un idéal homogène radical. $I(\emptyset) = k[X_0, \cdots, X_n]$, et si $E \neq \emptyset$, alors $I(E) \subseteq (X_0, \cdots, X_n)$.
+        \end{exo}
+        \begin{prop}
+            Soit $V \subseteq \mathbb{P}^n$ un ensemble algébrique projectif, alors $V(I(V)) = V$.
+        \end{prop}
+        \begin{proof}
+            \cor{Exercice}
+        \end{proof}
+        \begin{prop}
+            Soit $V \subseteq \mathbb{P}^n$ un ensemble algébrique projectif, $V$ est irréductible si et seulement si $I(V)$ est un idéal premier.
+        \end{prop}
+        \begin{proof}
+            \item 1 $\Rightarrow$ 2 : Soient $f,g \in k[X_0, \cdots, X_n]$ tq $fg \in I(V)$. Mais $V(fg) = V(f) \cup V(g)$, puis soit $V_1 = V \cap V(f)$, $V_2 = V \cap V(g)$, alors $V_1 \cup V_2 = V \cap V(fg) = V$. Ainsi $V_1 = V$ ou $V_2 = V$, donc $f \in I(V)$ ou $g \in I(V)$.
+            \item 2 $\Rightarrow$ 1 : Soit $V \subseteq \mathbb{P}_k^n$ ensemble algébrique projectif tq $I(V)$ est un idéal premier. Supposons que $V$ est réductible, alors $V = V_1 \cup V_2$ avec $V \neq V_1, V \neq V_2$. Comme $V_1,V_2$ sont algébriques projectifd, alors $V(I(V)) = V$, $V(I(V_i)) = V_i$, et ainsi $V(I(V)) \neq V(I(V_1))$ et $I(V) \subseteq I(V_1)$. Donc il existe $f_1 \in I(V_1)$ tq $f_1 \notin I(V)$. De même, il existe $f_2 \in I(V_2)$ tq $f_2 \notin I(V)$. Mais $f_1f_2 \in I(V_1) \cap I(V_2) = I(V)$ et ainsi $I(V)$ n'est pas premier.
+        \end{proof}
+        \begin{theo} (Nullstellensatz projectif)
+            Soit $I \subseteq k[X_0, \cdots, X_n]$ un idéal homogène, supposons que $k = \bar k$. Alors
+            \begin{itemize}
+                \item Si $V(I) \neq \emptyset$, alors $I(V(I)) = \sqrt{I}$,
+                \item Sinon, \begin{align*}
+                    V(I) = \emptyset &\iff (X_0, \cdots, X_n) \subseteq (X_0, \cdots, X_n)\\
+                    &\iff \sqrt{I} = (X_0, \cdots, X_n) \lor \sqrt{I} = k[X_0, \cdots, X_n]
+                \end{align*}
+            \end{itemize}
+        \end{theo}
+        \begin{exo}
+            Montrer que $I(\mathbb{P}^n) = 0$.
+        \end{exo}
+        \begin{coro}
+            Supposons que $k$ est algébriquement clos. Alors $I$ et $V$ induisent une correspondance bijective entre le ensemble projectifs de $\mathbb{P}^n$ non vides et les idéaux homogènes radicaux $I \nsubseteq k[X_0, \cdots, X_n]$ et $I \neq (X_0, \cdots, X_n)$.
+        \end{coro}
+
+    \section{Lien entre géométrie affine et géométrie projective}
+        \begin{lemm}
+            La bijection $u_i : \mathbb{A}^n \to \mathcal{U}_i \subseteq \mathbb{P}^n$ est un homéomorphisme pour la topologie de Zariski sur $\mathbb{A}^n$ et la topologie de Zariski induite par $\mathbb{P}^n$ induite sur $\mathcal{U}_i$.
+        \end{lemm}
+        \begin{proof}
+            Sans perte de généralité, supposons que $i = 0$. On a déjà montré que si $S \subseteq k[X_1, \cdots, X_n]$, alors $u_0(V(S)) = V(\tilde S) \cap \mathcal{U}_0$, où $\tilde S$ est l'ensemble des homogénéisés des éléments de $S$, puis pour tout $T \subseteq k[X_0, \cdots, X_n]$, il existe $S \subseteq k[X_1, \cdots, X_n]$ tel que $V(T) = V(\tilde S)$, donc cette égalité prouve la continuité de l'application et de sa réciproque.
+        \end{proof}
+        \begin{prop}
+            Soit $V \subseteq \mathbb{A}^n$ un ensemble algébrique affine, supposons que $k$ est algébriquement clos. Alors $f : V \to k$ est régulière si et seuelment si pour tout $a \in V$, $\exists \Omega_a \subrel{op} V$ tel que $a \in \Omega_a$ et $\exists g,h \in k[V]$, $g \neq 0$ sur $\Omega_a$, tels que $f = h/g$ sur $\Omega_a$ (nous appelons cette dernière condition la condition (*)).
+        \end{prop}
+        \begin{proof}
+            \item $\Rightarrow$ : Par définition, il exists $P \in k[X_1, \cdots, X_n]$ tel que $f(a) = P(a)$ sur $V$, donc pour $a \in V$, on prend $\Omega_a = V$ et $h = [P]$, $g = 1$.
+            \item $\Leftarrow$ : Supposons dans un premier temps que $V$ est irréductible, et que $f : V \to k$ vérifie (*). Considérons l'idéal $\mathcal{J} := \{g \in k[V] \mid gf \in k[V]\}$ de $k[V]$. Il suffit de montrer que $1 \in J$ (en effet, si $1 \in J$, alors $f \in k[V]$). Supposons le contraire, alors $J \nsubseteq k[V]$ et donc d'après le théorème de Krull il existe un idéal maximal $M \subseteq k[V]$ contenant $J$. Et d'après le Nullstellensatz ($k = \bar k$), $\exists a = (a_1, \cdots, a_n) \in \mathbb{A}^n$ tel que
+            \begin{align*}
+                M = (x_1 - a_1, \cdots, x_n - a_n) = (X_1 - a_1, \cdots, X_n - a_n)/I(V)
+            \end{align*}
+            On a donc $I(V) \subseteq (X_1 - a_1, \cdots, X_n - a_n)$ et donc $a \in V(I(V)) = V$. Et comme $J \subseteq (x_1 - a_1, \cdots, x_n - a_n)$, pour tout $g \in J$, $g(a) = 0$. Maintenant utilisons la condition : il existe $\Omega_a \subseteq V$ un ouvert tel que $a \in \Omega_a$ et $\exists P,Q \in k[X_1, \cdots, X_n]$ avec $Q(a) \neq 0$ tels que $P(a) \neq 0$ et $f = [P]/[Q]$ sur $\Omega_a$. Alors $[Q]f = [P]$ sur $\Omega_a$, mais comme $V$ est irréductible, $\Omega_a$ est dense et ainsi $[Q]f = [P]$ sur $V$, donc $[Q] \in J$, absurde puisque $Q(a) \neq 0$.
+            \item Pour passer au cas réductible, remarquons que si $f : V \to k$ vérifie (*), alors $f$ est continue (\cor{Exercice}). Maintenant si $V$ est réductible, notons $V = V_1 \cup V_2$, où les $V_i$ sont des fermés de $V$. Par récurrence (sur le nombre de composantes irréductibles) et par le point précédent, on peut trouver $P,Q \in k[X_1, \cdots, X_n]$ tels que pour tout $a \in V_1$, $f(a) = P(a)$ et poiur tout $b \in V_2$, $f(a) = Q(a)$. Mais alors considérons $I_i = I(V_i)$, $i = 1,2$, on a
+            \begin{align*}
+                I(V_1 \cap V_2) = \sqrt{I(V_1) + I(V_2)} = \sqrt{I(V_1)} + \sqrt{I(V_2)} = I(V_1) + I(V_2)
+            \end{align*}
+            Maintenant $P = Q$ sur $V_1 \cap V_2$, donc $P - Q \in I_1 + I_2$, et ainsi il existe $R_1, R_2 \in I_1, I_2$ tels que $P - Q = R_1 + R_2$ dans $k[X_1, \cdots, X_n]$. Définissons alors $R := P - R_1 = Q + R_2$, on a $R = P$ sur $V_1$ et $R = Q$ sur $V_2$, donc finalement $f(a) = R(a)$ pour tout $a \in V$ et donc $f$ est une fonction régulière.
+        \end{proof}
+        \begin{defi}
+            Soit $V \subseteq \mathbb{P}^n$ un ensemble algébrique projectif, $\mathcal{U} \subrel{op} V$. Une application $f : \mathcal{U} \to k$ est régulière si pour tout $a \in \mathcal{U}$, $\exists \Omega_a \subrel{op} \mathcal{U}$ qui contient $a$, et $G,H \in k[X_0, \cdots, X_n]$ homogènes de degré $d$ tels que $f = H/G$ sur $\Omega_a$ et $G(a) \neq 0$.
+        \end{defi}
+        \begin{remq}
+            Si $f = G/H$ comme dans la définition précédente, alors $f$ est bien définie : en effet, si $[a] = [b]$, alors $\exists \lambda \in k^\times$ tel que $a = \lambda b$, puis
+            \begin{align*}
+                f([a]) &= \frac{G([a])}{H([a])} = \frac{G(a)}{H(a)} = \frac{G(\lambda b)}{H(\lambda b)} = \frac{\lambda^d G(b)}{\lambda^d H(b)} = \frac{G(b)}{H(b)} = f([b])
+            \end{align*}
+        \end{remq}
+        \begin{defi}
+            \begin{enumerate}
+                \item On appelle ensemble quasi projectif un ouvert d'une ensemble algébrique projectif affine.
+                \item Soit $V \subseteq \mathbb{A}^n$ un ensemble algébrique affine, puis $\mathcal{U} \subrel{op} V$. $f : \mathcal{U} \to k$ est régulière si pour tout $a \in U$, il existe $\Omega_a \subrel{op} \mathcal{U}$ tel que $a \in \Omega_a$, et $\exists g,h \in k[V]$ tels que $g(a) \neq 0$ et $f = g/h$ sur $\Omega_a$. 
+                \item Soient $\mathcal{U}_1, \mathcal{U}_2$ des ensembles quasi-projectifs. Une application $\varphi : \mathcal{U}_1 \to \mathcal{U}_2$ est régulière (on dit aussi que c'est un morphisme) si $\varphi$ est continue, et si pour tout $W \subseteq \mathcal{U}_2$ ouvert, pour tout fonction régulière $f : W \to k$, alors $f \circ \varphi : \varphi^{-1}(W) \to k$ est une fonction régulière. 
+            \end{enumerate}
+        \end{defi}
+        \begin{exo}
+            \begin{enumerate}
+                \item $u_0 : \mathbb{A}^n \to \mathcal{U}_0 \subset \mathbb{P}^n$ est un isomorphisme.
+                \item $\varphi : \mathcal{U}_1 \to \mathcal{U}_2$ est un morphisme si et seulement si $\exists \{W_\alpha\}$ recouvrement ouvert de $\mathcal{U}_2$ tel que $\varphi_{|\varphi^{-1}(W_\alpha)} : \varphi^{-1}(W_\alpha) \to W_\alpha$ est régulière.
+            \end{enumerate}
+        \end{exo}
+        \begin{prop}
+            Soient $\mathcal{U}_1, \mathcal{U}_2 \subseteq \mathbb{P}^n, \mathbb{P}^l$ des ensembles quasi-projectifs. Alors $\varphi : \mathcal{U}_1 \to \mathcal{U}_2$ est un morphisme si et seulement si pour tout $a \in \mathcal{U}_1$, $\exists \Omega_a \subrel{op} \mathcal{U}_1$ tel que $a \in \Omega_a$, et $\exists G_i, H_i \in k[X_0, \cdots, X_n]$ des polynômes homogènes tels que $G_i(a) \neq 0$ et $\deg G_i = \deg H_i$ pour tout $0 \leq i \leq l$, et
+            \begin{align*}
+                \varphi(x) = \left[ \frac{H_0}{G_0}, \cdots, \frac{H_l}{G_l} \right]
+            \end{align*}
+            pour tout $x \in \Omega_a$.
+        \end{prop}
+        \begin{proof}
+            \cor{Exercice}
+        \end{proof}
+        \begin{expl}
+            Considérons l'application 
+            \begin{align*}
+                \begin{array}{cccc}
+                    \varphi : & \mathbb{P}^1 & \to & \mathbb{P}^n \\
+                    & [u,v] & \mapsto & [u^n, u^{n-1}v, \cdots, uv^{n-1}, v^n]\\
+                \end{array}
+            \end{align*}
+            Alors $\varphi$ est bien définie et est un morphisme. 
+            \begin{enumerate}
+                \item Méthode 1 : Considérons le recouvrement ouvert canonique $\mathcal{U}_0 \cup \mathcal{U}_1 = \mathbb{P}^1$. Alors pour tout  $[u,v] \in \mathcal{U}_0$, $u \neq 0$ et ainsi
+                \begin{align*}
+                    \varphi([u,v]) = \left[ 1, \frac vu, \frac{v^2}{u^2}, \cdots, \frac{v^n}{u^n} \right]
+                \end{align*}
+                et si $[u,v] \in \mathcal{U}_1$, $v \neq 0$ et alors 
+                \begin{align*}
+                    \varphi([u,v]) = \left[ \frac{u^n}{v^n}, \cdots, \frac{u^2}{v^2}, \frac uv, 1  \right]
+                \end{align*}
+                ainsi d'après la proposition précédente, $\varphi$ est un morphisme.
+                \item Méthode 2 : \cor{???} 
+            \end{enumerate}
+        \end{expl}
+        \begin{defi}
+            Une variété est un ensemble algébrique quasi-projectif irréductible. Si $V$ est une variété, on définit le corps des fractions rationnelles de $V$ comme
+            \begin{align*}
+                k(V) = \{(U, f) \mid U \subrel{ouv} V,\, f : U \to k \text{ fonction régulière}\}/\sim
+            \end{align*}
+            Où $(U, f) \sim (U', f') \iff f = f'$ sur $U \cap U'$ (c'est une relation d'équivalence).
+        \end{defi}
+        \begin{remq}
+            $k(V)$ est muni d'une structure canonique de corps : les opérations sont
+            \begin{align*}
+                &(U,f) + (U',f') = (U \cap U', f + f') \\
+                &(U,f)(U',f') = (U \cap U', ff') \\
+                &(V,0) = 0 \\
+                &(V,1) = 1 \\
+                &(U,f)^{-1} = (U \cap D(f), 1/f) \text{ si } (U,f) \neq (V,0)
+            \end{align*}
+        \end{remq}
+        \begin{remq}
+            Si $V$ est une variété, et $W \subseteq V$ un ouvert non vide, alors 
+            \begin{align*}
+                \begin{array}{cccc}
+                    & k(V) & \to & k(W) \\
+                    & (U,f) & \mapsto & (U \cap W, f_{|U \cap W}) \\
+                \end{array}
+            \end{align*}
+            est un isomorphisme de corps (en partie car $W$ est irréductible, donc les ouverts non-vides sont denses)
+        \end{remq}
+        \begin{lemm}
+            Soit $V \subseteq \mathbb{A}^n$ une variété algébrique. Alors $k(V) \simeq \Frac k[V]$.
+        \end{lemm}
+        \begin{proof}
+            Notons $A = k[V]$, $K = \Frac (A)$. Considérons le morphisme d'anneaux
+            \begin{align*}
+                \begin{array}{cccc}
+                    \chi : & K & \to & k(V) \\
+                    & \frac fg & \mapsto & (D(g), \frac{f_{|D(g)}}{g_{|D(g)}}) \\
+                \end{array}
+            \end{align*}
+            Alors $\chi$ est surjective (et cela suffit à prouver que c'est un isomorphisme) : en effet, soit $(U,f) \in k(V)$, avec $U \subrel{op} V$ et $f : U \to k$ une fonction régulière. Alors par définition soit $a \in U$, il existe $a \in \Omega_a \subseteq U$ un ouvert et $g,h \in k[V]$ telles que $g \neq 0$ sur $\Omega_a$ et $f = h/g$. Mais alors $(U,f) = (\Omega_a, h/g) = (D(g), h/g) = \chi(h/g)$.
+        \end{proof}
+        \begin{defi}
+            Soient $V,W$ des variétés. Une application rationnelle entre $V$ et $W$ est la classe d'équivalence d'un morphisme $\varphi : U_V \to W$ avec $U_V \subrel{op} V$, pour la relation d'équivalence 
+            \begin{align*}
+                \varphi_1 : U_1 \to W \sim \varphi_2 : U_2 \to W \iff \varphi_1 = \varphi_2 \text{ sur un ouvert } \emptyset \neq D \subseteq U_1 \cap U_2
+            \end{align*}
+            On note $V \dashrightarrow W$.
+        \end{defi}
+        \begin{remq}
+            Un morphisme $V \to \mathbb{A}^1$ est une fonction régulière $V \to k$. Une application rationnelle $V \dashrightarrow \mathbb{A}^1$ est une fonction rationnelle $V \to k$.
+        \end{remq}
+        \begin{defi} (Dimension)
+            Soit $V$ une variété. Alors $\dim(V) := tr\deg_k k(V)$.
+        \end{defi}
+        \begin{expl}
+            $k(\mathbb{P}^n) = k(\mathbb{A}^n)$, $\dim \mathbb{P}^n = \dim \mathbb{A}^n$.
+        \end{expl}
+        \begin{remq}
+            Soit $V$ une variété et $U$ un ouvert de $V$. Alors $\dim U = \dim V$.
+        \end{remq}
+        \begin{defi}
+            Soit $V$ une variété, $x \in V$. On définit
+            \begin{align*}
+                \mathcal{O}_x = \{(U,f) \in k(V) \mid x \in U \subrel{op} V\}/\sim
+            \end{align*}
+            On appelle cet anneau l'anneau des fonctions régulières en $x$.
+        \end{defi}
+        \begin{defi}
+            Soit $V$ une variété, $x \in v$. On définit $\mathfrak{m}_x := \{(U,f) \in \mathcal{O}_x \mid f(x) = 0\}$
+        \end{defi}
+        \begin{exo}
+            \begin{enumerate}
+                \item $\mathfrak{m}_x$ est un idéal maximal,
+                \item $\mathcal{O}_x$ est un anneau local,
+                \item Si $V$ est une variété affine, alors $\mathcal{O}_x \simeq k[V]_x$,
+                \item $\mathcal{O}_x$ dépend seulement d'un voisinage de $x$ (i.e. si $V,W$ sont des variétés avec $x \in U_V \subrel{op} V$, $y \in U_W \subrel{op} W$, et $U_V \simeq U_W$ qui fait correspondre $x$ avec $y$, alors $\mathcal{O}_{V,x} \simeq \mathcal{O}_{U,y}$)
+            \end{enumerate}
         \end{exo}
         \begin{defi}
-            $V$ variété, $x \in V$. L'espace tangent de $V$ en $x$ est défini comme le $k$-ev
+            Soit $V$ une variété, $x \in V$. On définit l'espace tangent de $V$ en $x$ comme 
             \begin{align*}
                 T_xV = (\mathfrak{m}_x/\mathfrak{m}_x^2)^\vee
             \end{align*}
-            $x$ est régulier si $\dim T_xV = \dim V$, singulier sinon.
+            C'est un $k$-ev. On dit que $x$ est régulier si $\dim V = \dim T_xV$, que $x$ est singulier sinon.
         \end{defi}
 
     \section{Courbes projectives}

@@ -2,7 +2,7 @@
 #include<stdlib.h>
 
 
-// Fonctions auxiliaires
+//------ Fonctions auxiliaires
 // Exponentiation modulaire
 int fast_exp(int x, unsigned int k);
 // Calcule le degré d'un polynôme
@@ -11,9 +11,11 @@ int deg(unsigned int P);
 void poly_print(unsigned int P);
 //------ Partie 1
 // Initialise les tables d'exponentielles et de logarithmes
-unsigned int tables_init(unsigned int** exp, unsigned int** log, unsigned int qn);
+void tables_init(unsigned int** exp, unsigned int** log, unsigned int qn);
 // Libère les tables d'exponentielles et de logarithmes
-unsigned int tables_free(unsigned int** exp, unsigned int** log);
+void tables_free(unsigned int** exp, unsigned int** log);
+// Calcule les tables d'exponentielles et de logarithmes
+void tables(unsigned int* exp, unsigned int* log, unsigned int P, unsigned int qn);
 // Tests de la partie 1
 void q1();
 //------ Partie 2
@@ -26,16 +28,38 @@ unsigned int inv(unsigned int P, unsigned int* exp, unsigned int* log, unsigned 
 // Tests de la partie 2
 void q2();
 //------ Partie 3
-// Initialise une table de Cayley
-void Cayley_table_init(unsigned int*** T, unsigned int qn);
-// Libère une table de Cayley
-void Cayley_table_free(unsigned int*** T, unsigned int qn);
+// Initialise une table de cayley
+void cayley_table_init(unsigned int*** T, unsigned int qn);
+// Libère une table de cayley
+void cayley_table_free(unsigned int*** T, unsigned int qn);
 // Calcule les tablees d'addition et de multiplication dans F_{2^n}
-void Cayley_table(unsigned int** plus, unsigned int** times, unsigned int P, unsigned int qn);
-// Affiche une table de Cayley
+void cayley_table(unsigned int** plus, unsigned int** times, unsigned int P, unsigned int qn);
+// Affiche une table de cayley
 void table_print(unsigned int** T, unsigned int qn);
 // Tests de la partie 3
 void q3();
+//------ Partie 4
+// Initialise la table de logarithme de Zech
+void zech_init(unsigned int** zlog, unsigned int qn);
+// Libère la table de logarithme de Zech
+void zech_free(unsigned int** zlog);
+// Calcul du logarithme de Zech
+void zech_log(unsigned int* exp, unsigned int* log, unsigned int* zlog, unsigned int P, unsigned int qn);
+// Tests de la question 4
+void q4();
+//------ Partie 5
+// Addition sous forme exp
+unsigned int add_exp(unsigned int k, unsigned int l, unsigned int* zlog, unsigned qn);
+// Multiplication sous forme exp
+unsigned int mult_exp(unsigned int k, unsigned int l, unsigned int qn);
+// Inverse sous forme exp
+unsigned int inv_exp(unsigned int k, unsigned int qn);
+// Calcul des tables de Cayley en utilisant le logarithme de Zech
+unsigned int cayley_zech(unsigned int** plus, unsigned int** times, unsigned int P, unsigned int qn);
+// 1ere serie de tests de la question 5
+void q5_1();
+// 2eme serie de tests de la question 5
+void q5_2();
 
 
 // Fonctions auxiliaires
@@ -101,19 +125,19 @@ void poly_print(unsigned int P)
 
 
 //------ Partie 1
-unsigned int tables_init(unsigned int** exp, unsigned int** log, unsigned int qn)
+void tables_init(unsigned int** exp, unsigned int** log, unsigned int qn)
 {
     *exp = (unsigned int*) malloc(qn*sizeof(unsigned int));
     *log = (unsigned int*) malloc(qn*sizeof(unsigned int));
 }
 
-unsigned int tables_free(unsigned int** exp, unsigned int** log)
+void tables_free(unsigned int** exp, unsigned int** log)
 {
     free(*exp);
     free(*log);
 }
 
-unsigned int tables(unsigned int* exp, unsigned int* log, unsigned int P, unsigned int qn)
+void tables(unsigned int* exp, unsigned int* log, unsigned int P, unsigned int qn)
 {
 
     exp[0] = 1;
@@ -199,7 +223,7 @@ void q2()
 
 
 //------ Partie 3
-void Cayley_table_init(unsigned int*** T, unsigned int qn)
+void cayley_table_init(unsigned int*** T, unsigned int qn)
 {
     *T = (unsigned int**) malloc(qn*sizeof(unsigned int*));
     for (int i = 0; i < qn; i ++)
@@ -208,13 +232,13 @@ void Cayley_table_init(unsigned int*** T, unsigned int qn)
     }
 }
 
-void Cayley_table_free(unsigned int*** T, unsigned int qn)
+void cayley_table_free(unsigned int*** T, unsigned int qn)
 {
     for (int i = 1; i < qn; i ++) free((*T)[i]);
     free(*T);
 }
 
-void Cayley_table(unsigned int** plus, unsigned int** times, unsigned int P, unsigned int qn)
+void cayley_table(unsigned int** plus, unsigned int** times, unsigned int P, unsigned int qn)
 {
     unsigned int* exp;
     unsigned int* log;
@@ -230,6 +254,8 @@ void Cayley_table(unsigned int** plus, unsigned int** times, unsigned int P, uns
             times[i][j] = prod(i, j, exp, log, qn);
         }
     }
+
+    tables_free(&exp, &log);
 }
 
 void table_print(unsigned int** T, unsigned int qn)
@@ -251,24 +277,146 @@ void q3()
     unsigned int** times;
     unsigned int P = 0b1011;
     unsigned int qn = fast_exp(2, deg(P));
-    Cayley_table_init(&plus, qn);
-    Cayley_table_init(&times, qn);
+    cayley_table_init(&plus, qn);
+    cayley_table_init(&times, qn);
 
-    Cayley_table(plus, times, P, qn);
+    cayley_table(plus, times, P, qn);
     printf("Table d'addition :\n");
     table_print(plus, qn);
     printf("Table de multiplication :\n");
     table_print(times, qn);
 
-    Cayley_table_free(&plus, qn);
-    Cayley_table_free(&times, qn);
+    cayley_table_free(&plus, qn);
+    cayley_table_free(&times, qn);
 }
 
+
+//------ Partie 4
+void zech_init(unsigned int** zlog, unsigned int qn)
+{
+    *zlog = (unsigned int*) malloc(qn*sizeof(unsigned int));
+}
+
+void zech_free(unsigned int** zlog)
+{
+    free(*zlog);
+}
+
+void zech_log(unsigned int* exp, unsigned int* log, unsigned int* zlog, unsigned int P, unsigned int qn)
+{
+    for (int i = 0; i < qn; i++)
+    {
+        zlog[i] = log[1^exp[i]];
+    }
+}
+
+void q4()
+{
+    unsigned int* exp;
+    unsigned int* log;
+    unsigned int* zlog;
+    unsigned int P = 0b1011;
+    unsigned int qn = fast_exp(2, deg(P));
+
+    tables_init(&exp, &log, qn);
+    zech_init(&zlog, qn);
+
+    tables(exp, log, P, qn);
+    zech_log(exp, log, zlog, P, qn);
+    poly_print(exp[zlog[3]]);
+    printf("\n");
+}
+
+
+//------ Partie 5
+unsigned int add_exp(unsigned int k, unsigned int l, unsigned int* zlog, unsigned qn)
+{
+    if (k == (qn - 1)) return l;
+    else if (l == (qn - 1)) return k;
+    else if (k == l) return qn;
+    else return (k + zlog[(qn - 1 + l - k) % (qn - 1)]) % (qn - 1);
+}
+
+unsigned int mult_exp(unsigned int k, unsigned int l, unsigned int qn)
+{
+    if (k == (qn - 1) || l == (qn - 1)) return qn;
+    else return (k + l) % (qn - 1);
+}
+
+unsigned int inv_exp(unsigned int k, unsigned int qn)
+{
+    return (qn - 1) - (k % (qn - 1));
+}
+
+void q5_1()
+{
+    unsigned int P = 0b1011;
+    unsigned int qn = fast_exp(2, deg(P));
+    unsigned int* zlog;
+    unsigned int* exp;
+    unsigned int* log;
+
+    tables_init(&exp, &log, qn);
+    zech_init(&zlog, qn);
+
+    tables(exp, log, P, qn);
+    zech_log(exp, log, zlog, P, qn);
+
+    printf("%u\n", mult_exp(4, 5, qn));
+    printf("%u\n", add_exp(7, 2, zlog, qn));
+}
+
+unsigned int cayley_zech(unsigned int** plus, unsigned int** times, unsigned int P, unsigned int qn)
+{
+    unsigned int* zlog;
+    unsigned int* exp;
+    unsigned int* log;
+
+    tables_init(&exp, &log, qn);
+    zech_init(&zlog, qn);
+
+    tables(exp, log, P, qn);
+    zech_log(exp, log, zlog, P, qn);
+
+    for (unsigned int i = 0; i < qn; i++)
+    {
+        for (unsigned int j = 0; j < qn; j++)
+        {
+            plus[exp[i]][exp[j]] = exp[add_exp(i, j, zlog, qn)];
+            times[exp[i]][exp[j]]  = exp[mult_exp(i, j, qn)];
+        }
+    }
+
+    tables_free(&exp, &log);
+    zech_free(&zlog);
+}
+
+void q5_2()
+{
+    unsigned int** plus;
+    unsigned int** times;
+    unsigned int P = 0b1011;
+    unsigned int qn = fast_exp(2, deg(P));
+    cayley_table_init(&plus, qn);
+    cayley_table_init(&times, qn);
+
+    cayley_zech(plus, times, P, qn);
+    printf("Table d'addition :\n");
+    table_print(plus, qn);
+    printf("Table de multiplication :\n");
+    table_print(times, qn);
+
+    cayley_table_free(&plus, qn);
+    cayley_table_free(&times, qn);
+}
 
 //------
 int main()
 {
     // q1();
     // q2();
-    q3();
+    // q3();
+    // q4();
+    // q5_1();
+    q5_2();
 }

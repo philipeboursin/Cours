@@ -128,9 +128,208 @@
             \end{align*}
             C'est un polynômes en $n$ variables, qui est symétrique. Il existe donc $\Delta \in \mathbb{Z}[y_1, \cdots, y_n]$ tel que $f = \Delta(\sigma_1, \cdots, \sigma_n)$. On définit $\Delta$ comme le discriminant d'ordre $n$. Par exemple, dans $\mathbb{Z}[x_1, \cdots, x_n][T]$ considérons $P = \prod_{i = 1}^n (T - X_i)$. Alors le dixcriminant de $P$ est $\Delta$.
         \end{expl}
+        \begin{defi}
+            Pour tout $l \geq 1$, on pose
+            \begin{align*}
+                p_l = \sum_{i = 1}^l x_i^l
+            \end{align*}
+        \end{defi}
+        \begin{remq}
+            $p_l$ est symétrique.
+        \end{remq}
+        \begin{theo}
+            Supposons que $k$ est ce caractéristique $0$. Alors
+            \begin{align*}
+                k[X_1, \cdots, X_n]^{\mathfrak{S}_n} = k[p_1, \cdots, p_n]
+            \end{align*} 
+        \end{theo}
+        \begin{proof}
+            On sait que $k[x_1, \cdots, x_n]^{\mathfrak{S}_n} = k[\sigma_1, \cdots, \sigma_n]$. Il suffit donc de montrer que $\sigma_k \in k[p_1, \cdots, p_n]$, $\forall k \in \lcc 1,n \rcc$. Montrons le par récurrence sur $k$. Si $k = 1$, $\sigma_1 = p_1$ ok. Si $k > 1$, on utilise l'identité de Newton :
+            \begin{align}
+                \label{*}
+                p_k - \sigma_1p_{k - 1} + \sigma_2p_{k - 2} - \cdots + k(-1)^k\sigma_k = 0
+            \end{align}
+            Si cette identité est vraie, alors par récurrence $\sigma_k \in k[p_1, \cdots, p_n]$. Il faut montrer l'identité :
+            \begin{align*}
+                P_n(T) &= \prod_{i = 1} ^n (T - X_i) \\
+                &= T^n - \sigma_1T^{n-1} + \cdots + (-1)^n\sigma_n
+            \end{align*}
+            Alors
+            \begin{align}
+                \label{**}
+                0 = \sum_{i = 1}^n P_i(X_i) = p_n - \sigma_1p_{n-1} + \cdots + n(-1)^n\sigma_n
+            \end{align}
+            donc la formule est vraie pour $k = n$. Montrons finalement la formule pour $k < n$ : pour tout $(n - k)$-uplt de variables parmi $X_1, \cdots, X_n$, envoyer ces variables vers $0$, l'identité \ref{*} tiens toujours. On se retrouve alors dans la situation \ref{**} qui vaut $0$. Donc les coefficients devant les monômes ne faisant pas intervenir les $(n - k)$ variables sont tous nuls. Faisons varier le $(n - k)$-uplet, on obtient le résultat.
+        \end{proof}
 
     \section{Théorie des invariants}
-        Supposons que $k$ est un corps de caractéristique nulle. On note $GL_n(k)$ le groupe des matrices $n \times n$ inversibles. Soit $L$ le sev de $k[x_1, \cdots, x_n]$ des polynômes homogènes de degré $1$. C'est un $k$ ev de dimension $n$ ayant pour base $(x_1, \cdots, x_n)$. Dans cette base, tout élément de $L$ s'écrit comme $\sum \lambda_ix_i$, et alors $GL_n(k)$ agit donc sur $L$ par multiplication à gauche sur $(\lambda_1, \cdots, \lambda_n)$. Ceci induit une action de $GL_n(k)$ sur tout $k[x_1, \cdots, x_n]$.
+        Supposons que $k$ est un corps algébriquement clos, de caractéristique nulle. On note $GL_n(k)$ le groupe des matrices $n \times n$ inversibles. Soit $L$ le sev de $k[x_1, \cdots, x_n]$ des polynômes homogènes de degré $1$. C'est un $k$ ev de dimension $n$ ayant pour base $(x_1, \cdots, x_n)$. Dans cette base, tout élément de $L$ s'écrit comme $\sum \lambda_ix_i$, et alors $GL_n(k)$ agit donc sur $L$ par multiplication à gauche sur $(\lambda_1, \cdots, \lambda_n)$. Ceci induit une action de $GL_n(k)$ sur tout $k[x_1, \cdots, x_n]$.
         \begin{nota}
             $(f.A)(x_1, \cdots, x_n) = f(A \cdot (x_1, \cdots, x_n))$
         \end{nota}
+        Remarquons que si $G$ est un sous-groupe fini de $GL_n(k)$, alors $G$ agit de la même manière sur $k[x_1, \cdots, x_n]$. Ainsi soit $G$ un tel sous-groupe, est-ce-que $k[X_1, \cdots, X_n]^G$ est-il finiment engendré.
+        \begin{expl}
+            $n = 3$, prenons
+            \begin{align*}
+                G = \bra
+                \begin{bmatrix}
+                    0 & 1 & 0 \\
+                    0 & 0 & 1 \\
+                    1 & 0 & 0 \\
+                \end{bmatrix} \ket \simeq \znz{3}
+            \end{align*}
+            agit par permutation cyclique de $x_1, x_2, x_3$. Par exemple, $f = (x_1 - x_2)(x_2 - x_3)(x_3 - x_1)$ est un polynômes $G$ invariant.
+        \end{expl}
+        \begin{expl}
+            Soit 
+            \begin{align*}
+                G = \bra
+                \begin{bmatrix}
+                    1 & 0 & 0 \\
+                    0 & \zeta & 0 \\
+                    0 & 0 & \zeta^2 \\
+                \end{bmatrix} \ket
+            \end{align*}
+            avec $\zeta$ une racine cubique primitive de l'unité. Par exemple $x_1,x_2^2,x_3^3$ sont $G$ invariants. $x_1x_2x_3$ est $G$ invariant. $(x_1^3 - 1)(x_2^3 - 1)(x_3^3 - 1)$ est $G$-invariant.
+        \end{expl}
+        \begin{defi}
+            L'opérateur de Reynolds de $G$ est 
+            \begin{align*}
+                \begin{array}{cccc}
+                    R_G : & k[x_1, \cdots, x_n] & \to & k[x_1, \cdots, x_n]^G \\
+                    & f & \mapsto & \frac 1{|G|} \sum_{A \in G} f \cdot A \\
+                \end{array}
+            \end{align*}
+        \end{defi}
+        \begin{prop}
+            \ref{prop431}
+            \begin{enumerate}
+                \item $R_G(f)$ est $G$-invariant, pour tout $f \in k[x_1, \cdots, x_n]$.
+                \item $R_G$ est $k$-linéaire (mais n'est pas un morphisme d'anneaux).
+                \item Si $f \in k[x_1, \cdots, x_n]^G$, alors $R_G(f) = f$.
+            \end{enumerate}
+        \end{prop}
+        \begin{proof}
+            Ok
+        \end{proof}
+        \begin{expl}
+            Prenons $G = \mathfrak{S}_n$ agissant par permutation. Alors
+            \begin{align*}
+                R_G(x_1) = \frac 1n ((n - 1)!x_1 + (n - 1)!x_2 + \cdots + (n - 1)!x_n) = \frac 1n \sigma_1
+            \end{align*}
+            De même, $R_G(x_2) = \frac 1n \sigma_1$.
+        \end{expl}
+        \begin{theo} [Emmy Noether]
+            Supposons que $k = \bar k$, $car(k) = 0$, $G$ est un sous-groupe fini de $GL_n(k)$. Alors $k[x_1, \cdots, x_n]^G$ est engendré par les $R_G(x^\beta)$ avec $\deg x^\beta \leq |G|$ est finiment engendré.
+        \end{theo}
+        \begin{proof}
+            \item L'inclusion $k[R_G(x^\beta) \mid |\beta| \leq |G|] \subseteq k[x_1, \cdots, x_n]^G$ est clair d'après le point 1 de la proposition \label{431}.
+            \item Soit $f \in k[x_1, \cdots, x_n]^G$, notons le $f = \sum_{\alpha \in \mathbb{N}^n} \lambda_\alpha x^\alpha$. Alors $f = R_G(f) = \sum_{\alpha \in \mathbb{N}^n} \lambda_\alpha R_G(x^\alpha)$. Ceci montre que $k[x_1, \cdots, x_n]^G = k[R_G(x^\alpha) \mid \alpha \in \mathbb{N}^n]$. Il suffit donc de montrer que pour tout $\alpha \in \mathbb{N}^n$, alors $R_G(x^\alpha) \in k[R_G(x^\beta) \mid |\beta| \leq |G|]$.
+            \begin{nota}
+                Soit $A \in G \subrel{sg fini} GL_n(k)$, notons
+                \begin{align*}
+                    A =
+                    \begin{bmatrix}
+                        A_1 \\
+                        A_2 \\
+                        \vdots \\
+                        A_n \\
+                    \end{bmatrix}
+                \end{align*}
+                Alors on définit
+                \begin{align*}
+                    (A.x)^\alpha = (A_1x)^{\alpha_1} (A_2x)^{\alpha_2} \cdots (A_nx)^{\alpha_n}
+                \end{align*}
+                Ainsi $x^\alpha = (Ax)^\alpha$.
+            \end{nota}
+            On a donc
+            \begin{align*}
+                R_G(x^\alpha) = \frac 1{|G|} \sum_{A \in G} (Ax)^\alpha
+            \end{align*}
+            Soient $u_1, \cdots, u_n$ est variables. Pour $A \in G$, soit 
+            \begin{align*}
+                z_A = (u_1A_1x + \cdots + u_nA_nx) \in k[x_1, \cdots, x_n, u_1, \cdots, u_n]
+            \end{align*}
+            Pour tout $k > 0$, écrivons
+            \begin{align*}
+                z_1^k &= (u_1A_1x + \cdots + u_nA_nx)^k \\
+                &= \sum_{|\alpha| \leq k} a_\alpha (Ax)^\alpha u^\alpha
+            \end{align*}
+            où $a_\alpha \in k$ ne dépend pas de $A$. Soit
+            \begin{align*}
+                S_k &= \sum_{A \in G} z_A^k \\
+                &= \sum_{A \in G} \sum_{|\alpha| \leq k} a_\alpha (Ax)^\alpha u^\alpha \\
+                &= \sum_{|\alpha| \leq k} a_\alpha \left( \sum_{A \in G} (Ax)^\alpha \right) u^\alpha \\
+                &= \sum_{|\alpha| \leq k} a_\alpha |G|R_G(x^\alpha) u^\alpha \\
+            \end{align*}
+            Or $S_k$ est un polynôme symétrique en les $z_A$. Par le théorème précédent, tout polynôme symétrique en les $z_A$ est un polynôme en les $p_1 = S_1, \cdots, p_{|G|} = S_{|G|}$. En particulier, $S_k$ est un polynôme en les $S_1, \cdots, S_{|G|}$, disons $S_k = F(S_1, \cdots, S_{|G|})$. Donc 
+            \begin{align*}
+                &\sum_{|\alpha| \leq k} a_\alpha |G|R_G(x^\alpha) u^\alpha = S_k = F(S_1, \cdots, S_{|G|}) \\
+                &= F\left(\sum_{|\beta| \leq 1} a^1_\beta |G|R_G(X)^\beta u^\beta, \cdots, \sum_{|\beta| \leq |G|} a^{|G|}_\beta |G|R_G(X)^\beta u^\beta \right) \in k[u_1, \cdots, u_n, R_G(x^\beta) \mid |\beta| \leq |G|]
+            \end{align*}
+            En comparant les coeffs devant $u^\alpha$, on obtient que $R_G(x^\alpha) \in k[R_G(x^\beta) \mid |\beta| \leq |G|]$.
+        \end{proof}
+        
+        \subsection{Interprétation géométrique}
+            On suppose toujours que $k = \bar k$, $car k = 0$. $G$ agit sur $k[X_1, \cdots, X_n]$, et $G$ agit sur $\mathbb{A}^n$. \cor{Insérer le diagramme commutatif !} Ainsi
+            \begin{align*}
+                k[y_1, \cdots, y_r]/I_F \simeq k[X_1, \cdots, X_n]^G \injectivearrow k[X_1, \cdots, X_n]
+            \end{align*}
+            On applique les foncteur variété à ce diagramme, on obtient un morphisme $\pi : \mathbb{A}^n_x \to V(I_F) \subseteq \mathbb{A}^r_y$.
+            \begin{theo}
+                \begin{enumerate}
+                    \item $\pi$ est surjective,
+                    \item Si $p,q \in \mathbb{A}^n$, alors $\pi(p) = \pi(q) \iff Gp = Gq$ ($Gp,Gq$ sont les $G$-orbites de $p$ et $q$)
+                \end{enumerate}
+            \end{theo}
+            \begin{remq}
+                $V(I_F)$ est en bijection est en bijections avec $\mathbb{A}^n/G$, et $k[V(I_F)] \simeq k[X_1, \cdots, X_n]^G$.
+            \end{remq}
+            \begin{proof}
+                \begin{enumerate}
+                    \item On voit le morphisme de $\mathbb{A}^n_x$ dans $\mathbb{A}^r_y$ comme définissant une variété paramétrée. Par le théorème d'implicitisation, $V(I_F) = \overline{\pi(\mathbb{A}^n)}$. On veut montrer que $V(I_F) \subseteq \pi(\mathbb{A}^n)$. Soit $b = (b_1, \cdots, b_r) \in V(I_F)$. On pose 
+                    \begin{align*}
+                        J = \bra y_1 - f_1, \cdots, y_r - f_r \ket \subrel{id} k[x_1, \cdots, x_n, y_1, \cdots, y_r]
+                    \end{align*}
+                    \begin{figure}[H]
+                        \centering
+                        \begin{tikzcd}
+                            {k[x_1, \cdots, x_n, y_1, \cdots, y_n]} \arrow[rd, "\Phi"] &                       \\
+                            {k[y_1, \cdots, y_r]} \arrow[r]                            & {k[x_1, \cdots, x_n]}
+                            \end{tikzcd}
+                    \end{figure}
+                    $J = \ker \Phi$. On cherche $(a_1, \cdots, a_n) \in \mathbb{A}^n_x$ tel que $\pi(a) = b$. De façon équivalente, $(a_1, \cdots, a_n, b_1, \cdots, b_r) \in V(J)$. On applique le théorème d'extension : rappelons que si $(a_{i+1}, \cdots, a_n, b_1, \cdots, b_r)$ est une solution partielle de $J \cap k[x_{i+1}, \cdots, x_n, y_1, \cdots, y_r]$ et s'il existe $h_i \in J \cap k[x_i, \cdots, x_n, y_1, \cdots, y_r]$ avec 
+                    \begin{align*}
+                        h_i = g_i(x_{i+1}, \dots, x_n, y)x_i^{N_i} + \text{ termes en }\deg_{X_i} < N_i
+                    \end{align*} 
+                    et $g_i(a_{i + 1}, \cdots, a_n, b) \neq 0$ alors la solution s'étend en une solution $(a_i, a_{i+1}, \cdots, a_n, b)$. Trouvons un tel $h_i$ pour chaque $i$ : pour chaque $h \in k[x_1, \cdots, x_n]$, considérons
+                    \begin{align*}
+                        \prod_{A \in G} (u - hA) = \sum_{j = 0}^{|G|} g_j(x)u^j \in k[u,x]
+                    \end{align*}
+                    Comme ce polynôme est $G$ invariant, on a que $g_j(x) \in k[x]^G$, $\forall j$. On sait que l'on peut écrire $k[x]^G = k[f_1, \cdots, f_r]$. Ainsi $\exists p_0, \cdots, p_{|G| - 1} \in k[y_1, \cdots, y_r]$ tels que $g_j(x) = p_j(f_1, \cdots, f_r)$ (remarquons que l'on traite pas le cas $|G|$ puisque $g_{|G|} = 1$). En évaluant $u$ en $h$, on trouve $0$ :
+                    \begin{align*}
+                        0 &= \sum_{j = 0}^{|G|} p_j(f_1, \cdots, f_r) h^j \\
+                        &= \sum_{j = 0}^{|G| - 1} p_j(f_1, \cdots, f_r) h^j + h^{|G|} \\
+                    \end{align*}
+                    On applique à $h = x_i$ :
+                    \begin{align*}
+                        h_i := \sum_{j = 0}^{|G| - 1} p_j(y_1, \cdots, y_r) x_i^j + x_i^{|G|} \in J \\
+                    \end{align*}
+                    puisque $h_i(f_1, \cdots, f_r) = 0$ d'après l'équation précédente. Avec ce choix de $h_i$ pour tout $i$, on peut appliquer le théorème d'extension récursivement. On a ainsi montré que $\pi$ est surjective.
+                    \item $\pi : \mathbb{A}^n \to V(I_F)$, puisque les $f_i$ sont $G$ invariants,
+                    \begin{align*}
+                        \pi(Ax) = (f_1(Ax), \cdots, f_r(Ax)) = (f_1(x), \cdots, f_r(x)) = \pi(x)
+                    \end{align*}
+                    Il reste à montrer que si $Ga \neq Gb$, alors $\pi(a) \neq \pi(b)$. Il suffit de trouver $g \in k[x_1, \cdots, x_n]^G$ tel que $g(a) \neq g(b)$. Posons $E = (Gb \cup Ga) \bs \{a\}$. C'est un ensemble fini, donc c'est une variété algébrique (au sens d'ensemble algébrique dans l'autre cours). Soit $L \subrel{id} k[X]$ tel que $E = V(L)$, comme $a \notin E$, il existe $f \in L$ tel que $f(a) \neq 0$. Prenons maintenant $g = R_G(f) \in k[x_1, \cdots, x_n]^G$. Alors $g(b) = 0$, et $g(a) = \neq 0$. 
+                \end{enumerate}
+            \end{proof}
+            \begin{remq}
+                $\pi : \mathbb{A}^n \to V(I_f)$ n'est plus forcément surjective si $k \neq \bar k$. Par exemple prenons $\mathbb{R}[x_1, x_2]^{\mathfrak{S}_2} = \mathbb{R}[\sigma_1, \sigma_2]$. Alors $I_F = \ker(y_i \in k[y_1, y_2] \mapsto \sigma_k k[x_1, x_2]) = 0$. Donc $V(I_F) = \mathbb{A}^2_y$ mais
+                \begin{align*}
+                    \begin{array}{cccc}
+                        \pi : & \mathbb{A}^2 & \to & \mathbb{A}^2_y \\
+                        & (x_1, x_2) & \mapsto & (x_1 + x_2, x_1x_2) \\
+                    \end{array}
+                \end{align*}
+                n'est pas surjective sur $\mathbb{R}$ : en effet, si $(y_1, y_2) = \pi(x_1, x_2) = (x_1 + x_2, x_1x_2)$ et ainsi $(X - x_1)(X - x_2) = X^2 - \sigma_1X + \sigma_2 = X^2 - y_1X + y_2$ donc $X^2 - y_1X + y2$ a des racines réelles, i.e. $y_1^2 - 4y_2 \geq 0$.
+            \end{remq}

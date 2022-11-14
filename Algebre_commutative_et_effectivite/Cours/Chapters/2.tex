@@ -18,7 +18,7 @@
             Soit $I \subrel{id} k[x_1, \cdots, x_n]$, soit $<$ l'ordre lex avec $x_1 > \cdots > x_n$. Soit $G$ une bdg de $I$. Pour chaque $l \in \lcc 1,n \rcc$, une base de Gröbner de $I_l$ est $G_l$.
         \end{theo}
         \begin{proof}
-            Clairement, $G_l \subseteq I_l$ donc $\bra LT(G_l) \ket \subseteq \bra LT(I_l) \ket$. Il faut montrer $\supseteq$. Soit $f \in I_l$. Alors $f \in I$, d'où $LT(f) \in \bra LT(G) \ket$. On sait que $f \in k[x_{l+1}, \cdots, x_n]$. Soit $g \in G$ tq $LT(g) \mid LT(f)$. D'où $LT(g) \in k[x_{l+1}, \cdots, x_n]$. Comme $<$ est l'ordre lex, on en déduit que $g \in k[x_{l+1}, \cdots, x_n]$. Donc $g \in G_l$ et $LT(f) \in \bra LT(G_l) \ket$.
+            Clairement, $G_l \subseteq I_l$ donc $\bra LT(G_l) \ket \subseteq \bra LT(I_l) \ket$. Il faut montrer $\supseteq$. Soit $f \in I_l$. Alors $f \in I$, d'où $LT(f) \in \bra LT(G) \ket$. On sait que $f \in k[x_{l+1}, \cdots, x_n]$. Soit $g \in G$ tq $LT(g) \mid LT(f)$, alors $LT(g) \in k[x_{l+1}, \cdots, x_n]$. Comme $<$ est l'ordre lex, on en déduit que $g \in k[x_{l+1}, \cdots, x_n]$. Donc $g \in G_l$ et $LT(f) \in \bra LT(G_l) \ket$.
         \end{proof}
         Par conséquent, une bdg pour l'ordre lex contient des éléments qui font intervenir de moins en moins de variables.
 
