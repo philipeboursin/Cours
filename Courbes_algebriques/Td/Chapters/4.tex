@@ -1,0 +1,72 @@
+\chapter{TD4}
+    \section{Exercice 1}
+
+    \section{Exercice 2}
+
+    \section{Exercice 3}
+
+    \section{Exercice 4}
+
+    \section{Exercice 5}
+
+    \section{Exercice 6}
+        \begin{question}{0.}
+            Montrons plus généralement que si $X = \bigcup_{i = 1}^k U_i$, avec $U_i$ un ouvert irréductible pour tout $1 \leq i \leq n$, tels que $U_i \cap U_j \neq \emptyset$ pour tous $i \neq j$, alors $X$ est irréductible. Procédons par récurrence : si $k = 1$ ok. Si $k > 1$, alors écrivons
+            \begin{align*}
+                X = U_1 \cup \bigcup_{i = 2}^k U_i
+            \end{align*}
+            Alors par récurrence, $\bigcup_{i = 2}^k U_i$ est irréductible, puis la propriété est vraie pour deux ouverts donc on a bien que $X$ est irréductible.
+        \end{question}
+        \begin{question}{1.}
+            On sait que $\mathbb{P}_n = \bigcup_{i = 0}^n U_i$, où $U_i \simeq \mathbb{A}^n$ (en tant qu'espaces topologiques). Ainsi $U_i$ est irréductible puisque $\mathbb{A}^n$ l'est, et donc en appliquant la question 0 on conclut que $\mathbb{P}^n$ est irréductible.
+        \end{question}
+        \begin{question}{3.}
+            Notons $d$ le degré de $F$. On a $V(F) = \cup_{i = 0}^n U_i \cap V(F)$, et $U_i \cap V(F) \simeq V(f) \subseteq \mathbb{A}^n$, où $f = F(X_1, \cdots, X_{i-1}, 1, X_{i+1}, \cdots, X_n)$. Ainsi il faut montrer que $f$ est irréductible, et quitte à réindexer, on peut supposer que $f = F(1, X_1, \cdots, X_n) \in k[X_1, \cdots, X_n]$. Alors soient $g,h \in k[X_1, \cdots, X_n]$ tels que $f = gh$. On voudrait homogénéiser cette équation pour retomber sur $F$, alors il faut prouver que l'homogénéisation commute au produit et on a aussi que l'homogénéisation de $f$ en $X_0$ ne donne pas forcément $F$ (par exemple considérer $F = X_0$). En fait, on peut prouver qu'il existe $d \geq 0$ tel que $F = X_0^dh_{X_0}(f)$ : écrivons
+            \begin{align*}
+                F = \sum_{i = 1}^r X_0^{d_i}m_i
+            \end{align*}
+            où $0 \leq d_1 < d_1 < \cdots < d_r \leq d$, et $\deg m_i = d - d_i$. Maintenant
+            \begin{align*}
+                f = \sum_{i = 1}^r m_i
+            \end{align*}
+            et $m_1$ est de degré maximal $d - d_1$, donc 
+            \begin{align*}
+                h_{X_0}(f) = \sum_{i = 1}^r m_iX_0^{(d - d_1) - (d - d_i)} = \sum_{i = 1}^r m_iX_0^{d_i - d_1}
+            \end{align*}
+            mais alors
+            \begin{align*}
+                X_0^{d_1}h_{X_0}(f) = \sum_{i = 1}^r m_iX^{d_i - d_1}X_0^{d_1} = F
+            \end{align*}
+            Maintenant dans l'exo, $F$ est irréductible, et comme $F = X_0^d h_{X_0}(f)$, soit $d = 1$ et $h_{X_0}(f) \in k$, et donc $f = 1$ et $V(f) = \emptyset$ qui est irréductible, et sinon $d = 0$, et $h_{X_0}(f)$ est irréductible. Maintenant si on décompose
+            \begin{align*}
+                g &= \sum_{i = 0}^e g^i,\, h = \sum_{i = 0}^f h^i
+            \end{align*}
+            avec $g^e, h^f \neq 0$, alors 
+            \begin{align*}
+                h_{x_0}(g)h_{X_0}(h) &= \left(\sum_{i = 0}^e g^iX^{e - i}\right) \left(\sum_{i = 0}^f h^iX^{f - i}\right) \\
+                &= X^{e + d}g^0h^0 + X^{e + d - 1}(g^0h^1 + g^1h^0) + \cdots + g^eh^f \\
+                &= h_{X_0}(gh)
+            \end{align*}
+            Finalement, $h_{X_0}(f) = h_{X_0}(gh) = h_{x_0}(g)h_{X_0}(h)$ et comme $h_{X_0}(f)$ est irréductible, $h_{X_0}(g) \in k$ ou $h_{X_0}(h) \in k$ et donc $g = (h_{X_0}(g))(1, X_1, \cdots, X_n) \in k$ ou $h =( h_{X_0}(h))(1, X_1, \cdots, X_n) \in k$. Plus structurellement, on aurait pu voir que l'ensemble
+            \begin{align*}
+                A = \{F \in k[X_0, \cdots, X_n] \mid F \text{ homogène },\, X_0 \nmid F\}
+            \end{align*}
+            est un sous monoïde de $(k[X_0, \cdots, X_n], \times)$ et l'evaluation de $X_0$ en $1$ est un morphisme de monoïdes entre $A$ et $k[X_1, \cdots, X_n]$ qui est bijectif, d'inverse $h_{X_0}$, et donc $h_{X_0}$ est aussi un morphisme de monoïdes (et la formule s'étend bien aux polynômes nuls). 
+        \end{question}
+        \begin{question}{2.}
+            D'après la question précédente, il suffit de prouver que $XT - YZ \in k[X,Y,Z,T]$ est irréductible. Ecrivons $XT - YZ = PQ$, $P,Q \in k[X,Y,Z,T]$, alors soit $\deg_X P = 1$ et alors $\deg_X Q = 0$, soit $\deg_X Q = 1$ et alors $deg_X P = 0$. Sans perte de généralité, supposons que $\deg_X P = 1$. Alors si on avait $\deg_Y Q = 1$, $PQ$ contiendrait un terme divisible par $XY$. Or aucun terme de $XT - YZ$ n'est divisible par $XY$, ainsi $\deg_Y Q = 0$ et donc $\deg_Y P = 1$. De même, $\deg_Z P = 1$. Finalement comme $\deg_Y P = 1$, si $\deg_T Q$ valait $1$, on aurait un terme de $PQ$ qui serait divisible par $YT$, or aucun termes de $XT - YZ$ n'est divisible par $YT$, et donc on doit avoir que $\deg_T P = 1$. Au final, $\deg_X Q = \deg_Y Q = \deg_Z Q = \deg_T Q = 0$ et donc $Q \in k$, et donc $XT - YZ$ est irréductible.
+        \end{question}
+
+
+
+    \section{Exercice 7}
+
+    \section{Exercice 8}
+
+    \section{Exercice 9}
+
+    \section{Exercice 10}
+
+    \section{Exercice 11}
+
+    \section{Exercice 12}
