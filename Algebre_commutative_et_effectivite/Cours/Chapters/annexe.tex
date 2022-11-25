@@ -1,0 +1,36 @@
+\appendix
+\chapter{}
+    \section{Commandes en sage}
+        \begin{itemize}
+            \item Définir un anneau de polynômes : \mintinline{python}{A.PolynomialRing(QQ, order = 'lex')}
+            \item Terme/monôme/coefficient dominant de $P$ : \mintinline{python}{P.lt() P.lm() P.lc()}
+            \item Coefficients de $P$ : \mintinline{python}{P.coefficients()}
+            \item Norme du multidegré de $P$ : \mintinline{python}{P.degree()}
+            \item Division euclidienne de $P$ par $Q$ $P = AQ + B$ : \mintinline{python}{A, B = P.quo_rem(Q)}
+            \item GCD de $P$ et $Q$ : \mintinline{python}{gcd(P, Q)}
+            \item Factorisation de $P$ : \mintinline{python}{factor(P)}
+            \item Evaluation de $P$ en un point : \mintinline{python}{P(2)}
+            \item Savoir si un polynôme est irréductible : \mintinline{python}{P.is_irreducible()}
+            \item $P$ polynôme multivarié, le regarder selon une variable : \mintinline{python}{P.polynomial(x)}
+            \item Savoir l'ordre sur un anneau de polynômes multivariés : \mintinline{python}{A.term_order()}
+            \item Changer l'ordre sur un anneau de polynômes : \mintinline{python}{A = A.change_ring(order = 'lex')}
+            \item Cast un polynôme $P$ d'un anneau $A$ vers un anneau $B$ : \mintinline{python}{B(P)}
+            \item Ordres standards : \mintinline{python}{'lex', 'deglex', 'degrevlex'}
+            \item Division multivariée : \mintinline{python}{P.reduce(Q1; Q2)}
+            \item Retourne une liste : \mintinline{python}{L.reverse()}
+            \item Fabriquer une idéal d'un anneaux de polynômes à partir de générateurs : \mintinline{python}{I = A.ideal(f1, ..., fn)}
+            \item Vérifier si un élément $f \in A$ est dans $I \subrel{id} A$ : \mintinline{python}{f in I}
+            \item Si $I = \bra f_1, \cdots, f_n \ket$, et $f \in I$, trouver une décomposition $f = \sum g_if_i$ : \mintinline{python}{f.lift(I)}
+            \item Changer l'ordre sur un idéal en le changeant d'anneau : \mintinline{python}{I.change_ring(A)}
+            \item Calculer une bdg pour un idéal $I$ : \mintinline{python}{I.groebner_basis()}
+            \item Savoir si la famille génératrice d'un idéal $I = \bra f_1, \cdots, f_n \ket$ est une bdg pour celui-ci : \mintinline{python}{I.basis_is_groebner()}
+            \item Récupérer la liste des générateurs d'un idéal $I \subrel{id} A$ : \mintinline{python}{I.gens()}
+            \item Changer l'ordre des variables d'un anneau de polynômes : \mintinline{python}{A = A.change_ring(names = 'y,z,x')}
+            \item Eliminer une liste de variables de l'idéal $I$ : \mintinline{python}{I.elimination_ideal([x, z])}
+            \item Calculer le résultat de $f$ et $g$ selon la variable $x_i$ : \mintinline{python}{f.resultant(g, xi)}
+            \item Transformer un polynôme multivarié ne faisant intervenir qu'une seule variable : \mintinline{python}{P = P.univariate_polynomial()}
+            \item Calculer les racines d'un polynôme $P$ dans un corps $k$ : \mintinline{python}{f.roots(k)}. Pour ne pas avoir les multiplicités, rajouter l'option \mintinline{python}{multiplicities = false} e.g. \linebreak \mintinline{python}{f.roots(RR, multiplicities = false)}
+            \item Calculer la variété associée à un idéal $I$ sur un corps $k$ : \mintinline{python}{I.variety(k)} (pour par exemple calculer les solutions d'un système d'équations)
+            \item Pour définir une matrice : \mintinline{python}{m = matrix(3, [1,1,0,0,1,0,0,0,1])}
+            \item Pour définir un ordre à partir d'une matrice : \mintinline{python}{T = TermOrder(m)}. S'utilise en spécifiant (par exemple dans la définition d'un anneau de polynômes) \mintinline{python}{order = T}
+        \end{itemize}

@@ -29,8 +29,9 @@
                     \item $P = X^2 + Y^2 + 1 \in k[X,Y]$, si $k = \mathbb{R}$, $V(P) = \emptyset$. Si $k = \mathbb{C}$, $V(P)$ est isomorphe (en tant que variété algébrique, même si cela n'a pour le moment aucun sens) au cercle complexe (en considérant le changement de variables $a_j = ib_j$).
                     \item $P_i = \sum a_{ij} X_j - b_i \in k[X_1, \cdots, X_n]$, $i \in \lcc 1,r \rcc$.
                     \begin{align*}
-                        V(P_i) = \{x \in k^n \mid (a_{ij})x = b\} \simeq \mathbb{A}_k^n \text{ ou } \emptyset
+                        V(P_i) = \{x \in k^n \mid (a_{ij})x = b\} \simeq \mathbb{A}_k^m \text{ ou } \emptyset
                     \end{align*}
+                    pour un certain $0 \leq m \leq n$.
                 \end{enumerate}
             \end{expl}
             \begin{exo}
@@ -55,7 +56,7 @@
                 Pour tout $S \subseteq k[X_1, \cdots, X_n]$, on a $V(S) = V((S))$. Ainsi tout ensemble algébrique peut s'écrire $V(I)$ avec $I \subrel{id} k[X_1, \cdots, X_n]$.
             \end{remq}
             }
-            La remarque précédente nous permet de donner le corollaire suivant :
+            La remarque précédente combinée au théorème de la base de Hilbert nous permet de donner le corollaire suivant :
             \begin{coro}
                 Chaque ensemble algébrique $V \subseteq \mathbb{A}_k^n$ est de la forme $V = V(P_1, \cdots, P_r)$ avec $P_i \in k[X_1, \cdots, X_n]$
             \end{coro}
@@ -146,7 +147,7 @@
                 $E = V(I(E)) \iff E$ est un ensemble algébrique. 
             \end{lemm}
             \begin{proof}
-                Il suffit de montrer que si $E$ est un ensemble algébrique affine, alors \linebreak $V(I(E)) \subseteq E$ : supposons que $E = V(J)$, $J \subrel{id} k[X_1, \cdots, X_n]$. ALors $J \subseteq I(V(J))$ et ainsi $V(I(E)) = V(I(V(J))) \subseteq V(J) = E$.
+                Il suffit de montrer que si $E$ est un ensemble algébrique affine, alors \linebreak $V(I(E)) \subseteq E$ : supposons que $E = V(J)$, $J \subrel{id} k[X_1, \cdots, X_n]$. Alors $J \subseteq I(V(J))$ et ainsi $V(I(E)) = V(I(V(J))) \subseteq V(J) = E$.
             \end{proof}
             \begin{expl}
                 Le segment $[0,1] \subseteq \mathbb{A}_\mathbb{R}^1$ n'est pas un ensemble algébrique.
@@ -212,8 +213,8 @@
                     \mathfrak{m} = (X_1 - a_1, \cdots, X_n - a_n, X_{n+1} - b)
                 \end{align*}
                 Mais alors pour tout $i \in \lcc 1,r \rcc$, $P_i(a) = 0$ et $1 - bf(a) = 0$. Mais alors la première série d'égalités nous indique que $a \in V(I)$, et comme $f \in I(V(I))$, $f(a) = 0$, ce qui est absurde. Ainsi $J$ est $k[X_1, \cdots, X_{n+1}]$ tout entier, donc en particulier il existe $Q_1, \cdots, Q_n, Q \in k[X_1, \cdots, X_{n+1}]$ tels que
-                \label{1.1}
                 \begin{align}
+                    \label{1.1}
                     1 = P_1Q_1 + \cdots + P_rQ_r + Q(1 + X_{n+1}f)
                 \end{align}
                 Maintenant le morphisme de localisation $k[X_1, \cdots, X_n] \to k[X_1, \cdots, X_n, 1/f]$ et le choix de l'élément $1/f$ induit un morphisme d'évaluation

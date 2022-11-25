@@ -15,7 +15,7 @@
 
         \begin{defi} (Morphisme d'ensembles algébriques)
             \label{ensalgmor}
-            Soit $V,W \subseteq \mathbb{A}^n, \mathbb{A}^m$ des ensembles algébriques affines. $\varphi = (\varphi_1, \cdots, \varphi_m) : V \to W$ est une fonction régulière, ou morphisme (d'ensembles algébriques affines) si pour tout $i \in \lcc 1,l \rcc$, $\exists P_i \in k[X_1, \cdots, X_n]$ tel que $\varphi_i(q) = P_i(a)$ pour tout $a \in V$.
+            Soit $V,W \subseteq \mathbb{A}^n, \mathbb{A}^m$ des ensembles algébriques affines. $\varphi = (\varphi_1, \cdots, \varphi_m) : V \to W$ est une fonction régulière, ou morphisme (d'ensembles algébriques affines) si pour tout $i \in \lcc 1,l \rcc$, $\exists P_i \in k[X_1, \cdots, X_n]$ tel que $\varphi_i(a) = P_i(a)$ pour tout $a \in V$.
         \end{defi}
 
         \begin{expl}
@@ -121,9 +121,9 @@
         \end{align*}
         Ainsi au travers de $\chi$ il envoie $f_P$ sur $f_P \circ \varphi$. De plus, si on note $\varphi_i \in k[X_1, \cdots, X_n]$ des polynômes tels que $\varphi(a) = (\varphi_i(a))$ pour tout $a \in V$, alors 
         \begin{align*}
-            \varphi^*([Y_i]) = \chi^{-1}(\chi([T_i]) \circ \varphi) = \varphi_i
+            \varphi^*([Y_i]) = \chi^{-1}(\chi([Y_i]) \circ \varphi) = \varphi_i
         \end{align*}
-        Ainsi $\varphi^*$ correspond au morphisme d'évaluation en les $\varphi_i$. Finalement, pour tout $y \in W$,
+        Ainsi $\varphi^*$ correspond au morphisme d'évaluation en les $\varphi_i$. Finalement, pour tout $x \in V$,
         \begin{align*}
             \varphi^*([P])(x) = (f_P \circ \varphi)(x) = f_P(\varphi(x)) = [P](\varphi(x))
         \end{align*}
@@ -165,7 +165,6 @@
             Les foncteurs pleinements fidèles préservent et réfléchissent les isomorphismes.
         \end{proof}
         \begin{proof} (\ref{theo115})
-            \cor{A relire}
             Soit $\varphi : V \to W \subseteq \mathbb{A}^l$, écrivons $\varphi = (\varphi_1, \cdots, \varphi_l)$, avec $\varphi_i : V \to k$. $\varphi$ morphisme, donc
             \begin{align*}
                 \begin{array}{cccc}

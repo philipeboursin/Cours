@@ -91,7 +91,7 @@
                         w_b \cdot \beta
                     \end{bmatrix} \\
                 \end{align*}
-                Montrons que $<_M = <_{TM}$. Notons $T = (T_{ij})_{1 \leq i,j \leq m}$. Alors
+                Montrons que $<_M = <_{TM}$. Notons $T = (t_{ij})_{1 \leq i,j \leq m}$. Alors
                 \begin{align*}
                     TM =
                     \begin{bmatrix}
@@ -105,7 +105,7 @@
                 \begin{align*}
                     \alpha <_M \beta &\iff 
                     \begin{cases}
-                        w_1 \alpha < w_2 \beta \\
+                        w_1 \alpha < w_1 \beta \\
                         \text{ou alors } w_1\alpha = w_1 \beta \text{ et } w_2 \alpha < w_2 \beta \\
                         \text{ou alors } w_1\alpha = w_1 \beta \text{ et } w_2 \alpha = w_2 \beta \text{ et } w_3 \alpha < w_3 \beta \\
                         \vdots
@@ -212,39 +212,37 @@
 
     \section{Bases de Gröbner marquées, universelles}
         \begin{nota}
-            \begin{itemize}
-                \item $<$ ordre monomial, $E \subseteq k[x_1, \cdots, x_n]$. Alors
-                \begin{align*}
-                    LT_<(E) := \{LT_<(f) \mid f \in E\}
-                \end{align*}
-                \item \begin{align*}
-                    Mon(E) = \{(LT_<(E)) \mid < \text{ ordre monomial}\}
-                \end{align*}
-            \end{itemize}
+            $<$ ordre monomial, $E \subseteq k[x_1, \cdots, x_n]$. Alors
+            \begin{align*}
+                LT_<(E) := \{LT_<(f) \mid f \in E\}
+            \end{align*}
+            \begin{align*}
+                Mon(E) = \{\bra LT_<(E) \ket \mid < \text{ ordre monomial}\}
+            \end{align*}
         \end{nota}
         \begin{theo}
             Soit $I \subrel{id} k[x_1, \cdots, x_n]$. Alors $Mon(I)$ est fini.
         \end{theo}
         \begin{proof}
-            Supposons le contraire, pour chaque $J \in Mon(I)$, soit $<^J$ un ordre monomial tel que $J = (LT_{<^J}(I))$. Soit
+            Supposons le contraire, pour chaque $J \in Mon(I)$, soit $<^J$ un ordre monomial tel que $J = \bra LT_{<^J}(I) \ket$. Soit
             \begin{align*}
                 \Sigma = \{<^J \mid J \in Mon(I)\}
             \end{align*}
-            Par le théorème de la base de Hilbert  il existe $f_1, \cdots, f_r \in I$ tq $I = (f_1, \cdots, f_r)$. Chaque $f_i$ n'a qu'un nombre fini de termes, puisque $\Sigma$ est infini, $\exists \Sigma_1 \subseteq \Sigma$ infini tel que $\forall i \in \lcc 1,r \rcc$, $LT_<(f_i)$ prend la même valeur pour tout $< \in \Sigma_1$. Posons
+            Par le théorème de la base de Hilbert  il existe $f_1, \cdots, f_r \in I$ tq $I = \bra f_1, \cdots, f_r \ket$. Chaque $f_i$ n'a qu'un nombre fini de termes, puisque $\Sigma$ est infini, $\exists \Sigma_1 \subseteq \Sigma$ infini tel que $\forall i \in \lcc 1,r \rcc$, $LT_<(f_i)$ prend la même valeur pour tout $< \in \Sigma_1$. Posons
             \begin{align*}
-                J := (LT_<(f_1), \cdots, LT_<(f_r))
+                J := \bra LT_<(f_1), \cdots, LT_<(f_r) \ket
             \end{align*}
             pour $< \in \Sigma_1$. Montrons que $\{f_1, \cdots, f_r\}$ n'est pas une bdg de $I$, pour $< \in \Sigma_1$. Si c'était le cas, alors ce serait une bdg pour tout $<' \in \Sigma_1$ : 
             \begin{align*}
-                (LT_<(I)) = (LT_<(f_i)) = (LT_{<'}(f_i)) \subseteq (LT_{<'}(I))
+                \bra LT_<(I) \ket = \bra LT_<(f_i),\, 1 \leq i \leq r \ket  = \bra LT_{<'}(f_i),\, 1 \leq i \leq r \ket \subseteq \bra LT_{<'}(I) \ket
             \end{align*}
-            puis si un monôme $m$ est dans $(LT_{<'}(I))$ mais pas dans $(LT_<(I))$, alors la division de $m$ par $f_1, \cdots, f_r$ donne un reste non nul, pour $<$ comme pour $<'$. Mais si $m = LT_{<'}(f)$, $f \in I$, alors le reste de la dibision de $f$ par $f_1, \cdots, f_r$ pour $<$ est nul. Ce reste contient pourtant le terme $m$, contradiction. Donc $\{f_1, \cdots, f_r\}$ est une bdg pour tout $<' \in \Sigma_1$, donc pour tout $<, <' \in \Sigma_1$, 
+            puis si un monôme $m$ est dans $\bra LT_{<'}(I) \ket$ mais pas dans $\bra LT_<(I) \ket$, alors la division de $m$ par $f_1, \cdots, f_r$ donne un reste non nul, pour $<$ comme pour $<'$. Mais si $m = LT_{<'}(f)$, $f \in I$, alors le reste de la division de $f$ par $f_1, \cdots, f_r$ pour $<$ est nul. Ce reste contient pourtant le terme $m$, contradiction. Donc $\{f_1, \cdots, f_r\}$ est une bdg pour tout $<' \in \Sigma_1$, donc pour tout $<, <' \in \Sigma_1$, 
             \begin{align*}
-                (LT_<(I)) = (LT_{<'}(I))
+                \bra LT_<(I) \ket = \bra LT_{<'}(I) \ket
             \end{align*}
-            mais par définition de $\Sigma_1$, si $< \neq <'$, alors $(LT_<(I)) \neq (LT_{<'}(I))$, contradiction. Ainsi $\{f_1, \cdots, f_r\}$ n'est pas une bdg pour $I$ et pour $< \in \Sigma_I$. Il existe donc $f_{r+1} \in I$ tq $LT_<(f_{r+1}) \notin (LT_<(f_i))$. Alors $\exists \Sigma_2 \subseteq \Sigma_1$ infini tel que les valeurs de $LT_<(f_i)$, $i \in \lcc 1,r+1 \rcc$, sont les mêmes pour tout $< \in \Sigma_2$. Comme plus haut, on mq $(f_1, \cdots, f_{r+1})$ n'est pas une bdg de $I$ pour $< \in \Sigma_2$. Donc $\exists f_{r+2} \in I$ tel que $LT_<(f_{r+2}) \notin (LT_<(f_1), \cdots, LT_<(f_{r+1}))$ pour $< \in \Sigma_2$. Ainsi on construit par récurrence une famille d'ensembles infinis $\Sigma \supseteq \Sigma_1 \supseteq \Sigma_2 \supseteq \cdots$ et des éléments $f_1, f_2, \cdots$ pour $<_i \in \Sigma_i$ tels que 
+            mais par définition de $\Sigma$, si $< \neq <'$, alors $\bra LT_<(I) \ket \neq \bra LT_{<'}(I) \ket$, contradiction. Ainsi $\{f_1, \cdots, f_r\}$ n'est pas une bdg pour $I$ et pour $< \in \Sigma_I$. Il existe donc $f_{r+1} \in I$ tq $LT_<(f_{r+1}) \notin \bra LT_<(f_i) \ket = J$. Alors $\exists \Sigma_2 \subseteq \Sigma_1$ infini tel que les valeurs de $LT_<(f_i)$, $i \in \lcc 1,r+1 \rcc$, sont les mêmes pour tout $< \in \Sigma_2$. Comme plus haut, on mq $\{f_1, \cdots, f_{r+1}\}$ n'est pas une bdg de $I$ pour $< \in \Sigma_2$. Donc $\exists f_{r+2} \in I$ tel que $LT_<(f_{r+2}) \notin \bra LT_<(f_1), \cdots, LT_<(f_{r+1}) \ket$ pour $< \in \Sigma_2$. Ainsi on construit par récurrence une famille d'ensembles infinis $\Sigma \supseteq \Sigma_1 \supseteq \Sigma_2 \supseteq \cdots$ et des éléments $f_1, f_2, \cdots$ pour $<_i \in \Sigma_i$ tels que 
             \begin{align*}
-                (LT_{<_1}(f_1), \cdots, LT_{<_1}(f_{r+1})) \nsubseteq (LT_{<_2}(f_1), \cdots, LT_{<_1}(f_{r+2})) \supseteq \cdots 
+                J \varsubsetneq \bra LT_{<_1}(f_1), \cdots, LT_{<_1}(f_{r+1}) \ket \varsubsetneq \bra LT_{<_2}(f_1), \cdots, LT_{<_1}(f_{r+2}) \ket \varsubsetneq \cdots 
             \end{align*}
             ce qui contredit la noethérianité de $k[x_1, \cdots, x_n]$.
         \end{proof}
@@ -256,21 +254,21 @@
             L'ensemble des bdg marquée de $I$ est en bijection avec $Mon(I)$, et est donc fini.
         \end{coro}
         \begin{proof}
-            Soit $\{(g_1,m_1), \cdots, (g_r,m_r)\}$ une badg marquée de $I$. Supposons que $<, <'$ sont deux ordres monomiaux pour lesquels $\{(g_1, m_1), \cdots, (g_r, m_r)\}$ est la base de grobner marquée. Alors
+            Soit $\{(g_1,m_1), \cdots, (g_r,m_r)\}$ une bdg marquée de $I$. Supposons que $<, <'$ sont deux ordres monomiaux pour lesquels $\{(g_1, m_1), \cdots, (g_r, m_r)\}$ est la base de grobner marquée. Alors
             \begin{align*}
-                (LT_<(I)) = (LT_{<'}(I))
+                \bra LT_<(I) \ket = \bra LT_{<'}(I) \ket
             \end{align*}
-            En effet, $(LT_<(I)) = (LT_<(g_i)) = (m_i) = (LT_{<'}(g_i)) = (LT_{<'}(I))$. On a donc défini une application
+            En effet, $\bra LT_<(I) \ket = \bra LT_<(g_i) \ket = \bra m_i \ket = \bra LT_{<'}(g_i) \ket = \bra LT_{<'}(I) \ket$. On a donc défini une application
             \begin{align*}
                 \begin{array}{cccc}
                     \phi : & \{\text{bdg marquées}\} & \to & Mon(I) \\
-                    & \{(g_i,m_i)\} & \mapsto & (LT_<(I)) \\
+                    & \{(g_i,m_i)\} & \mapsto & \bra LT_<(I) \ket \\
                 \end{array}
             \end{align*}
-            où $<$ est un ordre pour lequel $\{(g_i, m_i)\}$ est une bdg marquée. On définit une inverse $\psi$ à $\phi$ : Soit $J \in Mon(I)$, puis soient $<, <'$ tq $J = (LT_<(I)) = (LT_{<'}(I))$. Alors $<$ et $<'$ définissent la même bdg marquée de $I$. Soit $\{(g_i,m_i)\}$ la base de groebner marquée pour $<$. Ainsi
+            où $<$ est un ordre pour lequel $\{(g_i, m_i)\}$ est une bdg marquée. On définit une inverse $\psi$ à $\phi$ : Soit $J \in Mon(I)$, puis soient $<, <'$ tq $J = \bra LT_<(I) \ket = \bra LT_{<'}(I) \ket$. Alors $<$ et $<'$ définissent la même bdg marquée de $I$ : soit $\{(g_i,m_i)\}$ la base de groebner marquée pour $<$ (la base de Groebner réduite à laquelle on rajoute les monômes dominants), alors
             \begin{align*}
-                (LT_<(g_i)) &= (LT_<(I)) \\
-                &= (LT_{<'}(I)) \supseteq (LT_{<'}(g_i))
+                \bra LT_<(g_i) \ket &= \bra LT_<(I) \ket \\
+                &= \bra LT_{<'}(I) \ket \supseteq \bra LT_{<'}(g_i) \ket
             \end{align*}
             Pour chaque $i$, $LT_{<'}(g_i)$ est divisible par l'un des $LT_<(g_j)$, mais comme $(g_i)$ est une bdg réduite, ceci entraine que $LT_{<'}(g_i) = LT_<(g_i)$. En particulier $(g_i, m_i)$ est une bdg, réduite et marquée pour l'ordre $<'$. On a donc défini
             \begin{align*}
@@ -311,16 +309,17 @@
 
         %Cours du 24/10
         \begin{defi}
-            Soit $w \in \mathbb{R}^n_+$. Le $w$ degré d'un monôme $x^\alpha$ est $\deg_w x^\alpha = w \cdot \alpha$. Un polynôme est $w$-homogène si tous ses termes ont le même $w$-degré. Si $0 \neq F \in k[X_1, \cdots, X_n]$, on pose 
+            Soit $w \in \mathbb{R}^n_+$. Le $w$-degré d'un monôme $x^\alpha$ est $\deg_w x^\alpha = w \cdot \alpha$. Un polynôme est $w$-homogène si tous ses termes ont le même $w$-degré. Si $0 \neq f \in k[x_1, \cdots, x_n]$, on pose 
             \begin{align*}
                 LT_w(f) = \sum \text{termes de $f$ de $w$-degré maximal}
             \end{align*}
-            Si $E \subseteq k[X_1, \cdots, X_n]$, $LT_w(E) = \{LT_w(f) \mid f \in E\}$.
+            Si $E \subseteq k[x_1, \cdots, x_n]$, $LT_w(E) = \{LT_w(f) \mid f \in E\}$.
         \end{defi}
         \begin{nota}
             Si $<_M$ est un ordre monomial, on écrira $LT_M$ au lieu de $LT_{<M}$.
         \end{nota}
         \begin{prop}
+            \label{prop331}
             Soit $<_M$ un ordre monomial, soit $w \in \mathbb{R}_+^n$. Posons
             \begin{align*}
                 \bar M :=
@@ -331,8 +330,8 @@
             \end{align*}
             de sorte que $<_{\bar M}$ soit un ordre monomial.
             \begin{enumerate}
-                \item $\forall f \in k[X_1, \cdots, X_n]$, $LT_{\bar M}(f) = LT_M(LT_w(f))$
-                \item Si $I \subrel{id} k[X_1, \cdots, X_n]$, alors
+                \item $\forall f \in k[x_1, \cdots, x_n]$, $LT_{\bar M}(f) = LT_M(LT_w(f))$
+                \item Si $I \subrel{id} k[x_1, \cdots, x_n]$, alors
                 \begin{align*}
                     \bra LT_M \bra LT_w(I) \ket \ket = \bra LT_{\bar M}(I) \ket
                 \end{align*}
@@ -360,7 +359,7 @@
                 \begin{align*}
                     f = \sum_{i = 1}^r q_i LT_w(f_i)
                 \end{align*}
-                avec $q_i \in k[X_1, \cdots, X_n]$, $f_i \in I$.
+                avec $q_i \in k[x_1, \cdots, x_n]$, $f_i \in I$.
                 \begin{align*}
                     f &= \sum_{d \in \mathbb{N}} \sum_{i = 1}^r (q_i LT_w(f_i))_{(d)} \\
                     &= \sum_d \sum_{i = 1}^r (q_i)_{(d - \deg_w LT_w f_i)} LT_w(f_i) \\
@@ -382,25 +381,25 @@
             \end{enumerate}
         \end{proof}
         \begin{prop}
-            Soit $<$ un ordre monomial. Soit $I \subrel{id} k[X_1, \cdots, X_n]$. Soit $B$ l'ensemble des monômes qui ne sont pas dans $\bra LT_<(I) \ket$. Soit $\pi : k[X_1, \cdots, X_n] \surjectivearrow k[X_1, \cdots, X_n]$, alors $\pi(B)$ est un base du $k$-ev $k[X_1, \cdots, X_n]/I$.
+            Soit $<$ un ordre monomial. Soit $I \subrel{id} k[x_1, \cdots, x_n]$. Soit $B$ l'ensemble des monômes qui ne sont pas dans $\bra LT_<(I) \ket$. Soit $\pi : k[x_1, \cdots, x_n] \surjectivearrow k[x_1, \cdots, x_n]/I$ la projection canonique, alors $\pi(B)$ est un base du $k$-ev $k[x_1, \cdots, x_n]/I$.
         \end{prop}
         \begin{proof}
-            Soit $G$ une bdg de $I$ pour $<$. Si $0 \neq f \in k[X_1, \cdots, X_n]$, $\bar f^G$ est combinaison linéaire des éléments de $B$. Or $\pi(f) = \pi(\bar f^G)$, d'où $\pi(f)$ est combinaison linéaire des éléments de $\pi(B)$. De plus, $\pi(B)$ est libre car aucu,e combinaison linéaire d'éléments de $B$ n'est dans $I$.
+            Soit $G$ une bdg de $I$ pour $<$. Si $0 \neq f \in k[x_1, \cdots, x_n]$, $\bar f^G$ est combinaison linéaire des éléments de $B$. Or $\pi(f) = \pi(\bar f^G)$, d'où $\pi(f)$ est combinaison linéaire des éléments de $\pi(B)$. De plus, $\pi(B)$ est libre car aucune combinaison linéaire d'éléments de $B$ n'est dans $I$.
         \end{proof}
         \begin{coro}
-            Si $< \neq <'$ sont deux ordres monomiaux, alors on ne peut pas avoir $\bra LT_<(I) \ket \nsubseteq \bra LT_{<'}(I) \ket$.
+            Si $< \neq <'$ sont deux ordres monomiaux, alors on ne peut pas avoir $\bra LT_<(I) \ket \varsubsetneq \bra LT_{<'}(I) \ket$.
         \end{coro}
         \begin{proof}
-            Si on avait une inclusion stricte, alors on aurait que $B' \nsubseteq B$, et donc $\pi(B') \nsubseteq \pi(B)$ sont deux bases du même espace vectoriel, impossible.
+            Si on avait une inclusion stricte, alors on aurait que $B' \varsubsetneq B$, et donc $\pi(B') \varsubsetneq \pi(B)$ sont deux bases du même espace vectoriel, impossible.
         \end{proof}
         \begin{defi}
-            Soit $I \subrel{id} k[X_1, \cdots, X_n]$. Soit $w \in \mathbb{R}_+^n$.
-            \begin{align}
+            Soit $I \subrel{id} k[x_1, \cdots, x_n]$. Soit $w \in \mathbb{R}_+^n$.
+            \begin{align*}
                 C[w] := \left\{ w' \in \mathbb{R}_+^n \mid \bra LT_w(I) \ket = \bra LT_{w'}(I) \ket \right\}
-            \end{align}
+            \end{align*}
         \end{defi}
         \begin{prop}
-            Soit $<_M$ un ordre monomial, et
+            \label{prop333} Soit $<_M$ un ordre monomial, et
             \begin{align*}
                 \bar M =
                 \begin{bmatrix}
@@ -408,13 +407,13 @@
                     M \\
                 \end{bmatrix}
             \end{align*}
-            Soit $\bar G$ la bdg réduite de $I$ pour $w_{\bar M}$. Alors
+            Soit $\bar G$ la bdg réduite de $I$ pour $<_{\bar M}$. Alors
             \begin{align*}
                 C[w] = \{w' \in \mathbb{R}_+^n \mid \forall g \in \bar G,\, LT_w(g) = LT_{w'}(g) \}
             \end{align*}
         \end{prop}
         \begin{proof}
-            \item $\subset$ : Soit $w' \in C[w]$. Alors $\bra LT_w(I) \ket = \bra LT_{w'} (I) \ket$. Par la prop précédente, $LT_w(\bar G)$ est ma bdg réduite de $\bra LT_w(I) \ket$ pour $<_M$. Soit $g \in \bar G$,
+            \item $\subseteq$ : Soit $w' \in C[w]$. Alors $\bra LT_w(I) \ket = \bra LT_{w'} (I) \ket$. D'après \ref{prop331}, $LT_w(\bar G)$ est la bdg réduite de $\bra LT_w(I) \ket$ pour $<_M$. Soit $g \in \bar G$,
             \begin{align*}
                 \overline{LT_w'(g)}^{LT_w(\bar G)} = 0
             \end{align*}
@@ -427,9 +426,9 @@
             \begin{align*}
                 \bra LT_w(I) \ket = \bra LT_w(\bar G) \ket = \bra LT_{w'}(\bar G) \ket \subseteq \bra LT_{w'}(I) \ket 
             \end{align*}
-            Si l'inclusion était stricte, alors on aurait $\bra LT_M \bra LT_w(I) \ket \ket \nsubseteq \bra LT_M \bra LT_{w'}(I) \ket \ket$ (en effet, si $J \subseteq J'$ et $\bra LT_M(J) \ket = \bra LT_M(J') \ket$, alors une bdg de $J$ pour $<_M$ est forcément une bdg de $J'$ pour $J'$, et donc $J = J'$). Maintenant
+            Si l'inclusion était stricte, alors on aurait $\bra LT_M \bra LT_w(I) \ket \ket \varsubsetneq \bra LT_M \bra LT_{w'}(I) \ket \ket$ (en effet, si $J \subseteq J'$ et $\bra LT_M(J) \ket = \bra LT_M(J') \ket$, alors une bdg de $J$ pour $<_M$ est forcément une bdg de $J'$ pour $J'$, et donc $J = J'$). Maintenant
             \begin{align*}
-                \bra LT_{\bar M}(I) \ket = \bra LT_M \bra LT_w(I) \ket \ket \nsubseteq \bra LT_M \bra LT_{w'}(I) \ket \ket = \bra LT_{\begin{bmatrix} w \\ M \end{bmatrix}}(I) \ket
+                \bra LT_{\bar M}(I) \ket = \bra LT_M \bra LT_w(I) \ket \ket \varsubsetneq \bra LT_M \bra LT_{w'}(I) \ket \ket = \bra LT_{\begin{bmatrix} w \\ M \end{bmatrix}}(I) \ket
             \end{align*}
             contradiction avec le corollaire précédent. Donc $\bra LT_w(I) \ket = \bra LT_{w'}(I) \ket$, d'où $w' \in C[w]$.
         \end{proof}
@@ -519,7 +518,7 @@
                 \begin{align*}
                     C[w'] = \{w'' \in \mathbb{R}_+^n \mid \forall g \in \bar G,\, LT_{w'}(g) = LT_{w''}(g) \}
                 \end{align*}
-                Si $w'$ est "génériqueé (i.e. que toute inégalité définissant $F$ est stricte pour $w'$). Alors $\overline{C[w']} = F$ car $w'' \in \overline{C[w']}$ ssi $w''$ satisfaisant aux mêmes (in)égalités que $w'$.
+                Si $w'$ est "générique" (i.e. que toute inégalité définissant $F$ est stricte pour $w'$). Alors $\overline{C[w']} = F$ car $w'' \in \overline{C[w']}$ ssi $w''$ satisfaisant aux mêmes (in)égalités que $w'$.
                 \item Soient $w,w' \in \mathbb{R}_+^n$. Condiréons $\overline{C[w]} \cap \overline{C[w']}$. Si $w'' \in \overline{C[w]} \cap \overline{C[w']}$, alors $\overline{C[w'']}$ est une face de $\overline{C[w]}$ et de $\overline{C[w']}$, par ce qui précède. Prenons $w''$ dans l'intérieur relatif, on obtiens que $\overline{C[w'']} = \overline{C[w]} \cap \overline{C[w']}$.
             \end{enumerate}
         \end{proof}
@@ -534,7 +533,7 @@
             \end{align*}
             Fixons $<_M$ ordre monomial pour lequel $g$ est la bdgm. Notons $w$ la première ligne de $M$. Alors $\forall i \in \lcc 1,r \rcc$, $\forall \beta$ tq $c_{i, \beta} \neq 0$,
             \begin{align*}
-                w \cdot \alpha_i \geq w \cdot w \cdot \beta \iff w \cdot (\alpha_i - \beta) \geq 0
+                w \cdot \alpha_i \geq  w \cdot \beta \iff w \cdot (\alpha_i - \beta) \geq 0
             \end{align*}
             \begin{lemm}
                 Il existe $w' \in \mathbb{R}^n_+$ tel que $\forall i \in \lcc 1,r \rcc$, $\forall \beta \neq \alpha_i$ t.q. $c_{i, \beta} \neq 0$,

@@ -38,7 +38,7 @@
         \end{theo}
         \begin{proof}
             $\subseteq$ : Soit $f \in I \cap J$, alors $f = tf + (1 - t)f \in \bra tI + (1 - t)J \ket$, puis $f \in k[x_1, \cdots, x_n]$. \\
-            $\supseteq$ : Soit $f \in \bra tI + (1-t)J \ket \cap k[x_1, \cdots, x_n]$. Posons
+            $\supseteq$ : Soit $f \in \bra tI + (1-t)J \ket \cap k[x_1, \cdots, x_n]$. Pour tout $\lambda \in k$, posons
             \begin{align*}
                 \begin{array}{cccc}
                     \varepsilon_\lambda : & k[t,x_1, \cdots, x_n] & \to & k[x_1, \cdots, x_n] \\
@@ -54,7 +54,7 @@
     \section{Application 2 : extension}
         Soit $k$ un corps algébriquement clos. On veut montrer le théorème suivant :
         \begin{theo} (Théorème d'extension)
-            Soit $I = (f_1, \cdots, f_r) \subrel{id} k[x_1, \cdots, x_n]$. Notons
+            Soit $I = \bra f_1, \cdots, f_r \ket \subrel{id} k[x_1, \cdots, x_n]$. Notons
             \begin{align*}
                 f_i(x_1, \cdots, x_n) = g_i(x_2, \cdots, x_n)x_1^{N_1} + h_i
             \end{align*}
@@ -73,7 +73,19 @@
             \begin{align*}
                 (\alpha_0 + \alpha_1x + \cdots + \alpha_{e-1}x^{e-1})f + (\beta_0 + \beta_1x + \cdots + \beta_{d-1}x^{d-1})g = 0
             \end{align*}
-            admet une solution non nulle en les $\alpha_i, \beta_i$. Ce système est donné par la matrice de Sylvester
+            admet une solution non nulle en les $\alpha_i, \beta_i$. Ce système s'écrit matriciellement comme 
+            \begin{align*}
+                Syl(f,g,x) 
+                \begin{bmatrix}
+                    \alpha_0 \\
+                    \vdots \\
+                    \alpha_{e - 1} \\
+                    \beta_0 \\
+                    \vdots \\
+                    \beta_{d - 1} \\
+                \end{bmatrix} = 0
+            \end{align*}
+            où $Syl(f, g, x)$ est la matrice de Sylverster associée à $f, g \in k[x]$ définie comme
             \begin{align*}
                 Syl(f,g,x) =
                 \begin{bmatrix}
@@ -94,7 +106,9 @@
             \begin{prop}
                 $Res(f,g,x) = 0 \iff f$ et $g$ ont un facteur non constant en commun.
             \end{prop}
+            Ainsi on peut reformuler le fait que $f$ et $g$ ont un facteur non constant si et seulement si le système précédent admet une solution non nulle en terme la valeur de $Res(f, g, x)$ :
             \begin{prop}
+                \label{prop232}
                 Fixons $d,e \geq 1$. Il existe $A,B \in \mathbb{Z}[X_0, \cdots, X_d, Y_0, \cdots, Y_e, x]$ tq pour tout $f,g \in k[x]$ avec $\deg f , \deg g = d,e$, on a 
                 \begin{align*}
                     Res(f,g,x) = A(a_0, \cdots, a_d, b_0, \cdots, b_e, x) f +  B(a_0, \cdots, a_d, b_0, \cdots, b_e, x) g
@@ -116,11 +130,11 @@
                 \begin{align*}
                     Syl(f,g,x) M \begin{bmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{bmatrix} = \begin{bmatrix} Res(f,g,x) \\ 0 \\ \vdots \\ 0 \end{bmatrix}
                 \end{align*}
-                Maintenant $M$ times vecteur est un vecteur dont les coord sont des polynômes évalués en les $a_i$ et $b_j$. Ainsi
+                Maintenant les coefficients de $M$ sont des polynômes évalués en les $a_i$ et $b_j$. Ainsi
                 \begin{align*}
                     \varphi(P_0 + P_1X + \cdots + P_{e-1}X^{e-1}, Q_0 + Q_1X + \cdots + Q_{d-1}X^{d-1}) = Res(f,g,x)
                 \end{align*}
-                où $P_i, Q_j \in \mathbb{Z}[a_i, b_j]$. 
+                où $P_i, Q_j \in \mathbb{Z}[a_i, b_j]$ sont les coefficients de la première ligne de $M$.
                 \begin{align*}
                     \Rightarrow (P_0 + P_1X + \cdots + P_{e-1}X^{e-1}) f + (Q_0 + Q_1X + \cdots + Q_{d-1}X^{d-1}) g = Res(f,g,x)
                 \end{align*}
@@ -131,21 +145,22 @@
             \end{remq}
         
         \subsection{Théorème d'extension}
-            $f,g \in k[x_1, \cdots, x_n]$, alors $Res(f,g,x_1) \in k[x_2, \cdots, x_n]$. Notons $I = (f_1, \cdots, f_r) \subrel{id} k[x_1, \cdots, x_n]$, pour tout $i$
+            $f,g \in k[x_1, \cdots, x_n]$, alors $Res(f,g,x_1) \in k[x_2, \cdots, x_n]$. Notons $I := \bra f_1, \cdots, f_r \ket \subrel{id} k[x_1, \cdots, x_n]$, et notons pour tout $i$
             \begin{align*}
                 f_i = g_i(x_2, \cdots, x_n) x_1^{N_1} + \text{ termes de } \deg_{x_1} < N_1
             \end{align*}
+            où $g_i \in k[x_2, \cdots, x_n]$.
             \begin{lemm}
                 \label{lemm161}
                 Le théorème d'extension est vrai pour $n = 2$.
             \end{lemm}
             \begin{proof}
-                Notons $\deg f_1 = d$, $\deg f_2 = e$. Alors il existe $A,B \in \mathbb{Z}[X_0, \cdots, X_d, Y_0, \cdots, Y_e, x_1, \cdots, x_n]$. Alors
+                Notons $\deg f_1 = d$, $\deg f_2 = e$. Alors d'après \ref{prop232}, il existe \linebreak $A,B \in \mathbb{Z}[X_0, \cdots, X_d, Y_0, \cdots, Y_e, x_1, \cdots, x_n]$ tels que
                 \begin{align*}
                     Res(f_1, f_2, x_1) = &A(a_0, \cdots, a_d, b_0, \cdots, b_e, x_2, \cdots, x_n, x_1) f_1 + \\
                     &B(a_0, \cdots, a_d, b_0, \cdots, b_e, x_2, \cdots, x_n, x_1) f_2
                 \end{align*}
-                Le membre de droite de cette égalité est dans $I$, et $Res(f_1, f_2, x_1) \in k[x_1, \cdots, x_n]$. Ainsi $Res(f_1, f_2, x_1) \in I \cap k[x_2, \cdots, x_n] = I_1$. Soit $(c_2, \cdots, c_b) \in V(I_1)$. En particulier, $Res(f_1, f_2, x_1)(c_2, \cdots, c_n) = 0$. On cherche $c_1 \in k$ solution commune de $f_1(x_1, c_2, \cdots, c_n) = 0$ et $f_2(x_1, c_2, \cdots, c_n)$. Comme $k$ est algébriquement clos, $f_1(x_1, c_2, \cdots, c_n)$ et $f_2(x_1, c_2, \cdots, c_n)$ ont un zéro commun si et seulement si leur pgcd est non trivial ssi leur résultat s'annule. Maintenant 
+                Le membre de droite de cette égalité est dans $I$, et $Res(f_1, f_2, x_1) \in k[x_1, \cdots, x_n]$. Ainsi $Res(f_1, f_2, x_1) \in I \cap k[x_2, \cdots, x_n] = I_1$. Soit $(c_2, \cdots, c_b) \in V(I_1)$. En particulier, \linebreak $Res(f_1, f_2, x_1)(c_2, \cdots, c_n) = 0$. On cherche $c_1 \in k$ solution commune de $f_1(x_1, c_2, \cdots, c_n) = 0$ et $f_2(x_1, c_2, \cdots, c_n)$. Comme $k$ est algébriquement clos, $f_1(x_1, c_2, \cdots, c_n)$ et $f_2(x_1, c_2, \cdots, c_n)$ ont un zéro commun si et seulement si leur pgcd est non trivial ssi leur résultant s'annule. Maintenant 
                 \begin{align*}
                     Res(f_1(x_1, c_2, \cdots, c_n), f_2(x_1, c_2, \cdots, c_n), x_1) = Res(f_1(x_1, \cdots, x_n), f_1(x_1, \cdots, x_n), x_1)(c_2, \cdots, c_n)
                 \end{align*}
@@ -156,9 +171,9 @@
                         \deg_{x_1} f_i(x_1, c_2, \cdots, c_n) = \deg_{x_1} f(x_1, \cdots, x_n)
                     \end{align*}
                     et donc l'égalité précédente est vraie.
-                    \item l'un des $g_i$ s'annule en $(c_2, \cdots, c_n)$. Sans perte de généralité, supposons que $g_2$ s'annule (et donc $g_1$ ne s'annule pas) en $(c_2, \cdots, c_n)$. En remplaçant $f_2$ par $f_2' = f_2 + x_1^Nf_1$, avec $N >> 0$ ($N \geq \deg_{x_1}f_2$), on se ramène au cas 1 en remarquant que $f_1,f_2$ one une solution commune en $c_1$ si et seulement si $f_1, f_2'$ ont une solution commune en $c_1$.
+                    \item l'un des $g_i$ s'annule en $(c_2, \cdots, c_n)$. Sans perte de généralité, supposons que $g_2$ s'annule (et donc $g_1$ ne s'annule pas) en $(c_2, \cdots, c_n)$. En remplaçant $f_2$ par $f_2' = f_2 + x_1^Nf_1$, avec $N >> 0$ ($N \geq \deg_{x_1}f_2$), on se ramène au cas 1 en remarquant que $f_1,f_2$ ont une solution commune en $c_1$ si et seulement si $f_1, f_2'$ ont une solution commune en $c_1$.
                 \end{enumerate}
-                d'où $f_1(x_1, c_2, \cdots, c_n)$ et $f_2(x_1, c_2, \cdots, c_n)$ ont un zéro communt $c_1$.
+                d'où $f_1(x_1, c_2, \cdots, c_n)$ et $f_2(x_1, c_2, \cdots, c_n)$ ont un zéro commun $c_1$.
             \end{proof}
             \begin{defi}
                 Soient $f_1, \cdots, f_r \in k[x_1, \cdots, x_n]$. Considérons 

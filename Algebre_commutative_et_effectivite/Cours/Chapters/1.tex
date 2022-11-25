@@ -1,5 +1,5 @@
 \chapter{Bases de Gröbner}
-    Dans ce chapitre, tous les anneaux sont supposés commutatifs. Fixons dès à présent un $k \in \mathbf{Fld}$ (on supposera toujours qu'on dispose d'algorithmes pour les opérations du corps). 
+    Dans ce chapitre, tous les anneaux sont supposés commutatifs. Fixons dès à présent un corps $k$ (on supposera toujours qu'on dispose d'algorithmes pour les opérations du corps). 
     \section{Préliminaires}
         \begin{defi} (Anneau noéthérien)
             Un anneau est noéthérien si toute suite croissante d'idéaux $I_0 \subseteq I_1 \subseteq I_2 \subseteq \cdots$ est stationnaire i.e. 
@@ -66,7 +66,7 @@
                 \end{enumerate}
             \end{defi}
             \begin{nota}
-                On écrira $\alpha \leq \beta$ au lieu de $x^\alpha \leq x^\beta$.
+                On écrira $\alpha \leq \beta$ au lieu de $x^\alpha \leq x^\beta$ (la dernière condition devient alors $0 \leq \alpha$ pour tout $\alpha \in \mathbb{N}^n$)
             \end{nota}
             \begin{expl}
                 \begin{enumerate}
@@ -75,7 +75,7 @@
                     \begin{align*}
                         \alpha <_{lex} \beta \iff \exists 1 \leq r \leq n \mid \alpha_i = \beta_i \text{ pour } i < r \text{ et } \alpha_r < \beta_r
                     \end{align*}
-                    (i.e. le premier coeff non nul d $\beta - \alpha$ est positif). Par exemple, dans $k[x_1, x_2, x_3]$, $x_1^2 >_{lex} x_1x_2 >_{lex} x_2^2 >_{lex} x_3^{2097434}$
+                    (i.e. le premier coeff non nul d $\beta - \alpha$ est positif). Par exemple, dans $k[x_1, x_2, x_3]$, $x_1^2 >_{lex} x_1x_2 >_{lex} x_2^2 >_{lex} x_3^{2097434}$. Remarquons qu'avec cette définition, $x_1 >_{lex} x_2 >_{lex} \cdots >_{lex} x_n$.
                     \item Ordre lexicographique gradué $\leq_{deglex}$ : Pour $\alpha \in \mathbb{N}^n$, notons $|\alpha| = \sum \alpha_i$. Alors soient $\alpha \neq \beta$ dans $\mathbb{N}^n$,
                     \begin{align*}
                         \alpha <_{deglex} \beta \iff (|\alpha| < |\beta|) \lor (|\alpha| = |\beta| \land \alpha <_{lex} \beta)
@@ -191,8 +191,8 @@
         Par convention, $\emptyset$ est une base de Gröbner de l'idéal nul.
         \begin{expl}
             \begin{enumerate}
-                \item Si $0 \neq g \in k[x]$, alors $\{g\}$ est une bdg (base de Gröbner) de $\bra g \ket$.
-                \item Si $0 \neq g \in k[x_1, \cdots, x_n]$, alors $\{g\}$ est une bdg de $\bra g \ket$.
+                \item Si $0 \neq g \in k[x]$, alors $\{g\}$ est une bdG (base de Gröbner) de $\bra g \ket$.
+                \item Si $0 \neq g \in k[x_1, \cdots, x_n]$, alors $\{g\}$ est une bdG de $\bra g \ket$.
             \end{enumerate}
         \end{expl}
         Comment peut-on avoir $f \in \bra f_1, \cdots, f_r \ket$ mais $\bar f^{f_1, \cdots, f_r} \neq 0$ ? Il faut qu'à une étape de la division, $\mathrm{LT}(f)$ ne soit pas divisible par aucun des $\mathrm{LT}(f_i)$. 
@@ -219,7 +219,7 @@
             \begin{align*}
                 m = \sum_{i = 1}^r \sum_{\alpha \in \mathbb{N}^n} \lambda_\alpha^i x^{\alpha} m_i
             \end{align*}
-            Maintenant comme $m$ est un monome, il va exister $i, \alpha$ tels que $m = \lambda x^\alpha m_i$, donc $m_i \mid m$.
+            Maintenant comme $m$ est un monome, il va exister $i, \alpha, \lambda$ ($\lambda$ sera alors une somme de $\lambda_\alpha^i$) tels que $m = \lambda x^\alpha m_i$, donc $m_i \mid m$.
         \end{proof}
         Soient $f_1, \cdots, f_r \in k[x_1, \cdots, x_n]$. $\mathrm{LT}(f)$ divisible par l'un des $\mathrm{LT}(f_1), \cdots, \mathrm{LT}(f_r)$ si et seulement si $\mathrm{LT}(f) \in \bra \{\mathrm{LT}(f_i)\} \ket$ d'après la proposition précédente. \\
         \begin{nota}
@@ -265,8 +265,8 @@
             Soit $G = \{g_1, \cdots, g_r\} \subseteq k[x_1, \cdots, x_r]$. Alors $G$ est une BDG de $I := \bra G \ket$ si et seulement si $\forall g,h \in G$, $\overline{S(g,h)}^G = 0$
         \end{theo}
         \begin{proof}
-            $\Rightarrow$ : $G$ BDF, $f,g \in G$. Comme $S(f,g) \in I$, alors $\overline{S(f,g)}^G = 0$. \\
-            $\Leftarrow$ : Supposons que pour tout $g,h \in G$, alors $\overline{S(g,h)}^G = 0$. Soit $f \in I$, on veut mq $LT(f) \in \bra LT(G) \ket$. Or $I = \bra g_1, \cdots, g_r \ket$. Donc il existe $q_1, \cdots, q_r \in k[x_1, \cdots, x_n]$ tq 
+            $\Rightarrow$ : $G$ bdG, $f,g \in G$. Comme $S(f,g) \in I$, alors $\overline{S(f,g)}^G = 0$. \\
+            $\Leftarrow$ : Supposons que pour tout $g,h \in G$, alors $\overline{S(g,h)}^G = 0$. Soit $f \in I$, on veut mq $LT(f) \in \bra LT(G) \ket$. Or $I = \bra g_1, \cdots, g_r \ket$, donc il existe $q_1, \cdots, q_r \in k[x_1, \cdots, x_n]$ tq 
             \begin{align*}
                 f = \sum_{i = 1}^r q_ig_i
             \end{align*}
@@ -319,7 +319,7 @@
                 \begin{align*}
                     S(g_{i_j}, g_{i_{j+1}}) = \sum_{i = 1}^r b_i^jg_i
                 \end{align*}
-                Par définition de l'algorithme, chaque $b_i^jq_i$ est de multidegré au plus $mdeg(S(g_{i_j}, g_{i_{j+1}}))$. Mais alors
+                Par définition de l'algorithme, chaque $b_i^jq_i$ est de multidegré au plus $\mathrm{mdeg}(S(g_{i_j}, g_{i_{j+1}}))$. Mais alors
                 \begin{align*}
                     \mathrm{mdeg}(m_j S(g_{i_j}, g_{i_{j+1}})) = \mathrm{mdeg}(S(h_j,h_{j+1})) < \mathbb{M}
                 \end{align*}
@@ -336,10 +336,10 @@
             \begin{align*}
                 G^n = G^{n-1} \cup \left\{\overline{S(f,g)}^{G^{n-1}} \mid f,g \in G^{n-1},\, \overline{S(f,g)}^{G^{n-1}} \neq 0\right\} 
             \end{align*}
-            Alors il existe $N \in \mathbb{N}$ tel que $n \geq N \Rightarrow G^n = G^N$. Dans ce cas, $G^N$ est une bdg de $I$.
+            Alors il existe $N \in \mathbb{N}$ tel que $n \geq N \Rightarrow G^n = G^N$. Dans ce cas, $G^N$ est une bdG de $I$.
         \end{coro}
         \begin{proof}
-            Si $G^n = G^{n+1}$, alors par le critère de Buchberger $G^n$ est une bdg. Il faut donc montrer que la suite $(G^n)_n$ est stationnaire. Supposons le contraire, alors pour tout $n \geq 0$, $\exists f,g \in G^n$ tq $\overline{S(f,g)}^{G^n} \neq 0$. Par définition de l'algorithme de division multivariée, aucun des termes de $\overline{S(f,g)}^{G^n}$ n'est dans $\bra LT(G^n) \ket$. En particulier, $LT \left(\overline{S(f,g)}^{G^n} \right) \notin \bra LT(G^n) \ket$. On a donc $\bra LT(G^n) \ket \nsubseteq \bra LT(G^{n+1}) \ket$ et donc on obtiens une suite d'idéaux strictement croissante dans $k[x_1, \cdots, x_n]$, contradiction.
+            Si $G^n = G^{n+1}$, alors par le critère de Buchberger $G^n$ est une bdG. Il faut donc montrer que la suite $(G^n)_n$ est stationnaire. Supposons le contraire, alors pour tout $n \geq 0$, $\exists f,g \in G^n$ tq $\overline{S(f,g)}^{G^n} \neq 0$. Par définition de l'algorithme de division multivariée, aucun des termes de $\overline{S(f,g)}^{G^n}$ n'est dans $\bra LT(G^n) \ket$. En particulier, $LT \left(\overline{S(f,g)}^{G^n} \right) \notin \bra LT(G^n) \ket$. On a donc $\bra LT(G^n) \ket \varsubsetneq \bra LT(G^{n+1}) \ket$ et donc on obtiens une suite d'idéaux strictement croissante dans $k[x_1, \cdots, x_n]$, contradiction.
         \end{proof}
         \begin{remq}
             L'algorithme de Buchberger n'est pas optimal. Pour des versions optimisées, voir les algorithmes F4 et F5 (Faugère)
@@ -347,10 +347,10 @@
 
     \section{Bases de Gröbner réduites, unicité}
         \begin{expl}
-            $\bra x-y,y-z \ket = \bra x-z, y-z \ket \subrel{id} k[x_1, \cdots, x_n]$. Les deux couples de générateurs sont des bdg de l'idéal qu'ils engendrent pour l'ordre lex, on n'a donc pas toujours unicité des bases de Gröbner.
+            $\bra x-y,y-z \ket = \bra x-z, y-z \ket \subrel{id} k[x_1, \cdots, x_n]$. Les deux couples de générateurs sont des bdG de l'idéal qu'ils engendrent pour l'ordre lex, on n'a donc pas toujours unicité des bases de Gröbner.
         \end{expl}
-        \begin{defi} (bdg réduite)
-            Soit $G$ une bdg de $I \subrel{id} k[x_1, \cdots, x_n]$. Cette base est réduite si
+        \begin{defi} (bdG réduite)
+            Soit $G$ une bdG de $I \subrel{id} k[x_1, \cdots, x_n]$. Cette base est réduite si
             \begin{enumerate}
                 \item Pour tout $g \in G$, $LC(g) = 1$
                 \item Pour tout $g,h \in G$ distincts, aucun monôme de $g$ n'est divisible par $LT(h)$.
@@ -358,31 +358,31 @@
         \end{defi}
         \begin{theo}
             \label{1.5.1}
-            Tout idéal $I \subrel{id} k[x_1, \cdots, x_n]$ admet une unique bdg réduite.
+            Tout idéal $I \subrel{id} k[x_1, \cdots, x_n]$ admet une unique bdG réduite.
         \end{theo}
         \begin{remq}
-            La bdg réduite dépend de l'ordre monomial !
+            La bdG réduite dépend de l'ordre monomial !
         \end{remq}
         On aura besoin d'outils de réduction.
         \begin{lemm}
-            Soit $G = \{g_1, \cdots, g_r\}$ une bdg de $I$ idéal.
+            Soit $G = \{g_1, \cdots, g_r\}$ une bdG de $I$ idéal.
             \begin{enumerate}
-                \item Si $1 \leq i,j \leq r$ distincts sont tq $LT(g_i) \mid LT(g_j)$, alors $G \bs \{g_j\}$ est une bdg de $I$
-                \item Si $h_1, \cdots, h_r \in I$ sont tq $\mathrm{mdeg}(h_i) = \mathrm{mdeg}(g_i)$, alors $H = \{h_1, \cdots, h_r\}$ est une bdg de $I$.
+                \item Si $1 \leq i,j \leq r$ distincts sont tq $LT(g_i) \mid LT(g_j)$, alors $G \bs \{g_j\}$ est une bdG de $I$
+                \item Si $h_1, \cdots, h_r \in I$ sont tq $\mathrm{mdeg}(h_i) = \mathrm{mdeg}(g_i)$, alors $H = \{h_1, \cdots, h_r\}$ est une bdG de $I$.
             \end{enumerate}
         \end{lemm}
         \begin{proof}
             \begin{enumerate}
-                \item Comme $G$ est une bdg, $\bra LT(G) \ket = \bra LT(I) \ket$. Maintenant si $LT(g_i) \mid LT(g_j)$, alors $\bra LT(G \bs \{g_j\}) \ket = \bra LT(G) \ket$ et donc $G \bs \{g_j\}$ est une bdg.
+                \item Comme $G$ est une bdG, $\bra LT(G) \ket = \bra LT(I) \ket$. Maintenant si $LT(g_i) \mid LT(g_j)$, alors $\bra LT(G \bs \{g_j\}) \ket = \bra LT(G) \ket$ et donc $G \bs \{g_j\}$ est une bdG.
                 \item $\bra LT(G) \ket = \bra LT(H) \ket$ vu que $LM(G) = LM(H)$.
             \end{enumerate}
         \end{proof}
         \begin{proof} (\ref{1.5.1})
-            Soit $G = \{g_1, \cdots, g_r\}$ une bdg de $I$.
+            Soit $G = \{g_1, \cdots, g_r\}$ une bdG de $I$.
             \begin{enumerate}
                 \item Divisons chaque $g_i$ par $LC(g_i)$. On peut donc supposer que $LC(g_i) = 1$.
-                \item Chaque fois que $LT(g_i) \mid LT(g_j)$, on peut toujours retirer $g_j$ et toujours avoir une bdg. On peut donc supposer que $\forall i \neq j$, $LT(g_i) \nmid LT(g_j)$.
-                \item Enfin, pour chaque $i$, considérons $\bar g_i^{G \bs \{g_i\}} \in I$, et par définition aucun monôme de $\bar g_i^{G \bs \{g_i\}}$ n'est divisible par un des $LT(g_j)$, et $LT\left(\bar g_i^{G \bs \{g_i\}}\right) = LT(g_i)$. Par le $2$ du lemme, alors $\left\{ \bar g_1^{G \bs \{g_1\}}, \cdots, \bar g_r^{G \bs \{g_r\}} \right\}$ est une bdg, qui de plus est réduite.
+                \item Chaque fois que $LT(g_i) \mid LT(g_j)$, on peut toujours retirer $g_j$ et toujours avoir une bdG. On peut donc supposer que $\forall i \neq j$, $LT(g_i) \nmid LT(g_j)$.
+                \item Enfin, pour chaque $i$, considérons $\bar g_i^{G \bs \{g_i\}} \in I$, et par définition aucun monôme de $\bar g_i^{G \bs \{g_i\}}$ n'est divisible par un des $LT(g_j)$, et $LT\left(\bar g_i^{G \bs \{g_i\}}\right) = LT(g_i)$. Par le $2$ du lemme, alors $\left\{ \bar g_1^{G \bs \{g_1\}}, \cdots, \bar g_r^{G \bs \{g_r\}} \right\}$ est une bdG, qui de plus est réduite.
             \end{enumerate}
-            Ceci prouve l'existence d'une bdg réduite pour $I$. Reste à montrer l"unicité : soient $G,G'$ deus bdg réduites de $I$. Soit $g \in G$, il existe $g' \in G'$ tel que $LT(g') \mid LT(g)$. De même, il existe $g'' \in G$ tel que $LT(g'') \mid LT(g')$, et ainsi $LT(g'') \mid LT(g)$, donc $g'' = g$, et donc $LT(g') = LT(g)$. Ainsi on a montré que $LT(G) = LT(G')$. Considérons maintenant $g - g' \in I$, en particulier $\overline{g - g'}^G = 0$. Notons que si $h \in G \bs \{g\}$, alors aucun des termes de $g$ n'est divisible par $LT(h)$. De même pour $g'$, car $LT(G) = LT(G')$. De même aucun monôme de $g - g'$ n'est divisible par $LT(g)$ car $LT(g) = LT(g')$ donc $LT(g - g') < LT(g)$. D'où $\overline{g - g'}^G = g- g' = 0$ donc $g = g'$.
+            Ceci prouve l'existence d'une bdG réduite pour $I$. Reste à montrer l"unicité : soient $G,G'$ deus bdG réduites de $I$. Soit $g \in G$, il existe $g' \in G'$ tel que $LT(g') \mid LT(g)$. De même, il existe $g'' \in G$ tel que $LT(g'') \mid LT(g')$, et ainsi $LT(g'') \mid LT(g)$, donc $g'' = g$, et donc $LT(g') = LT(g)$. Ainsi on a montré que $LT(G) = LT(G')$. Considérons maintenant $g - g' \in I$, en particulier $\overline{g - g'}^G = 0$. Notons que si $h \in G \bs \{g\}$, alors aucun des termes de $g$ n'est divisible par $LT(h)$. De même pour $g'$, car $LT(G) = LT(G')$. De même aucun monôme de $g - g'$ n'est divisible par $LT(g)$ car $LT(g) = LT(g')$ donc $LT(g - g') < LT(g)$. D'où $\overline{g - g'}^G = g- g' = 0$ donc $g = g'$.
         \end{proof}
