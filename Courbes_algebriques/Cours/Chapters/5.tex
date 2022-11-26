@@ -1,6 +1,6 @@
 \chapter{Géométrie projective}
     \section{Ensembles algébriques projectifs}
-        Soit $k \in \mathbf{Fld}$, $V$ un $k$ espace vectoriel tel que $1 \leq \dim V < \infty$.
+        Soit $k$ un corps, $V$ un $k$ espace vectoriel tel que $1 \leq \dim V < \infty$.
         \begin{defi}
             L'espace projectif de $V$ est donné par
             \begin{align*}
@@ -11,7 +11,7 @@
         \begin{align*}
             x \sim y \iff \exists \lambda \in k \bs \{0\} \mid x = \lambda y
         \end{align*}
-        Alors $\mathbb{P}^n_k \simeq k^{n+1} \bs \{0\} /\sim$, via l'application
+        Alors $\mathbb{P}^n_k \simeq k^{n+1} \bs \{0\} /\sim$ (en tant qu'ensembles), via l'application
         \begin{align*}
             \begin{array}{cccc}
                 & k^{n+1}/\sim & \to & \mathbb{P}^n_k \\
@@ -50,16 +50,16 @@
                 et alors $\mathbb{P}^n \bs u_i(\mathbb{A}^n) = \{[x_1, \cdots, x_i, 0, x_{i+1}, \cdots, x_n]\}$. Si $i = 0$, on appelle cet ensemble hyperplan à l'infini.
             \end{enumerate}
         \end{expl}
-        \begin{defi}
-            Soit $[a] \in \mathbb{P}^n$, $a \in k^{n+1}$ et $F \in k[X_0, \cdots, X_n]$. Alors si pour tout $\lambda \in k^\times$, $F(\lambda a) = F(a)$, on dit que $F$ est bien défini en $[a]$ et on pose$F([a]) := F(a)$.
-        \end{defi}
+        % \begin{defi}
+        %     Soit $[a] \in \mathbb{P}^n$, $a \in k^{n+1}$ et $F \in k[X_0, \cdots, X_n]$. Alors si pour tout $\lambda \in k^\times$, $F(\lambda a) = F(a)$, on dit que $F$ est bien défini en $[a]$ et on pose $F([a]) := F(a)$.
+        % \end{defi}
         \begin{remq}
-            Pour tout $F \in k[X_0, \cdots, X_n]$, on peut décomposer $F$ comme $F = \sum F^i$ où les $F^i$ sont homogènes de degré $i$. Alors dans ce cas soit $[a] \in \mathbb{P}^n$, on a $F(\lambda a) = 0$ pour tout $\lambda \in k^\times$ si et seulement si $F^i(a) = 0$ pour tout $i$. \cor{Vrai que si le corps est infini ? Si le corps est infini, ça parraît vrai au vu de la gueule qu'un déterminant de vandermonde a}
+            Pour tout $F \in k[X_0, \cdots, X_n]$, on peut décomposer $F$ comme $F = \sum F^i$ où les $F^i$ sont homogènes de degré $i$. Alors dans ce cas soit $[a] \in \mathbb{P}^n$, on a $F(\lambda a) = 0$ pour tout $\lambda \in k^\times$ si et seulement si $F^i(a) = 0$ pour tout $i$. On écrit cette condition $F([a]) = 0$. \cor{Vrai que si le corps est infini ? Si le corps est infini, ça parraît vrai au vu de la gueule qu'un déterminant de vandermonde a}
         \end{remq}
         \begin{defi} (Ensemble algébrique projectif)
             Soit $S \subseteq k[X_0, \cdots, X_n]$. On définit
             \begin{align*}
-                V(S) &:= \{[a] \in \mathbb{P}^n \mid \forall F \in S \text{ bien défini en } [a],\, F([a]) = 0\} \\
+                V(S) &:= \{[a] \in \mathbb{P}^n \mid \forall F \in S,\, F([a]) = 0\} \\
                 &= \{[a] \in \mathbb{P}^n \mid \forall F = \sum F^i \in S,\, F^i(a) = 0 \, \forall i\} \\
             \end{align*}
         \end{defi}
@@ -67,7 +67,7 @@
             Si $\tilde S = \{F^i \mid F \in S,\, F = \sum F^i\}$, alors $V(S) = V(\tilde S)$. Remarquons que $\tilde S$ ne contient que des polynômes homogènes, ainsi on peut toujours considérer des ensembles de polynômes homogènes pour définir un $V(S)$.
         \end{remq}
         \begin{expl}
-            Soit $F \in k[X_0, \cdots, X_n]$ un polynôme homogène de degré $d > 0$. Alors dans ce cas $F$ est bien défini en tout $[a] \in \mathbb{P}^n$, et alors
+            Soit $F \in k[X_0, \cdots, X_n]$ un polynôme homogène de degré $d > 0$. Alors dans ce cas
             \begin{align*}
                 V(F) = \{[a] \in \mathbb{P}^n \mid F(a) = 0\}
             \end{align*}
@@ -158,551 +158,591 @@
             \begin{itemize}
                 \item Si $V(I) \neq \emptyset$, alors $I(V(I)) = \sqrt{I}$,
                 \item Sinon, \begin{align*}
-                    V(I) = \emptyset &\iff (X_0, \cdots, X_n) \subseteq (X_0, \cdots, X_n)\\
+                    V(I) = \emptyset &\iff (X_0, \cdots, X_n) \subseteq I \\
                     &\iff \sqrt{I} = (X_0, \cdots, X_n) \lor \sqrt{I} = k[X_0, \cdots, X_n]
                 \end{align*}
             \end{itemize}
         \end{theo}
         \begin{exo}
-            Montrer que $I(\mathbb{P}^n) = 0$.
+            Montrer que $I(\mathbb{P}^n) = 0$. \ajout{Comme $\mathbb{P}^n = V(0)$, on a $I(\mathbb{P}^n) = I(V(0)) = \sqrt{(0)} = (0)$.}
         \end{exo}
         \begin{coro}
             Supposons que $k$ est algébriquement clos. Alors $I$ et $V$ induisent une correspondance bijective entre le ensemble projectifs de $\mathbb{P}^n$ non vides et les idéaux homogènes radicaux $I \nsubseteq k[X_0, \cdots, X_n]$ et $I \neq (X_0, \cdots, X_n)$.
         \end{coro}
 
     \section{Lien entre géométrie affine et géométrie projective}
-        \begin{lemm}
-            La bijection $u_i : \mathbb{A}^n \to \mathcal{U}_i \subseteq \mathbb{P}^n$ est un homéomorphisme pour la topologie de Zariski sur $\mathbb{A}^n$ et la topologie de Zariski induite par $\mathbb{P}^n$ induite sur $\mathcal{U}_i$.
-        \end{lemm}
-        \begin{proof}
-            Sans perte de généralité, supposons que $i = 0$. On a déjà montré que si $S \subseteq k[X_1, \cdots, X_n]$, alors $u_0(V(S)) = V(\tilde S) \cap \mathcal{U}_0$, où $\tilde S$ est l'ensemble des homogénéisés des éléments de $S$, puis pour tout $T \subseteq k[X_0, \cdots, X_n]$, il existe $S \subseteq k[X_1, \cdots, X_n]$ tel que $V(T) = V(\tilde S)$, donc cette égalité prouve la continuité de l'application et de sa réciproque.
-        \end{proof}
-        \begin{prop}
-            Soit $V \subseteq \mathbb{A}^n$ un ensemble algébrique affine, supposons que $k$ est algébriquement clos. Alors $f : V \to k$ est régulière si et seuelment si pour tout $a \in V$, $\exists \Omega_a \subrel{op} V$ tel que $a \in \Omega_a$ et $\exists g,h \in k[V]$, $g \neq 0$ sur $\Omega_a$, tels que $f = h/g$ sur $\Omega_a$ (nous appelons cette dernière condition la condition (*)).
-        \end{prop}
-        \begin{proof}
-            \item $\Rightarrow$ : Par définition, il exists $P \in k[X_1, \cdots, X_n]$ tel que $f(a) = P(a)$ sur $V$, donc pour $a \in V$, on prend $\Omega_a = V$ et $h = [P]$, $g = 1$.
-            \item $\Leftarrow$ : Supposons dans un premier temps que $V$ est irréductible, et que $f : V \to k$ vérifie (*). Considérons l'idéal $\mathcal{J} := \{g \in k[V] \mid gf \in k[V]\}$ de $k[V]$. Il suffit de montrer que $1 \in J$ (en effet, si $1 \in J$, alors $f \in k[V]$). Supposons le contraire, alors $J \nsubseteq k[V]$ et donc d'après le théorème de Krull il existe un idéal maximal $M \subseteq k[V]$ contenant $J$. Et d'après le Nullstellensatz ($k = \bar k$), $\exists a = (a_1, \cdots, a_n) \in \mathbb{A}^n$ tel que
-            \begin{align*}
-                M = (x_1 - a_1, \cdots, x_n - a_n) = (X_1 - a_1, \cdots, X_n - a_n)/I(V)
-            \end{align*}
-            On a donc $I(V) \subseteq (X_1 - a_1, \cdots, X_n - a_n)$ et donc $a \in V(I(V)) = V$. Et comme $J \subseteq (x_1 - a_1, \cdots, x_n - a_n)$, pour tout $g \in J$, $g(a) = 0$. Maintenant utilisons la condition : il existe $\Omega_a \subseteq V$ un ouvert tel que $a \in \Omega_a$ et $\exists P,Q \in k[X_1, \cdots, X_n]$ avec $Q(a) \neq 0$ tels que $P(a) \neq 0$ et $f = [P]/[Q]$ sur $\Omega_a$. Alors $[Q]f = [P]$ sur $\Omega_a$, mais comme $V$ est irréductible, $\Omega_a$ est dense et ainsi $[Q]f = [P]$ sur $V$, donc $[Q] \in J$, absurde puisque $Q(a) \neq 0$.
-            \item Pour passer au cas réductible, remarquons que si $f : V \to k$ vérifie (*), alors $f$ est continue (\cor{Exercice}). Maintenant si $V$ est réductible, notons $V = V_1 \cup V_2$, où les $V_i$ sont des fermés de $V$. Par récurrence (sur le nombre de composantes irréductibles) et par le point précédent, on peut trouver $P,Q \in k[X_1, \cdots, X_n]$ tels que pour tout $a \in V_1$, $f(a) = P(a)$ et poiur tout $b \in V_2$, $f(a) = Q(a)$. Mais alors considérons $I_i = I(V_i)$, $i = 1,2$, on a
-            \begin{align*}
-                I(V_1 \cap V_2) = \sqrt{I(V_1) + I(V_2)} = \sqrt{I(V_1)} + \sqrt{I(V_2)} = I(V_1) + I(V_2)
-            \end{align*}
-            Maintenant $P = Q$ sur $V_1 \cap V_2$, donc $P - Q \in I_1 + I_2$, et ainsi il existe $R_1, R_2 \in I_1, I_2$ tels que $P - Q = R_1 + R_2$ dans $k[X_1, \cdots, X_n]$. Définissons alors $R := P - R_1 = Q + R_2$, on a $R = P$ sur $V_1$ et $R = Q$ sur $V_2$, donc finalement $f(a) = R(a)$ pour tout $a \in V$ et donc $f$ est une fonction régulière.
-        \end{proof}
-        \begin{defi}
-            Soit $V \subseteq \mathbb{P}^n$ un ensemble algébrique projectif, $\mathcal{U} \subrel{op} V$. Une application $f : \mathcal{U} \to k$ est régulière si pour tout $a \in \mathcal{U}$, $\exists \Omega_a \subrel{op} \mathcal{U}$ qui contient $a$, et $G,H \in k[X_0, \cdots, X_n]$ homogènes de degré $d$ tels que $f = H/G$ sur $\Omega_a$ et $G(a) \neq 0$.
-        \end{defi}
-        \begin{remq}
-            Si $f = G/H$ comme dans la définition précédente, alors $f$ est bien définie : en effet, si $[a] = [b]$, alors $\exists \lambda \in k^\times$ tel que $a = \lambda b$, puis
-            \begin{align*}
-                f([a]) &= \frac{G([a])}{H([a])} = \frac{G(a)}{H(a)} = \frac{G(\lambda b)}{H(\lambda b)} = \frac{\lambda^d G(b)}{\lambda^d H(b)} = \frac{G(b)}{H(b)} = f([b])
-            \end{align*}
-        \end{remq}
-        \begin{defi}
-            \begin{enumerate}
-                \item On appelle ensemble quasi projectif un ouvert d'une ensemble algébrique projectif affine.
-                \item Soit $V \subseteq \mathbb{A}^n$ un ensemble algébrique affine, puis $\mathcal{U} \subrel{op} V$. $f : \mathcal{U} \to k$ est régulière si pour tout $a \in U$, il existe $\Omega_a \subrel{op} \mathcal{U}$ tel que $a \in \Omega_a$, et $\exists g,h \in k[V]$ tels que $g(a) \neq 0$ et $f = g/h$ sur $\Omega_a$. 
-                \item Soient $\mathcal{U}_1, \mathcal{U}_2$ des ensembles quasi-projectifs. Une application $\varphi : \mathcal{U}_1 \to \mathcal{U}_2$ est régulière (on dit aussi que c'est un morphisme) si $\varphi$ est continue, et si pour tout $W \subseteq \mathcal{U}_2$ ouvert, pour tout fonction régulière $f : W \to k$, alors $f \circ \varphi : \varphi^{-1}(W) \to k$ est une fonction régulière. 
-            \end{enumerate}
-        \end{defi}
-        \begin{exo}
-            \begin{enumerate}
-                \item $u_0 : \mathbb{A}^n \to \mathcal{U}_0 \subset \mathbb{P}^n$ est un isomorphisme.
-                \item $\varphi : \mathcal{U}_1 \to \mathcal{U}_2$ est un morphisme si et seulement si $\exists \{W_\alpha\}$ recouvrement ouvert de $\mathcal{U}_2$ tel que $\varphi_{|\varphi^{-1}(W_\alpha)} : \varphi^{-1}(W_\alpha) \to W_\alpha$ est régulière.
-            \end{enumerate}
-        \end{exo}
-        \begin{prop}
-            Soient $\mathcal{U}_1, \mathcal{U}_2 \subseteq \mathbb{P}^n, \mathbb{P}^l$ des ensembles quasi-projectifs. Alors $\varphi : \mathcal{U}_1 \to \mathcal{U}_2$ est un morphisme si et seulement si pour tout $a \in \mathcal{U}_1$, $\exists \Omega_a \subrel{op} \mathcal{U}_1$ tel que $a \in \Omega_a$, et $\exists G_i, H_i \in k[X_0, \cdots, X_n]$ des polynômes homogènes tels que $G_i(a) \neq 0$ et $\deg G_i = \deg H_i$ pour tout $0 \leq i \leq l$, et
-            \begin{align*}
-                \varphi(x) = \left[ \frac{H_0}{G_0}, \cdots, \frac{H_l}{G_l} \right]
-            \end{align*}
-            pour tout $x \in \Omega_a$.
-        \end{prop}
-        \begin{proof}
-            \cor{Exercice}
-        \end{proof}
-        \begin{expl}
-            Considérons l'application 
-            \begin{align*}
-                \begin{array}{cccc}
-                    \varphi : & \mathbb{P}^1 & \to & \mathbb{P}^n \\
-                    & [u,v] & \mapsto & [u^n, u^{n-1}v, \cdots, uv^{n-1}, v^n]\\
-                \end{array}
-            \end{align*}
-            Alors $\varphi$ est bien définie et est un morphisme. 
-            \begin{enumerate}
-                \item Méthode 1 : Considérons le recouvrement ouvert canonique $\mathcal{U}_0 \cup \mathcal{U}_1 = \mathbb{P}^1$. Alors pour tout  $[u,v] \in \mathcal{U}_0$, $u \neq 0$ et ainsi
+        \subsection{Ensembles quasi-projectifs}
+            \begin{lemm}
+                \label{lemm531}
+                La bijection $u_i : \mathbb{A}^n \to \mathcal{U}_i \subseteq \mathbb{P}^n$ est un homéomorphisme pour la topologie de Zariski sur $\mathbb{A}^n$ et la topologie de Zariski induite par $\mathbb{P}^n$ induite sur $\mathcal{U}_i$.
+            \end{lemm}
+            \begin{proof}
+                Sans perte de généralité, supposons que $i = 0$. On a déjà montré que si $S \subseteq k[X_1, \cdots, X_n]$, alors $u_0(V(S)) = V(\tilde S) \cap \mathcal{U}_0$, où $\tilde S$ est l'ensemble des homogénéisés des éléments de $S$, puis pour tout $T \subseteq k[X_0, \cdots, X_n]$, il existe $S \subseteq k[X_1, \cdots, X_n]$ tel que $V(T) = V(\tilde S)$, donc cette égalité prouve la continuité de l'application et de sa réciproque.
+            \end{proof}
+            \begin{defi}
+                On appelle ensemble quasi-projectif un (ensemble homéomorphe à un) ouvert d'un ensemble algébrique projectif.
+            \end{defi}
+            \begin{remq}
+                Les ensembles algébriques projectifs sont des ensembles quasi-projectifs. Les ensembles algébriques affines sont des ensembles quasi-projectifs, d'après le lemme \ref{lemm531}.
+            \end{remq}
+            \begin{defi}
+                Soient $U_1 \subseteq \mathbb{P}^n, U_2 \subseteq \mathbb{P}^l$ des ensembles quasi-projectifs. Une application $\varphi : U_1 \to U_2$ est un morphisme si pour tout $a \in \mathcal{U}_1$, $\exists \Omega_a \subrel{op} \mathcal{U}_1$ tel que $a \in \Omega_a$, et $\exists G_i, H_i \in k[X_0, \cdots, X_n]$ des polynômes homogènes tels que $G_i(a) \neq 0$ et $\deg G_i = \deg H_i$ pour tout $0 \leq i \leq l$, et
                 \begin{align*}
-                    \varphi([u,v]) = \left[ 1, \frac vu, \frac{v^2}{u^2}, \cdots, \frac{v^n}{u^n} \right]
+                    \varphi(x) = \left[ \frac{H_0}{G_0}, \cdots, \frac{H_l}{G_l} \right]
                 \end{align*}
-                et si $[u,v] \in \mathcal{U}_1$, $v \neq 0$ et alors 
+                pour tout $x \in \Omega_a$.
+            \end{defi}
+            \begin{exo}
+                \begin{enumerate}
+                    \item $u_0 : \mathbb{A}^n \to \mathcal{U}_0 \subset \mathbb{P}^n$ est un isomorphisme.
+                    \item $\varphi : \mathcal{U}_1 \to \mathcal{U}_2$ est un morphisme si et seulement si $\exists \{W_\alpha\}$ recouvrement ouvert de $\mathcal{U}_2$ tel que $\varphi_{|\varphi^{-1}(W_\alpha)} : \varphi^{-1}(W_\alpha) \to W_\alpha$ est un morphisme.
+                \end{enumerate}
+            \end{exo}
+            \begin{expl}
+                Considérons l'application 
                 \begin{align*}
-                    \varphi([u,v]) = \left[ \frac{u^n}{v^n}, \cdots, \frac{u^2}{v^2}, \frac uv, 1  \right]
+                    \begin{array}{cccc}
+                        \varphi : & \mathbb{P}^1 & \to & \mathbb{P}^n \\
+                        & [u,v] & \mapsto & [u^n, u^{n-1}v, \cdots, uv^{n-1}, v^n]\\
+                    \end{array}
                 \end{align*}
-                ainsi d'après la proposition précédente, $\varphi$ est un morphisme.
-                \item Méthode 2 : \cor{???} 
-            \end{enumerate}
-        \end{expl}
-        \begin{defi}
-            Une variété est un ensemble algébrique quasi-projectif irréductible. Si $V$ est une variété, on définit le corps des fractions rationnelles de $V$ comme
-            \begin{align*}
-                k(V) = \{(U, f) \mid U \subrel{ouv} V,\, f : U \to k \text{ fonction régulière}\}/\sim
-            \end{align*}
-            Où $(U, f) \sim (U', f') \iff f = f'$ sur $U \cap U'$ (c'est une relation d'équivalence).
-        \end{defi}
-        \begin{remq}
-            $k(V)$ est muni d'une structure canonique de corps : les opérations sont
-            \begin{align*}
-                &(U,f) + (U',f') = (U \cap U', f + f') \\
-                &(U,f)(U',f') = (U \cap U', ff') \\
-                &(V,0) = 0 \\
-                &(V,1) = 1 \\
-                &(U,f)^{-1} = (U \cap D(f), 1/f) \text{ si } (U,f) \neq (V,0)
-            \end{align*}
-        \end{remq}
-        \begin{remq}
-            Si $V$ est une variété, et $W \subseteq V$ un ouvert non vide, alors 
-            \begin{align*}
-                \begin{array}{cccc}
-                    & k(V) & \to & k(W) \\
-                    & (U,f) & \mapsto & (U \cap W, f_{|U \cap W}) \\
-                \end{array}
-            \end{align*}
-            est un isomorphisme de corps (en partie car $W$ est irréductible, donc les ouverts non-vides sont denses)
-        \end{remq}
-        \begin{lemm}
-            Soit $V \subseteq \mathbb{A}^n$ une variété algébrique. Alors $k(V) \simeq \Frac k[V]$.
-        \end{lemm}
-        \begin{proof}
-            Notons $A = k[V]$, $K = \Frac (A)$. Considérons le morphisme d'anneaux
-            \begin{align*}
-                \begin{array}{cccc}
-                    \chi : & K & \to & k(V) \\
-                    & \frac fg & \mapsto & (D(g), \frac{f_{|D(g)}}{g_{|D(g)}}) \\
-                \end{array}
-            \end{align*}
-            Alors $\chi$ est surjective (et cela suffit à prouver que c'est un isomorphisme) : en effet, soit $(U,f) \in k(V)$, avec $U \subrel{op} V$ et $f : U \to k$ une fonction régulière. Alors par définition soit $a \in U$, il existe $a \in \Omega_a \subseteq U$ un ouvert et $g,h \in k[V]$ telles que $g \neq 0$ sur $\Omega_a$ et $f = h/g$. Mais alors $(U,f) = (\Omega_a, h/g) = (D(g), h/g) = \chi(h/g)$.
-        \end{proof}
-        \begin{defi}
-            Soient $V,W$ des variétés. Une application rationnelle entre $V$ et $W$ est la classe d'équivalence d'un morphisme $\varphi : U_V \to W$ avec $U_V \subrel{op} V$, pour la relation d'équivalence 
-            \begin{align*}
-                \varphi_1 : U_1 \to W \sim \varphi_2 : U_2 \to W \iff \varphi_1 = \varphi_2 \text{ sur un ouvert } \emptyset \neq D \subseteq U_1 \cap U_2
-            \end{align*}
-            On note $V \dashrightarrow W$.
-        \end{defi}
-        \begin{remq}
-            Un morphisme $V \to \mathbb{A}^1$ est une fonction régulière $V \to k$. Une application rationnelle $V \dashrightarrow \mathbb{A}^1$ est une fonction rationnelle $V \to k$.
-        \end{remq}
-        \begin{defi} (Dimension)
-            Soit $V$ une variété. Alors $\dim(V) := tr\deg_k k(V)$.
-        \end{defi}
-        \begin{expl}
-            $k(\mathbb{P}^n) = k(\mathbb{A}^n)$, $\dim \mathbb{P}^n = \dim \mathbb{A}^n$.
-        \end{expl}
-        \begin{remq}
-            Soit $V$ une variété et $U$ un ouvert de $V$. Alors $\dim U = \dim V$.
-        \end{remq}
-        \begin{defi}
-            Soit $V$ une variété, $x \in V$. On définit
-            \begin{align*}
-                \mathcal{O}_x = \{(U,f) \in k(V) \mid x \in U \subrel{op} V\}/\sim
-            \end{align*}
-            On appelle cet anneau l'anneau des fonctions régulières en $x$.
-        \end{defi}
-        \begin{defi}
-            Soit $V$ une variété, $x \in v$. On définit $\mathfrak{m}_x := \{(U,f) \in \mathcal{O}_x \mid f(x) = 0\}$
-        \end{defi}
-        \begin{exo}
-            \begin{enumerate}
-                \item $\mathfrak{m}_x$ est un idéal maximal,
-                \item $\mathcal{O}_x$ est un anneau local,
-                \item Si $V$ est une variété affine, alors $\mathcal{O}_x \simeq k[V]_x$,
-                \item $\mathcal{O}_x$ dépend seulement d'un voisinage de $x$ (i.e. si $V,W$ sont des variétés avec $x \in U_V \subrel{op} V$, $y \in U_W \subrel{op} W$, et $U_V \simeq U_W$ qui fait correspondre $x$ avec $y$, alors $\mathcal{O}_{V,x} \simeq \mathcal{O}_{U,y}$)
-            \end{enumerate}
-        \end{exo}
-        \begin{defi}
-            Soit $V$ une variété, $x \in V$. On définit l'espace tangent de $V$ en $x$ comme 
-            \begin{align*}
-                T_xV = (\mathfrak{m}_x/\mathfrak{m}_x^2)^\vee
-            \end{align*}
-            C'est un $k$-ev. On dit que $x$ est régulier si $\dim V = \dim T_xV$, que $x$ est singulier sinon.
-        \end{defi}
+                Alors $\varphi$ est bien définie et est un morphisme. Considérons le recouvrement ouvert canonique $\mathcal{U}_0 \cup \mathcal{U}_1 = \mathbb{P}^1$. Alors pour tout  $[u,v] \in \mathcal{U}_0$, $u \neq 0$ et ainsi
+                    \begin{align*}
+                        \varphi([u,v]) = \left[ 1, \frac vu, \frac{v^2}{u^2}, \cdots, \frac{v^n}{u^n} \right]
+                    \end{align*}
+                    et si $[u,v] \in \mathcal{U}_1$, $v \neq 0$ et alors 
+                    \begin{align*}
+                        \varphi([u,v]) = \left[ \frac{u^n}{v^n}, \cdots, \frac{u^2}{v^2}, \frac uv, 1  \right]
+                    \end{align*}
+                    ainsi $\varphi$ est un morphisme.
+            \end{expl}
+            \begin{remq}
+                Si $U_2 = k = \mathbb{A}^1 \subseteq \mathbb{P}^1$, alors un morphisme $f : U_1 \to k$ est appelé fonction régulière (projective). Alors par définition, une application $f : U_1 \to k$ est régulière si et seulement si pour tout $a \in \mathcal{U}$, $\exists \Omega_a \subrel{op} \mathcal{U}$ qui contient $a$, et $G, H \in k[X_0, \cdots, X_n]$ homogènes de degré $d$ tels que $f = H/G$ sur $\Omega_a$ et $G(a) \neq 0$.
+            \end{remq}
+            \begin{prop}
+                Les morphismes sont continus pour la topologie de Zariski.
+            \end{prop}
+            \begin{proof}
+                \cor{Piéton (probablement ?)}
+            \end{proof}
+            \begin{prop}
+                Soit $\varphi : U_1 \to U_2$ une application continue. Alors $\varphi$ est un morphisme si et seulement si pour tout $W \subseteq U_2$ ouvert, et pour toute fonction régulière $f : W \to k$, alors $f \circ \varphi : \varphi^{-1}(W) \to k$ est une fonction régulière.
+            \end{prop}
+            \begin{proof}
+                \cor{Piéton}
+            \end{proof}
+            \begin{prop}
+                Les morphismes sont stables par composition.
+            \end{prop}
+            \begin{proof}
+                Se déduit facilement de la proposition précédente.
+            \end{proof}
+            Il nous faut maintenant vérifier que si $U_1$ et $U_2$ sont homéomorphes à des ensembles algébriques affines, alors la notion de morphisme en tant qu'ensembles quasi-projectifs coïncide avec la notion de morphismes d'ensembles algébriques. Pour cela, on utilise le résultat suivant :
+            \begin{prop}
+                Soit $V \subseteq \mathbb{A}^n$ un ensemble algébrique affine, supposons que $k$ est algébriquement clos. Alors $f : V \to k$ est régulière si et seulement si pour tout $a \in V$, $\exists \Omega_a \subrel{op} V$ tel que $a \in \Omega_a$ et $\exists g,h \in k[V]$, $g \neq 0$ sur $\Omega_a$, tels que $f = h/g$ sur $\Omega_a$ (nous appelons cette dernière condition la condition (*)).
+            \end{prop}
+            \begin{proof}
+                \item $\Rightarrow$ : Par définition, il existe $P \in k[X_1, \cdots, X_n]$ tel que $f(a) = P(a)$ sur $V$, donc pour $a \in V$, on prend $\Omega_a = V$ et $h = [P]$, $g = 1$.
+                \item $\Leftarrow$ : Supposons dans un premier temps que $V$ est irréductible, et que $f : V \to k$ vérifie (*). Considérons l'idéal $\mathcal{J} := \{g \in k[V] \mid gf \in k[V]\}$ de $k[V]$. Il suffit de montrer que $1 \in J$ (en effet, si $1 \in J$, alors $f \in k[V]$). Supposons le contraire, alors $J \nsubseteq k[V]$ et donc d'après le théorème de Krull il existe un idéal maximal $M \subseteq k[V]$ contenant $J$. Et d'après le Nullstellensatz ($k = \bar k$), $\exists a = (a_1, \cdots, a_n) \in \mathbb{A}^n$ tel que
+                \begin{align*}
+                    M = (x_1 - a_1, \cdots, x_n - a_n) = (X_1 - a_1, \cdots, X_n - a_n)/I(V)
+                \end{align*}
+                On a donc $I(V) \subseteq (X_1 - a_1, \cdots, X_n - a_n)$ et donc $a \in V(I(V)) = V$. Et comme $J \subseteq (x_1 - a_1, \cdots, x_n - a_n)$, pour tout $g \in J$, $g(a) = 0$. Maintenant utilisons la condition : il existe $\Omega_a \subseteq V$ un ouvert tel que $a \in \Omega_a$ et $\exists P,Q \in k[X_1, \cdots, X_n]$ avec $Q(a) \neq 0$ tels que $P(a) \neq 0$ et $f = [P]/[Q]$ sur $\Omega_a$. Alors $[Q]f = [P]$ sur $\Omega_a$, mais comme $V$ est irréductible, $\Omega_a$ est dense et ainsi $[Q]f = [P]$ sur $V$, donc $[Q] \in J$, absurde puisque $Q(a) \neq 0$.
+                \item Pour passer au cas réductible, remarquons que si $f : V \to k$ vérifie (*), alors $f$ est continue (\cor{Exercice}). Maintenant si $V$ est réductible, notons $V = V_1 \cup V_2$, où les $V_i$ sont des fermés de $V$. Par récurrence (sur le nombre de composantes irréductibles) et par le point précédent, on peut trouver $P,Q \in k[X_1, \cdots, X_n]$ tels que pour tout $a \in V_1$, $f(a) = P(a)$ et pour tout $b \in V_2$, $f(a) = Q(a)$. Mais alors considérons $I_i = I(V_i)$, $i = 1,2$, on a
+                \begin{align*}
+                    I(V_1 \cap V_2) = \sqrt{I(V_1) + I(V_2)} = \sqrt{I(V_1)} + \sqrt{I(V_2)} = I(V_1) + I(V_2)
+                \end{align*}
+                Maintenant $P = Q$ sur $V_1 \cap V_2$, donc $P - Q \in I_1 + I_2$, et ainsi il existe $R_1, R_2 \in I_1, I_2$ tels que $P - Q = R_1 + R_2$ dans $k[X_1, \cdots, X_n]$. Définissons alors $R := P - R_1 = Q + R_2$, on a $R = P$ sur $V_1$ et $R = Q$ sur $V_2$, donc finalement $f(a) = R(a)$ pour tout $a \in V$ et donc $f$ est une fonction régulière.
+            \end{proof}
+            On peut finalement prouver que
+            \begin{prop}
+                Soit $V,W \subseteq \mathbb{P}^n, \mathbb{P}^l$ des ensembles quasi-projectifs isomorphes à des ensembles algébriques affines, et $\varphi : V \to W$ une application. Alors $\varphi$ est un morphisme d'ensembles algébriques affines si et seulement si c'est un morphisme d'ensembles quasi-projectifs (vus comme sous-ensembles de $\mathbb{P}^n, \mathbb{P}^l$).
+            \end{prop}
+            \begin{proof}
+                D'après le point précédent, une application $f : W \to k$ est régulière affine si et seulement si elle est régulière projective. Ainsi $\varphi$ est un morphisme d'ensembles algébriques si et seulement si pour tout fonction régulière affine $f : W \to k$, $f \circ \varphi$ est régulière affine si et seulement si pour toute fonction régulière projective $f : W \to k$, $f \circ \varphi$ est régulière projective si et seulement si $\varphi$ est un morphisme d'ensembles projectifs.
+            \end{proof}
+            Cela nous permet finalement de définir une catégorie des ensembles quasi-projectifs, dont les objets sont les ensembles quasi-projectifs et les morphismes sont les morphismes d'ensembles quasi-projectifs. Remarquons que la dernière vérification que nous avons faite nous permet de voir la catégorie des ensembles algébriques affines comme une sous-catégorie pleine de cette nouvelle catégorie.
+            % \begin{defi}
+            %     Soit $V \subseteq \mathbb{P}^n$ un ensemble algébrique projectif, $\mathcal{U} \subrel{op} V$. Une application $f : \mathcal{U} \to k$ est régulière si 
+            % \end{defi}
+            % \begin{remq}
+            %     Si $f = G/H$ comme dans la définition précédente, alors $f$ est bien définie : en effet, si $[a] = [b]$, alors $\exists \lambda \in k^\times$ tel que $a = \lambda b$, puis
+            %     \begin{align*}
+            %         f(a) &= \frac{G(a)}{H(a)} = \frac{G(\lambda b)}{H(\lambda b)} = \frac{\lambda^d G(b)}{\lambda^d H(b)} = f(b)
+            %     \end{align*}
+            %     Dans ce cas, on définit $f([a]) := f(a)$.
+            % \end{remq}
+            % \begin{defi}
+            %     \begin{enumerate}
+            %         \item On appelle ensemble quasi projectif un ouvert d'un ensemble algébrique projectif ou affine. \cor{Pourquoi préciser affine ? Si $V \subseteq \mathbb{A}^n$ est un ensemble algébrique affine, alors il est homéomorphe à $\tilde V \cap U_0 \subseteq \mathbb{P}^n$ qui est bien un ouvert de $\tilde V$ par définition de la topologie induite ?}
+            %         \item Soit $V \subseteq \mathbb{A}^n$ un ensemble algébrique affine, puis $\mathcal{U} \subrel{op} V$. $f : \mathcal{U} \to k$ est régulière si pour tout $a \in U$, il existe $\Omega_a \subrel{op} \mathcal{U}$ tel que $a \in \Omega_a$, et $\exists g,h \in k[V]$ tels que $g(a) \neq 0$ et $f = g/h$ sur $\Omega_a$. 
+            %         \item Soient $\mathcal{U}_1, \mathcal{U}_2$ des ensembles quasi-projectifs. Une application $\varphi : \mathcal{U}_1 \to \mathcal{U}_2$ est régulière (on dit aussi que c'est un morphisme) si $\varphi$ est continue, et si pour tout $W \subseteq \mathcal{U}_2$ ouvert, pour tout fonction régulière $f : W \to k$, alors $f \circ \varphi : \varphi^{-1}(W) \to k$ est une fonction régulière. 
+            %     \end{enumerate}
+            % \end{defi}
+
+
+        \subsection{Variétés}
+            \begin{defi}
+                Une variété est un ensemble algébrique quasi-projectif irréductible. Si $V$ est une variété, on définit le corps des fractions rationnelles de $V$ comme
+                \begin{align*}
+                    k(V) = \{(U, f) \mid U \subrel{ouv} V,\, f : U \to k \text{ fonction régulière}\}/\sim
+                \end{align*}
+                Où $(U, f) \sim (U', f') \iff f = f'$ sur $U \cap U'$ (c'est une relation d'équivalence).
+            \end{defi}
+            \begin{remq}
+                $k(V)$ est muni d'une structure canonique de corps : les opérations sont
+                \begin{align*}
+                    &(U,f) + (U',f') = (U \cap U', f + f') \\
+                    &(U,f)(U',f') = (U \cap U', ff') \\
+                    &(V,0) = 0 \\
+                    &(V,1) = 1 \\
+                    &(U,f)^{-1} = (U \cap D(f), 1/f) \text{ si } (U,f) \neq (V,0)
+                \end{align*}
+            \end{remq}
+            \begin{remq}
+                Si $V$ est une variété, et $W \subseteq V$ un ouvert non vide, alors 
+                \begin{align*}
+                    \begin{array}{cccc}
+                        & k(V) & \to & k(W) \\
+                        & (U,f) & \mapsto & (U \cap W, f_{|U \cap W}) \\
+                    \end{array}
+                \end{align*}
+                est un isomorphisme de corps (en partie car $W$ est irréductible, donc les ouverts non-vides sont denses)
+            \end{remq}
+            \begin{lemm}
+                Soit $V \subseteq \mathbb{A}^n$ une variété algébrique. Alors $k(V) \simeq \Frac\, k[V]$.
+            \end{lemm}
+            \begin{proof}
+                Notons $A = k[V]$, $K = \Frac (A)$. Considérons le morphisme d'anneaux
+                \begin{align*}
+                    \begin{array}{cccc}
+                        \chi : & K & \to & k(V) \\
+                        & \frac fg & \mapsto & (D(g), \frac{f_{|D(g)}}{g_{|D(g)}}) \\
+                    \end{array}
+                \end{align*}
+                Alors $\chi$ est surjective (et cela suffit à prouver que c'est un isomorphisme) : en effet, soit $(U,f) \in k(V)$, avec $U \subrel{op} V$ et $f : U \to k$ une fonction régulière. Alors par définition soit $a \in U$, il existe $a \in \Omega_a \subseteq U$ un ouvert et $g,h \in k[V]$ telles que $g \neq 0$ sur $\Omega_a$ et $f = h/g$. Mais alors $(U,f) = (\Omega_a, h/g) = (D(g), h/g) = \chi(h/g)$.
+            \end{proof}
+            \begin{defi}
+                Soient $V,W$ des variétés. Une application rationnelle entre $V$ et $W$ est la classe d'équivalence d'un morphisme $\varphi : U_V \to W$ avec $U_V \subrel{op} V$, pour la relation d'équivalence 
+                \begin{align*}
+                    \varphi_1 : U_1 \to W \sim \varphi_2 : U_2 \to W \iff \varphi_1 = \varphi_2 \text{ sur un ouvert } \emptyset \neq D \subseteq U_1 \cap U_2
+                \end{align*}
+                On note $V \dashrightarrow W$.
+            \end{defi}
+            \begin{remq}
+                Un morphisme $V \to \mathbb{A}^1$ est une fonction régulière $V \to k$. Une application rationnelle $V \dashrightarrow \mathbb{A}^1$ est une fonction rationnelle $V \to k$.
+            \end{remq}
+            \begin{defi} (Dimension)
+                Soit $V$ une variété. Alors $\dim(V) := tr\deg_k k(V)$.
+            \end{defi}
+            \begin{expl}
+                $k(\mathbb{P}^n) = k(\mathbb{A}^n)$, $\dim \mathbb{P}^n = \dim \mathbb{A}^n$.
+            \end{expl}
+            \begin{remq}
+                Soit $V$ une variété et $U$ un ouvert de $V$. Alors $\dim U = \dim V$.
+            \end{remq}
+            \begin{defi}
+                Soit $V$ une variété, $x \in V$. On définit
+                \begin{align*}
+                    \mathcal{O}_x = \{(U,f) \in k(V) \mid x \in U \subrel{op} V\}/\sim
+                \end{align*}
+                On appelle cet anneau l'anneau des fonctions régulières en $x$.
+            \end{defi}
+            \begin{defi}
+                Soit $V$ une variété, $x \in v$. On définit $\mathfrak{m}_x := \{(U,f) \in \mathcal{O}_x \mid f(x) = 0\}$
+            \end{defi}
+            \begin{exo}
+                \begin{enumerate}
+                    \item $\mathfrak{m}_x$ est un idéal maximal,
+                    \item $\mathcal{O}_x$ est un anneau local,
+                    \item Si $V$ est une variété affine, alors $\mathcal{O}_x \simeq k[V]_x$,
+                    \item $\mathcal{O}_x$ dépend seulement d'un voisinage de $x$ (i.e. si $V,W$ sont des variétés avec $x \in U_V \subrel{op} V$, $y \in U_W \subrel{op} W$, et $U_V \simeq U_W$ qui fait correspondre $x$ avec $y$, alors $\mathcal{O}_{V,x} \simeq \mathcal{O}_{U,y}$)
+                \end{enumerate}
+            \end{exo}
+            \begin{defi}
+                Soit $V$ une variété, $x \in V$. On définit l'espace tangent de $V$ en $x$ comme 
+                \begin{align*}
+                    T_xV = (\mathfrak{m}_x/\mathfrak{m}_x^2)^\vee
+                \end{align*}
+                C'est un $k$-ev. On dit que $x$ est régulier si $\dim V = \dim T_xV$, que $x$ est singulier sinon.
+            \end{defi}
 
     \section{Courbes projectives}
-        \begin{defi}
-            Une courbe projective est une variété projective de dimension $1$.
-        \end{defi}
-        \begin{expl}
-            $C \subseteq \mathbb{A}^n$ courbe affine, alors $\overline{C} \subseteq \mathbb{P}^n$ est une courbe projective.
-        \end{expl}
-        \begin{prop}
-            $C$ courbe projective, $x \in C$ point régulier. Si $\varphi : C \to \mathbb{P}^n$ application rationnelle, alors $\varphi$ est défini en $x$, i.e. il existe $\varphi' : U \to \mathbb{P}^n$ morphisme, $x \in U$ et avex $\varphi' \sim \varphi$.
-        \end{prop}
-        \begin{expl}
-            Soit $E_\lambda = V(Y^2 - X(X - 1)(X - \lambda)) \subseteq \mathbb{A}^2_{(X,Y)} \subseteq \mathbb{P}^2_{(X,Y,Z)}$. Alors
-            \begin{align*}
-                \overline{E_\lambda} = V(Y^2Z - X(X - Z)(X - \lambda Z))
-            \end{align*}
-            est irréductible. $E_\lambda$ est régulière si $\lambda \neq 0,1$. Considérons l'application rationnelle
-            \begin{align*}
-                \begin{array}{cccc}
-                    \pi : & \mathbb{P}^2 & \to & \mathbb{P}^1 \\
-                    & [X,Y,Z] & \mapsto & [X,Y] \\
-                \end{array}
-            \end{align*}
-            $\pi$ n'est pas défini en $[0,0,1]$. Soit $\varphi = \pi_{\overline{E_\lambda}} : \overline{E_\lambda} \to \mathbb{P}^1$, supposons que $\lambda \neq 0,1$ (donc $[0,0,1]$ est un point régulier de $\overline{E_\lambda}$). Soit $\varphi([x,y,z]) = [X,Y] = [YZ, (X - Z)(X - \lambda Z)]$ (car $X(X - Z)(X - \lambda Z) = Y^2Z$). A $z = 1$, $\varphi([x,y,1]) = [Y, (X - 1)(X - \lambda)]$.
-            \begin{enumerate}
-                \item Si $\lambda = 0$ : on voit $[x,y,1]$ comme un point de $\mathbb{A}^2$, alors $\varphi : \mathbb{A}^2 \to \mathbb{P}^1$. Mais il n'existe pas de $\psi : U \to \mathbb{P}^1$ morphisme, $(0,0) \in U \subrel{ouv} \mathbb{A}^2$. Supposons que $\psi$ existe, alors
+        \subsection{Définition, première propriétés}
+            \begin{defi}
+                Une courbe projective est une variété projective de dimension $1$.
+            \end{defi}
+            \begin{expl}
+                $C \subseteq \mathbb{A}^n$ courbe affine, alors $\overline{C} \subseteq \mathbb{P}^n$ est une courbe projective.
+            \end{expl}
+            \begin{prop}
+                $C$ courbe projective, $x \in C$ point régulier. Si $\varphi : C \to \mathbb{P}^n$ application rationnelle, alors $\varphi$ est défini en $x$, i.e. il existe $\varphi' : U \to \mathbb{P}^n$ morphisme, $x \in U$ et $\varphi' \sim \varphi$.
+            \end{prop}
+            \begin{expl}
+                Soit $E_\lambda = V(Y^2 - X(X - 1)(X - \lambda)) \subseteq \mathbb{A}^2_{(X,Y)} \subseteq \mathbb{P}^2_{(X,Y,Z)}$. Alors
                 \begin{align*}
-                    \psi = \left[ \frac{H_0}{G_0}, \frac{H_1}{G_1} \right]
+                    \overline{E_\lambda} = V(Y^2Z - X(X - Z)(X - \lambda Z))
                 \end{align*}
-                sur $0 \in U' \subrel{ouv} U$, avec $H_i, G_i \in k[X,Y,Z]$ homogènes tq $\deg H_i = \deg G_i$ et $G_i([0,0,1]) \neq 0$. Rq : On peut supposer $U \subseteq U_z = \{z = 1\} \simeq \mathbb{A}^2$. Ainsi il existe $U' \subseteq \mathbb{A}^2_{x,y}$, $0 \in U$, $\exists h_i,g_i \in k[X,Y]$, $g_i(0,0) \neq 0$. Dans $\mathbb{P}^1$,
-                \begin{align*}
-                    [X,Y] = \left[ \frac{h_0}{g_0}, \frac{h_1}{g_1} \right]
-                \end{align*}
-                sur $U'$. Ainsi $Xh_1/g_1 = Yh_0/g_0$ sur $0 \in U' \subrel{ouv} E_{\lambda}$, donc $xh_1g_0 = yh_1g_0$ et $x,y \in k[E_\lambda]$. Maintenant $U'$ est dense dans $E_\lambda$ donc $xh_1g_0 - yh_0g_1 \in (Y^2, X^2(X - 1))$
-                \begin{itemize}
-                    \item $g_0(0,0) \neq 0 \Rightarrow g_0 = g_0^0 + \cdots$ et $g_0^0 \neq 0$
-                    \item $g_1(0,0) \neq 0 \Rightarrow g_0 = g_1^0 + \cdots$ et $g_0^0 \neq 0$
-                \end{itemize}
-                $\psi$ défini en $0$ ssi $h_0(0,0) \neq 0$ ou $h_1(0,0) \neq 0$. Supposons $h_0(0,0) \neq 0$, on a $h_0 = h_0^1 + \cdots$ avex $h_0^0 \neq 0$. La partie linéaire de $Xh_1g_0 - Yh_0g_1$ est $Xh_1^0g_0^0 -  Yh_0^0g_1^0$. Les éléments de $(Y^2 - X(X - 1))$ ont $0$ comme partie linéaire donc $Xh_1^0g_0^0 -  Yh_0^0g_1^0 = 0$ donc $h_1^0g0^0 = 0 = h_0^0 g_0^0$ absurde.
-            \end{enumerate}
-        \end{expl}
-        \begin{coro}
-            $C$ courbe projective lisse. Alors toute application rationnelle $\varphi : C \dashrightarrow \mathbb{P}^n$ est régulière.
-        \end{coro}
-        \begin{coro}
-            $C,C'$ courbes lisses projectives, toute application birationnelle (application rationnelle $C \dashrightarrow C'$ telle que $\exists \emptyset \neq U \subrel{ouv} C$, $\exists \emptyset \neq U' \subrel{ouv} C'$, telle que $\varphi : U \to U'$ isom)
-        \end{coro}
-        \begin{proof}
-            $x \in U \subrel{ouv} C$, $\varphi : U \bs \{x\} \to \mathbb{P}^n$ morphisme. On peut supposer que $x = [x_0, \cdots, c_n]$ avec $x_0 \neq 0$. Soit $C' = C \cap U_0 \subseteq U_0 \simeq \mathbb{A}^n$. On peut supposer que $U \subrel{ouv} C'$. Soit $\varphi = [f_0, \cdots, f_n]$, $f_i = H_i/G_i$ sur $U \bs \{x\}$, $H_i, G_i \in k[X_0, \cdots, X_n]$ homogènes, $\deg G_i = \deg H_i$, $G_i(x) \neq 0$. Soient $h_i = H_i(1,X_1, \cdots, X_n)$, $g_i = G_i(1,X_1, \cdots, X_n)$, $f_i = h_i/g_i$ sur $U \bs \{x\}$, $g_i,h_i \in k[C']$. $x$ point réfgulier $\iff \mathcal{O}_x \simeq k[C']_x$ est un DVR. Ainsi $\mathfrak{m}_x = (t)$, notons $v_x : k(C')  \bs \{0\} \to \mathbb{Z}$. Soit $r_i = v_x(f_i) \in \mathbb{Z}$. (ops $f_0, \cdots, f_n \neq 0$, sinon si $f_0 = 0$, on considère $C \dashrightarrow \mathbb{P}^{n-1}$). Soit $r = \min \{r_0, \cdots, r_n\}$, soit $\varphi' = [t^{-r}f_0, \cdots, t^{-r}f_n]$. Alors $\varphi = \varphi'$ sur $U \bs \{x\}$ et $\varphi'$ est défini en $x$, car si $r_i = r$, alors $v_x(t^{-r}f_i) = 0$, i.e. $t^{-r}f_i \in \mathcal{O}_x^\times$ n'est pas $0$ en $x$.
-        \end{proof}
-        $C$ courbe projective lisse, $x \in C$, $C \subseteq \mathbb{P}^n_{X_0, \cdots, X_n}$. $\exists U \subrel{ouv} C$ ,$x \in U$, $U$ est une courbe affine ($U = C \cap \{X_i \neq 0\}$). $\mathcal{O}_c = k[U]_x$ DVR, $m_x = (t)$, on dispose d'une valuation $v_x$. Alors
-        \begin{align*}
-            & \mathcal{O}_x = \{f \in k(C) \mid v_x(f) \geq 0\} \\
-            & \mathfrak{m}_x = \{f \in k(C) \mid v_x(f) > 0\}
-        \end{align*}
-        \begin{defi}
-            $f \in k(C)$ non nul.
-            \begin{enumerate}
-                \item Si $v_x(f) > 0$, on tit que $x$ est un zéro de $f$.
-                \item Si $v_x(f) < 0$, on dit que $x$ est un pôle de $f$. 
-            \end{enumerate}
-        \end{defi}
-        \begin{expl}
-            $C = \mathbb{P}^1$, $f = \frac{X(2X - Y)}{(X - 3Y)^2} \in k(\mathbb{P}^1)$ Trouver les zéros et les pôles de $f$ : $U_0 = \{[1,t] \mid t \in k\}$, $U_1 = \{[s,1] \mid s \in k\}$, $k(\mathbb{P}^1) = k(U_0) = k(t)$. A travers cette égalitén on a
-            \begin{align*}
-                f = \frac{2 - t}{(1 - 3t)^2} \in k(t)
-            \end{align*}
-            Sur $U_0$ : $t = 2$ est un zéro, $t = 1/3$ est un pôle. Soit $t_0 \in \mathbb{A}^1 = U_0$, $k[\mathbb{A}^1]_{t_0} = k[t]_{(t - t_0)} = \{P/Q \mid P,Q \in k[t],\, Q(t_0) \neq 0\}$. Ainsi si $t \neq 2,1/3$, $f = P/Q \in \mathcal{O}^\times_{t_0}$ (car $P(t_0) \neq 0$, $Q(t_0) \neq 0$). Et si $t_0 = 2$, $\mathfrak{m}_{t_0} = (t - 2)$ et alors $v_{t_0}(f) = 1$ donc $2$ est zéro d'ordre $1$. Si $t_0 = 1/3$, alors $\mathfrak{m}_{1/3} = (t - 1/3) = (3t - 1)$, et alors $v_{1/3}(f) = -2$ donc $1/3$ est un pôle d'ordre $2$.
-            On fait pareil avec l'autre recouvrement si $x$ est le point à l'infini, et on remarque que c'est un zéro d'ordre $1$. 
-        \end{expl}
-        \begin{theo}
-            $V \subseteq \mathbb{P}^n$ variété projective. Si $f : V \to k$ est une fonction régulière, alors $f$ est une constante. 
-        \end{theo}
-        \begin{expl}
-            $V = \mathbb{P}^1$, soit $f : \mathbb{P}^1 \to k$ une fonction régulière. Ainsi on obtiens deux rstrictions $f_{|U_0} \in k[\mathbb{A}^1]$, $f_{|U_1} \in k[\mathbb{A}^1]$ qui sont des fonctions régulières. Ainsi $\exists P \in k[t]$ tq $f([1,t]) = P(t)$ pour tout $t \in k$, et il existe $Q \in k[s]$ tel que $f([s,1])$ tq $f([s,1]) = Q(s)$ pour tout $s \in k$. Si $t \neq 0$, alors $P(t) = f([1,t]) = f([1/t, 1]) = Q(1/t)$. Mais alors soient $P = \sum^n a_it^i$, $Q = \sum^l b_it^i$, on obtiens donc l'égalité
-            \begin{align*}
-                \sum^n a_it^i = \sum^l b_i\frac1t^i
-                \Rightarrow a_n t^{l + n} + \cdots + a_0t^l = b_l + \cdots + b_0t^l
-            \end{align*}
-            donc $n = l = 0$ et donc $P,Q \in k$ i.e. $f \in k$.
-        \end{expl}
-        \begin{coro}
-            Soit $C$ une courbe projective lisse, alors $\forall f \in k(C)$, $f$ non constante a au moins un pôle et au moins un zéro.
-        \end{coro}
-        \begin{proof} (coro)
-            On a, pour tout $f \in k(C)$ non nulle, $x \in X$, que 
-            \begin{align*}
-                v_x(f) = - v_x(1/f)
-            \end{align*}
-            Ainsi $x$ est un zéro de $f \iff x$ est un pôle de $1/f$. Ainsi il suffit de montrer que $\forall f \in k(C)$ non constante, $f$ a au moins un pôle. Supposons le contraire, soit $f \in k(C)$, $f$ non constante mais qui n'a pas de pôle. Alors $v_x(f) \geq 0$ pour tout $x \in X$. Alors $f : C \to k$ est une fonction régulière globale,  ce qui est contradictoire avec le théorème. 
-        \end{proof}
-        \begin{prop}
-            $C$ courbe projective lisse, $f \in k(C)$, $f \neq 0$. Alors il y a un nombre fini de zéros et de pôles.
-        \end{prop}
-        \begin{proof}
-            Soit $\emptyset \neq C' \subrel{ouv} C$ ouvert avec $C'$ courbe affine. On a montré que que si $V$ est une courbe affine, les sous-ensembles algébriques propres sont finis. C'est aussi vrai pour une courbe projective \cor{(Exercice)} : les sous-ensembles projectifs propres sont finis (on applique le résultat précédent plusieurs fois). Maintenant $C \bs C'$ est fini (c'est un  sous-ensemble algébrique  propre). Vérifions que $f$ a un nombre fini de pôles et de zéros sur cette courbe affine. Soit $f = g/h$, avec $g,h \in k[C']$ et $h \neq 0$. Alors $\{$zéros de $f\} \subseteq \{$zéros de $g\} = V(g) \cap C'$, et idem pour les pôles : $\{$pôles de $f\} \subseteq \{$zéros de $h\} = V(h) \cap C'$. Mais $V(g) \cap C'$ est un sous-ensemble algébrique propre de $C'$, car sinon on aurait $g = 0$ sur $C'$, i.e. $g \in k[C']$ donc $f = 0$. De manière similaire, $V(h) \cap C'$ est un sous-ensemble algébrique propre de $C'$.
-        \end{proof}
-        \begin{defi}
-            $C$ courbe projective lisse, un diviseur sur $C$ est une somme finie formelle
-            \begin{align*}
-                D = \sum_{x \in C} n_xx
-            \end{align*}
-            avec $n_x = 0$ sauf pour un ensemble fini de points $x \in C$.
-        \end{defi}
-        \begin{nota}
-            On note $\mathrm{Div}(C) = \{$diviseurs de $C\}$ (c'est le groupe abélien libre engendré par $C$ vue comme un ensemble)
-        \end{nota}
-        \begin{nota}
-            On défini
-            \begin{align*}
-                \begin{array}{cccc}
-                    \deg : & \mathrm{Div}(C) & \to & \mathbb{Z} \\
-                    & \sum_{x \in C} n_xx & \mapsto & \sum_{x \in C} n_x \\
-                \end{array}
-            \end{align*}
-            C'est un morphisme de groupes, et on notera $\mathrm{Div}^0(C) = \ker \deg$
-        \end{nota}
-        \begin{defi}
-            Un diviseur principal est un diviseur associé à $f \in k(C)$, $f \neq 0$ est 
-            \begin{align*}
-                \mathrm{div} f = \sum_{x \in C} v_x(f)x
-            \end{align*}
-        \end{defi}
-        \begin{nota}
-            \begin{align*}
-                div_0(f) &= \sum_{\substack{p \in C \\ p \text{ zéro de } f}} v_p(f)p \\
-                div_\infty(f) &= \sum_{\substack{g \in C \\ g \text{ pôle de } f}} -v_p(f)g
-            \end{align*}
-        \end{nota}
-        \begin{remq}
-            \begin{align*}
-                \mathrm{div} f = div_0(f) - div_\infty(f)             
-            \end{align*}
-        \end{remq}
-        \begin{expl}
-            $C = \mathbb{P}^1$, $f = \frac{X(2X - Y)}{(X - 3Y)^2}$.
-            \begin{enumerate}
-                \item zéros : $\infty = [0,1]$, $p = [1,2]$ (d'ordre $1$)
-                \item pôles : $q = [3,1]$ d'ordre $2$.
-            \end{enumerate}
-            Ainsi $\mathrm{div} f = \infty + p - 2g$, diviseur principal de degré $0$.
-        \end{expl}
-        \begin{theo}
-            $f \in k(C)$ non nulle, alors $\mathrm{div} f$ est de degré $0$.
-        \end{theo}
-        \begin{prop}
-            \begin{enumerate}
-                \item $\mathrm{div} (fg) = \mathrm{div} f + \mathrm{div} g$ pour tous $f,g \in k(C)$ non nuls.
-                \item $\mathrm{div} 1/f = - \mathrm{div} f$ $\forall f \in k(C)$, $f \neq 0$.
-            \end{enumerate}
-        \end{prop}
-        \begin{proof}
-            \cor{Exercice}
-        \end{proof}
-        \begin{defi}
-            $Pr(C) := \{\mathrm{div} f \mid f \in k(C)^\times\}$
-        \end{defi}
-        \begin{prop}
-            \begin{enumerate}
-                \item $Pr(C) \subseteq Div(C)$ est un sous-groupe.
-                \item \begin{align*}
-                    \begin{array}{cccc}
-                        div : & k(C)^\times & \to & Pr(C) \\
-                        & f & \mapsto & div f \\
-                    \end{array}
-                \end{align*}
-                est un morphisme de groupes surjectif, de noyau $k^\times$.
-            \end{enumerate}
-        \end{prop}
-        \begin{proof}
-            soit $f \in k(C)^\times$ dans le noyau de $div$. Si $f$ n'est pas constante, alors $f$ a au moins un pôle et un zéro, et ainsi $div f \neq 0$.
-        \end{proof}
-        \begin{defi}
-            On définit le groupe de Picard de $C$ comme
-            \begin{align*}
-                Pic(C) = Div(C)/Pr(C) = Div(C)/\sim
-            \end{align*}
-        \end{defi}
-        \begin{nota}
-            Soient $D,D' \in Div(C)$, alors
-            \begin{align*}
-                D \sim D' \iff D - D' = \div(f) \in Pr(C)
-            \end{align*}
-            où $f\in k(C)^\times$. Cette relation d'équivalence est nommée "linéairement équivalents". On note $[D]$ la cladde de $D$ dans $Pic(C)$.
-        \end{nota}
-        \begin{theo}
-            \label{*}
-            $Pr(C) \subseteq Div^0(C)$, i.e. pour tout $f \in k(C)^\times$, $div(f)$ est de degré $0$, i.e. $\deg (div_0(f)) = \deg (div_\infty(f))$.
-        \end{theo}
-        \begin{remq}
-            $f \in k(C)$ non constante. Alors $\bar k = k \subseteq k(f)$ est purement transcendante, mais $\dim C = 1$, i.e. $tr \deg_kk(C) = 1$, donc $k(f) \subseteq k(C)$ est algébrique (et de type fini), i.e. $[k(C) : k(f)] < \infty$.
-        \end{remq}
-        \begin{theo}
-            \label{**}
-            $f \in k(C)^\times$ non constante. Alors
-            \begin{align*}
-                \deg(div_0(f)) = \deg(div_\infty(f)) = [k(C):k(f)]
-            \end{align*}
-        \end{theo}
-        \begin{remq}
-            $f \in k(C)^\times$ non constante, alors on peut définir
-            \begin{align*}
-                \begin{array}{cccc}
-                    F : & C & \dashrightarrow & \mathbb{P}^1 \\
-                    & x & \mapsto & [1, f(x)]\\
-                \end{array}
-            \end{align*}
-            et on a prouvé que si $C$ est lisse, alors $F$ est en réalité un morphisme (est bien défini).
-        \end{remq}
-        \begin{theo}
-            \label{***}
-            \begin{align*}
-                [k(C), k(f)] = \deg F
-            \end{align*}
-            où $\deg F$ est le nombre de points dans $F^{-1}(y)$ pour un $y \in \mathbb{P}^1$ point général.
-        \end{theo}
-        \begin{remq}
-            Si $[k(C),k(f)] = 1$, alors $F$ est en réalité un isomorphisme.
-        \end{remq}
-        \begin{remq}
-            $V,W$ variétés, et $V \dashrightarrow W$ birationelle ($\exists \emptyset \neq U_V \subseteq V,\, \emptyset \neq U_W \subseteq W$ ouverts, $U_V \simeq U_W$), alors $k(V) \simeq k(W)$. La réciproque est aussi vraie. Ainsi si $C$ est une courbe projective, $f \in k(C)^\times$ non constante, si $k(C) = k(f) \simeq k(\mathbb{P}^1)$, alors il existe une application birationnelle $C \dashrightarrow \mathbb{P}^1$.
-        \end{remq}
-        \begin{exo}
-            $C,C'$ courbes lisses, alors il existe une application birationnelle $C \dashrightarrow C'$ si et seulement si $C \simeq C'$.
-        \end{exo}
-        Une conséquence du théorème \ref{*} est que le morphisme $\deg$ passe au quotient par $Pr(C)$, i.e. le morphisme
-        \begin{align*}
-            \begin{array}{cccc}
-                \deg : & Pic(C) & \to & \mathbb{Z} \\
-                & [D] & \mapsto & \deg D\\
-            \end{array}
-        \end{align*}
-        est bien défini (et il est surjectif). Autrement dit, si $D \sim D'$, alors $\deg D = \deg D'$.
-        \begin{exo}
-            $C = \mathbb{P}^1$, alors pour tout $D \in Div^0(C)$, on a que $D$ est principal ($D = div f$ pour un $f \in k(\mathbb{P}^1)^\times$)
-        \end{exo}
-        \begin{defi}
-            On définit la variété de Picard comme
-            \begin{align*}
-                Pic^0(C) = Div^0/Pr(C)
-            \end{align*}
-            C'est un sous groupe de $Pic(C)$.
-        \end{defi}
-        \begin{remq}
-            Considérons le morphisme $\deg : Pic(C) \to \mathbb{Z}$. Alors $\ker(\deg) = Div^0(C)$. Ainsi si $C = \mathbb{P}^1$, $Pic^0(\mathbb{P}^1) = 0$ et ainsi $Pic(\mathbb{P}^1) \simeq \mathbb{Z}$.
-        \end{remq}
-        \begin{defi}
-            Un diviseur $D = \sum n_pp$ sur $C$ est effectif si $n_p \geq 0$ pour tout $p \in C$.
-        \end{defi}
-        \begin{nota}
-            On note $D \geq 0$ si $D$ est effectif, et $D' \geq D$ si $D - D' \geq 0$.
-        \end{nota}
-        \begin{nota}
-            $D \in Div(C)$, considérons
-            \begin{align*}
-                \mathcal{L}(D) = \{0\} \cup \{f \in k(C)^\times \mid div(f) + D \geq 0\}
-            \end{align*}
-            Plus explicitement, $D = \sum n_pp$, alors $f \in k(C)^\times$ est dans $\mathcal{L}(D)$ si et sulement si $n_p + v_p(f) \geq 0$.
-        \end{nota}
-        \begin{lemm} ($D = 0$)
-            \label{d=0}
-            \begin{align*}
-                \mathcal{L}(0) = k
-            \end{align*}
-        \end{lemm}
-        \begin{proof}
-            $\mathcal{L}(0) = \{0\} \cup \{f \in k(C)^\times \mid div(f) \geq 0\}$, or $div(f) = div_0(f) - div_\infty(f)$, et si $f \notin k$, alors $div_\infty(f) \neq 0$ donc $f \notin \mathcal{L}(0)$, et si $f \in k^\times$, alors on a bien $div(f) = 0$.
-        \end{proof}
-        \begin{expl}
-            $C = \mathbb{P}^1$, $p = [0,1] \in \mathbb{P}^1$, $n > 0$ entier. Notons $D = np$, alors 
-            \begin{align*}
-                \mathcal{L}(D) = \{0\} \cup \{f \in k(C)^\times \mid div(f) + np \geq 0\}
-            \end{align*}
-            Ainsi $f \in \mathcal{L}(D) \iff \forall g \neq p,\, v_p(f) \geq 0$ et $v_p(f) + n \geq 0$. Essayons de caractériser cela : $p \in \mathbb{A}^1 \subseteq \mathbb{P}^1$ où on identifie $\mathbb{A}^1$ avec l'ouvert $\{[x,1] \mid x \in \mathbb{A}^1\}$, et $k(\mathbb{P}^1) \simeq \mathbb{A}^1 = k(t)$. Ainsi $\mathcal{O}_p = k[\mathbb{A}^1]_0$ correspond donc aux fractions rationnelles dont le dénominateur ne s'annule pas en $0$. Remarquons alors que si $f = P/Q$, $P,Q \in k[t]$. Alors écrivons $P = t^nP'$, $Q = t^m Q'$, avec $P'(0) \neq 0$, $Q'(0) \neq 0$. Alors $f = t^{n - m}(P'/Q')$, et $v_p(f) = n - m$. On voudrait alors montrer que 
-            \begin{align*}
-                \mathcal{L}(np) = \left\{ \frac{P(t)}{t^n} \mid P \in k[t],\, \deg P \leq n \right\}
-            \end{align*}
-            Il faut d'abord montrer que $1/t^i \in \mathcal{L}(np)$ si $0 \leq i \leq n$ pour prouver $\supseteq$. Mais si $p = 0$, alors $v_p(1/t^i) = -i$, et donc $v_p(1/t^i) + n \geq 0$. Et si $g \neq 0$, alors $v_g(1/t^i) = 0$ (\cor{Exercice}). Maintenant si $g = \infty = [1,0]$, on doit changer de carte pour calculer $\mathcal{O}_g$ : on prend $y \in \mathbb{A}^1 \mapsto [1,y] \in \mathbb{P}^1$. Et par ce changement de carte $k(t) \simeq k(s)$ via $t \mapsto 1/s$, et alors $1/t^i \mapsto s^i$ qui est de $g$-valuation positive, et ainsi $\infty$ n'est pas un pôle de $1/t^i$. \cor{Le sens réciproque est laissé en exercice}
-        \end{expl}
-        \begin{prop}
-            \begin{enumerate}
-                \item $\mathcal{L}(D) \neq 0$ si et seulement si $\exists E \geq 0$ diviseur effectif tel que $D \sim E$.
-                \item $\mathcal{L}(D) \subseteq k(C)$ est un $k$-sev.
-                \item Si $D \geq D'$, alors $\mathcal{L}(D) \subseteq \mathcal{L}(D')$ et $\dim_k \mathcal{L}(D')/\mathcal{L}(D) \leq \deg D' - \deg D$.
-                \item Si $D' \sim D$, alors $\mathcal{L}(D) \simeq \mathcal{L}(D')$ dans $\mathbf{Vect}_k$.
-                \item Si $D \geq 0$, alors $\dim_k \mathcal{L}(D) \leq \deg(D) + 1$ (et en particulier $\mathcal{L}(D)$ est un $k$-ev de dimension finie)
-            \end{enumerate}
-        \end{prop}
-        \begin{proof}
-            \begin{enumerate}
-                \item $\mathcal{L}(D) \neq 0 \iff f \in k(C)^\times$ tel que $div(f) + D \geq 0$. Ainsi posons $E := div(f) + D \geq 0$, alors $E \sim D$ car $E - D = div(f)$. Pour le sens réciproque, si $E \geq 0$ et $E \sim D$, alors $\exists f \in k(C)^\times$ tel que $E - D = div(f)$, donc $0 \leq E = D + div(f)$ et ainsi $f \in \mathcal{L}(D) \bs \{0\}$.
-                \item Si $f,g \in \mathcal{L}(D)$, alors $f + g \in \mathcal{L}(D)$ : notons $D = \sum_{p \in C} n_pp$, $p_i \in C$, $n_i \in \mathbb{Z}$. Alors $f \in \mathcal{L}(D) \iff v_p(f) + n_p \geq 0$ pour tout $p \in C$. Soit $f,g \in \mathcal{L}(D)$, il faut montrer que $v_p(f + g) + n_p \geq 0$ pour tout $p \in C$. Mais on sait que $v_p(f + g) \geq \min \{v_p(f), v_p(g)\} \geq -n_p$ comme $f,g \in \mathcal{L}(D)$, et ainsi $f + g \in \mathcal{L}(D)$. Il faut ensuite montrer que si $f \in \mathcal{L}(D)$, $\lambda \in k$, alors $\lambda f \in \mathcal{L}(D)$ : si $\lambda = 0$, ok. Sinon, $v_p(\lambda f) = v_p(f) \geq n_p$ si $f \in \mathcal{L}(D)$.
-                \item Comme $D \geq D'$, alors $D' = D + E$ où $E \geq 0$. Maintenant si $f \in \mathcal{L}(D)$, alors $D' + div(f) = E + D + div(f)$ et $E, D + div(f) \geq 0$ donc $f \in \mathcal{L}(D')$. Pour le deuxième point, notons $D' = D + \sum_{i = 1} ^l n_iy_i$, $n_i \geq 0$. D'après le point précédent, on a $\mathcal{L}(D) \subseteq \mathcal{L}(D + y_1) \subseteq \mathcal{L}(D + 2y_1) \subseteq \cdots \subseteq \mathcal{L}(D)(D + n_1y_1) \subseteq \mathcal{L}(D)(D + n_1y_1 + y_2) + \cdots$. Comme $\deg D' - \deg D = \sum n_i$, il suffit de montrer que $\dim_k \mathcal{L}(D + y)/\mathcal{L}(D) \leq 1$ pour $y \in C$. Pour cela, considérons
+                est irréductible. $E_\lambda$ est régulière si $\lambda \neq 0,1$. Considérons l'application rationnelle
                 \begin{align*}
                     \begin{array}{cccc}
-                        \varphi : & \mathcal{L}(D + y) & \to & k \\
-                        & f & \mapsto & (t^{n_y + 1}f)(y)\\
+                        \pi : & \mathbb{P}^2 & \to & \mathbb{P}^1 \\
+                        & [X,Y,Z] & \mapsto & [X,Y] \\
                     \end{array}
                 \end{align*}
-                où $D = n_yy + \sum_{p \neq y} n_pp$, $m_y = (t) \subseteq \mathcal{O}_y$. $\varphi$ est bien défini : si $f \in \mathcal{L}(D + y)$ est non nul, $v_y(f) + n_y + 1 \geq 0$ et donc $v_y(t^{n_y + 1}) \geq 0$ et ainsi $t^{n_y + 1}f \in k(C)^\times$ est bien défini en $y$. Maintenant $f \in \ker \varphi \iff v_y(t^{n_y + 1}f) > 0 \iff n_y + v_y(f) \geq 0$. Il faut donc vérifier que si $f \in \ker \varphi$, alors $f \in \mathcal{L}(D)$. En $y$, $v_y(f) + n_y \geq 0$, et sinon si $x \neq y$, $f \in \mathcal{L}(D + y) \Rightarrow v_x(f) + n_x \geq 0$ et ainsi au final $div(f) + D \geq 0$.
-                \item $D \sim D' \iff D' = D + div(f)$, où $f \in k(C)^\times$. Soit 
+                $\pi$ n'est pas défini en $[0,0,1]$. Soit $\varphi = \pi_{\overline{E_\lambda}} : \overline{E_\lambda} \to \mathbb{P}^1$, supposons que $\lambda \neq 0,1$ (donc $[0,0,1]$ est un point régulier de $\overline{E_\lambda}$). Soit $\varphi([x,y,z]) = [X,Y] = [YZ, (X - Z)(X - \lambda Z)]$ (car $X(X - Z)(X - \lambda Z) = Y^2Z$). A $z = 1$, $\varphi([x,y,1]) = [Y, (X - 1)(X - \lambda)]$.
+                \begin{enumerate}
+                    \item Si $\lambda = 0$ : on voit $[x,y,1]$ comme un point de $\mathbb{A}^2$, alors $\varphi : \mathbb{A}^2 \to \mathbb{P}^1$. Mais il n'existe pas de $\psi : U \to \mathbb{P}^1$ morphisme, $(0,0) \in U \subrel{ouv} \mathbb{A}^2$. Supposons que $\psi$ existe, alors
+                    \begin{align*}
+                        \psi = \left[ \frac{H_0}{G_0}, \frac{H_1}{G_1} \right]
+                    \end{align*}
+                    sur $0 \in U' \subrel{ouv} U$, avec $H_i, G_i \in k[X,Y,Z]$ homogènes tq $\deg H_i = \deg G_i$ et $G_i([0,0,1]) \neq 0$. Rq : On peut supposer $U \subseteq U_z = \{z = 1\} \simeq \mathbb{A}^2$. Ainsi il existe $U' \subseteq \mathbb{A}^2_{x,y}$, $0 \in U$, $\exists h_i,g_i \in k[X,Y]$, $g_i(0,0) \neq 0$. Dans $\mathbb{P}^1$,
+                    \begin{align*}
+                        [X,Y] = \left[ \frac{h_0}{g_0}, \frac{h_1}{g_1} \right]
+                    \end{align*}
+                    sur $U'$. Ainsi $Xh_1/g_1 = Yh_0/g_0$ sur $0 \in U' \subrel{ouv} E_{\lambda}$, donc $xh_1g_0 = yh_1g_0$ et $x,y \in k[E_\lambda]$. Maintenant $U'$ est dense dans $E_\lambda$ donc $xh_1g_0 - yh_0g_1 \in (Y^2, X^2(X - 1))$
+                    \begin{itemize}
+                        \item $g_0(0,0) \neq 0 \Rightarrow g_0 = g_0^0 + \cdots$ et $g_0^0 \neq 0$
+                        \item $g_1(0,0) \neq 0 \Rightarrow g_0 = g_1^0 + \cdots$ et $g_0^0 \neq 0$
+                    \end{itemize}
+                    $\psi$ défini en $0$ ssi $h_0(0,0) \neq 0$ ou $h_1(0,0) \neq 0$. Supposons $h_0(0,0) \neq 0$, on a $h_0 = h_0^1 + \cdots$ avex $h_0^0 \neq 0$. La partie linéaire de $Xh_1g_0 - Yh_0g_1$ est $Xh_1^0g_0^0 -  Yh_0^0g_1^0$. Les éléments de $(Y^2 - X(X - 1))$ ont $0$ comme partie linéaire donc $Xh_1^0g_0^0 -  Yh_0^0g_1^0 = 0$ donc $h_1^0g0^0 = 0 = h_0^0 g_0^0$ absurde.
+                \end{enumerate}
+            \end{expl}
+            \begin{coro}
+                $C$ courbe projective lisse. Alors toute application rationnelle $\varphi : C \dashrightarrow \mathbb{P}^n$ est régulière.
+            \end{coro}
+            \begin{coro}
+                $C,C'$ courbes lisses projectives, toute application birationnelle (application rationnelle $C \dashrightarrow C'$ telle que $\exists \emptyset \neq U \subrel{ouv} C$, $\exists \emptyset \neq U' \subrel{ouv} C'$, telle que $\varphi : U \to U'$ isom) est un isomorphisme.
+            \end{coro}
+            \begin{proof}
+                $x \in U \subrel{ouv} C$, $\varphi : U \bs \{x\} \to \mathbb{P}^n$ morphisme. On peut supposer que $x = [x_0, \cdots, c_n]$ avec $x_0 \neq 0$. Soit $C' = C \cap U_0 \subseteq U_0 \simeq \mathbb{A}^n$. On peut supposer que $U \subrel{ouv} C'$. Soit $\varphi = [f_0, \cdots, f_n]$, $f_i = H_i/G_i$ sur $U \bs \{x\}$, $H_i, G_i \in k[X_0, \cdots, X_n]$ homogènes, $\deg G_i = \deg H_i$, $G_i(x) \neq 0$. Soient $h_i = H_i(1,X_1, \cdots, X_n)$, $g_i = G_i(1,X_1, \cdots, X_n)$, $f_i = h_i/g_i$ sur $U \bs \{x\}$, $g_i,h_i \in k[C']$. $x$ point régulier $\iff \mathcal{O}_x \simeq k[C']_x$ est un DVR. Ainsi $\mathfrak{m}_x = (t)$, notons $v_x : k(C')  \bs \{0\} \to \mathbb{Z}$. Soit $r_i = v_x(f_i) \in \mathbb{Z}$. (ops $f_0, \cdots, f_n \neq 0$, sinon si $f_0 = 0$, on considère $C \dashrightarrow \mathbb{P}^{n-1}$). Soit $r = \min \{r_0, \cdots, r_n\}$, soit $\varphi' = [t^{-r}f_0, \cdots, t^{-r}f_n]$. Alors $\varphi = \varphi'$ sur $U \bs \{x\}$ et $\varphi'$ est défini en $x$, car si $r_i = r$, alors $v_x(t^{-r}f_i) = 0$, i.e. $t^{-r}f_i \in \mathcal{O}_x^\times$ n'est pas $0$ en $x$.
+            \end{proof}
+            
+        \subsection{Pôles et zéros}
+            $C$ courbe projective lisse, $x \in C$, $C \subseteq \mathbb{P}^n_{X_0, \cdots, X_n}$. $\exists U \subrel{ouv} C$ ,$x \in U$, $U$ est une courbe affine ($U = C \cap \{X_i \neq 0\}$). $\mathcal{O}_c = k[U]_x$ DVR, $m_x = (t)$, on dispose d'une valuation $v_x$. Alors
+            \begin{align*}
+                & \mathcal{O}_x = \{f \in k(C) \mid v_x(f) \geq 0\} \\
+                & \mathfrak{m}_x = \{f \in k(C) \mid v_x(f) > 0\}
+            \end{align*}
+            \begin{defi}
+                $f \in k(C)$ non nul.
+                \begin{enumerate}
+                    \item Si $v_x(f) > 0$, on tit que $x$ est un zéro de $f$.
+                    \item Si $v_x(f) < 0$, on dit que $x$ est un pôle de $f$. 
+                \end{enumerate}
+            \end{defi}
+            \begin{expl}
+                $C = \mathbb{P}^1$, $f = \frac{X(2X - Y)}{(X - 3Y)^2} \in k(\mathbb{P}^1)$ Trouver les zéros et les pôles de $f$ : $U_0 = \{[1,t] \mid t \in k\}$, $U_1 = \{[s,1] \mid s \in k\}$, $k(\mathbb{P}^1) = k(U_0) = k(t)$. A travers cette égalitén on a
+                \begin{align*}
+                    f = \frac{2 - t}{(1 - 3t)^2} \in k(t)
+                \end{align*}
+                Sur $U_0$ : $t = 2$ est un zéro, $t = 1/3$ est un pôle. Soit $t_0 \in \mathbb{A}^1 = U_0$, $k[\mathbb{A}^1]_{t_0} = k[t]_{(t - t_0)} = \{P/Q \mid P,Q \in k[t],\, Q(t_0) \neq 0\}$. Ainsi si $t \neq 2,1/3$, $f = P/Q \in \mathcal{O}^\times_{t_0}$ (car $P(t_0) \neq 0$, $Q(t_0) \neq 0$). Et si $t_0 = 2$, $\mathfrak{m}_{t_0} = (t - 2)$ et alors $v_{t_0}(f) = 1$ donc $2$ est zéro d'ordre $1$. Si $t_0 = 1/3$, alors $\mathfrak{m}_{1/3} = (t - 1/3) = (3t - 1)$, et alors $v_{1/3}(f) = -2$ donc $1/3$ est un pôle d'ordre $2$.
+                On fait pareil avec l'autre recouvrement si $x$ est le point à l'infini, et on remarque que c'est un zéro d'ordre $1$. 
+            \end{expl}
+            \begin{theo}
+                $V \subseteq \mathbb{P}^n$ variété projective. Si $f : V \to k$ est une fonction régulière, alors $f$ est une constante. 
+            \end{theo}
+            \begin{expl}
+                $V = \mathbb{P}^1$, soit $f : \mathbb{P}^1 \to k$ une fonction régulière. Ainsi on obtiens deux rstrictions $f_{|U_0} \in k[\mathbb{A}^1]$, $f_{|U_1} \in k[\mathbb{A}^1]$ qui sont des fonctions régulières. Ainsi $\exists P \in k[t]$ tq $f([1,t]) = P(t)$ pour tout $t \in k$, et il existe $Q \in k[s]$ tel que $f([s,1])$ tq $f([s,1]) = Q(s)$ pour tout $s \in k$. Si $t \neq 0$, alors $P(t) = f([1,t]) = f([1/t, 1]) = Q(1/t)$. Mais alors soient $P = \sum^n a_it^i$, $Q = \sum^l b_it^i$, on obtiens donc l'égalité
+                \begin{align*}
+                    \sum^n a_it^i = \sum^l b_i\frac1t^i
+                    \Rightarrow a_n t^{l + n} + \cdots + a_0t^l = b_l + \cdots + b_0t^l
+                \end{align*}
+                donc $n = l = 0$ et donc $P,Q \in k$ i.e. $f \in k$.
+            \end{expl}
+            \begin{coro}
+                Soit $C$ une courbe projective lisse, alors $\forall f \in k(C)$, $f$ non constante a au moins un pôle et au moins un zéro.
+            \end{coro}
+            \begin{proof} (coro)
+                On a, pour tout $f \in k(C)$ non nulle, $x \in X$, que 
+                \begin{align*}
+                    v_x(f) = - v_x(1/f)
+                \end{align*}
+                Ainsi $x$ est un zéro de $f \iff x$ est un pôle de $1/f$. Ainsi il suffit de montrer que $\forall f \in k(C)$ non constante, $f$ a au moins un pôle. Supposons le contraire, soit $f \in k(C)$, $f$ non constante mais qui n'a pas de pôle. Alors $v_x(f) \geq 0$ pour tout $x \in X$. Alors $f : C \to k$ est une fonction régulière globale,  ce qui est contradictoire avec le théorème. 
+            \end{proof}
+            \begin{prop}
+                $C$ courbe projective lisse, $f \in k(C)$, $f \neq 0$. Alors il y a un nombre fini de zéros et de pôles.
+            \end{prop}
+            \begin{proof}
+                Soit $\emptyset \neq C' \subrel{ouv} C$ ouvert avec $C'$ courbe affine. On a montré que que si $V$ est une courbe affine, les sous-ensembles algébriques propres sont finis. C'est aussi vrai pour une courbe projective \cor{(Exercice)} : les sous-ensembles projectifs propres sont finis (on applique le résultat précédent plusieurs fois). Maintenant $C \bs C'$ est fini (c'est un  sous-ensemble algébrique  propre). Vérifions que $f$ a un nombre fini de pôles et de zéros sur cette courbe affine. Soit $f = g/h$, avec $g,h \in k[C']$ et $h \neq 0$. Alors $\{$zéros de $f\} \subseteq \{$zéros de $g\} = V(g) \cap C'$, et idem pour les pôles : $\{$pôles de $f\} \subseteq \{$zéros de $h\} = V(h) \cap C'$. Mais $V(g) \cap C'$ est un sous-ensemble algébrique propre de $C'$, car sinon on aurait $g = 0$ sur $C'$, i.e. $g \in k[C']$ donc $f = 0$. De manière similaire, $V(h) \cap C'$ est un sous-ensemble algébrique propre de $C'$.
+            \end{proof}
+
+        \subsection{Diviseurs sur une courbe}
+            \begin{defi}
+                $C$ courbe projective lisse, un diviseur sur $C$ est une somme finie formelle
+                \begin{align*}
+                    D = \sum_{x \in C} n_xx
+                \end{align*}
+                avec $n_x = 0$ sauf pour un ensemble fini de points $x \in C$.
+            \end{defi}
+            \begin{nota}
+                On note $\mathrm{Div}(C) = \{$diviseurs de $C\}$ (c'est le groupe abélien libre engendré par $C$ vue comme un ensemble)
+            \end{nota}
+            \begin{nota}
+                On défini
                 \begin{align*}
                     \begin{array}{cccc}
-                        \varphi : & \mathcal{L}(D) & \to & \mathcal{L}(D') \\
-                        & g & \mapsto & \frac 1fg \\
+                        \deg : & \mathrm{Div}(C) & \to & \mathbb{Z} \\
+                        & \sum_{x \in C} n_xx & \mapsto & \sum_{x \in C} n_x \\
                     \end{array}
                 \end{align*}
-                alors $\varphi$ est bien défini : soit $g \in \mathcal{L}(D)$, alors $D + div(g) \geq 0$. Mais 
+                C'est un morphisme de groupes, et on notera $\mathrm{Div}^0(C) = \ker \deg$
+            \end{nota}
+            \begin{defi}
+                Un diviseur principal est un diviseur associé à $f \in k(C)$, $f \neq 0$ est 
                 \begin{align*}
-                    div(g/f) + D' = div(g) - div(f) + D' = div(g) + D \geq 0
+                    \mathrm{div} f = \sum_{x \in C} v_x(f)x
                 \end{align*}
-                puis $\varphi$ est $k$-linéaire. Par le même argument, l'application 
+            \end{defi}
+            \begin{nota}
+                \begin{align*}
+                    div_0(f) &= \sum_{\substack{p \in C \\ p \text{ zéro de } f}} v_p(f)p \\
+                    div_\infty(f) &= \sum_{\substack{g \in C \\ g \text{ pôle de } f}} -v_p(f)g
+                \end{align*}
+            \end{nota}
+            \begin{remq}
+                \begin{align*}
+                    \mathrm{div} f = div_0(f) - div_\infty(f)             
+                \end{align*}
+            \end{remq}
+            \begin{expl}
+                $C = \mathbb{P}^1$, $f = \frac{X(2X - Y)}{(X - 3Y)^2}$.
+                \begin{enumerate}
+                    \item zéros : $\infty = [0,1]$, $p = [1,2]$ (d'ordre $1$)
+                    \item pôles : $q = [3,1]$ d'ordre $2$.
+                \end{enumerate}
+                Ainsi $\mathrm{div} f = \infty + p - 2g$, diviseur principal de degré $0$.
+            \end{expl}
+            \begin{theo}
+                $f \in k(C)$ non nulle, alors $\mathrm{div} f$ est de degré $0$.
+            \end{theo}
+            \begin{prop}
+                \begin{enumerate}
+                    \item $\mathrm{div} (fg) = \mathrm{div} f + \mathrm{div} g$ pour tous $f,g \in k(C)$ non nuls.
+                    \item $\mathrm{div} 1/f = - \mathrm{div} f$ $\forall f \in k(C)$, $f \neq 0$.
+                \end{enumerate}
+            \end{prop}
+            \begin{proof}
+                \cor{Exercice}
+            \end{proof}
+            \begin{defi}
+                $Pr(C) := \{\mathrm{div} f \mid f \in k(C)^\times\}$
+            \end{defi}
+            \begin{prop}
+                \begin{enumerate}
+                    \item $Pr(C) \subseteq Div(C)$ est un sous-groupe.
+                    \item \begin{align*}
+                        \begin{array}{cccc}
+                            div : & k(C)^\times & \to & Pr(C) \\
+                            & f & \mapsto & div f \\
+                        \end{array}
+                    \end{align*}
+                    est un morphisme de groupes surjectif, de noyau $k^\times$.
+                \end{enumerate}
+            \end{prop}
+            \begin{proof}
+                soit $f \in k(C)^\times$ dans le noyau de $div$. Si $f$ n'est pas constante, alors $f$ a au moins un pôle et un zéro, et ainsi $div f \neq 0$.
+            \end{proof}
+            \begin{defi}
+                On définit le groupe de Picard de $C$ comme
+                \begin{align*}
+                    Pic(C) = Div(C)/Pr(C) = Div(C)/\sim
+                \end{align*}
+            \end{defi}
+            \begin{nota}
+                Soient $D,D' \in Div(C)$, alors
+                \begin{align*}
+                    D \sim D' \iff D - D' = \div(f) \in Pr(C)
+                \end{align*}
+                où $f\in k(C)^\times$. Cette relation d'équivalence est nommée "linéairement équivalents". On note $[D]$ la cladde de $D$ dans $Pic(C)$.
+            \end{nota}
+            \begin{theo}
+                \label{*}
+                $Pr(C) \subseteq Div^0(C)$, i.e. pour tout $f \in k(C)^\times$, $div(f)$ est de degré $0$, i.e. $\deg (div_0(f)) = \deg (div_\infty(f))$.
+            \end{theo}
+            \begin{remq}
+                $f \in k(C)$ non constante. Alors $\bar k = k \subseteq k(f)$ est purement transcendante, mais $\dim C = 1$, i.e. $tr \deg_kk(C) = 1$, donc $k(f) \subseteq k(C)$ est algébrique (et de type fini), i.e. $[k(C) : k(f)] < \infty$.
+            \end{remq}
+            \begin{theo}
+                \label{**}
+                $f \in k(C)^\times$ non constante. Alors
+                \begin{align*}
+                    \deg(div_0(f)) = \deg(div_\infty(f)) = [k(C):k(f)]
+                \end{align*}
+            \end{theo}
+            \begin{remq}
+                $f \in k(C)^\times$ non constante, alors on peut définir
                 \begin{align*}
                     \begin{array}{cccc}
-                        \psi : & \mathcal{L}(D') & \to & \mathcal{L}(D) \\
-                        & g & \mapsto & fg \\
+                        F : & C & \dashrightarrow & \mathbb{P}^1 \\
+                        & x & \mapsto & [1, f(x)]\\
                     \end{array}
                 \end{align*}
-                est bien définie et $k$-linéaire, et est l'inverse de $\varphi$.
-                \item C'est un cas particulier du point (3) : on a que $\dim_k \mathcal{L}(D)/\mathcal{L}(0) \leq \deg D$, puis $\mathcal{L}(0) \simeq k$ donc $\dim \mathcal{L}(D) - 1 \leq \deg D$.
-            \end{enumerate}
-        \end{proof}
-        Ainsi on peut énoncer un corollaire du théorème \ref{*} :
-        \begin{coro}
-            \begin{enumerate}
-                \item Si $D \sim D'$, alors $\deg D = \deg D'$.
-                \item Si $\mathcal{L}(D) \neq 0$, alors $\deg D \geq 0$ (donc si $\deg D < 0$, alors $\mathcal{L}(D) = 0$)
-                \item Si $\deg D \geq -1$, alors $\dim \mathcal{L}(D) \leq \deg D + 1$.
-            \end{enumerate}
-        \end{coro}
-        \begin{proof}
-            \begin{enumerate}
-                \item Ok
-                \item $\mathcal{L}(D) \neq 0 \iff \exists E \geq 0$ tel que $E \sim D$. Mais alors $\deg E = \deg D \geq 0$ car $E \geq 0$.
-                \item Si $\mathcal{L}(D) = 0$, alors $0 \leq \deg D + 1$ si $\deg D \geq -1$. Ainsi on peut supposer que $\mathcal{L}(D) \neq 0$. Alors $\exists E \geq 0$ tel que $E \sim D$, donc $\deg E = \deg D$, et $\dim \mathcal{L}(D) = \dim \mathcal{L}(E)$. On a donc que $\sim \mathcal{L}(E) \leq \deg E + 1$ par le point (5) du lemme précédent, et ainsi $\dim \mathcal{L}(D) \leq \deg D + 1$.
-            \end{enumerate}
-        \end{proof}
-        \begin{nota}
-            $\dim D := \dim_k \mathcal{L}(D)$
-        \end{nota}
-        \begin{theo} (Riemann-Roch)
-            \label{RR}
-            $C$ courbe projective lisse, $k = \bar k$. Alors il existe un entier $g \geq 0$ (le genre de $C$) tel que 
-            \begin{enumerate}
-                \item Pour tout diviseur $D$ ur $C$, on a $\dim(D) \geq \deg(D) + 1 - g$
-                \item Si $\deg D \geq 2g - 1$, alors $\dim(D) = \deg(D) + 1 - g$
-            \end{enumerate}
-        \end{theo}
-        \begin{theo} (dualité de Serre)
-            $\exists$ diviseur $K_c$ (diviseur canonique) tel que $\deg(K_c) = 2g - 2$, et $\dim(D) - \dim(K_c - D) = \deg D + 1 - g$.
-        \end{theo}
-        \begin{theo}
-            $C$ courbe projective lisse sur $k = \bar k$. On a $g = 0 \iff C \simeq \mathbb{P}^1$
-        \end{theo}
-        \begin{proof}
-            \item $\Leftarrow$ : Montrer que $\dim(D) \geq \deg(D) + 1$ pour tout diviseur $D$, et $\sim(D) = \deg D + 1$ si $\deg D \geq -1$. On sait déja que si $\deg D \geq -1$, alors $\dim(D) \leq \deg(D) + 1$ (vrai pour tout $C$!). Il suffit donc de montrer $\dim D = \deg D + 1$ si $\deg D \geq -1$. Si $\deg D = -1$, alors $\mathcal{L}(D) = 0$ et donc $0 = -1 + 1$ ok. Ainsi on peut supposer que $\deg(D) = n \geq 0$. On a vu (exercice) que sur $\mathbb{P}^1$, si $\deg D = \deg D'$, alors $D \sim D'$. Ainsi si $\deg D = n$, alors $D \sim np$ avec $p \in \mathbb{P}^1$. Et ainsi $\dim(D) = \dim(np)$ mais on a aussi vu en exercice que $\mathcal{L}(np) = k + k1/t + \cdots + k1/t^n$ dont une base est les $1/t^i$, donc de dimension $n + 1$. On a donc $\dim D = \dim np = n + 1 = \deg D + 1$.
-            \item $\Rightarrow$ : Supposons que le genre $g$ de $C$ est $0$. Donc pour tout diviseur $D$ sur $C$ on a que $\dim D \geq \deg D + 1$ et $\dim D = \deg D + 1$ si $\deg D \geq -1$. Soit $D = p$, $p \in C$. Alors $\deg D = 1$, et $\dim(D) = \deg(D) + 1 = 2$. Et donc $\mathcal{L}(0) \nsubseteq \mathcal{L}(D)$ et donc il exists $f \in \mathcal{L}(D)$ non constante, et donc $\div_{\infty}(f) \neq 0$, mais comme $f \in \mathcal{L}(D)$, $div(f) + p \geq 0$, $\div_\infty = p$. Mais d'après le théorème \ref{**}, $\deg(div_\infty(f)) = \deg(div_0(f)) = [k(C): k(f)] = 1$ et donc $k(C) = k(f)$, mais $k(f) \simeq k(\mathbb{P}^1)$ et ainsi $C \simeq \mathbb{P}^1$ (du fait que si $C,C'$ sont des courbes lisses, alors $k(C) \simeq k(C') \iff C \simeq C'$)
-        \end{proof}
-        \begin{defi}
-            $C$ courbe elliptique est une courbe projective lisse de genre $g = 1$.
-        \end{defi}
-        \begin{theo}
-            $C$ courbe elliptique, $o \in C$ point. Soit 
+                et on a prouvé que si $C$ est lisse, alors $F$ est en réalité un morphisme (est bien défini).
+            \end{remq}
+            \begin{theo}
+                \label{***}
+                \begin{align*}
+                    [k(C), k(f)] = \deg F
+                \end{align*}
+                où $\deg F$ est le nombre de points dans $F^{-1}(y)$ pour un $y \in \mathbb{P}^1$ point général.
+            \end{theo}
+            \begin{remq}
+                Si $[k(C),k(f)] = 1$, alors $F$ est en réalité un isomorphisme.
+            \end{remq}
+            \begin{remq}
+                $V,W$ variétés, et $V \dashrightarrow W$ birationelle ($\exists \emptyset \neq U_V \subseteq V,\, \emptyset \neq U_W \subseteq W$ ouverts, $U_V \simeq U_W$), alors $k(V) \simeq k(W)$. La réciproque est aussi vraie. Ainsi si $C$ est une courbe projective, $f \in k(C)^\times$ non constante, si $k(C) = k(f) \simeq k(\mathbb{P}^1)$, alors il existe une application birationnelle $C \dashrightarrow \mathbb{P}^1$.
+            \end{remq}
+            \begin{exo}
+                $C,C'$ courbes lisses, alors il existe une application birationnelle $C \dashrightarrow C'$ si et seulement si $C \simeq C'$.
+            \end{exo}
+            Une conséquence du théorème \ref{*} est que le morphisme $\deg$ passe au quotient par $Pr(C)$, i.e. le morphisme
             \begin{align*}
                 \begin{array}{cccc}
-                    \varphi : & C & \to & Pic^0(C) \\
-                    & p & \mapsto & [p - o]\\
+                    \deg : & Pic(C) & \to & \mathbb{Z} \\
+                    & [D] & \mapsto & \deg D\\
                 \end{array}
             \end{align*}
-            Alors $\varphi$ est bijectif.
-        \end{theo}
-        \begin{proof}
-            \item Injective : supposons que $\varphi(p) = \varphi(g)$, $p,g \in C$ et $p \neq g$. Alors $[p - o] = [g - o]$, et ainsi $p - o \im g - o$ et donc $p \sim g$, i.e. $p - g = div(f)$, opur un $f \in k(C)^\times$. Maintenant $div_0(f) = p$, $div_\infty(f) = g$ est de degré $1$ donc $k(f) = k(C)$ (d'après \ref{**}). Ainsi $k(\mathbb{P}^1) \simeq k(C)$ et donc $\mathbb{P}^1 \simeq C$, absurde puisque $\mathbb{P}^1$ est de genre $0$.
-            \item Surjective : Soit $D \in Div^0(C)$, soit $D' = D + o$. Alors $D'$ est un diviseur de degré $1$ : d'après le \hyperref[RR]{le théorème de Riemann-Roch}, $\dim (D') = \deg(D') + 1 - 1  = 1$. Alors $\mathcal{L}(D') \neq 0$, et ainsi il exists $E \geq 0$ tel que $D' \sim E$. Mais $\deg E = \deg D' = 1$ donc $E = p$, $p \in C$. Et alors $D' \sim E = p$ d'où $D + o \sim p$ et donc $[D] = [p - o]$.
-        \end{proof}
+            est bien défini (et il est surjectif). Autrement dit, si $D \sim D'$, alors $\deg D = \deg D'$.
+            \begin{exo}
+                $C = \mathbb{P}^1$, alors pour tout $D \in Div^0(C)$, on a que $D$ est principal ($D = div f$ pour un $f \in k(\mathbb{P}^1)^\times$)
+            \end{exo}
+            \begin{defi}
+                On définit la variété de Picard comme
+                \begin{align*}
+                    Pic^0(C) = Div^0/Pr(C)
+                \end{align*}
+                C'est un sous groupe de $Pic(C)$.
+            \end{defi}
+            \begin{remq}
+                Considérons le morphisme $\deg : Pic(C) \to \mathbb{Z}$. Alors $\ker(\deg) = Div^0(C)$. Ainsi si $C = \mathbb{P}^1$, $Pic^0(\mathbb{P}^1) = 0$ et ainsi $Pic(\mathbb{P}^1) \simeq \mathbb{Z}$.
+            \end{remq}
+            \begin{defi}
+                Un diviseur $D = \sum n_pp$ sur $C$ est effectif si $n_p \geq 0$ pour tout $p \in C$.
+            \end{defi}
+            \begin{nota}
+                On note $D \geq 0$ si $D$ est effectif, et $D' \geq D$ si $D - D' \geq 0$.
+            \end{nota}
+            \begin{nota}
+                $D \in Div(C)$, considérons
+                \begin{align*}
+                    \mathcal{L}(D) = \{0\} \cup \{f \in k(C)^\times \mid div(f) + D \geq 0\}
+                \end{align*}
+                Plus explicitement, $D = \sum n_pp$, alors $f \in k(C)^\times$ est dans $\mathcal{L}(D)$ si et sulement si $n_p + v_p(f) \geq 0$.
+            \end{nota}
+            \begin{lemm} ($D = 0$)
+                \label{d=0}
+                \begin{align*}
+                    \mathcal{L}(0) = k
+                \end{align*}
+            \end{lemm}
+            \begin{proof}
+                $\mathcal{L}(0) = \{0\} \cup \{f \in k(C)^\times \mid div(f) \geq 0\}$, or $div(f) = div_0(f) - div_\infty(f)$, et si $f \notin k$, alors $div_\infty(f) \neq 0$ donc $f \notin \mathcal{L}(0)$, et si $f \in k^\times$, alors on a bien $div(f) = 0$.
+            \end{proof}
+            \begin{expl}
+                $C = \mathbb{P}^1$, $p = [0,1] \in \mathbb{P}^1$, $n > 0$ entier. Notons $D = np$, alors 
+                \begin{align*}
+                    \mathcal{L}(D) = \{0\} \cup \{f \in k(C)^\times \mid div(f) + np \geq 0\}
+                \end{align*}
+                Ainsi $f \in \mathcal{L}(D) \iff \forall g \neq p,\, v_p(f) \geq 0$ et $v_p(f) + n \geq 0$. Essayons de caractériser cela : $p \in \mathbb{A}^1 \subseteq \mathbb{P}^1$ où on identifie $\mathbb{A}^1$ avec l'ouvert $\{[x,1] \mid x \in \mathbb{A}^1\}$, et $k(\mathbb{P}^1) \simeq \mathbb{A}^1 = k(t)$. Ainsi $\mathcal{O}_p = k[\mathbb{A}^1]_0$ correspond donc aux fractions rationnelles dont le dénominateur ne s'annule pas en $0$. Remarquons alors que si $f = P/Q$, $P,Q \in k[t]$. Alors écrivons $P = t^nP'$, $Q = t^m Q'$, avec $P'(0) \neq 0$, $Q'(0) \neq 0$. Alors $f = t^{n - m}(P'/Q')$, et $v_p(f) = n - m$. On voudrait alors montrer que 
+                \begin{align*}
+                    \mathcal{L}(np) = \left\{ \frac{P(t)}{t^n} \mid P \in k[t],\, \deg P \leq n \right\}
+                \end{align*}
+                Il faut d'abord montrer que $1/t^i \in \mathcal{L}(np)$ si $0 \leq i \leq n$ pour prouver $\supseteq$. Mais si $p = 0$, alors $v_p(1/t^i) = -i$, et donc $v_p(1/t^i) + n \geq 0$. Et si $g \neq 0$, alors $v_g(1/t^i) = 0$ (\cor{Exercice}). Maintenant si $g = \infty = [1,0]$, on doit changer de carte pour calculer $\mathcal{O}_g$ : on prend $y \in \mathbb{A}^1 \mapsto [1,y] \in \mathbb{P}^1$. Et par ce changement de carte $k(t) \simeq k(s)$ via $t \mapsto 1/s$, et alors $1/t^i \mapsto s^i$ qui est de $g$-valuation positive, et ainsi $\infty$ n'est pas un pôle de $1/t^i$. \cor{Le sens réciproque est laissé en exercice}
+            \end{expl}
+            \begin{prop}
+                \begin{enumerate}
+                    \item $\mathcal{L}(D) \neq 0$ si et seulement si $\exists E \geq 0$ diviseur effectif tel que $D \sim E$.
+                    \item $\mathcal{L}(D) \subseteq k(C)$ est un $k$-sev.
+                    \item Si $D \geq D'$, alors $\mathcal{L}(D) \subseteq \mathcal{L}(D')$ et $\dim_k \mathcal{L}(D')/\mathcal{L}(D) \leq \deg D' - \deg D$.
+                    \item Si $D' \sim D$, alors $\mathcal{L}(D) \simeq \mathcal{L}(D')$ dans $\mathbf{Vect}_k$.
+                    \item Si $D \geq 0$, alors $\dim_k \mathcal{L}(D) \leq \deg(D) + 1$ (et en particulier $\mathcal{L}(D)$ est un $k$-ev de dimension finie)
+                \end{enumerate}
+            \end{prop}
+            \begin{proof}
+                \begin{enumerate}
+                    \item $\mathcal{L}(D) \neq 0 \iff f \in k(C)^\times$ tel que $div(f) + D \geq 0$. Ainsi posons $E := div(f) + D \geq 0$, alors $E \sim D$ car $E - D = div(f)$. Pour le sens réciproque, si $E \geq 0$ et $E \sim D$, alors $\exists f \in k(C)^\times$ tel que $E - D = div(f)$, donc $0 \leq E = D + div(f)$ et ainsi $f \in \mathcal{L}(D) \bs \{0\}$.
+                    \item Si $f,g \in \mathcal{L}(D)$, alors $f + g \in \mathcal{L}(D)$ : notons $D = \sum_{p \in C} n_pp$, $p_i \in C$, $n_i \in \mathbb{Z}$. Alors $f \in \mathcal{L}(D) \iff v_p(f) + n_p \geq 0$ pour tout $p \in C$. Soit $f,g \in \mathcal{L}(D)$, il faut montrer que $v_p(f + g) + n_p \geq 0$ pour tout $p \in C$. Mais on sait que $v_p(f + g) \geq \min \{v_p(f), v_p(g)\} \geq -n_p$ comme $f,g \in \mathcal{L}(D)$, et ainsi $f + g \in \mathcal{L}(D)$. Il faut ensuite montrer que si $f \in \mathcal{L}(D)$, $\lambda \in k$, alors $\lambda f \in \mathcal{L}(D)$ : si $\lambda = 0$, ok. Sinon, $v_p(\lambda f) = v_p(f) \geq n_p$ si $f \in \mathcal{L}(D)$.
+                    \item Comme $D \geq D'$, alors $D' = D + E$ où $E \geq 0$. Maintenant si $f \in \mathcal{L}(D)$, alors $D' + div(f) = E + D + div(f)$ et $E, D + div(f) \geq 0$ donc $f \in \mathcal{L}(D')$. Pour le deuxième point, notons $D' = D + \sum_{i = 1} ^l n_iy_i$, $n_i \geq 0$. D'après le point précédent, on a $\mathcal{L}(D) \subseteq \mathcal{L}(D + y_1) \subseteq \mathcal{L}(D + 2y_1) \subseteq \cdots \subseteq \mathcal{L}(D)(D + n_1y_1) \subseteq \mathcal{L}(D)(D + n_1y_1 + y_2) + \cdots$. Comme $\deg D' - \deg D = \sum n_i$, il suffit de montrer que $\dim_k \mathcal{L}(D + y)/\mathcal{L}(D) \leq 1$ pour $y \in C$. Pour cela, considérons
+                    \begin{align*}
+                        \begin{array}{cccc}
+                            \varphi : & \mathcal{L}(D + y) & \to & k \\
+                            & f & \mapsto & (t^{n_y + 1}f)(y)\\
+                        \end{array}
+                    \end{align*}
+                    où $D = n_yy + \sum_{p \neq y} n_pp$, $m_y = (t) \subseteq \mathcal{O}_y$. $\varphi$ est bien défini : si $f \in \mathcal{L}(D + y)$ est non nul, $v_y(f) + n_y + 1 \geq 0$ et donc $v_y(t^{n_y + 1}) \geq 0$ et ainsi $t^{n_y + 1}f \in k(C)^\times$ est bien défini en $y$. Maintenant $f \in \ker \varphi \iff v_y(t^{n_y + 1}f) > 0 \iff n_y + v_y(f) \geq 0$. Il faut donc vérifier que si $f \in \ker \varphi$, alors $f \in \mathcal{L}(D)$. En $y$, $v_y(f) + n_y \geq 0$, et sinon si $x \neq y$, $f \in \mathcal{L}(D + y) \Rightarrow v_x(f) + n_x \geq 0$ et ainsi au final $div(f) + D \geq 0$.
+                    \item $D \sim D' \iff D' = D + div(f)$, où $f \in k(C)^\times$. Soit 
+                    \begin{align*}
+                        \begin{array}{cccc}
+                            \varphi : & \mathcal{L}(D) & \to & \mathcal{L}(D') \\
+                            & g & \mapsto & \frac 1fg \\
+                        \end{array}
+                    \end{align*}
+                    alors $\varphi$ est bien défini : soit $g \in \mathcal{L}(D)$, alors $D + div(g) \geq 0$. Mais 
+                    \begin{align*}
+                        div(g/f) + D' = div(g) - div(f) + D' = div(g) + D \geq 0
+                    \end{align*}
+                    puis $\varphi$ est $k$-linéaire. Par le même argument, l'application 
+                    \begin{align*}
+                        \begin{array}{cccc}
+                            \psi : & \mathcal{L}(D') & \to & \mathcal{L}(D) \\
+                            & g & \mapsto & fg \\
+                        \end{array}
+                    \end{align*}
+                    est bien définie et $k$-linéaire, et est l'inverse de $\varphi$.
+                    \item C'est un cas particulier du point (3) : on a que $\dim_k \mathcal{L}(D)/\mathcal{L}(0) \leq \deg D$, puis $\mathcal{L}(0) \simeq k$ donc $\dim \mathcal{L}(D) - 1 \leq \deg D$.
+                \end{enumerate}
+            \end{proof}
+            Ainsi on peut énoncer un corollaire du théorème \ref{*} :
+            \begin{coro}
+                \begin{enumerate}
+                    \item Si $D \sim D'$, alors $\deg D = \deg D'$.
+                    \item Si $\mathcal{L}(D) \neq 0$, alors $\deg D \geq 0$ (donc si $\deg D < 0$, alors $\mathcal{L}(D) = 0$)
+                    \item Si $\deg D \geq -1$, alors $\dim \mathcal{L}(D) \leq \deg D + 1$.
+                \end{enumerate}
+            \end{coro}
+            \begin{proof}
+                \begin{enumerate}
+                    \item Ok
+                    \item $\mathcal{L}(D) \neq 0 \iff \exists E \geq 0$ tel que $E \sim D$. Mais alors $\deg E = \deg D \geq 0$ car $E \geq 0$.
+                    \item Si $\mathcal{L}(D) = 0$, alors $0 \leq \deg D + 1$ si $\deg D \geq -1$. Ainsi on peut supposer que $\mathcal{L}(D) \neq 0$. Alors $\exists E \geq 0$ tel que $E \sim D$, donc $\deg E = \deg D$, et $\dim \mathcal{L}(D) = \dim \mathcal{L}(E)$. On a donc que $\sim \mathcal{L}(E) \leq \deg E + 1$ par le point (5) du lemme précédent, et ainsi $\dim \mathcal{L}(D) \leq \deg D + 1$.
+                \end{enumerate}
+            \end{proof}
+            \begin{nota}
+                $\dim D := \dim_k \mathcal{L}(D)$
+            \end{nota}
+            \begin{theo} (Riemann-Roch)
+                \label{RR}
+                $C$ courbe projective lisse, $k = \bar k$. Alors il existe un entier $g \geq 0$ (le genre de $C$) tel que 
+                \begin{enumerate}
+                    \item Pour tout diviseur $D$ ur $C$, on a $\dim(D) \geq \deg(D) + 1 - g$
+                    \item Si $\deg D \geq 2g - 1$, alors $\dim(D) = \deg(D) + 1 - g$
+                \end{enumerate}
+            \end{theo}
+            \begin{theo} (dualité de Serre)
+                $\exists$ diviseur $K_c$ (diviseur canonique) tel que $\deg(K_c) = 2g - 2$, et $\dim(D) - \dim(K_c - D) = \deg D + 1 - g$.
+            \end{theo}
+            \begin{theo}
+                $C$ courbe projective lisse sur $k = \bar k$. On a $g = 0 \iff C \simeq \mathbb{P}^1$
+            \end{theo}
+            \begin{proof}
+                \item $\Leftarrow$ : Montrer que $\dim(D) \geq \deg(D) + 1$ pour tout diviseur $D$, et $\sim(D) = \deg D + 1$ si $\deg D \geq -1$. On sait déja que si $\deg D \geq -1$, alors $\dim(D) \leq \deg(D) + 1$ (vrai pour tout $C$!). Il suffit donc de montrer $\dim D = \deg D + 1$ si $\deg D \geq -1$. Si $\deg D = -1$, alors $\mathcal{L}(D) = 0$ et donc $0 = -1 + 1$ ok. Ainsi on peut supposer que $\deg(D) = n \geq 0$. On a vu (exercice) que sur $\mathbb{P}^1$, si $\deg D = \deg D'$, alors $D \sim D'$. Ainsi si $\deg D = n$, alors $D \sim np$ avec $p \in \mathbb{P}^1$. Et ainsi $\dim(D) = \dim(np)$ mais on a aussi vu en exercice que $\mathcal{L}(np) = k + k1/t + \cdots + k1/t^n$ dont une base est les $1/t^i$, donc de dimension $n + 1$. On a donc $\dim D = \dim np = n + 1 = \deg D + 1$.
+                \item $\Rightarrow$ : Supposons que le genre $g$ de $C$ est $0$. Donc pour tout diviseur $D$ sur $C$ on a que $\dim D \geq \deg D + 1$ et $\dim D = \deg D + 1$ si $\deg D \geq -1$. Soit $D = p$, $p \in C$. Alors $\deg D = 1$, et $\dim(D) = \deg(D) + 1 = 2$. Et donc $\mathcal{L}(0) \nsubseteq \mathcal{L}(D)$ et donc il exists $f \in \mathcal{L}(D)$ non constante, et donc $\div_{\infty}(f) \neq 0$, mais comme $f \in \mathcal{L}(D)$, $div(f) + p \geq 0$, $\div_\infty = p$. Mais d'après le théorème \ref{**}, $\deg(div_\infty(f)) = \deg(div_0(f)) = [k(C): k(f)] = 1$ et donc $k(C) = k(f)$, mais $k(f) \simeq k(\mathbb{P}^1)$ et ainsi $C \simeq \mathbb{P}^1$ (du fait que si $C,C'$ sont des courbes lisses, alors $k(C) \simeq k(C') \iff C \simeq C'$)
+            \end{proof}
+            \begin{defi}
+                $C$ courbe elliptique est une courbe projective lisse de genre $g = 1$.
+            \end{defi}
+            \begin{theo}
+                $C$ courbe elliptique, $o \in C$ point. Soit 
+                \begin{align*}
+                    \begin{array}{cccc}
+                        \varphi : & C & \to & Pic^0(C) \\
+                        & p & \mapsto & [p - o]\\
+                    \end{array}
+                \end{align*}
+                Alors $\varphi$ est bijectif.
+            \end{theo}
+            \begin{proof}
+                \item Injective : supposons que $\varphi(p) = \varphi(g)$, $p,g \in C$ et $p \neq g$. Alors $[p - o] = [g - o]$, et ainsi $p - o \im g - o$ et donc $p \sim g$, i.e. $p - g = div(f)$, opur un $f \in k(C)^\times$. Maintenant $div_0(f) = p$, $div_\infty(f) = g$ est de degré $1$ donc $k(f) = k(C)$ (d'après \ref{**}). Ainsi $k(\mathbb{P}^1) \simeq k(C)$ et donc $\mathbb{P}^1 \simeq C$, absurde puisque $\mathbb{P}^1$ est de genre $0$.
+                \item Surjective : Soit $D \in Div^0(C)$, soit $D' = D + o$. Alors $D'$ est un diviseur de degré $1$ : d'après le \hyperref[RR]{le théorème de Riemann-Roch}, $\dim (D') = \deg(D') + 1 - 1  = 1$. Alors $\mathcal{L}(D') \neq 0$, et ainsi il exists $E \geq 0$ tel que $D' \sim E$. Mais $\deg E = \deg D' = 1$ donc $E = p$, $p \in C$. Et alors $D' \sim E = p$ d'où $D + o \sim p$ et donc $[D] = [p - o]$.
+            \end{proof}

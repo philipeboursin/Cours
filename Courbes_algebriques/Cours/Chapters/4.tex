@@ -1,8 +1,8 @@
 \chapter{Courbes algébriques affines}
     \section{Rappels d'algèbre commutative}
-        $k$ corps algébriquement clos. Une courbe est une variété affine de dimension $1$. $a \in C$ dans une courbe est régulier ssi $\dim \mathfrak{m}_a/\mathfrak{m}_a^2 = 1$.
+        Soit $k$ corps algébriquement clos. Une courbe est une variété affine de dimension $1$. $a \in C$ dans une courbe est régulier ssi $\dim \mathfrak{m}_a/\mathfrak{m}_a^2 = 1$.
         \begin{defi}
-            Un anneau de valuation discrète (DVR) est un anneau local $(A, \mathfrak{m})$ tel que $A$ intègre et principal, mais n'est pas un corps.
+            Un anneau de valuation discrète (DVR, Discrete Valuation Ring) est un anneau local $(A, \mathfrak{m})$ tel que $A$ intègre et principal, mais n'est pas un corps.
         \end{defi}
         En particulier, un tel anneau est
         \begin{enumerate}
@@ -39,7 +39,7 @@
             \end{align*}
         \end{prop}
         \begin{exo}
-            Si $v : K \bs 0 \to \mathbb{Z}$ est une valuation d'un corps $K$, alors $A = \{x \in K \bs 0 \mid v(x) \geq 0\} \cup \{0\}$ est un DVR d'idéal maximal $\mathfrak{m} = \{x \in K \bs 0 \mid v(x) > 0\} \cup \{0\}$. \ajout{En effet, c'est un anneau pour les opérations induites par $K$ au vu des équations sur la valuation requises pour que $v$ soit une valuation. Maintenant $A$ est intègre car $K$ l'est, puis considérons $I \subrel{id} A$, } \cor{A finir}
+            Si $v : K \bs 0 \to \mathbb{Z}$ est une valuation d'un corps $K$, alors $A = \{x \in K \bs 0 \mid v(x) \geq 0\} \cup \{0\}$ est un DVR d'idéal maximal $\mathfrak{m} = \{x \in K \bs 0 \mid v(x) > 0\} \cup \{0\}$. \cor{Pas fait}
         \end{exo}
         \begin{proof}
             \begin{enumerate}
@@ -109,19 +109,19 @@
             \cor{A voir}
         \end{proof}
         \begin{exo}
-            $Sing(C)$ est un sous-ensemble algébrique. \ajout{En effet, }
+            $Sing(C)$ est un sous-ensemble algébrique.
         \end{exo}
         \begin{prop}
             \label{prop412}
-            Soit $C$ une courbe affine. Les sous-ensemblers propres de $C$ sont finis.
+            Soit $C$ une courbe affine. Les sous-ensembles propres de $C$ sont finis.
         \end{prop}
-        \begin{coro}
-            Soit $C$ une courbe algébrique, alors$|Sing(C)| < \infty$
-        \end{coro}
-        \begin{proof} (\ref{prop412})
-            Soit $V \subseteq C \subseteq \mathbb{A}^n$ ensemble algébrique propre. OPS $V$ irréductible(sinon on considère une composante de $V$). Alors $V \nsubseteq C$ implique que $I(C) \nsubseteq I(V) \subseteq k[X_1, \cdots, X_n]$. Montrons que $I(V) = \mathfrak{m}_a$, $a \in \mathbb{A}^n$. Maintenant
+        \begin{proof}
+            Soit $V \subseteq C \subseteq \mathbb{A}^n$ ensemble algébrique propre. Ops $V$ irréductible (sinon on considère une composante de $V$). Alors $V \nsubseteq C$ implique que $I(C) \nsubseteq I(V) \subseteq k[X_1, \cdots, X_n]$. Montrons que $I(V) = \mathfrak{m}_a$, $a \in \mathbb{A}^n$. Maintenant
             \begin{align*}
                 0 \subseteq I(V)/I(C) \subseteq k[C]
             \end{align*}
             est un idéal premier. Mais $\dim k[C] = 1$, donc $I(V)/I(C)$ est maximal, donc $I(V)$ maximal. Ainsi $I(V) = \mathfrak{m}_a$ car $k = \bar k$, donc $V$ doit être un point.
         \end{proof}
+        \begin{coro}
+            Soit $C$ une courbe algébrique, alors$|Sing(C)| < \infty$
+        \end{coro}

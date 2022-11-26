@@ -120,7 +120,7 @@
 
         \subsection{Dimension de krull}
             Soit $A \in \mathbf{CRings}$.
-            \begin{defi} (Dimension de Krull)
+            \begin{defi} (Dimension de Krull) La dimension de Krull d'un anneau est définie comme
                 \begin{align*}
                     \dim A := \sup \{l \geq 0 \mid \mathfrak{p}_0 \nsubseteq \mathfrak{p}_1 \nsubseteq \cdots \nsubseteq \mathfrak{p}_l \subseteq A\}
                 \end{align*}
@@ -205,7 +205,6 @@
         \begin{proof}
             \cor{A faire}
         \end{proof}
-        Ainsi énoçons la définition d'un point régulier :
         \begin{defi}
             $a \in V$ est un point régulier (ou encore non singulier) de $V$ si 
             \begin{align*}
@@ -373,13 +372,8 @@
                 l'espace tangent à $V$ en $a$.
             \end{defi}
             \begin{remq}
-                $\mathfrak{m}_a/\mathfrak{m}_a^2 \simeq M_a/M_a^2$ (isomorphisme de $k$-espaces vectoriels), où $M_a = \ker ev_a : k[V] \to k \subrel{id} k[V]$. \ajout{En effet, considérons le morphisme
-                \begin{align*}
-                    \begin{array}{cccc}
-                        & & \to & \\
-                        & & \mapsto & \\
-                    \end{array}
-                \end{align*}                    
+                \label{remq344}
+                $\mathfrak{m}_a/\mathfrak{m}_a^2 \simeq M_a/M_a^2$ (isomorphisme de $k$-espaces vectoriels), où $M_a = \ker (ev_a : k[V] \to k) \subrel{id} k[V]$. \ajout{Pas si facile ...
                 }
             \end{remq}
             \begin{theo}
@@ -509,15 +503,11 @@
             \begin{align*}
                 \Hom_k(T_a^\mathrm{geom}V, k) \simeq \mathfrak{m}/\mathfrak{m}^2
             \end{align*}
-            On note $x_i = [X_i] \in k[V]$, $M = (x_1, \cdots, x_n)$.
-            \begin{exo}
-                $\mathfrak{m}/\mathfrak{m}^2 \simeq M/M^2$ en tant que $k$-ev ($\mathfrak{m}$ est l'image de $M$ par $k[V] \to k[V]_a$ où $M = (x_i - a_i)$) 
-            \end{exo}
-            Aisni prouver le point précédent reviens a prouver qu'il existe un isom
+            On note $x_i = [X_i] \in k[V]$, $M = (x_1, \cdots, x_n)$. D'après la remarque \ref{remq344}, prouver le point précédent reviens à prouver qu'il existe un isomorphisme
             \begin{align*}
                 M/M^2 \simeq \Hom_k(T_a^\mathrm{geom}V, k) 
             \end{align*}
-            Notons ainsi $V = V(P_1, \cdots, P_r)$, $W := T_a^\mathrm{geom}V$. Comme $a = 0 \in V$, alors $P_i(0) = 0$ pour tout $i$. Alors soit
+            (rappelons que la remarque prouve que $M/M^2 \simeq \mathfrak{m}/\mathfrak{m}^2$) Notons ainsi $V = V(P_1, \cdots, P_r)$, $W := T_a^\mathrm{geom}V$. Comme $a = 0 \in V$, alors $P_i(0) = 0$ pour tout $i$. Alors soit
             \begin{align*}
                 \begin{array}{cccc}
                     \varphi : & M & \to & \Hom_k(W,k) \\
