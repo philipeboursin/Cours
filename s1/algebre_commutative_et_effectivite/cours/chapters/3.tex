@@ -652,3 +652,30 @@
 
         \subsection{$\overline{C_{G_{der}}}$ est plus proche de $w_1$ que $C_{G_0'}$}
             Il suffit de voir que si on avance un peu sur le segment qui relie $w_{der}$ à $w_1$, on reste dans $\overline{C_{G_{der}}}$. Si $g \in G_{der}$, alors $LT_{M_{der}}(g)$ est un terme de $LG_{w_{der}}(g)$. Si on remplace $w_{der}$ par $w_{der} + \varepsilon(w_1 - w_{der})$, $0 < \varepsilon$ petit. Alors dans ce cas $LT_{M_{der}}(g)$ ne change pas. Ainsi on peut répéter les étapes précédentes jusqu'à obtenir $w_1$.
+
+        \subsection{Récapitulatif de l'algorithme}
+            \begin{enumerate}
+                \item Initialement, on a $G_0$ une bdg de $I$ pour $M_0$. On cherche $G_1$ une bdg de $I$ pour $M_1$. On note $w_0, w_1$ la première ligne de respectivement $M_0, M_1$. 
+                \item Trouver $w_{der}$ le dernier point de $[w_0, w_1]$ dans $\overline{C_{G_0}}$.
+                \item Calculer $H = \{h_1, \cdots, h_s\}$ une bdg réduite de $\bra LT_{w_0}(G_0) \ket$ pour $M_1$.
+                \item Décomposer ces $h_i$ selon les $LT_{w_0}(g)$, pour $g \in G_0$, en réalisant la division multivariée de $h_i$ par $LT_{w_0}(G_0)$. On obtiens
+                \begin{align*}
+                    h_i = \sum_{g \in G_0} P_{i,g} LT_{w_0}(g)
+                \end{align*}
+                Alors on pose
+                \begin{align*}
+                    \bar h_i = \sum_{g \in G_0} P_{i,g} g
+                \end{align*}
+                puis $\bar H := \{\bar h_i \}$ est une bdg de $I$ pour $M_0' = \begin{bmatrix} w_0 \\ M_1 \\ \end{bmatrix}$.
+                \item Calculer la bdg réduite $H' = \{h_1', \cdots, h_r'\}$ de $\bra LT_{w_{der}}(G_0') \ket$ pour $M_{der} = \begin{bmatrix} w_{der} \\ M_1 \\ \end{bmatrix}$.
+                \item Décomposer les $h_i'$ selon $LT_{w_{der}}(G_0')$, en réalisant l'algorithme de division multivariée. On obtiens
+                \begin{align*}
+                    h_i' = \sum_{g \in G_0'} Q_{i,g} LT_{w_{der}}(g)
+                \end{align*}
+                Alors on pose 
+                \begin{align*}
+                    \bar h_i' = \sum_{g \in G_0'} Q_{i,g} g
+                \end{align*}
+                puis $\bar H' := \{\bar h_i' \}$ est une bdg de $I$ pour $M_{der}$.
+                \item Répéter cette étape jusqu'a obtenir $w_{der} = w_1$.
+            \end{enumerate}
