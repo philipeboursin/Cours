@@ -33,4 +33,6 @@
             \item Calculer la variété associée à un idéal $I$ sur un corps $k$ : \mintinline{python}{I.variety(k)} (pour par exemple calculer les solutions d'un système d'équations)
             \item Pour définir une matrice : \mintinline{python}{m = matrix(3, [1,1,0,0,1,0,0,0,1])}
             \item Pour définir un ordre à partir d'une matrice : \mintinline{python}{T = TermOrder(m)}. S'utilise en spécifiant (par exemple dans la définition d'un anneau de polynômes) \mintinline{python}{order = T}
+            \item Pour calculer un éventail de groebner d'un idéal : \mintinline{python}{gf = I.groebner_fan()}
+            \item Pour affiche un éventail de groebner (marche que pour dimension $3$) : \mintinline{python}{gf.render()}
         \end{itemize}
