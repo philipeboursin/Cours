@@ -1,0 +1,35 @@
+\documentclass[11pt]{report}
+
+\usepackage{import}
+\import{D:/Bureau/Documents/Maths/Latex/Packages/}{report.tex}
+
+% Couleur de correction
+% \newcommand{\cor}[1]{{#1}}
+\newcommand{\cor}[1]{{\color{red} #1}}
+\newcommand{\Kb}{\overline{\mathbb{K}}}
+\newcommand{\K}{\mathbb{K}}
+
+\binoppenalty=\maxdimen
+\relpenalty=\maxdimen
+
+\begin{document}
+
+%Page de garde
+\title{Courbes elliptiques}
+\date{\today}
+\author{Alexandre Guillemot}
+\maketitle
+
+%Table des matières
+\tableofcontents
+
+%Header/footer pour le reste du document
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\leftmark}
+\cfoot{\thepage}
+
+%Input des différents chapitres
+\input{|"bash -c /mnt/d/Bureau/Documents/Maths/Latex/input.sh"}
+
+\end{document}
