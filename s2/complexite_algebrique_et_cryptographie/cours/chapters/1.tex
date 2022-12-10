@@ -36,6 +36,10 @@
             
             \subsubsection{Modèle de Turing}
                 On dispose d'un ruban infini
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=.5\textwidth]{01}
+                \end{figure}
                 Chaque case contient un symbôle (dans un alphabet fini $\Sigma$ que l'on peut supposer être $\{0, 1\}$, ou le symbôle blanc $b$). Le ruban v aêtre lu case par case par le curseur, la machine est à chaque instant dans un état $q_i \in Q$, où $Q$ est l'ensemble fini des états possibles.
                 \begin{defi} (Machine de Turing)
                     Une opération élémentaire est entièrement déterminée par le symbôle lu par le curseur, et par l'état actuel $q_i$ :
@@ -116,6 +120,15 @@
                 \end{enumerate}
             \end{expl}
             On conjecture que $P \neq NP$. Astuce de Levin : Supposons que $P = NP$ : alors on peut construire un algorithme polynomial pour résoudre $SAT$. Considérons les machines de Turing $M_1, M_2, \cdots$ qui prennent en entrée une instance de $SAT$ : Alors on fait tourner les machines simultanément, en faisant tourner de une étape $M_1$, puis en faisant tourner de une étape $M_2$, puis $M_1$, puis $M_3$, $M_2$ et $M_1$, etc. 
+
+            \subsubsection{Résumé de la hiérarchie des complexités algorithmiques :}
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=.5\textwidth]{02}
+                \end{figure}
+                \begin{remq}
+                    Co-$NP \cap NP$-complet $= \emptyset$.
+                \end{remq}
 
     \section{Factorisation}
         \subsection{Complexité}

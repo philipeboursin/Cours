@@ -1,0 +1,1 @@
+int fast_exp(int x, int k);
