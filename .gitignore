@@ -296,7 +296,7 @@ TSWLatexianTemp*
 *.xwm
 
 # pdf
-Cox.pdf
+*.pdf
 
 
 # Homework
