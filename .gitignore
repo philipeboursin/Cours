@@ -296,7 +296,8 @@ TSWLatexianTemp*
 *.xwm
 
 # pdf
-*.pdf
+cox.pdf
+handbook_of_elliptic_and_hyperelliptic_curve_cryptography.pdf
 
 
 # Homework
