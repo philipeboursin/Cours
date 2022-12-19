@@ -1,0 +1,68 @@
+\chapter{L'algorithme RSA en pratique}
+    \section{Rappels sur RSA}
+        \subsection{Définition}
+            \subsubsection{Histoire}
+                1976 : Diffie Hellman, New Directions in Cryptography. 1977 : Merkle, "puzzle de Merkle". Rivest, Shamir, Adleman, RSA.
+
+            On fixe $e$ impair ($e = 3, e = 17, e = 257$). On calcule des entiers $p, q$ premiers distincts tels que $\gcd (e, (p-1)(q-1)) = 1$. On pose $n = pq$. Finalement, on calcule $d = e^{-1}[\varphi(n)]$. Clé publique : $(n, e)$. Clé secrète : $(p, q, d, \varphi(n))$.
+            \begin{theo}
+                Si $p,q$ sont premiers distincts, $n = pq$, $\gcd (e, \varphi(n)) = 1$, $d = e^{-1}[\varphi(n)]$, alors 
+                \begin{align*}
+                    \begin{array}{cccc}
+                        f : & \znz{n} & \to & \znz{n} \\
+                        & x & \mapsto & x^e[n] \\
+                    \end{array}
+                \end{align*}
+                est bijective d'inverse
+                \begin{align*}
+                    \begin{array}{cccc}
+                        f^{-1} : & \znz{n} & \to & \znz{n} \\
+                        & x & \mapsto & x^d[n] \\
+                    \end{array}
+                \end{align*}
+            \end{theo}
+            
+        \subsection{Sécurité de RSA}
+            Objectif de l'attaquant :
+            \begin{enumerate}
+                \item Trouver la clé secrète
+                \item Calculer $f^{-1}(y)$ pour certains $y$.
+            \end{enumerate}
+            \begin{itemize}
+                \item Trouver $p, q, d, \varphi(n)$ à partir de $n$ et $e$ : déjà, si on connait $p$ ou $q$, on peut facilement retrouver tout le reste de la clé. Ensuite si on connait $\varphi(n) = pq - (p + q) + 1$ et $pq  = n$, donc $p + q = n - \varphi(n) + 1$, $pq = n$, et alors on peut trouver $p, q$. Enfin si on connaît $d$, alors $ed = 1[\varphi(n)]$. Prenons $x$ aléatoire, on calcule $y = x^{\frac{ed - 1}1} [n]$. Et alors $y^2 = x^{ed - 1} = 1[n]$. Mais alors $y$ est solution de l'équation $y^2 = 1 [n]$, qui a $4$ solutions : $(\pm 1, \pm 1) \in \znz{p} \times \znz{q}$ au travers du théorème des restes chinois. Mais alors si $y$ correspond à $(1, -1)$ ou $(-1, 1)$ (notons $\alpha, -\alpha$ les éléments correspondants dans $\znz{n}$), alors $\gcd(y - 1, n) = p$ ou $q$ (vu que $\alpha = 1[p]$ et $\alpha = -1[q]$).
+                \item Trouver $f^{-1}(y)$ pour certains $y$ (problème de la racine $e$-ième modulo $n$) : si on sait factoriser, on sait résoudre le problème de la racine $e$-ième grâce au théorème des restes chinois. On ne sait cepandant pas si savoir résoudre le problème des racines $e$-ièmes nous permettrait de résoudre facilement le problème de factorisation. 
+            \end{itemize}
+
+    \section{RSA en signature}
+        \subsection{Problématique}
+            \cor{diagramme 1}
+            \subsubsection{Algorithme de signature naif}
+                On signe avec $f^{-1}(M) = M^d[n]$. Déjà, on doit supposer que $0 \leq M < n$ car sinon on aurait plusieurs messages avec la même signature.
+                \begin{itemize}
+                    \item Si $M$ est grand, on pourrait écrire $M = \sum M_kn^k$ avec $M_k \in [0, n-1]$, puis on signe par blocs, pas terrible ... \cor{diagramme 2}
+                    \item Problème 2 : Si Alice envoie deux messages signés $(M,S)$ et $(M',S')$, alors charlie peut signer $MM'$ en calculant $SS'$.
+                    \item Problème 3 : Si Alice envoie un message $M,S$, alors charlie peut envoyer $M^2, S^2$, $\lambda^eM, \lambda S$.
+                    \item Prolbème 4 : charlie peut envoyer $(0, 0)$, $(1, 1)$, $(\lambda^e, \lambda)$.
+                \end{itemize}
+                
+            \subsubsection{Paradigme "hash and sign"}
+                \cor{diagramme 3}
+
+        \subsection{Fonctions de hachage}
+            $h : \{0,1\}^* \to \{0,1\}^l$ avec $\{0,1\}^* = \sqcup_{n \geq 0} \{0,1\}^n$ et $l$ un entier fixé. 
+            \begin{defi}
+                Une telle fonction $h : \{0,1\}^* \to \{0,1\}^l$ est appelée fonction de hachage si elle vérifie les 3 propriétés suivantes : 
+                \begin{description}
+                    \item[$p_1$ :] $h$ est à sens unique, i.e. pour $y \in \{0,1\}^l$, il est calculatoirement difficile de trouver un antécédent $x$ et $y$. 
+                    \item[$p_2$ :] $h$ est à collisions faibles difficiles (second preimage resistant) i.e. pour $x \in \{0,1\}^*$ et $y = h(x)$, il est calulatoirement difficile de trouver $x' \in \{0,1\}$ tel que $x \neq x'$ et $h(x') = y$.
+                    \item[$p_3$ :] $h$ est à collisions fortes difficiles (collision resistant) i.e. il est calculatoirement difficile de trouver $x,x' \in \{0,1\}^*$ tel que $x \neq x'$ et $h(x) = h(x')$.   
+                \end{description}
+            \end{defi}
+            \begin{remq}
+                $p_2 \Rightarrow p_1$, $p_3 \Rightarrow p_2$. Ainsi d'un point de vu mathématique, $p_3$ suffit, mais il est intéressant de les écrire vu qu'elles ont un intérêt cryptographique.
+            \end{remq}
+            \begin{enumerate}
+                \item Pour la propriété $p_1$, on a un algo qui trouve un antécédent par recherche exhaustive (on tire aléatoirement $x$ et on regarder si $h(x) = y$). La complexité est en $2^l$.
+                \item On peut faire la même chose pour la propriété $p_2$. 
+                \item On génère aléatoirement $x_1, x_2, \cdots$, et on calcule leurs images $y_i = h(x_i)$ jusqu'à trouver une égalité du type $y_i = y_j$.
+            \end{enumerate}

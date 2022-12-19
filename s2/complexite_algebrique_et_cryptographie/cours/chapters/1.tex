@@ -155,5 +155,133 @@
                 \item On peut aussi s'arrêter avant $\sqrt{n}$, mais l'algorithme reste exponentiel.
                 \item On peut aussi diviser par les nombres premiers $\sqrt{n}$. D'après le théorème des nombres premiers (Hadamard, de la Vallée-Poussin), le cardinal des entiers premiers plus petits que $x$ est aymptotiquement équivalent à $x/\ln x$. Ainsi l'algo est en $\mathcal{O}(\sqrt{n}/\log n)$, qui reste exponentiel en la taille de $n$.
             \end{itemize}
+            Il suffit, pour factoriser $n$, de trouver $x$ et $y$ tels que $x^2 = y^2 [n]$, avec $x \neq \pm y [n]$. En effetn on a alors $(x - y)(x + y) = 0 [n]$ et ainsi $\gcd (x, x-y)$ est un facteur de $n$. Fermat prend comme valeurs de $x$ $\lfloor \sqrt{n} \rfloor + 1, \lfloor \sqrt{n} \rfloor + 2$, et espère que $x^2 - n$ est un carré parfait $y^2$. SAUCISSE. 
+            \begin{expl}
+                $n = 9167$, $\sqrt{n} = 95,7$, $96^2 = 49 [n]$, et $49 = 7^2$, et alors $\gcd (9167, 96+7) = 103$, $\gcd (9167, 96 - 7) = 89$. On a bien $9167 = 103 \times 89$.
+            \end{expl} \noindent
+            La complexité est de l'ordre de $\sqrt{n}$, c'est donc toujours exponentiel. Donnons un rafinement de la méthode : prenons $n = 849239$, $\sqrt{n} = 921,5$.
+            \begin{itemize}
+                \item $922^2 = 845 = 5 \times 13^2 [n]$
+                \item $933^2 = 2 \times 5^4 \times 17 [n]$
+                \item $937^2 = 2 \times 5 \times 13^2 \times 17 [n]$
+            \end{itemize}
+            Et alors $(922 \times 933 \times 937)^2 = (2 \times 5^3 \times 13 \times 17)^2 [n]$ et donc on a trouvé l'équation qu'on voulait, et après calcul des pgcd on obtiens que $1229 \times 691 = 849239$. On vient de décrire le crible quadratique de Pomerance. 
             
+            \subsubsection{Algorithmes} 
+                Décrivons le dans sa généralité : on veut factoriser $n$, pour cela
+                \begin{enumerate}
+                    \item On se fixe une base de factorisation $B = \{-1, p_1, p_2, \cdots, p_h\}$. 
+                    \item On dit qu'un entier est friable (ou lisse/smooth) s'il n'a que des petits facteurs premiers. Précisément, il est $B$-friable si tous des facteurs premiers sont dans $B$.
+                    \item On va dire que $b$ est $B$-adapté si le représentant de $b^2[n]$ dans l'intervalle $[-n/2, n/2]$ est $B$-friable. 
+                \end{enumerate}
+                \begin{description}
+                    \item[Etape 1 :] Obtenir et stocker des entiers $b_i$ qui sont $B$-adaptés. On note
+                    \begin{align}
+                        \label{relation}
+                        b_i^2 = (-1)^{\varepsilon_i} p_1^{\alpha_{i,1}} \cdots p_h^{\alpha_{i,h}} [n]
+                    \end{align}
+                    \item[Etape 2 :] A chaque relation  \ref{relation}, on associe 
+                    \begin{align*}
+                        u_i = (u_{i, 0}, \cdots, u_{i,h}) \in \mathbb{F}_2^{h + 1}
+                    \end{align*}
+                    où $u_0 = \varepsilon_i [2]$, $u_{i,j} = \alpha_{i,j} [2]$ si $j \geq 1$.
+                    \item[Etape 3 : ] on a
+                    \begin{align*}
+                        \Rightarrow \prod_{i \in I} (b_i^2)^{\beta_i} &= \prod_{i \in I} \left( (-1)^{\varepsilon_i} \prod_{j = 1}^h p_j^{\alpha_{i,j}} \right)^{\beta_i} [n] \\
+                        &= (-1)^{\sum_{i \in I} \beta_i \varepsilon_i} \times \prod_{j = 1}^h p_j^{\sum_{i \in I} \beta_i \alpha_{i, j}} [n]
+                    \end{align*}
+                    donc si on trouve une combinaison linéaire des $u_i$ qui est nulle
+                    \begin{align*}
+                        \sum_{i \in I} \beta_i u_i = 0
+                    \end{align*}
+                    les exposants dans la dernière ligne du calcul sont pairs. On a donc $x^2 = y^2 [n]$, avec 
+                    \begin{align*}
+                        &x := \prod_{i \in I} b_i^{\beta_i} ,\, y = \prod_{j = 1}^h p_j^{\frac12 \sum \beta_i \alpha_{i,j}}
+                    \end{align*}
+                \end{description}
+
+            \subsubsection{Complexité de l'algorithme}
+                \begin{description}
+                    \item[Etape 2 :]  Il faut $|I| \geq h + 2$.
+                    \item[Etape 1 :] Pour évaluer la complexité de l'étape 1, on utilise
+                    \begin{theo}
+                        On pose
+                        \begin{align*}
+                            \psi(x, T) = \card{\{n \leq x \mid n \text{ a tous se facteurs premiers } \leq T\}}
+                        \end{align*}
+                        Pour $1 \leq T \leq x$, on pose $v := \frac{\ln x}{\ln T}$, alors
+                        \begin{align*}
+                            \frac{\psi(x, T)}x = v^{-v + o(1)}
+                        \end{align*}
+                    \end{theo}
+                    On prend $B = \{-1, p_1, \cdots, p_h\}$, avec $p_1, \cdots, p_h$ les entiers premiers qui sont $\leq T = \mathrm{exp}\left(\frac12 \sqrt{\ln n \ln \ln n}\right)$. Alors 
+                    \begin{align*}
+                        v = \frac{\ln \sqrt{n}}{\ln T} = \frac{\frac12 \ln n}{\frac12 \sqrt{\ln n \ln \ln n}} = \sqrt{\frac{\ln n}{\ln \ln n}}
+                    \end{align*}
+                    donc $\ln v \simeq \frac12 \ln \ln n$. Ainsi le nombre de valeurs à essayer dans la première étape est $(h  + 2)v^v$. Et
+                    \begin{align*}
+                        v^v = \e^{v \ln v} = \e^{\frac12 \sqrt{\ln n \ln \ln n}} = T
+                    \end{align*}
+                    Ainsi le nombre d'essais vaut $T(h + 2)$, et $h + 2 \sim T/\ln T$.
+                    \item[Etape 3 :] Finalement, la complexité de l'algorithme complet  vaut 
+                    \begin{align*}
+                        \frac{T^2}{\ln T} + (h + 2)^3 \sim \left( \frac{T}{\ln T} \right)^3 = \e^{\frac32 \sqrt{\ln n \ln \ln n}}
+                    \end{align*}
+                    On vient donc de décrire un algorithme sous-exponentiel.
+                \end{description}
+                \begin{nota}
+                    \begin{align*}
+                        L_{\alpha, c}(z) = \e^{c (\ln Z)^\alpha (\ln \ln z)^{1 - \alpha}}
+                    \end{align*}
+                    \begin{itemize}
+                        \item $\alpha = 0$ : alors $L_{0, c}(z) = \e^{c \ln \ln z} = (\ln z)^c$ donc complexité polynomiale.
+                        \item $\alpha = 1$ : $L_{1, c}(z) = \e^{c \ln z}$ donc complexité exponentielle.
+                        \item $0 \leq \alpha \leq 1$, alors $L_{\alpha, c}(z)$ est sous-exponentiel.
+                    \end{itemize}
+                \end{nota}
+                Dans le cas de l'algorithme que l'on vient de décrire, la complexité vaut $L_{\frac 12, c}$. Actuellement, le meilleur algorithme pour des nombres types clés de RSA est GNFS (General Number Field Sieve) dont la complexité est $L_{\frac13, c}(n)$ avec $c = 1,92$ (algorithme du à H. Lenstra, A. Lenstra, Manasse, Pollard, 1990).
+                \begin{remq}
+                    Si on veut $L_{\frac13, c}(n) \geq 2^{80}$, il faut prendre $|n| = 1024$ bits.
+                \end{remq}
+                \begin{remq}
+                    L'exposant $3$ qui vient du pivot de gauss (3eme étape) peut être amélioré : le système à résoudre est un système creux :
+                    \begin{align*}
+                        b_i^2 = \prod_{j = 1}^h p_j^{\alpha_{i, j}} [n]
+                    \end{align*}
+                    Le nombre de facteurs premiers qui interviennent dans cette décomposition est de l'ordre $\mathcal{O}(\ln n)$. Ainsi les lignes du système à résoudre contiennent beacoup de zéros, et il existe un algorithme (Block-Lanczos) pour ce genre de système qui est en $\mathcal{O}(dh^2)$ où $h$ est la dimension du système et $d$ est le nombre macimal d'éléments non nuls dans chaque ligne.
+                \end{remq}
+
+    \section{Logarithme discret}
+        \subsection{Complexité}
+            Problème du log discret : soit $p$ un nombre premier, $g$ un générateur de $\znz{p}^*$. À partir de $y = g^x [p]$, retrouver $x$ ? On peut lui associer le problème de décision suivant :
+            \begin{description}
+                \item[Instance :] $p, g, y, t$
+                \item[Question :] Le log discret de $y$ par rapport à $g$ est-il $\leq t$ ? 
+            \end{description}
+            Si on a un algo $A$ polynomial pour le problème de décision, alors de manière similaire au problème de factorisation (dichotomie), on peut calculer le log discret en temps polynomial.
+
+        \subsection{Méthodes de calcul du log discret}
+            \begin{itemize}
+                \item Méthode naïve : recherce exhaustive sur $x$, complexité en $\mathcal{O}(p)$ (donc exponentiel).
+                \item Méthode baby step giant step : On regarde la division euclidienne de $x$ par $a$ où $a = \lfloor \sqrt{n} \rfloor$. Trouver $x$ est équivalent à trouver $q, r$ et poser $x = aq + r$. Maintenant 
+                \begin{align*}
+                    y = g^x [p] \iff yg^{-aq} = g^r[p]
+                \end{align*}
+                On peut créer 2 tables de $0$ à $a$ indexées par $q$ et $r$ où on calcule $yg^{-aq}$ et $g^r$, et on cherche une valeur commune. Si les tables sont triées, alors la recherche d'une valeur commune est en $\mathcal{O}(a)$. 
+            \end{itemize}
             
+        \subsection{Méthode du calcul d'indices}
+            On cherche $x$ tel que $g^x = y[p]$.
+            \begin{description}
+                \item[Etape 1 :] On choisit $B = \{-1, p_1, \cdots, p_h\}$
+                \begin{itemize}
+                    \item On choisit $c_i$ aléatoire
+                    \item On calcule le représentant de $g^{c_i}[p]$ dans $[-p/2, p/2]$ et on espère que $g^{c_i}[p] = \prod_{j = 0}^h p_j^{\alpha_{i,j}} \, (*)$, dans ce cas on aura $c_i = \sum_{j = 0}^h \alpha_{i,j} \log_g(p_j) [p_1]$.
+                \end{itemize} 
+                \item[1Etape 2 :] Si on a obtenu $\geq h + 1$ relations du type $(*)$, on pourra trouver les $\log_g(p_j)$ pour $0 \leq j \leq h$.
+                \item[Etape 3 :] On calcule $yg^e [p]$ où $e$ est aléatoire. Avec une certaine probabilité, $yg^e = \prod_{j = 0}^h p_j^{\beta_j}$, et alors
+                \begin{align*}
+                    \log_g(y) = \left(\sum_{j = 0}^h \beta_j \log_h(p_j)\right) - e
+                \end{align*}
+            \end{description}
+            Par un argument similaire à l'analyse de complexité de l'algorithme de factorisation, on obtiens une complexité en $\mathcal{O}(\e^{1 + o(1) \sqrt{\ln p \ln \ln p}})$, doit du $\mathcal{O}(L_{\frac12, 1 + o(1)}(p))$. Le meilleur algorithme est en $L_{\frac13, c}$ avec $c = 1,92$. 
