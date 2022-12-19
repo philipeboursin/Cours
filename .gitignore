@@ -296,7 +296,9 @@ TSWLatexianTemp*
 *.xwm
 
 # pdf
-*.pdf
+cox.pdf
+s2/projet_info/*.pdf
+stage/*.pdf
 
 # Homework
 *.txt
