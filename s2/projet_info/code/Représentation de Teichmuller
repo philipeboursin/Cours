@@ -1,0 +1,66 @@
+#include<stdio.h>
+#include<flint/padic.h>
+#include<gmp.h>
+
+//  ----------------on initialise les premières constantes et le context
+
+
+fmpz_t p; // le nb premier en question
+fmpz_init_set_ui(p, 2);
+
+
+padic_ctx_t C;
+N=20 // la précision 2-adique
+padic_ctx_init(C, p, 0, N, PADIC_SERIES); 
+
+
+
+
+
+// on a besoin de pouvoir réduire les polynômes 2-adiques modulo 2 
+
+
+padic_poly_t RedMod2( padic_poly_t P )
+{
+    fmpz_t d ;
+    fmpz_init_set_ui(d, padic_poly_degree(P));
+
+    for (int i = 0; i < d+1; i++)
+    {
+        padic_poly_get_coeff_padic(padic_t c, const padic_poly_t poly, slong n, const padic_ctx_t ctx)
+    }
+    
+    
+    
+}
+
+
+
+
+
+
+// ----------------- l'incrémentation de Teichmuller
+
+
+padic_poly_t TechModIncre( padic_poly_t M0, padic_poly_t M1, padic_poly_t V, fmpz_t n)
+
+    {
+        if (n==1)
+        {
+            padic_poly_t delta;
+            padic_poly_reduce(delta, ctx)
+        }
+        
+    }
+
+
+
+
+
+
+
+
+
+
+
+
