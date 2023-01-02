@@ -2,6 +2,9 @@
 
 int main()
 {
-    printf("0\n");
-    fflush(stdout);
+    int N=45;
+    int n=(N>>1);
+    n=n+(N&1);
+    printf("%d \n",n);
+
 }
