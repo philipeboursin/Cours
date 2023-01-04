@@ -10,6 +10,9 @@
 void main()
 {
 
+    
+
+
 //  ----------------on initialise les premières constantes et le context
 
 
@@ -31,6 +34,47 @@ padic_add(deux, un, un, C);
 padic_t un_demi; 
 padic_init(un_demi);
 padic_inv(un_demi, deux, C);
+
+padic_poly_t P;
+    padic_poly_init2(P,9,1);
+
+    padic_t a0;
+    padic_init(a0);
+    fmpz_t a00;
+    fmpz_init_set_ui(a00, 1);
+    padic_set_fmpz(a0, a00, C);
+
+    padic_t a2;
+    padic_init(a2);   
+    fmpz_t a20;
+    fmpz_init_set_ui(a20, 1);
+    padic_set_fmpz(a2, a20, C);
+    
+    padic_t a3; 
+    padic_init(a3);  
+    fmpz_t a30;
+    fmpz_init_set_ui(a30, 1);
+    padic_set_fmpz(a3, a30, C);
+    
+    padic_t a4;
+    padic_init(a4); 
+    fmpz_t a40;
+    fmpz_init_set_ui(a40, 1);
+    padic_set_fmpz(a4, a40, C);
+
+    padic_t a8;
+    padic_init(a8); 
+    fmpz_t a80;
+    fmpz_init_set_ui(a80, 1);
+    padic_set_fmpz(a8, a80, C);
+
+
+
+    padic_poly_set_coeff_padic(P, 0, a0, C);
+    padic_poly_set_coeff_padic(P, 2, a2, C);
+    padic_poly_set_coeff_padic(P, 3, a3, C);
+    padic_poly_set_coeff_padic(P, 4, a4, C);
+    padic_poly_set_coeff_padic(P, 8, a8, C);
 
 
 
@@ -215,6 +259,8 @@ void TeichmullerModulus ( padic_poly_t M, padic_poly_t m, int N )  // on suppose
     if (N==1)
         {
             padic_poly_set(M,m,C );
+            padic_poly_print(M,C);
+            printf("\n");
         }
     else
     {
@@ -319,6 +365,8 @@ void TeichmullerModulus ( padic_poly_t M, padic_poly_t m, int N )  // on suppose
         padic_poly_init2(totalMod2expN, deg2 ,N);
         padic_poly_set(totalMod2expN,total,C);
         padic_poly_set(M,totalMod2expN,C);
+        padic_poly_print(M,C);
+        printf("\n");
 
 
 
@@ -328,6 +376,12 @@ void TeichmullerModulus ( padic_poly_t M, padic_poly_t m, int N )  // on suppose
 }
 
 
+//padic_poly_print(P,C);
+padic_poly_t test;
+padic_poly_init(test);
+TeichmullerModulus(test,P,10);
+printf("\n");
+padic_poly_print(test,C);
 
 
 
