@@ -50,24 +50,30 @@ int main()
     
 
     padic_poly_set_coeff_padic(P, 0, a0, C);
-    padic_poly_set_coeff_padic(P, 1, a1, C);
+    //padic_poly_set_coeff_padic(P, 1, a1, C);
     padic_poly_set_coeff_padic(P, 2, a2, C);
-    padic_poly_set_coeff_padic(P, 3, a3, C);
+    //padic_poly_set_coeff_padic(P, 3, a3, C);
     padic_poly_set_coeff_padic(P, 4, a4, C);
 
     padic_poly_t res;
     padic_poly_init(res);
 
-    padic_poly_t X2;
-    padic_poly_init(X2);
-    padic_t a;
-    padic_init(a);
-    padic_one(a);
-    padic_poly_set_coeff_padic(X2,2,a, C);
-    padic_poly_compose(res, P, X2, C);
+    fmpz_t d ;
+    fmpz_init_set_ui(d, padic_poly_degree(P));
+    int deg;
+    deg=fmpz_get_si(d);
 
+    padic_t coefs[deg+1];
+    
+    for (int i = 0; i < deg+1; i=i+2)
+    {
+        padic_init(coefs[i]);
+        padic_poly_get_coeff_padic(coefs[i], P, i, C);
+        padic_poly_set_coeff_padic(res, i/2, coefs[i], C);
+
+    }
+    
     padic_poly_print(P,C);
-    printf("\n");
     padic_poly_print(res,C);
 
 }
