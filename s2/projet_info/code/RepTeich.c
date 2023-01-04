@@ -4,11 +4,13 @@
 #include<flint/padic_poly.h>
 #include<flint/fmpz.h>
 
-//  ----------------on initialise les premières constantes et le context
+
 
 
 void main()
 {
+
+//  ----------------on initialise les premières constantes et le context
 
 
 fmpz_t p; // le nb premier en question
