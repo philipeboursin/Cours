@@ -50,30 +50,32 @@ int main()
     
 
     padic_poly_set_coeff_padic(P, 0, a0, C);
-    //padic_poly_set_coeff_padic(P, 1, a1, C);
+    padic_poly_set_coeff_padic(P, 1, a1, C);
     padic_poly_set_coeff_padic(P, 2, a2, C);
-    //padic_poly_set_coeff_padic(P, 3, a3, C);
+    padic_poly_set_coeff_padic(P, 3, a3, C);
     padic_poly_set_coeff_padic(P, 4, a4, C);
 
-    padic_poly_t res;
-    padic_poly_init(res);
+    void CompomoinsX( padic_poly_t P0, padic_poly_t P1) // transforme P0(X) en P1(-X)
+{
+   
+    padic_poly_t moinsX;
+    padic_poly_init(moinsX);
+    padic_t moinsun;
+    padic_init(moinsun);
+    padic_t a;
+    padic_init(a);
+    padic_one(a);
+    padic_neg(moinsun,a,C);
+    padic_poly_set_coeff_padic(moinsX,1,moinsun, C);
+    padic_poly_compose(P0, P1, moinsX, C);
 
-    fmpz_t d ;
-    fmpz_init_set_ui(d, padic_poly_degree(P));
-    int deg;
-    deg=fmpz_get_si(d);
+}
 
-    padic_t coefs[deg+1];
-    
-    for (int i = 0; i < deg+1; i=i+2)
-    {
-        padic_init(coefs[i]);
-        padic_poly_get_coeff_padic(coefs[i], P, i, C);
-        padic_poly_set_coeff_padic(res, i/2, coefs[i], C);
-
-    }
-    
+    padic_poly_t Res;
+    padic_poly_init(Res);
+    CompomoinsX(Res,P);
     padic_poly_print(P,C);
-    padic_poly_print(res,C);
+    printf("\n");
+    padic_poly_print(Res,C);
 
 }

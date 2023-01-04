@@ -85,8 +85,6 @@ void TechModIncre( padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_p
     {
         if (N==1)
         {
-            
-
             padic_poly_t vmod2;
             fmpz_t d ;
             fmpz_init_set_ui(d, padic_poly_degree(V));
@@ -141,7 +139,7 @@ void TechModIncre( padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_p
             padic_poly_t delta1;
             padic_poly_init2(delta1,deg+1,(1<<N));
             precompoX2(delta1,delta1oX2);
-            padic_poly_clear(delta0oX2);
+            padic_poly_clear(delta1oX2);
 
             // definition Vr
 
@@ -173,7 +171,7 @@ void TechModIncre( padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_p
             padic_pow_si(un_demiexpNr, un_demi, Nr, C);
 
             padic_poly_t Vr;
-            padic_poly_init2(V,deg,(1<<(N-Nr)));
+            padic_poly_init2(Vr,deg,(1<<(N-Nr)));
             padic_poly_scalar_mul_padic(Vr, numerateur, un_demiexpNr, C);
             padic_poly_clear(numerateur);
 
@@ -200,6 +198,7 @@ void TechModIncre( padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_p
 
             padic_poly_t totalMod2expN;
             padic_poly_init2(totalMod2expN, deg2 ,N);
+            padic_poly_set(totalMod2expN,total,C);
             padic_poly_set(delta,totalMod2expN,C);
             
         }
@@ -207,6 +206,129 @@ void TechModIncre( padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_p
        
 
     }
+
+
+// ---------------- l'algo final
+
+void TeichmullerModulus ( padic_poly_t M, padic_poly_t m, int N )  // on suppose que m est a coef dans Z/2Z, ie dans Z_2 de precision 1
+{
+    if (N==1)
+        {
+            padic_poly_set(M,m,C );
+        }
+    else
+    {
+        int Nr = (N>>1)+(N&1); // partie entiere sup de N/2
+        padic_poly_t Mr;
+        padic_poly_init(Mr);
+        TeichmullerModulus(Mr,m,Nr);
+
+        fmpz_t d ;
+        fmpz_init_set_ui(d, padic_poly_degree(Mr));
+        int deg;
+        deg=fmpz_get_si(d);
+
+        // definition de M0
+
+        padic_poly_t M0oX2 ;
+        padic_poly_init2(M0oX2,deg+1,(1<<N)); 
+        padic_poly_t sum;
+        padic_poly_init(sum);
+        padic_poly_t MroMX;
+        padic_poly_init(MroMX);
+        CompomoinsX(MroMX,Mr);
+        padic_poly_add(sum, Mr, MroMX, C);
+        padic_poly_scalar_mul_padic(M0oX2, sum, un_demi, C);
+
+        padic_poly_t M0;
+        padic_poly_init2(M0,deg+1,(1<<N));
+        precompoX2(M0,M0oX2);
+        padic_poly_clear(M0oX2);
+
+        // definition de M1
+
+        padic_poly_t M1oX2 ;
+        padic_poly_init2(M1oX2,deg+1,(1<<N));
+        padic_poly_sub(sum, Mr, MroMX, C);
+        padic_poly_t cache;
+        padic_poly_init(cache);
+        padic_poly_scalar_mul_padic(cache, sum, un_demi, C);
+        padic_poly_shift_right(M1oX2, cache, 1,C); // la division par X
+        padic_poly_clear(sum);
+
+
+        padic_poly_t M1;
+        padic_poly_init2(M1,deg+1,(1<<N));
+        precompoX2(M1,M1oX2);
+        padic_poly_clear(M1oX2);
+
+        // definition de V
+            
+        padic_poly_t mult0;
+        padic_poly_init(mult0);
+        padic_poly_mul(mult0,M0,M0,C);
+        padic_poly_t mult1;
+        padic_poly_init(mult1);
+        padic_poly_mul(mult1,M1,M1,C);
+        padic_poly_shift_left(cache, mult1, 1,C); //cache = X*M1*M1
+
+        padic_poly_t sub0;
+        padic_poly_init(sub0);
+        padic_poly_sub(sub0,mult0,cache,C); // sub0 = M0*M0 - X*M1*M1
+        padic_poly_clear(mult0);
+        padic_poly_clear(mult1);
+
+        padic_poly_t numerateur;
+        padic_poly_init(numerateur);
+        padic_poly_sub(numerateur, Mr, sub0,C );
+        padic_poly_clear(sub0);
+
+        padic_t un_demiexpNr;
+        padic_init(un_demiexpNr);
+        padic_pow_si(un_demiexpNr, un_demi, Nr, C);
+
+        padic_poly_t V;
+        padic_poly_init2(V,deg,(N-Nr));
+        padic_poly_scalar_mul_padic(V, numerateur, un_demiexpNr, C);
+        padic_poly_clear(numerateur);
+
+        // definition de delta
+
+        padic_poly_t delta;
+        padic_poly_init(delta);
+        TechModIncre(delta,M0,M1,V,(N-Nr));
+
+        //definition de M
+
+        padic_t deuxexpNr ;
+        padic_init(deuxexpNr);
+        padic_pow_si(deuxexpNr, deux,Nr,C);
+
+        padic_poly_scalar_mul_padic(cache, delta,deuxexpNr,C);
+
+        padic_poly_t total;
+        padic_poly_init(total);
+        padic_poly_add(total,Mr,cache,C);
+
+        fmpz_t d2 ;
+        fmpz_init_set_ui(d2, padic_poly_degree(total));
+        int deg2;
+        deg=fmpz_get_si(d2);
+
+        padic_poly_t totalMod2expN;
+        padic_poly_init2(totalMod2expN, deg2 ,N);
+        padic_poly_set(totalMod2expN,total,C);
+        padic_poly_set(M,totalMod2expN,C);
+
+
+
+    }
+    
+    
+}
+
+
+
 
 
 }
