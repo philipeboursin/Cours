@@ -10,10 +10,6 @@
 void main()
 {
 
-flint_cleanup();
-    
-
-
 //  ----------------on initialise les premières constantes et le context
 
 

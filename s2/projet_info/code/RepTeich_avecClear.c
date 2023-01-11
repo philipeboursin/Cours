@@ -97,6 +97,7 @@ void CompomoinsX( padic_poly_t P0, padic_poly_t P1) // transforme P0(X) en P1(-X
     padic_poly_compose(P0, P1, moinsX, C);
     padic_poly_clear(moinsX);
     padic_clear(moinsun);
+    padic_clear(a);
 
 }
 
@@ -120,6 +121,7 @@ void precompoX2( padic_poly_t P0, padic_poly_t P1) // on suppose que P1 est un p
         padic_clear(coefs[i]);
 
     }
+    fmpz_clear(d);
 
 }
 
@@ -142,6 +144,7 @@ void TechModIncre( padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_p
 
             padic_poly_neg(delta, vmod2, C);
             padic_poly_clear(vmod2);
+            fmpz_clear(d);
 
         }
         else
@@ -378,7 +381,8 @@ void TeichmullerModulus ( padic_poly_t M, padic_poly_t m, int N )  // on suppose
         padic_poly_clear(total);
         padic_poly_set(M,totalMod2expN,C);
         padic_poly_clear(totalMod2expN);
-
+        padic_poly_print(M,C);
+        printf("\n");
 
 
     }
@@ -393,7 +397,6 @@ TeichmullerModulus(test,P,10);
 printf("\n");
 padic_poly_print(test,C);
 
-flint_cleanup();
 
 
 
