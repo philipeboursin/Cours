@@ -10,6 +10,7 @@
 void main()
 {
 
+flint_cleanup();
     
 
 
@@ -382,6 +383,7 @@ padic_poly_init(test);
 TeichmullerModulus(test,P,10);
 printf("\n");
 padic_poly_print(test,C);
+flint_cleanup();
 
 
 
