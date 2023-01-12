@@ -82,19 +82,18 @@ void precompoX2( padic_poly_t P0, padic_poly_t P1) // on suppose que P1 est un p
 // ----------------- l'incrémentation de Teichmuller
 
 
-void TechModIncre( padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_poly_t V, int N)
+void TechModIncre(padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_poly_t V, int N)
 
     {
-        if (N==1)
+        if (N == 1)
         {
             padic_poly_t vmod2;
-            fmpz_t d ;
-            fmpz_init_set_ui(d, padic_poly_degree(V));
-            int deg;
-            deg=fmpz_get_si(d);
-            padic_poly_init2(vmod2,deg,1);
-            padic_poly_set(vmod2,V,C );
-
+            int d = padic_poly_degree(V);
+            // fmpz_init_set_ui(d, padic_poly_degree(V));
+            // int deg;
+            // deg = fmpz_get_si(d);
+            padic_poly_init2(vmod2, d, 1);
+            padic_poly_set(vmod2, V, C);
             padic_poly_neg(delta, vmod2, C);
 
         }
