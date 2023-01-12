@@ -74,7 +74,6 @@ void precompoX2(padic_poly_t P, padic_poly_t Q, padic_ctx_t C)
 void Mul2n(padic_poly_t P, padic_poly_t Q, int n, padic_ctx_t C)
 {
     int N = padic_poly_prec(Q);
-    int deg = padic_poly_degree(Q);
 
     padic_t deux_pow_n;
 
@@ -90,8 +89,7 @@ void TechModIncre(padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_po
 {
     if (N == 1)
     {
-        padic_poly_neg(V, V, C);
-        padic_poly_set(delta, V, C);
+        padic_poly_neg(delta, V, C);
     }
     else
     {
@@ -153,7 +151,7 @@ void TechModIncre(padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_po
         Mul2n(P1, P1, 1, C);
         padic_poly_sub(P1, deltar, P1, C);
         padic_poly_add(P1, V, P1, C);
-        Mul2n(Vr, P1, Nr, C);
+        Mul2n(Vr, P1, -Nr, C);
 
         padic_poly_clear(P1);
         padic_poly_clear(P2);
@@ -246,13 +244,12 @@ void TeichmullerModulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
         padic_poly_mul(P1, M1, M1, C);
         padic_poly_shift_left(P1, P1, 1, C);
         padic_poly_mul(P2, M0, M0, C);
-        padic_poly_sub(P1, P2, P1, C);
-        padic_poly_sub(P1, Mr, P1, C);
+        padic_poly_add(P1, P1, Mr, C);
+        padic_poly_sub(P1, P1, P2, C);        
         Mul2n(V, P1, -Nr, C);
 
         padic_poly_clear(P1);
         padic_poly_clear(P2);
-
 
 
         // definition de delta
@@ -272,19 +269,19 @@ void TeichmullerModulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
 
 
         //------
-        printf("N : %d\n", N);
-        printf("M0 : ");
-        padic_poly_print(M0, C);
-        printf("\n");
-        printf("M1 : ");
-        padic_poly_print(M1, C);
-        printf("\n");
-        printf("V : ");
-        padic_poly_print(V, C);
-        printf("\n");
-        printf("delta : ");
-        padic_poly_print(delta, C);
-        printf("\n");
+        // printf("N : %d\n", N);
+        // printf("M0 : ");
+        // padic_poly_print(M0, C);
+        // printf("\n");
+        // printf("M1 : ");
+        // padic_poly_print(M1, C);
+        // printf("\n");
+        // printf("V : ");
+        // padic_poly_print(V, C);
+        // printf("\n");
+        // printf("delta : ");
+        // padic_poly_print(delta, C);
+        // printf("\n");
 
 
         // clear des variables 
@@ -296,9 +293,9 @@ void TeichmullerModulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
 
     }
 
-    printf("M : ");
-    padic_poly_print(M, C);
-    printf("\n------------------------------------------------------------------------\n");
+    // printf("M : ");
+    // padic_poly_print(M, C);
+    // printf("\n------------------------------------------------------------------------\n");
 }
 
 void test1(padic_ctx_t C)
