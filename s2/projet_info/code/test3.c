@@ -10,6 +10,8 @@
 void precompoX2(padic_poly_t P, padic_poly_t Q, padic_ctx_t C);
 // Renvoie f(-X) avec comme argument f(X). La précision du résultat est la précision de P
 void CompMoinsX(padic_poly_t P, padic_poly_t Q, padic_ctx_t C);
+// Multiplie Q par 2^n, n \in Z
+void Mul2n(padic_poly_t P, padic_poly_t Q, int n, padic_ctx_t C);
 // Teichmuller increment
 void TechModIncre(padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_poly_t V, int N, padic_ctx_t C);
 // Teichmuller modulus
@@ -153,13 +155,21 @@ void TechModIncre(padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_po
         padic_poly_clear(P2);
 
 
-        // definition de Delta et delta
+        // definition de Delta
         padic_poly_t Delta;
-        padic_poly_init(Delta);
+
+        padic_poly_init2(Delta, 0, N - Nr);
+
         TechModIncre(Delta, M0, M1, Vr, N - Nr, C);
 
-        Mul2n(Delta, Delta, Nr, C);
-        padic_poly_add(delta, deltar, Delta, C);
+        // definition de delta
+        padic_poly_init2(P1, 0, N);
+
+        padic_poly_set(P1, Delta, C);
+        Mul2n(P1, P1, Nr, C);
+        padic_poly_add(delta, deltar, P1, C);
+
+        padic_poly_clear(P1);
 
         // clear des différentes variables
         padic_poly_clear(delta0);
@@ -187,11 +197,6 @@ void TeichmullerModulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
         padic_poly_init2(Mr, 0, Nr);
         TeichmullerModulus(Mr, m, Nr, C);
 
-        printf("Mr : ");
-        padic_poly_print(Mr, C);
-        printf("\n");
-
-
         // definition de M0
         padic_poly_t M0;
 
@@ -208,9 +213,6 @@ void TeichmullerModulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
         padic_poly_clear(P1);
         padic_poly_clear(P2);
 
-        printf("M0 : ");
-        padic_poly_print(M0, C);
-        printf("\n");
 
         // definition de M1
         padic_poly_t M1;
@@ -229,10 +231,6 @@ void TeichmullerModulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
         padic_poly_clear(P1);
         padic_poly_clear(P2);
 
-        printf("M1 : ");
-        padic_poly_print(M1, C);
-        printf("\n");
-
 
         // definition de V
         padic_poly_t V;
@@ -250,10 +248,7 @@ void TeichmullerModulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
 
         padic_poly_clear(P1);
         padic_poly_clear(P2);
-        
-        printf("V : ");
-        padic_poly_print(V, C);
-        printf("\n");
+
 
 
         // definition de delta
@@ -261,20 +256,33 @@ void TeichmullerModulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
         padic_poly_init2(delta, 0, N - Nr);
         TechModIncre(delta, M0, M1, V, N - Nr, C);
 
+
+        //definition de M
+        padic_poly_init2(P1, 0, N);
+
+        padic_poly_set(P1, delta, C);
+        Mul2n(P1, P1, Nr, C);
+        padic_poly_add(M, Mr, P1, C);
+
+        padic_poly_clear(P1);
+
+
+        //------
+        printf("M0 : ");
+        padic_poly_print(M0, C);
+        printf("\n");
+        printf("M1 : ");
+        padic_poly_print(M1, C);
+        printf("\n");
+        printf("V : ");
+        padic_poly_print(V, C);
+        printf("\n");
         printf("delta : ");
         padic_poly_print(delta, C);
         printf("\n");
 
-        //definition de M
-        padic_poly_t M;
-        padic_poly_init2(M, 0, N);
-        Mul2n(M, delta, Nr, C);
-        padic_poly_add(M, Mr, M, C);
 
-        printf("M : ");
-        padic_poly_print(M, C);
-        printf("\n");
-
+        // clear des variables 
         padic_poly_clear(Mr);
         padic_poly_clear(M0);
         padic_poly_clear(M1);
@@ -282,6 +290,10 @@ void TeichmullerModulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
         padic_poly_clear(delta);
 
     }
+
+    printf("M : ");
+    padic_poly_print(M, C);
+    printf("\n");
 }
 
 void test1(padic_ctx_t C)
@@ -396,7 +408,7 @@ void main()
     fmpz_t p;
     padic_ctx_t C;
     fmpz_init_set_si(p, 2);
-    padic_ctx_init(C, p, 0, 20, PADIC_SERIES);
+    padic_ctx_init(C, p, 0, 20, PADIC_TERSE);
 
     // Tests
     // test1(C);
