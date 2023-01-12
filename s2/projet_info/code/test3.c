@@ -23,7 +23,7 @@ void test2(padic_ctx_t C);
 // Procédure de test de Mul2n
 void test3(padic_ctx_t C);
 // Procédure de test de TeichmullerModulus
-void test(padic_ctxit C);
+void test(padic_ctx_t C);
 
 
 //------
@@ -272,6 +272,7 @@ void TeichmullerModulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
 
 
         //------
+        printf("N : %d\n", N);
         printf("M0 : ");
         padic_poly_print(M0, C);
         printf("\n");
