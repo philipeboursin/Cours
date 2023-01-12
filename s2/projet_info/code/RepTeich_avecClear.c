@@ -34,6 +34,48 @@ padic_t un_demi;
 padic_init(un_demi);
 padic_inv(un_demi, deux, C);
 
+padic_poly_t P;
+    padic_poly_init2(P,9,1);
+
+    padic_t a0;
+    padic_init(a0);
+    fmpz_t a00;
+    fmpz_init_set_ui(a00, 1);
+    padic_set_fmpz(a0, a00, C);
+
+    padic_t a2;
+    padic_init(a2);   
+    fmpz_t a20;
+    fmpz_init_set_ui(a20, 1);
+    padic_set_fmpz(a2, a20, C);
+    
+    padic_t a3; 
+    padic_init(a3);  
+    fmpz_t a30;
+    fmpz_init_set_ui(a30, 1);
+    padic_set_fmpz(a3, a30, C);
+    
+    padic_t a4;
+    padic_init(a4); 
+    fmpz_t a40;
+    fmpz_init_set_ui(a40, 1);
+    padic_set_fmpz(a4, a40, C);
+
+    padic_t a8;
+    padic_init(a8); 
+    fmpz_t a80;
+    fmpz_init_set_ui(a80, 1);
+    padic_set_fmpz(a8, a80, C);
+
+
+
+    padic_poly_set_coeff_padic(P, 0, a0, C);
+    padic_poly_set_coeff_padic(P, 2, a2, C);
+    padic_poly_set_coeff_padic(P, 3, a3, C);
+    padic_poly_set_coeff_padic(P, 4, a4, C);
+    padic_poly_set_coeff_padic(P, 8, a8, C);
+
+
 
 
 
@@ -55,6 +97,7 @@ void CompomoinsX( padic_poly_t P0, padic_poly_t P1) // transforme P0(X) en P1(-X
     padic_poly_compose(P0, P1, moinsX, C);
     padic_poly_clear(moinsX);
     padic_clear(moinsun);
+    padic_clear(a);
 
 }
 
@@ -78,6 +121,7 @@ void precompoX2( padic_poly_t P0, padic_poly_t P1) // on suppose que P1 est un p
         padic_clear(coefs[i]);
 
     }
+    fmpz_clear(d);
 
 }
 
@@ -85,20 +129,22 @@ void precompoX2( padic_poly_t P0, padic_poly_t P1) // on suppose que P1 est un p
 // ----------------- l'incrémentation de Teichmuller
 
 
-void TechModIncre(padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_poly_t V, int N)
+void TechModIncre( padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_poly_t V, int N)
 
     {
-        if (N == 1)
+        if (N==1)
         {
             padic_poly_t vmod2;
-            int d = padic_poly_degree(V);
-            // fmpz_init_set_ui(d, padic_poly_degree(V));
-            // int deg;
-            // deg = fmpz_get_si(d);
-            padic_poly_init2(vmod2, d, 1);
-            padic_poly_set(vmod2, V, C);
+            fmpz_t d ;
+            fmpz_init_set_ui(d, padic_poly_degree(V));
+            int deg;
+            deg=fmpz_get_si(d);
+            padic_poly_init2(vmod2,deg,1);
+            padic_poly_set(vmod2,V,C );
+
             padic_poly_neg(delta, vmod2, C);
             padic_poly_clear(vmod2);
+            fmpz_clear(d);
 
         }
         else
@@ -335,7 +381,8 @@ void TeichmullerModulus ( padic_poly_t M, padic_poly_t m, int N )  // on suppose
         padic_poly_clear(total);
         padic_poly_set(M,totalMod2expN,C);
         padic_poly_clear(totalMod2expN);
-
+        padic_poly_print(M,C);
+        printf("\n");
 
 
     }
@@ -343,6 +390,12 @@ void TeichmullerModulus ( padic_poly_t M, padic_poly_t m, int N )  // on suppose
     
 }
 
+//padic_poly_print(P,C);
+padic_poly_t test;
+padic_poly_init(test);
+TeichmullerModulus(test,P,10);
+printf("\n");
+padic_poly_print(test,C);
 
 
 

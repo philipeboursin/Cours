@@ -10,9 +10,6 @@
 void main()
 {
 
-    
-
-
 //  ----------------on initialise les premières constantes et le context
 
 
@@ -382,6 +379,7 @@ padic_poly_init(test);
 TeichmullerModulus(test,P,10);
 printf("\n");
 padic_poly_print(test,C);
+flint_cleanup();
 
 
 
