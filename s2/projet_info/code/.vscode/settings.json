@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "représentation de teichmuller": "c"
+        "représentation de teichmuller": "c",
+        "diveucl": "c"
     }
 }
