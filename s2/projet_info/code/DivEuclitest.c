@@ -5,45 +5,50 @@
 #include<flint/fmpz.h>
 
 
-void RedModXn(padic_poly_t P, padic_poly_t Q, int n, padic_ctx_t C) // Procédure qui transfomre P en Q mod X^n
-{
-    int deg = padic_poly_degree(Q);
-    if (deg<n)
-    {
-        padic_poly_set(P,Q,C);
-    }
-    else
-    {
+// Correspond à la procédure _padic_poly_set_length de flint
+// void RedModXn(padic_poly_t P, padic_poly_t Q, int n, padic_ctx_t C) // Procédure qui transfomre P en Q mod X^n
+// {
+//     int deg = padic_poly_degree(Q);
+//     if (deg<n)
+//     {
+//         padic_poly_set(P,Q,C);
+//     }
+//     else
+//     {
          
-        int N=padic_poly_prec(Q);
-        padic_t padic_cache;
-        padic_init2(padic_cache, N);
+//         int N=padic_poly_prec(Q);
+//         padic_t padic_cache;
+//         padic_init2(padic_cache, N);
 
-        for (int i = 0; i < n; i++) // deg>=n
-        {
-            padic_poly_get_coeff_padic(padic_cache, Q, i, C);
-            padic_poly_set_coeff_padic(P, i, padic_cache, C);
-        }
-        padic_clear(padic_cache);
-    }
+//         for (int i = 0; i < n; i++) // deg>=n
+//         {
+//             padic_poly_get_coeff_padic(padic_cache, Q, i, C);
+//             padic_poly_set_coeff_padic(P, i, padic_cache, C);
+//         }
+//         padic_clear(padic_cache);
+//     }
 
-}
+// }
 
 
+// Un tout petit peu modifiée pour qu'elle accepte d'avoir la même variable pour le résultat et pour l'argument
 void CoefRenv(padic_poly_t P, padic_poly_t Q, padic_ctx_t C) // Procédure qui transforme P en un polynôme dont les coefficients sont ceux de Q renversés
 {
     int deg = padic_poly_degree(Q);
     int N = padic_poly_prec(Q);
 
+    padic_poly_t R;
     padic_t padic_cache;
+    padic_poly_init2(R, deg, N);
     padic_init2(padic_cache, N);
 
-    for (int i = 0; i < deg+1; i++)
+    for (int i = 0; i < deg + 1; i++)
     {
         padic_poly_get_coeff_padic(padic_cache, Q, i, C);
-        padic_poly_set_coeff_padic(P, deg-i, padic_cache, C);
+        padic_poly_set_coeff_padic(R, deg-i, padic_cache, C);
     }
 
+    padic_poly_set(P, R, C);
     padic_clear(padic_cache);
 }
 
@@ -54,76 +59,57 @@ void DivEucl(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_poly_t Q, pad
     int degB = padic_poly_degree(B);
     int N = padic_poly_prec(B);
 
-    if (degA<degB)
+    if (degA < degB)
     {
-        
-        padic_poly_set(R,A,C);
+        padic_poly_set(R, A, C);
         padic_poly_zero(Q);
     }
     else
     {
-        int n =degA-degB+1;
+        int n = degA - degB + 1;
 
-        padic_poly_t P1 ; //polynômes variables caches
-        padic_poly_t P2 ;
-        padic_poly_t P3 ;
-        padic_t padic_cache;
+        // On peut utiliser Q et R, et le fait que les procédures flint autorisent de mettre la même variable pour le résultat et pour les arguments, pour gagner un peu de mémoire qui sont essentiellement aussi des variables cache
+        padic_poly_t P ; //polynômes variables caches
 
-        padic_poly_init2(P1, degB, N);
-        padic_poly_init2(P2, degB, N);
-        padic_poly_init2(P3,n,N);
-
-        CoefRenv(P2,B,C);
-        padic_poly_inv_series(P1,P2,n,C); // P1=c dans le livre
-        //padic_poly_print(P1,C);  donne la bonne chose
+        CoefRenv(Q, B, C);
+        padic_poly_inv_series(Q, Q, n, C); // P=c dans le livre
+        //padic_poly_print(P,C);  donne la bonne chose
         //printf("\n");
 
-        padic_poly_init2(P2, degA, N);
-        CoefRenv(P2,A,C);
-        padic_poly_mul(P3, P1, P2, C);
-        padic_poly_clear(P1);
-        padic_poly_init2(P1, n, N);
-        RedModXn(P1,P3,n,C); // P1=\tilde{q}
-        //padic_poly_print(P1,C); donne la bonne chose
-        //printf("\n");
-
+        padic_poly_init2(P, degA, N);
+        CoefRenv(P, A, C);
+        padic_poly_mul(Q, P, Q, C);
+        _padic_poly_set_length(Q, n);
         
-        padic_poly_clear(P2);
-        padic_poly_init2(P2, n, N);
-        padic_init2(padic_cache, N);
-        int d = padic_poly_degree(P1);
-        int borne;
-        if (d<n)
-        {
-            borne=d;
-        }
-        else
-        {
-            borne=n;
-        }
+        
+        // Tout ça c'est un renversement de coefficients encore une fois (\tilde q est de degré n-1 comme il a été modulo par X^n )
+        // int d = padic_poly_degree(P);
+        // int borne;
+        // if (d<n)
+        // {
+        //     borne=d;
+        // }
+        // else
+        // {
+        //     borne=n;
+        // }
         
         
 
-        for (int i = 0; i < borne; i++) // on ne prend que les n premiers coefs de \tilde{q}=P3
-        {
-            padic_poly_get_coeff_padic(padic_cache, P1, borne-i, C);           
-            padic_poly_set_coeff_padic(P2, i, padic_cache, C); // P2 = q dans le livre
-        }
+        // for (int i = 0; i < borne; i++) // on ne prend que les n premiers coefs de \tilde{q}=P3
+        // {
+        //     padic_poly_get_coeff_padic(padic_cache, P, borne-i, C);           
+        //     padic_poly_set_coeff_padic(P2, i, padic_cache, C); // P2 = q dans le livre
+        // }
         
-        padic_poly_set(Q,P2,C); // on a bien définit q
+        // padic_poly_set(Q,P2,C); // on a bien définit q
 
+        CoefRenv(Q, Q, C);  
 
-        padic_poly_mul(P1,B,P2,C);
-        padic_poly_sub(P3,A,P1,C); // P3= a-bq
-        RedModXn(R,P3,degB,C); // on a bien définit r
+        padic_poly_mul(R, B, Q, C); // BQ est stocké dans R
+        padic_poly_sub(R, A, R, C); // on met A - R dans R
 
-        padic_poly_clear(P3);
-        padic_poly_clear(P2);
-        padic_poly_clear(P1);
-        padic_clear(padic_cache);
-
-
-
+        padic_poly_clear(P);
     }
     
 
