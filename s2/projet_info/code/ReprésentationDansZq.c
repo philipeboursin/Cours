@@ -131,9 +131,21 @@ void DivEucl(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_poly_t Q, pad
 }
 
 
-
-void multZq(padic_poly_t S, padic_poly_t A, padic_poly_t B, padic_ctx_t C) // 
+void RedMod(padic_poly_t A, padic_poly_t mod, padic_poly_t R, padic_ctx_t C ) // R prend la valeur du reste de A par mod
 {
+    padic_poly_t Cache1 ;
+    padic_poly_init(Cache1);
+    DivEucl(A,mod,R,Cache1,C);
+    padic_poly_clear(Cache1);
+
+}
+
+void multZq(padic_poly_t M, padic_poly_t A, padic_poly_t B, padic_poly_t mod, padic_ctx_t C,) // On suppose que A et B sont réduit
+{
+    padic_poly_t cache;
+    padic_poly_init(cache);
+    padic_poly_mul(cache,A,B,C);
+    RedMod(cache,mod,M,C)
 
 }
 
