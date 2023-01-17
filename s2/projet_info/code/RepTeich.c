@@ -16,6 +16,8 @@ void Mul2n(padic_poly_t P, padic_poly_t Q, int n, padic_ctx_t C);
 void TeichModIncre(padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_poly_t V, int N, padic_ctx_t C);
 // Teichmuller modulus
 void TeichMod(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C);
+// Procédure qui attribue à R (resp Q) la valeur du reste (resp quotient) de la div de A par B (supposé unitaire)
+void DivEucl(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_poly_t Q, padic_ctx_t C );
 // Procédure de test de PrecompoX
 void test1(padic_ctx_t C);
 // Procédure de test de CompMoinsX
@@ -299,14 +301,36 @@ void TeichMod(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
     // printf("\n------------------------------------------------------------------------\n");
 }
 
-void DivEuc(padic_poly_t A, padic_poly_t B, padic_poly_t Q, padic_poly_t R, padic_ctx_t C)
+void DivEucl(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_poly_t Q, padic_ctx_t C )
 {
     int degA = padic_poly_degree(A);
     int degB = padic_poly_degree(B);
-    if (deg A < deg B)
+    int N = padic_poly_prec(B);
+
+    if (degA < degB)
     {
-        padic_poly_zero(Q);
         padic_poly_set(R, A, C);
+        padic_poly_zero(Q);
+    }
+    else
+    {
+        int n = degA - degB + 1;
+
+        padic_poly_t P ; //polynômes variables caches
+
+        CoefRenv(Q, B, C);
+        padic_poly_inv_series(Q, Q, n, C); // On stocke le c du livre dans Q
+
+        padic_poly_init2(P, degA, N);
+        CoefRenv(P, A, C);
+        padic_poly_mul(Q, P, Q, C);
+        _padic_poly_set_length(Q, n);
+        CoefRenv(Q, Q, C);  
+
+        padic_poly_mul(R, B, Q, C); // BQ est stocké dans R
+        padic_poly_sub(R, A, R, C); // on met A - R dans R
+
+        padic_poly_clear(P);
     }
 }
 
