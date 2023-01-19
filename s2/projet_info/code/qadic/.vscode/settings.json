@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.sage": "python",
+        "qadic.h": "c",
+        "flint.h": "c"
+    }
+}
