@@ -1,5 +1,6 @@
 #include "../qadic.h"
 
+
 void _comp_moins_x(padic_poly_t P, padic_poly_t Q, padic_ctx_t C)
 {
     int N = padic_poly_prec(Q);
@@ -271,7 +272,6 @@ void _teichmuller_modulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
     // padic_poly_print(M, C);
     // printf("\n------------------------------------------------------------------------\n");
 }
-
 
 void _qadic_ctx_init_poly(qadic_ctx_t C, fmpz_t p, fmpz_poly_t m, int N, slong min, slong max, enum padic_print_mode mode)
 {

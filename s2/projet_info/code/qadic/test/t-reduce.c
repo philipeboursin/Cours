@@ -24,11 +24,26 @@ int main()
     _qadic_ctx_init_poly(qadic_ctx, p, m, N, 0, N, PADIC_TERSE);
 
     qadic_t x;
-    qadic_init(x, qadic_ctx);    
+    padic_t un;
 
+    qadic_init(x, qadic_ctx);    
+    padic_init(un);
+    padic_set_si(un, 1, (*qadic_ctx).C);
+
+    padic_poly_set_coeff_padic(x, 1, un, (*qadic_ctx).C);
+    qadic_print(x, qadic_ctx);
+    printf("\n");
+    
+    qadic_reduce(x, qadic_ctx);
+
+    qadic_print(x, qadic_ctx);
+    printf("\n");
+
+    padic_clear(un);
     qadic_clear(x);
     fmpz_clear(p);
     qadic_ctx_clear(qadic_ctx);
     fmpz_poly_clear(m);
     padic_poly_clear(M);
+
 }
