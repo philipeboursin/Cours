@@ -280,33 +280,34 @@ void _qadic_ctx_init_poly(qadic_ctx_t C, fmpz_t p, fmpz_poly_t m, int N, slong m
 
     (*C).N = N;
     (*C).n = fmpz_poly_degree(m);
-
+    fmpz_init_set((*C).p, p);
     padic_ctx_init((*C).C, p, min, max, mode);
-    padic_poly_set_fmpz_poly(lift, m, (*C).C);
-    
-    padic_poly_init2((*C).M, 0, N);
-    _teichmuller_modulus((*C).M, lift, N, (*C).C);
 
+    padic_poly_set_fmpz_poly(lift, m, (*C).C);
+    padic_poly_init2((*C).M, padic_poly_degree(lift), N);
+    _teichmuller_modulus((*C).M, lift, N, (*C).C);
+    
     padic_poly_clear(lift);
 }
 
-// void qadic_ctx_init(qadic_ctx_t C, fmpz_t p, unsigned int n, slong min, slong max, enum padic_print_mode mode)
-// {
-//     fmpz_poly_t m;
-//     fmpz_mod_ctx_t ctx_mod;
-//     fmpz_mod_poly_t m_modp;
-//     flint_rand_t state;
+void qadic_ctx_init(qadic_ctx_t C, fmpz_t p, unsigned int n, slong min, slong max, enum padic_print_mode mode)
+{
+    fmpz_poly_t m;
+    fmpz_mod_ctx_t ctx_mod;
+    fmpz_mod_poly_t m_modp;
+    flint_rand_t state;
 
-//     fmpz_mod_ctx_init(ctx_mod, p);
-//     fmpz_mod_poly_init(m_modp, ctx_mod);
-//     flint_randinit(state);
+    fmpz_mod_ctx_init(ctx_mod, p);
+    fmpz_mod_poly_init(m_modp, ctx_mod);
+    flint_randinit(state);
 
-//     fmpz_mod_poly_randtest_sparse_irreducible(m_mod_p, state, n, ctx_mod);
-//     fmpz_mod_poly_get_fmpz_poly(m, m_mod_p, ctx_mod);
+    fmpz_mod_poly_randtest_sparse_irreducible(m_modp, state, n, ctx_mod);
+    fmpz_mod_poly_get_fmpz_poly(m, m_modp, ctx_mod);
 
-//     _qadic_ctx_init_poly(C, p, m, n, min, max, mode)
+    _qadic_ctx_init_poly(C, p, m, n, min, max, mode);
 
-//     fmpz_mod_ctx_clear(ctx_mod);
-//     fmpz_mod_poly_clear(m);
-//     flint_rand_clear(state);
-// }
+    fmpz_poly_clear(m);
+    fmpz_mod_poly_clear(m_modp, ctx_mod);
+    fmpz_mod_ctx_clear(ctx_mod);
+    flint_randclear(state);
+}

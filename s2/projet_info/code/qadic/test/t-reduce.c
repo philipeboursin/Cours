@@ -45,5 +45,4 @@ int main()
     qadic_ctx_clear(qadic_ctx);
     fmpz_poly_clear(m);
     padic_poly_clear(M);
-
 }

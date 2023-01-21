@@ -11,8 +11,8 @@
 #include "flint/fmpz.h"
 #include "flint/fmpz_poly.h"
 
-
-//-------------------- Introduction :
+#include "flint/fmpz_mod.h"
+#include "flint/fmpz_mod_poly.h"
 
 
 //-------------------- Structure de données
@@ -24,6 +24,7 @@ typedef struct _qadic_ctx_t
 {
     int N; // Précision des calculs dans l'extension
     int n; // Degré de l'extension
+    fmpz_t p; // Nombre premier 
     padic_ctx_t C; // Contexte p-adique associé au sous-corps de l'extension
     padic_poly_t M; // Polynôme représentant de l'extension
 } qadic_ctx_t[1];
@@ -46,7 +47,7 @@ void qadic_ctx_clear(qadic_ctx_t C);
 
 
 //-------------------- Assignement
-void qadic_set_oadic_poly(qadic_t rop, padic_poly_t op, qadic_ctx_t qadic_ctx);
+void qadic_set_padic_poly(qadic_t rop, padic_poly_t op, qadic_ctx_t qadic_ctx);
 
 
 //-------------------- Opérations arithmétiques
