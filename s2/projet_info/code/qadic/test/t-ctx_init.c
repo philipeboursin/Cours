@@ -1,4 +1,4 @@
-#include "../qadic.h"
+
 
 
 void main()
