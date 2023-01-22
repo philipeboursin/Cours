@@ -146,9 +146,12 @@ void multZq(padic_poly_t M, padic_poly_t A, padic_poly_t B, padic_poly_t mod, pa
     padic_poly_init(cache);
     padic_poly_mul(cache,A,B,C);
     RedMod(cache,mod,M,C)
-
 }
 
+void FrobmodTeich(padic_poly_t A, padic_poly_t mod, padic_poly_t R, padic_ctx_t C ) // R prend la valeur de \Sigma(A) la substitution de Frobenius de A, si mod est de Teichmuller
+{
+    
+}
 
 
 

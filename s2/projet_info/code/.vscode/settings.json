@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "représentation de teichmuller": "c",
-        "diveucl": "c"
+        "diveucl": "c",
+        "forbsubstitu": "c"
     }
 }
