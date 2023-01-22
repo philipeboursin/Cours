@@ -1,8 +1,8 @@
 #include<stdio.h>
 #include<gmp.h>
-#include<flint/padic.h>
-#include<flint/padic_poly.h>
-#include<flint/fmpz.h>
+#include "../flint-2.9.0/padic.h"
+#include "../flint-2.9.0/padic_poly.h"
+#include "../flint-2.9.0/fmpz.h"
 
 
 //------
@@ -301,38 +301,38 @@ void TeichMod(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
     // printf("\n------------------------------------------------------------------------\n");
 }
 
-void DivEucl(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_poly_t Q, padic_ctx_t C )
-{
-    int degA = padic_poly_degree(A);
-    int degB = padic_poly_degree(B);
-    int N = padic_poly_prec(B);
+// void DivEucl(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_poly_t Q, padic_ctx_t C )
+// {
+//     int degA = padic_poly_degree(A);
+//     int degB = padic_poly_degree(B);
+//     int N = padic_poly_prec(B);
 
-    if (degA < degB)
-    {
-        padic_poly_set(R, A, C);
-        padic_poly_zero(Q);
-    }
-    else
-    {
-        int n = degA - degB + 1;
+//     if (degA < degB)
+//     {
+//         padic_poly_set(R, A, C);
+//         padic_poly_zero(Q);
+//     }
+//     else
+//     {
+//         int n = degA - degB + 1;
 
-        padic_poly_t P ; //polynômes variables caches
+//         padic_poly_t P ; //polynômes variables caches
 
-        CoefRenv(Q, B, C);
-        padic_poly_inv_series(Q, Q, n, C); // On stocke le c du livre dans Q
+//         CoefRenv(Q, B, C);
+//         padic_poly_inv_series(Q, Q, n, C); // On stocke le c du livre dans Q
 
-        padic_poly_init2(P, degA, N);
-        CoefRenv(P, A, C);
-        padic_poly_mul(Q, P, Q, C);
-        _padic_poly_set_length(Q, n);
-        CoefRenv(Q, Q, C);  
+//         padic_poly_init2(P, degA, N);
+//         CoefRenv(P, A, C);
+//         padic_poly_mul(Q, P, Q, C);
+//         _padic_poly_set_length(Q, n);
+//         CoefRenv(Q, Q, C);  
 
-        padic_poly_mul(R, B, Q, C); // BQ est stocké dans R
-        padic_poly_sub(R, A, R, C); // on met A - R dans R
+//         padic_poly_mul(R, B, Q, C); // BQ est stocké dans R
+//         padic_poly_sub(R, A, R, C); // on met A - R dans R
 
-        padic_poly_clear(P);
-    }
-}
+//         padic_poly_clear(P);
+//     }
+// }
 
 
 //------

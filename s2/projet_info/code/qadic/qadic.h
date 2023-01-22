@@ -31,7 +31,7 @@ typedef struct _qadic_ctx_t
 
 void _qadic_ctx_init_poly(qadic_ctx_t C, fmpz_t p, fmpz_poly_t m, int N, slong min, slong max, enum padic_print_mode mode);
 
-// void qadic_ctx_init(qadic_ctx_t C, fmpz_t p, unsigned int n, slong min, slong max, enum padic_print_mode mode);
+void qadic_ctx_init(qadic_ctx_t C, fmpz_t p, unsigned int n, int N, slong min, slong max, enum padic_print_mode mode);
 
 void _teichmuller_modulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C);
 

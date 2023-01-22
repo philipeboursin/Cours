@@ -156,7 +156,7 @@ void _teichmuller_modulus_increment(padic_poly_t delta, padic_poly_t M0, padic_p
     }
 }
 
-void _teichmuller_modulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
+void _teichmuller_modulus_auxi(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
 {
     if (N == 1)
     {
@@ -172,7 +172,7 @@ void _teichmuller_modulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
         int Nr = (N >> 1) + (N & 1); // partie entiere sup de N/2
         padic_poly_t Mr;
         padic_poly_init2(Mr, 0, Nr);
-        _teichmuller_modulus(Mr, m, Nr, C);
+        _teichmuller_modulus_auxi(Mr, m, Nr, C);
 
         // definition de M0
         padic_poly_t M0;
@@ -242,21 +242,6 @@ void _teichmuller_modulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
 
         padic_poly_clear(P1);
 
-        //------
-        // printf("N : %d\n", N);
-        // printf("M0 : ");
-        // padic_poly_print(M0, C);
-        // printf("\n");
-        // printf("M1 : ");
-        // padic_poly_print(M1, C);
-        // printf("\n");
-        // printf("V : ");
-        // padic_poly_print(V, C);
-        // printf("\n");
-        // printf("delta : ");
-        // padic_poly_print(delta, C);
-        // printf("\n");
-
 
         // clear des variables 
         padic_poly_clear(Mr);
@@ -266,11 +251,12 @@ void _teichmuller_modulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
         padic_poly_clear(delta);
 
     }
-    if ((padic_poly_degree(m) % 2) == 1) padic_poly_neg(M, M, C);
+}
 
-    // printf("M : ");
-    // padic_poly_print(M, C);
-    // printf("\n------------------------------------------------------------------------\n");
+void _teichmuller_modulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
+{
+    _teichmuller_modulus_auxi(M, m, N, C);
+    if ((padic_poly_degree(m) % 2) == 1) padic_poly_neg(M, M, C);
 }
 
 void _qadic_ctx_init_poly(qadic_ctx_t C, fmpz_t p, fmpz_poly_t m, int N, slong min, slong max, enum padic_print_mode mode)
@@ -290,7 +276,7 @@ void _qadic_ctx_init_poly(qadic_ctx_t C, fmpz_t p, fmpz_poly_t m, int N, slong m
     padic_poly_clear(lift);
 }
 
-void qadic_ctx_init(qadic_ctx_t C, fmpz_t p, unsigned int n, slong min, slong max, enum padic_print_mode mode)
+void qadic_ctx_init(qadic_ctx_t C, fmpz_t p, unsigned int n, int N, slong min, slong max, enum padic_print_mode mode)
 {
     fmpz_poly_t m;
     fmpz_mod_ctx_t ctx_mod;
@@ -300,11 +286,12 @@ void qadic_ctx_init(qadic_ctx_t C, fmpz_t p, unsigned int n, slong min, slong ma
     fmpz_mod_ctx_init(ctx_mod, p);
     fmpz_mod_poly_init(m_modp, ctx_mod);
     flint_randinit(state);
+    fmpz_poly_init(m);
 
-    fmpz_mod_poly_randtest_sparse_irreducible(m_modp, state, n, ctx_mod);
+    fmpz_mod_poly_randtest_sparse_irreducible(m_modp, state, n + 1, ctx_mod);
     fmpz_mod_poly_get_fmpz_poly(m, m_modp, ctx_mod);
 
-    _qadic_ctx_init_poly(C, p, m, n, min, max, mode);
+    _qadic_ctx_init_poly(C, p, m, N, min, max, mode);
 
     fmpz_poly_clear(m);
     fmpz_mod_poly_clear(m_modp, ctx_mod);
