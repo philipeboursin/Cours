@@ -1,4 +1,4 @@
-#include "../qadic.h"
+#include "qadic.h"
 
 int main()
 {
@@ -24,7 +24,7 @@ int main()
     _qadic_ctx_init_poly(qadic_ctx, p, m, N, 0, N, PADIC_TERSE);
 
     qadic_t x;
-    qadic_init(x, qadic_ctx);    
+    qadic_init(x, qadic_ctx); 
 
     qadic_clear(x);
     fmpz_clear(p);

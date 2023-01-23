@@ -1,10 +1,9 @@
-#include "../qadic.h"
+#include "qadic.h"
 
 
 void _comp_moins_x(padic_poly_t P, padic_poly_t Q, padic_ctx_t C)
 {
     int N = padic_poly_prec(Q);
-    int deg = padic_poly_degree(Q);
 
     padic_t moins_un;
     padic_poly_t moins_X;

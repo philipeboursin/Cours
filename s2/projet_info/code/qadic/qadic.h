@@ -51,9 +51,13 @@ void qadic_set_padic_poly(qadic_t rop, padic_poly_t op, qadic_ctx_t qadic_ctx);
 
 
 //-------------------- Opérations arithmétiques
+void _padic_poly_div_eucl(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_poly_t Q, padic_ctx_t C);
+
 void qadic_reduce(qadic_t x, qadic_ctx_t C);
 
 void qadic_add(qadic_t rop, qadic_t op1, qadic_t op2, qadic_ctx_t ctx);
+
+void qadic_mul(qadic_t rop, qadic_t op1, qadic_t op2, qadic_ctx_t ctx);
 
 
 //-------------------- Misc

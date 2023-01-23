@@ -1,0 +1,67 @@
+all: bin/t-ctx_init bin/t-init bin/t-reduce
+.PHONY: all
+
+clean:
+	rm -rf bin obj
+.PHONY: clean
+
+bin:
+	mkdir -p bin
+
+obj:
+	mkdir -p obj
+
+obj/add.o: qadic/qadic.h qadic/add.c | obj
+	gcc -o obj/add.o -c qadic/add.c
+
+obj/clear.o: qadic/qadic.h qadic/clear.c | obj
+	gcc -o obj/clear.o -c qadic/clear.c
+
+obj/ctx_clear.o: qadic/qadic.h qadic/ctx_clear.c | obj
+	gcc -o obj/ctx_clear.o -c qadic/ctx_clear.c
+
+obj/ctx_init.o: qadic/qadic.h qadic/ctx_init.c | obj
+	gcc -o obj/ctx_init.o -c qadic/ctx_init.c
+
+obj/ctx_rep.o: qadic/qadic.h qadic/ctx_rep.c | obj
+	gcc -o obj/ctx_rep.o -c qadic/ctx_rep.c
+
+obj/frobenius_substitution.o: qadic/qadic.h qadic/frobenius_substitution.c | obj
+	gcc -o obj/frobenius_substitution.o -c qadic/frobenius_substitution.c
+
+obj/init.o: qadic/qadic.h qadic/init.c | obj
+	gcc -o obj/init.o -c qadic/init.c
+
+obj/inv.o: qadic/qadic.h qadic/inv.c | obj
+	gcc -o obj/inv.o -c qadic/inv.c
+
+obj/mul.o: qadic/qadic.h qadic/mul.c | obj
+	gcc -o obj/mul.o -c qadic/mul.c
+
+obj/print.o: qadic/qadic.h qadic/print.c | obj
+	gcc -o obj/print.o -c qadic/print.c
+
+obj/reduce.o: qadic/qadic.h qadic/reduce.c | obj
+	gcc -o obj/reduce.o -c qadic/reduce.c
+
+obj/set_padic_poly.o: qadic/qadic.h qadic/set_padic_poly.c | obj
+	gcc -o obj/set_padic_poly.o -c qadic/set_padic_poly.c
+
+obj/t-ctx_init.o: qadic/qadic.h test/t-ctx_init.c | obj
+	gcc -o obj/t-ctx_init.o -c test/t-ctx_init.c -Iqadic
+
+obj/t-init.o: qadic/qadic.h test/t-init.c | obj
+	gcc -o obj/t-init.o -c test/t-init.c -Iqadic
+
+obj/t-reduce.o: qadic/qadic.h test/t-reduce.c | obj
+	gcc -o obj/t-reduce.o -c test/t-reduce.c -Iqadic
+
+bin/t-ctx_init: obj/t-ctx_init.o obj/add.o obj/clear.o obj/ctx_clear.o obj/ctx_init.o obj/ctx_rep.o obj/frobenius_substitution.o obj/init.o obj/inv.o obj/mul.o obj/print.o obj/reduce.o obj/set_padic_poly.o | bin
+	gcc -o bin/t-ctx_init obj/t-ctx_init.o obj/add.o obj/clear.o obj/ctx_clear.o obj/ctx_init.o obj/ctx_rep.o obj/frobenius_substitution.o obj/init.o obj/inv.o obj/mul.o obj/print.o obj/reduce.o obj/set_padic_poly.o -lflint -lgmp
+
+bin/t-init: obj/t-init.o obj/add.o obj/clear.o obj/ctx_clear.o obj/ctx_init.o obj/ctx_rep.o obj/frobenius_substitution.o obj/init.o obj/inv.o obj/mul.o obj/print.o obj/reduce.o obj/set_padic_poly.o | bin
+	gcc -o bin/t-init obj/t-init.o obj/add.o obj/clear.o obj/ctx_clear.o obj/ctx_init.o obj/ctx_rep.o obj/frobenius_substitution.o obj/init.o obj/inv.o obj/mul.o obj/print.o obj/reduce.o obj/set_padic_poly.o -lflint -lgmp
+
+bin/t-reduce: obj/t-reduce.o obj/add.o obj/clear.o obj/ctx_clear.o obj/ctx_init.o obj/ctx_rep.o obj/frobenius_substitution.o obj/init.o obj/inv.o obj/mul.o obj/print.o obj/reduce.o obj/set_padic_poly.o | bin
+	gcc -o bin/t-reduce obj/t-reduce.o obj/add.o obj/clear.o obj/ctx_clear.o obj/ctx_init.o obj/ctx_rep.o obj/frobenius_substitution.o obj/init.o obj/inv.o obj/mul.o obj/print.o obj/reduce.o obj/set_padic_poly.o -lflint -lgmp
+

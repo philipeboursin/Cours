@@ -1,10 +1,45 @@
-aled: $(wildcard qadic/*.o) test/t-ctx_init.o
-	gcc -o main $(wildcard qadic/*.o) test/t-ctx_init.o -lgmp -lflint
+BIN_DIR := bin
+OBJ_DIR := obj
+CC := gcc
+CC_ARGS := -Wall -Wextra -Werror
+INCLUDE := -I.
+LINK := gcc
+LINK_ARGS := -lflint -lgmp
 
-$(wildcard qadic/*.o): $(wildcard qadic/*.c)
-	cd qadic
-	gcc -c $(wildcard *.c)
-	cd ..
+TARGETS := bin/t-ctx_init.out bin/t-init.out bin/t-reduce.out
+SRC := $(shell find qadic -type f -name '*.c')
+OBJ := $(patsubst qadic/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
-test/t-ctx_init.o: test/t-ctx_init.c
-	gcc -o test/t-ctx_init.o -c test/t-ctx_init.c
+all: $(TARGETS)
+.PHONY: all
+
+run: $(TARGETS)
+	./bin/t-ctx_init
+	./bin/t-init
+	./bin/t-reduce
+.PHONY: run
+
+clean:
+	rm -rf $(BIN_DIR) $(OBJ_DIR)
+.PHONY: clean
+
+$(BIN_DIR):
+	mkdir -p $(BIN_DIR)
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+obj/%.o: qadic/%.c qadic.h | $(OBJ_DIR)
+	$(CC) $(CC_ARGS) $(INCLUDE) -o $@ -c $<
+
+obj/%.o: test/%.c qadic.h | $(OBJ_DIR)
+	$(CC) $(CC_ARGS) $(INCLUDE) -o $@ -c $<
+
+bin/t-ctx_init.out: obj/t-ctx_init.o $(OBJ) | $(BIN_DIR)
+	$(LINK) -o $@.out $^ $(LINK_ARGS)
+
+bin/t-init.out: obj/t-init.o $(OBJ) | $(BIN_DIR)
+	$(LINK) -o $@.out $^ $(LINK_ARGS)
+
+bin/t-reduce.out: obj/t-reduce.o $(OBJ) | $(BIN_DIR)
+	$(LINK) -o $@.out $^ $(LINK_ARGS)

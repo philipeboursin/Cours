@@ -1,7 +1,7 @@
+#include "qadic.h"
 
 
-
-void main()
+int main()
 {
     qadic_ctx_t qadic_ctx;
     fmpz_t p;

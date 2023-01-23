@@ -1,4 +1,4 @@
-#include "../qadic.h"
+#include "qadic.h"
 
 void qadic_clear(qadic_t x)
 {

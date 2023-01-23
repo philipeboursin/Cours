@@ -1,4 +1,4 @@
-#include "../qadic.h"
+#include "qadic.h"
 
 void qadic_ctx_rep(padic_poly_t P, qadic_ctx_t C)
 {

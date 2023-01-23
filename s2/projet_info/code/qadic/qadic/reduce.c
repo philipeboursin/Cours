@@ -1,4 +1,4 @@
-#include "../qadic.h"
+#include "qadic.h"
 
 
 void _coeff_symetry(padic_poly_t P, padic_poly_t Q, padic_ctx_t C) // Procédure qui transforme P en un polynôme dont les coefficients sont ceux de Q renversés

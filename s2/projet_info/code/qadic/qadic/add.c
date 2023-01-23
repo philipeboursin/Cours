@@ -1,4 +1,4 @@
-#include "../qadic.h"
+#include "qadic.h"
 
 void qadic_add(qadic_t rop, qadic_t op1, qadic_t op2, qadic_ctx_t qadic_ctx)
 {
