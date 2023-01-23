@@ -1,8 +1,8 @@
-#include "qadic.h"
+#include "n2adic.h"
 
 int main()
 {
-    qadic_ctx_t qadic_ctx;
+    n2adic_ctx_t n2adic_ctx;
     fmpz_t p;
     fmpz_init(p);
     fmpz_set_ui(p, 2);
@@ -21,14 +21,14 @@ int main()
     fmpz_poly_set_coeff_si(m, 4, 1);
     fmpz_poly_set_coeff_si(m, 8, 1);
 
-    _qadic_ctx_init_poly(qadic_ctx, p, m, N, 0, N, PADIC_TERSE);
+    _n2adic_ctx_init_poly(n2adic_ctx, p, m, N, 0, N, PADIC_TERSE);
 
-    qadic_t x;
-    qadic_init(x, qadic_ctx); 
+    n2adic_t x;
+    n2adic_init(x, n2adic_ctx); 
 
-    qadic_clear(x);
+    n2adic_clear(x);
     fmpz_clear(p);
-    qadic_ctx_clear(qadic_ctx);
+    n2adic_ctx_clear(n2adic_ctx);
     fmpz_poly_clear(m);
     padic_poly_clear(M);
 }

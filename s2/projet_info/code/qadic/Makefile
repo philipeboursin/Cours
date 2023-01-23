@@ -7,16 +7,16 @@ LINK := gcc
 LINK_ARGS := -lflint -lgmp
 
 TARGETS := bin/t-ctx_init.out bin/t-init.out bin/t-reduce.out
-SRC := $(shell find qadic -type f -name '*.c')
-OBJ := $(patsubst qadic/%.c,$(OBJ_DIR)/%.o,$(SRC))
+SRC := $(shell find n2adic -type f -name '*.c')
+OBJ := $(patsubst n2adic/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 all: $(TARGETS)
 .PHONY: all
 
 run: $(TARGETS)
-	./bin/t-ctx_init
-	./bin/t-init
-	./bin/t-reduce
+	./bin/t-ctx_init.out
+	./bin/t-init.out
+	./bin/t-reduce.out
 .PHONY: run
 
 clean:
@@ -29,17 +29,17 @@ $(BIN_DIR):
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
-obj/%.o: qadic/%.c qadic.h | $(OBJ_DIR)
+obj/%.o: n2adic/%.c n2adic.h | $(OBJ_DIR)
 	$(CC) $(CC_ARGS) $(INCLUDE) -o $@ -c $<
 
-obj/%.o: test/%.c qadic.h | $(OBJ_DIR)
+obj/%.o: test/%.c n2adic.h | $(OBJ_DIR)
 	$(CC) $(CC_ARGS) $(INCLUDE) -o $@ -c $<
 
 bin/t-ctx_init.out: obj/t-ctx_init.o $(OBJ) | $(BIN_DIR)
-	$(LINK) -o $@.out $^ $(LINK_ARGS)
+	$(LINK) -o $@ $^ $(LINK_ARGS)
 
 bin/t-init.out: obj/t-init.o $(OBJ) | $(BIN_DIR)
-	$(LINK) -o $@.out $^ $(LINK_ARGS)
+	$(LINK) -o $@ $^ $(LINK_ARGS)
 
 bin/t-reduce.out: obj/t-reduce.o $(OBJ) | $(BIN_DIR)
-	$(LINK) -o $@.out $^ $(LINK_ARGS)
+	$(LINK) -o $@ $^ $(LINK_ARGS)

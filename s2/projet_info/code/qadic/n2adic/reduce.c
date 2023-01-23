@@ -1,4 +1,4 @@
-#include "qadic.h"
+#include "n2adic.h"
 
 
 void _coeff_symetry(padic_poly_t P, padic_poly_t Q, padic_ctx_t C) // Procédure qui transforme P en un polynôme dont les coefficients sont ceux de Q renversés
@@ -58,13 +58,13 @@ void _padic_poly_div_eucl(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_
     }
 }
 
-void qadic_reduce(qadic_t x, qadic_ctx_t C)
+void n2adic_reduce(n2adic_t x, n2adic_ctx_t C)
 {
-    qadic_t y;
+    n2adic_t y;
 
-    qadic_init(y, C);
+    n2adic_init(y, C);
     _padic_poly_div_eucl(x, (*C).M, x, y, (*C).C);
     padic_poly_reduce(x, (*C).C);
 
-    qadic_clear(y);
+    n2adic_clear(y);
 }

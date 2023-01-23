@@ -1,4 +1,4 @@
-#include "qadic.h"
+#include "n2adic.h"
 
 
 void _comp_moins_x(padic_poly_t P, padic_poly_t Q, padic_ctx_t C)
@@ -258,7 +258,7 @@ void _teichmuller_modulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
     if ((padic_poly_degree(m) % 2) == 1) padic_poly_neg(M, M, C);
 }
 
-void _qadic_ctx_init_poly(qadic_ctx_t C, fmpz_t p, fmpz_poly_t m, int N, slong min, slong max, enum padic_print_mode mode)
+void _n2adic_ctx_init_poly(n2adic_ctx_t C, fmpz_t p, fmpz_poly_t m, int N, slong min, slong max, enum padic_print_mode mode)
 {
     padic_poly_t lift;
     padic_poly_init2(lift, fmpz_poly_degree(m), 1);
@@ -275,7 +275,7 @@ void _qadic_ctx_init_poly(qadic_ctx_t C, fmpz_t p, fmpz_poly_t m, int N, slong m
     padic_poly_clear(lift);
 }
 
-void qadic_ctx_init(qadic_ctx_t C, fmpz_t p, unsigned int n, int N, slong min, slong max, enum padic_print_mode mode)
+void n2adic_ctx_init(n2adic_ctx_t C, fmpz_t p, unsigned int n, int N, slong min, slong max, enum padic_print_mode mode)
 {
     fmpz_poly_t m;
     fmpz_mod_ctx_t ctx_mod;
@@ -290,7 +290,7 @@ void qadic_ctx_init(qadic_ctx_t C, fmpz_t p, unsigned int n, int N, slong min, s
     fmpz_mod_poly_randtest_sparse_irreducible(m_modp, state, n + 1, ctx_mod);
     fmpz_mod_poly_get_fmpz_poly(m, m_modp, ctx_mod);
 
-    _qadic_ctx_init_poly(C, p, m, N, min, max, mode);
+    _n2adic_ctx_init_poly(C, p, m, N, min, max, mode);
 
     fmpz_poly_clear(m);
     fmpz_mod_poly_clear(m_modp, ctx_mod);

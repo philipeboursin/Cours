@@ -16,49 +16,49 @@
 
 
 //-------------------- Structure de données
-typedef padic_poly_t qadic_t;
+typedef padic_poly_t n2adic_t;
 
 
 //-------------------- Contexte
-typedef struct _qadic_ctx_t
+typedef struct _n2adic_ctx_t
 {
     int N; // Précision des calculs dans l'extension
     int n; // Degré de l'extension
     fmpz_t p; // Nombre premier 
     padic_ctx_t C; // Contexte p-adique associé au sous-corps de l'extension
     padic_poly_t M; // Polynôme représentant de l'extension
-} qadic_ctx_t[1];
+} n2adic_ctx_t[1];
 
-void _qadic_ctx_init_poly(qadic_ctx_t C, fmpz_t p, fmpz_poly_t m, int N, slong min, slong max, enum padic_print_mode mode);
+void _n2adic_ctx_init_poly(n2adic_ctx_t C, fmpz_t p, fmpz_poly_t m, int N, slong min, slong max, enum padic_print_mode mode);
 
-void qadic_ctx_init(qadic_ctx_t C, fmpz_t p, unsigned int n, int N, slong min, slong max, enum padic_print_mode mode);
+void n2adic_ctx_init(n2adic_ctx_t C, fmpz_t p, unsigned int n, int N, slong min, slong max, enum padic_print_mode mode);
 
 void _teichmuller_modulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C);
 
-void qadic_ctx_rep(padic_poly_t P, qadic_ctx_t C);
+void n2adic_ctx_rep(padic_poly_t P, n2adic_ctx_t C);
 
 
 //-------------------- Gestion de la mémoire
-void qadic_init(qadic_t x, qadic_ctx_t qadic_ctx);
+void n2adic_init(n2adic_t x, n2adic_ctx_t n2adic_ctx);
 
-void qadic_clear(qadic_t x);
+void n2adic_clear(n2adic_t x);
 
-void qadic_ctx_clear(qadic_ctx_t C);
+void n2adic_ctx_clear(n2adic_ctx_t C);
 
 
 //-------------------- Assignement
-void qadic_set_padic_poly(qadic_t rop, padic_poly_t op, qadic_ctx_t qadic_ctx);
+void n2adic_set_padic_poly(n2adic_t rop, padic_poly_t op, n2adic_ctx_t n2adic_ctx);
 
 
 //-------------------- Opérations arithmétiques
 void _padic_poly_div_eucl(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_poly_t Q, padic_ctx_t C);
 
-void qadic_reduce(qadic_t x, qadic_ctx_t C);
+void n2adic_reduce(n2adic_t x, n2adic_ctx_t C);
 
-void qadic_add(qadic_t rop, qadic_t op1, qadic_t op2, qadic_ctx_t ctx);
+void n2adic_add(n2adic_t rop, n2adic_t op1, n2adic_t op2, n2adic_ctx_t ctx);
 
-void qadic_mul(qadic_t rop, qadic_t op1, qadic_t op2, qadic_ctx_t ctx);
+void n2adic_mul(n2adic_t rop, n2adic_t op1, n2adic_t op2, n2adic_ctx_t ctx);
 
 
 //-------------------- Misc
-void qadic_print(qadic_t x, qadic_ctx_t qadic_ctx);
+void n2adic_print(n2adic_t x, n2adic_ctx_t n2adic_ctx);

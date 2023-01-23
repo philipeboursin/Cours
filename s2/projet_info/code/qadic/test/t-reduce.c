@@ -1,9 +1,9 @@
-#include "qadic.h"
+#include "n2adic.h"
 
 
 int main()
 {
-    qadic_ctx_t qadic_ctx;
+    n2adic_ctx_t n2adic_ctx;
     fmpz_t p;
     fmpz_init(p);
     fmpz_set_ui(p, 2);
@@ -45,36 +45,36 @@ int main()
     fmpz_poly_set_coeff_si(b, 256, 1);
 
 
-    _qadic_ctx_init_poly(qadic_ctx, p, m, N, 0, N, PADIC_TERSE);
+    _n2adic_ctx_init_poly(n2adic_ctx, p, m, N, 0, N, PADIC_TERSE);
 
-    qadic_t x;
-    qadic_t y;
+    n2adic_t x;
+    n2adic_t y;
     padic_t un;
 
 
-    qadic_init(x, qadic_ctx);
-    qadic_init(y, qadic_ctx);
-    padic_poly_set_fmpz_poly(x, a, (*qadic_ctx).C);
-    padic_poly_set_fmpz_poly(y, b, (*qadic_ctx).C);
+    n2adic_init(x, n2adic_ctx);
+    n2adic_init(y, n2adic_ctx);
+    padic_poly_set_fmpz_poly(x, a, (*n2adic_ctx).C);
+    padic_poly_set_fmpz_poly(y, b, (*n2adic_ctx).C);
 
-    qadic_print(x, qadic_ctx);
+    n2adic_print(x, n2adic_ctx);
     printf("\n");
     
-    qadic_reduce(x, qadic_ctx);
-    qadic_reduce(y, qadic_ctx);
+    n2adic_reduce(x, n2adic_ctx);
+    n2adic_reduce(y, n2adic_ctx);
 
-    qadic_print(x, qadic_ctx);
+    n2adic_print(x, n2adic_ctx);
     printf("\n");
-    qadic_print(y, qadic_ctx);
+    n2adic_print(y, n2adic_ctx);
     printf("\n");
 
     fmpz_poly_clear(a);
     fmpz_poly_clear(b);
     padic_clear(un);
-    qadic_clear(x);
-    qadic_clear(y);
+    n2adic_clear(x);
+    n2adic_clear(y);
     fmpz_clear(p);
-    qadic_ctx_clear(qadic_ctx);
+    n2adic_ctx_clear(n2adic_ctx);
     fmpz_poly_clear(m);
     padic_poly_clear(M);
 }

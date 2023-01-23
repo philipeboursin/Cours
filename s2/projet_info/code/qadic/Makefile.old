@@ -11,50 +11,50 @@ bin:
 obj:
 	mkdir -p obj
 
-obj/add.o: qadic/qadic.h qadic/add.c | obj
-	gcc -o obj/add.o -c qadic/add.c
+obj/add.o: n2adic/n2adic.h n2adic/add.c | obj
+	gcc -o obj/add.o -c n2adic/add.c
 
-obj/clear.o: qadic/qadic.h qadic/clear.c | obj
-	gcc -o obj/clear.o -c qadic/clear.c
+obj/clear.o: n2adic/n2adic.h n2adic/clear.c | obj
+	gcc -o obj/clear.o -c n2adic/clear.c
 
-obj/ctx_clear.o: qadic/qadic.h qadic/ctx_clear.c | obj
-	gcc -o obj/ctx_clear.o -c qadic/ctx_clear.c
+obj/ctx_clear.o: n2adic/n2adic.h n2adic/ctx_clear.c | obj
+	gcc -o obj/ctx_clear.o -c n2adic/ctx_clear.c
 
-obj/ctx_init.o: qadic/qadic.h qadic/ctx_init.c | obj
-	gcc -o obj/ctx_init.o -c qadic/ctx_init.c
+obj/ctx_init.o: n2adic/n2adic.h n2adic/ctx_init.c | obj
+	gcc -o obj/ctx_init.o -c n2adic/ctx_init.c
 
-obj/ctx_rep.o: qadic/qadic.h qadic/ctx_rep.c | obj
-	gcc -o obj/ctx_rep.o -c qadic/ctx_rep.c
+obj/ctx_rep.o: n2adic/n2adic.h n2adic/ctx_rep.c | obj
+	gcc -o obj/ctx_rep.o -c n2adic/ctx_rep.c
 
-obj/frobenius_substitution.o: qadic/qadic.h qadic/frobenius_substitution.c | obj
-	gcc -o obj/frobenius_substitution.o -c qadic/frobenius_substitution.c
+obj/frobenius_substitution.o: n2adic/n2adic.h n2adic/frobenius_substitution.c | obj
+	gcc -o obj/frobenius_substitution.o -c n2adic/frobenius_substitution.c
 
-obj/init.o: qadic/qadic.h qadic/init.c | obj
-	gcc -o obj/init.o -c qadic/init.c
+obj/init.o: n2adic/n2adic.h n2adic/init.c | obj
+	gcc -o obj/init.o -c n2adic/init.c
 
-obj/inv.o: qadic/qadic.h qadic/inv.c | obj
-	gcc -o obj/inv.o -c qadic/inv.c
+obj/inv.o: n2adic/n2adic.h n2adic/inv.c | obj
+	gcc -o obj/inv.o -c n2adic/inv.c
 
-obj/mul.o: qadic/qadic.h qadic/mul.c | obj
-	gcc -o obj/mul.o -c qadic/mul.c
+obj/mul.o: n2adic/n2adic.h n2adic/mul.c | obj
+	gcc -o obj/mul.o -c n2adic/mul.c
 
-obj/print.o: qadic/qadic.h qadic/print.c | obj
-	gcc -o obj/print.o -c qadic/print.c
+obj/print.o: n2adic/n2adic.h n2adic/print.c | obj
+	gcc -o obj/print.o -c n2adic/print.c
 
-obj/reduce.o: qadic/qadic.h qadic/reduce.c | obj
-	gcc -o obj/reduce.o -c qadic/reduce.c
+obj/reduce.o: n2adic/n2adic.h n2adic/reduce.c | obj
+	gcc -o obj/reduce.o -c n2adic/reduce.c
 
-obj/set_padic_poly.o: qadic/qadic.h qadic/set_padic_poly.c | obj
-	gcc -o obj/set_padic_poly.o -c qadic/set_padic_poly.c
+obj/set_padic_poly.o: n2adic/n2adic.h n2adic/set_padic_poly.c | obj
+	gcc -o obj/set_padic_poly.o -c n2adic/set_padic_poly.c
 
-obj/t-ctx_init.o: qadic/qadic.h test/t-ctx_init.c | obj
-	gcc -o obj/t-ctx_init.o -c test/t-ctx_init.c -Iqadic
+obj/t-ctx_init.o: n2adic/n2adic.h test/t-ctx_init.c | obj
+	gcc -o obj/t-ctx_init.o -c test/t-ctx_init.c -In2adic
 
-obj/t-init.o: qadic/qadic.h test/t-init.c | obj
-	gcc -o obj/t-init.o -c test/t-init.c -Iqadic
+obj/t-init.o: n2adic/n2adic.h test/t-init.c | obj
+	gcc -o obj/t-init.o -c test/t-init.c -In2adic
 
-obj/t-reduce.o: qadic/qadic.h test/t-reduce.c | obj
-	gcc -o obj/t-reduce.o -c test/t-reduce.c -Iqadic
+obj/t-reduce.o: n2adic/n2adic.h test/t-reduce.c | obj
+	gcc -o obj/t-reduce.o -c test/t-reduce.c -In2adic
 
 bin/t-ctx_init: obj/t-ctx_init.o obj/add.o obj/clear.o obj/ctx_clear.o obj/ctx_init.o obj/ctx_rep.o obj/frobenius_substitution.o obj/init.o obj/inv.o obj/mul.o obj/print.o obj/reduce.o obj/set_padic_poly.o | bin
 	gcc -o bin/t-ctx_init obj/t-ctx_init.o obj/add.o obj/clear.o obj/ctx_clear.o obj/ctx_init.o obj/ctx_rep.o obj/frobenius_substitution.o obj/init.o obj/inv.o obj/mul.o obj/print.o obj/reduce.o obj/set_padic_poly.o -lflint -lgmp
