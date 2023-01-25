@@ -2,5 +2,5 @@
 
 void n2adic_init(n2adic_t x, n2adic_ctx_t n2adic_ctx)
 {
-    padic_poly_init2(x, (*n2adic_ctx).n, (*n2adic_ctx).N);
+    padic_poly_init2(x, (*n2adic_ctx).deg, (*n2adic_ctx).prec);
 }

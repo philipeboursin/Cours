@@ -258,42 +258,49 @@ void _teichmuller_modulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
     if ((padic_poly_degree(m) % 2) == 1) padic_poly_neg(M, M, C);
 }
 
-void _n2adic_ctx_init_poly(n2adic_ctx_t C, fmpz_t p, fmpz_poly_t m, int N, slong min, slong max, enum padic_print_mode mode)
+void _n2adic_ctx_init_poly(n2adic_ctx_t n2adic_ctx, fmpz_poly_t m, int prec, slong min, slong max, enum padic_print_mode mode)
 {
     padic_poly_t lift;
+    fmpz_t deux;
+
     padic_poly_init2(lift, fmpz_poly_degree(m), 1);
+    fmpz_init_set_ui(deux, 2);
 
-    (*C).N = N;
-    (*C).n = fmpz_poly_degree(m);
-    fmpz_init_set((*C).p, p);
-    padic_ctx_init((*C).C, p, min, max, mode);
 
-    padic_poly_set_fmpz_poly(lift, m, (*C).C);
-    padic_poly_init2((*C).M, padic_poly_degree(lift), N);
-    _teichmuller_modulus((*C).M, lift, N, (*C).C);
+    (*n2adic_ctx).prec = prec;
+    (*n2adic_ctx).deg = fmpz_poly_degree(m);
+    padic_ctx_init((*n2adic_ctx).ctx, deux, min, max, mode);
+
+    padic_poly_set_fmpz_poly(lift, m, (*n2adic_ctx).ctx);
+    padic_poly_init2((*n2adic_ctx).M, padic_poly_degree(lift), prec);
+    _teichmuller_modulus((*n2adic_ctx).M, lift, prec, (*n2adic_ctx).ctx);
     
     padic_poly_clear(lift);
+    fmpz_clear(deux);
 }
 
-void n2adic_ctx_init(n2adic_ctx_t C, fmpz_t p, unsigned int n, int N, slong min, slong max, enum padic_print_mode mode)
+void n2adic_ctx_init(n2adic_ctx_t n2adic_ctx, unsigned int deg, int prec, slong min, slong max, enum padic_print_mode mode)
 {
     fmpz_poly_t m;
     fmpz_mod_ctx_t ctx_mod;
     fmpz_mod_poly_t m_modp;
     flint_rand_t state;
+    fmpz_t deux;
 
-    fmpz_mod_ctx_init(ctx_mod, p);
+    fmpz_init_set_ui(deux, 2);
+    fmpz_mod_ctx_init(ctx_mod, deux);
     fmpz_mod_poly_init(m_modp, ctx_mod);
     flint_randinit(state);
     fmpz_poly_init(m);
 
-    fmpz_mod_poly_randtest_sparse_irreducible(m_modp, state, n + 1, ctx_mod);
+    fmpz_mod_poly_randtest_sparse_irreducible(m_modp, state, deg + 1, ctx_mod);
     fmpz_mod_poly_get_fmpz_poly(m, m_modp, ctx_mod);
 
-    _n2adic_ctx_init_poly(C, p, m, N, min, max, mode);
+    _n2adic_ctx_init_poly(n2adic_ctx, m, prec, min, max, mode);
 
     fmpz_poly_clear(m);
     fmpz_mod_poly_clear(m_modp, ctx_mod);
     fmpz_mod_ctx_clear(ctx_mod);
     flint_randclear(state);
+    fmpz_clear(deux);
 }

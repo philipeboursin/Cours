@@ -1,5 +1,46 @@
 #include "n2adic.h"
 
+void _padic_poly_newton_inv_auxi(padic_poly_t rop, padic_poly_t op, int n, padic_ctx_t ctx)
+{
+    if (n == 1)
+    {
+        padic_poly_one(rop);
+    }
+    else
+    {
+        int prec = padic_poly_prec(op);
+        
+        padic_poly_t cache;
+        padic_poly_t un;
+
+        padic_poly_init2(cache, 0, prec);
+        padic_poly_init2(un, 1, prec);
+        padic_poly_one(un);
+
+        int nr = (n >> 1) + (n & 1);
+        _padic_poly_newton_inv_auxi(rop, op, nr, ctx);
+        padic_poly_mul(cache, rop, op, ctx);
+        _padic_poly_set_length(cache, n + 1);
+        padic_poly_sub(cache, un, cache, ctx);
+        padic_poly_mul(cache, rop, cache, ctx);
+        _padic_poly_set_length(cache, n + 1);
+        padic_poly_add(cache, cache, rop, ctx);
+        _padic_poly_set_length(cache, n + 1);
+        padic_poly_set(rop, cache, ctx);
+
+        padic_poly_clear(cache);
+        padic_poly_clear(un);
+    }
+}
+
+void _padic_poly_newton_inv(padic_poly_t rop, padic_poly_t op, int n, padic_ctx_t ctx)
+{
+    padic_poly_t auxi;
+    padic_poly_init2(auxi, 0, padic_poly_prec(op));
+    _padic_poly_newton_inv_auxi(auxi, op, n, ctx);
+    padic_poly_set(rop, auxi, ctx);
+    padic_poly_clear(auxi);
+}
 
 void _coeff_symetry(padic_poly_t P, padic_poly_t Q, padic_ctx_t C) // Procédure qui transforme P en un polynôme dont les coefficients sont ceux de Q renversés
 {
@@ -21,7 +62,8 @@ void _coeff_symetry(padic_poly_t P, padic_poly_t Q, padic_ctx_t C) // Procédure
     padic_clear(padic_cache);
 }
 
-void _padic_poly_div_eucl(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_poly_t Q, padic_ctx_t C)
+// Ne fonctionne que si B est unitaire
+void _padic_poly_div_eucl_auxi(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_poly_t Q, padic_ctx_t C)
 {
     int degA = padic_poly_degree(A);
     int degB = padic_poly_degree(B);
@@ -43,7 +85,8 @@ void _padic_poly_div_eucl(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_
         padic_poly_init2(P2, degA, N);
 
         _coeff_symetry(P2, B, C);
-        padic_poly_inv_series(P2, P2, n, C);
+        // padic_poly_inv_series(P2, P2, n, C);
+        _padic_poly_newton_inv(P2, P2, n, C);
 
         _coeff_symetry(P1, A, C);
         padic_poly_mul(P2, P1, P2, C);
@@ -58,13 +101,36 @@ void _padic_poly_div_eucl(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_
     }
 }
 
-void n2adic_reduce(n2adic_t x, n2adic_ctx_t C)
+// Fonctionne même avec B non unitaire, le divise par son coefficient directeur et utilise _padic_poly_div_eucl_auxi
+void _padic_poly_div_eucl(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_poly_t Q, padic_ctx_t ctx)
+{
+    padic_t c;
+    padic_t d;
+    padic_poly_t B_monic;
+
+    int prec = padic_poly_prec(B);
+    int degB = padic_poly_degree(B);
+
+    padic_init2(c, prec);
+    padic_init2(d, prec);
+    padic_poly_init2(B_monic, degB, prec);
+
+    padic_poly_get_coeff_padic(c, B, degB, ctx);
+    padic_inv(d, c, ctx); // d est l'inverse de c
+    padic_poly_scalar_mul_padic(B_monic, B, d, ctx);
+
+    _padic_poly_div_eucl_auxi(A, B_monic, R, Q, ctx);
+
+    padic_poly_scalar_mul_padic(Q, Q, c, ctx);
+}
+
+void n2adic_reduce(n2adic_t x, n2adic_ctx_t n2adic_ctx)
 {
     n2adic_t y;
 
-    n2adic_init(y, C);
-    _padic_poly_div_eucl(x, (*C).M, x, y, (*C).C);
-    padic_poly_reduce(x, (*C).C);
+    n2adic_init(y, n2adic_ctx);
+    _padic_poly_div_eucl(x, (*n2adic_ctx).M, x, y, (*n2adic_ctx).ctx);
+    padic_poly_reduce(x, (*n2adic_ctx).ctx);
 
     n2adic_clear(y);
 }

@@ -6,7 +6,7 @@ INCLUDE := -I.
 LINK := gcc
 LINK_ARGS := -lflint -lgmp
 
-TARGETS := bin/t-ctx_init.out bin/t-init.out bin/t-reduce.out
+TARGETS := bin/t-ctx_init.out bin/t-init.out bin/t-reduce.out bin/t-inv.out bin/t-div_eucl.out
 SRC := $(shell find n2adic -type f -name '*.c')
 OBJ := $(patsubst n2adic/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
@@ -42,4 +42,10 @@ bin/t-init.out: obj/t-init.o $(OBJ) | $(BIN_DIR)
 	$(LINK) -o $@ $^ $(LINK_ARGS)
 
 bin/t-reduce.out: obj/t-reduce.o $(OBJ) | $(BIN_DIR)
+	$(LINK) -o $@ $^ $(LINK_ARGS)
+
+bin/t-inv.out: obj/t-inv.o $(OBJ) | $(BIN_DIR)
+	$(LINK) -o $@ $^ $(LINK_ARGS)
+
+bin/t-div_eucl.out: obj/t-div_eucl.o $(OBJ) | $(BIN_DIR)
 	$(LINK) -o $@ $^ $(LINK_ARGS)

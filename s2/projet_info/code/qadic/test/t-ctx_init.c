@@ -14,24 +14,24 @@ int main()
     
     // fmpz_poly_t m;
     padic_poly_t M;
-    int n = 8; // Degré de l'extension
-    int N = 10; // Précision du contexte
+    int deg = 8; // Degré de l'extension
+    int prec = 10; // Précision du contexte
     
     // fmpz_poly_init(m);
-    padic_poly_init2(M, n + 1, N);
+    padic_poly_init2(M, deg + 1, prec);
 
     fmpz_poly_set_coeff_si(b, 1, -1);
-    fmpz_poly_set_coeff_si(b, n_pow(2, n), 1);
+    fmpz_poly_set_coeff_si(b, n_pow(2, deg), 1);
 
-    n2adic_ctx_init(n2adic_ctx, p, n, N, 0, N, PADIC_TERSE);
+    n2adic_ctx_init(n2adic_ctx, deg, prec, 0, prec, PADIC_TERSE);
 
     n2adic_ctx_rep(M, n2adic_ctx);
-    padic_poly_print(M, (*n2adic_ctx).C);
+    padic_poly_print(M, (*n2adic_ctx).ctx);
     printf("\n");
 
     n2adic_t x;
     n2adic_init(x, n2adic_ctx);
-    padic_poly_set_fmpz_poly(x, b, (*n2adic_ctx).C);
+    padic_poly_set_fmpz_poly(x, b, (*n2adic_ctx).ctx);
 
     n2adic_reduce(x, n2adic_ctx);
     n2adic_print(x, n2adic_ctx);
