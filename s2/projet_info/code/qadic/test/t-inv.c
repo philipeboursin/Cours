@@ -7,8 +7,10 @@ int main()
     padic_poly_t M;
     fmpz_poly_t a;
     padic_poly_t A;
-
     flint_rand_t state;
+    n2adic_t x;
+    n2adic_t inv_x;
+
     flint_randinit(state);
 
     int deg = 8; // Degré de l'extension
@@ -38,8 +40,6 @@ int main()
 
     _n2adic_ctx_init_poly(n2adic_ctx, m, prec, 0, prec, PADIC_TERSE);
 
-    n2adic_t x;
-    n2adic_t inv_x;
     n2adic_init(x, n2adic_ctx);
     n2adic_init(inv_x, n2adic_ctx); 
     n2adic_set_padic_poly(x, A, n2adic_ctx);
@@ -58,7 +58,7 @@ int main()
     n2adic_print(x, n2adic_ctx);
     printf("\n");
 
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 1000; i++)
     {
         n2adic_randtest(x, state, n2adic_ctx);
         long val = padic_poly_val(x);
@@ -74,7 +74,11 @@ int main()
     }
 
     n2adic_clear(x);
-    n2adic_ctx_clear(n2adic_ctx);
+    n2adic_clear(inv_x);
+    flint_randclear(state);
+    padic_poly_clear(A);
+    fmpz_poly_clear(a);
     fmpz_poly_clear(m);
     padic_poly_clear(M);
+    n2adic_ctx_clear(n2adic_ctx);
 }

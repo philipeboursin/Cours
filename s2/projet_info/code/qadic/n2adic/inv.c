@@ -18,13 +18,13 @@ void _n2adic_inv_auxi(padic_poly_t rop, padic_poly_t op, padic_poly_t M, n2adic_
         fmpz_init_set_ui(deux, 2);
         fmpz_mod_ctx_init(mod2_ctx, deux);
         fmpz_poly_init(inter);
-        padic_poly_get_fmpz_poly(inter, M, ctx->ctx);
+        padic_poly_get_fmpz_poly(inter, M, ctx -> ctx);
         fmpz_mod_poly_init(m, mod2_ctx);
         fmpz_mod_poly_set_fmpz_poly(m, inter, mod2_ctx);
 
         fq_ctx_init_modulus(fq_ctx, m, mod2_ctx, "x");
 
-        padic_poly_get_fmpz_poly(inter, op, ctx->ctx);
+        padic_poly_get_fmpz_poly(inter, op, ctx -> ctx);
         fq_init(a, fq_ctx);
         fq_set_fmpz_poly(a, inter, fq_ctx);
         
@@ -34,9 +34,16 @@ void _n2adic_inv_auxi(padic_poly_t rop, padic_poly_t op, padic_poly_t M, n2adic_
 
 
         fq_get_fmpz_poly(inter, inv_a, fq_ctx);
-        padic_poly_set_fmpz_poly(rop, inter, ctx->ctx);
+        padic_poly_set_fmpz_poly(rop, inter, ctx -> ctx);
 
-        //------ FAIRE LES CLEARS
+
+        fq_clear(inv_a, fq_ctx);
+        fq_clear(a, fq_ctx);
+        fq_ctx_clear(fq_ctx);
+        fmpz_mod_poly_clear(m, mod2_ctx);
+        fmpz_mod_ctx_clear(mod2_ctx);
+        fmpz_poly_clear(inter);
+        fmpz_clear(deux);
     }
     else
     {
@@ -59,12 +66,12 @@ void _n2adic_inv_auxi(padic_poly_t rop, padic_poly_t op, padic_poly_t M, n2adic_
         padic_poly_init2(un, 0, N);
         padic_poly_one(un);
 
-        padic_poly_set(op_mod_pNr, op, ctx->ctx);
-        padic_poly_set(M_mod_pNr, M, ctx->ctx);
+        padic_poly_set(op_mod_pNr, op, ctx -> ctx);
+        padic_poly_set(M_mod_pNr, M, ctx -> ctx);
 
         _n2adic_inv_auxi(rop_mod_pNr, op, M_mod_pNr, ctx);
-        padic_poly_set(cache1, rop_mod_pNr, ctx->ctx);
-        padic_poly_set(cache2, op, ctx->ctx);
+        padic_poly_set(cache1, rop_mod_pNr, ctx -> ctx);
+        padic_poly_set(cache2, op, ctx -> ctx);
         
         // printf("cache1 = ");
         // n2adic_print(cache1, ctx);
@@ -74,20 +81,26 @@ void _n2adic_inv_auxi(padic_poly_t rop, padic_poly_t op, padic_poly_t M, n2adic_
         // n2adic_print(cache2, ctx);
         // printf("\n");
         
-        padic_poly_mul(cache2, cache1, cache2, ctx->ctx); // rop*op dans cache2
-        _padic_poly_div_eucl(cache2, M, cache2, cache3, ctx->ctx);
-        padic_poly_sub(cache2, un, cache2, ctx->ctx); // 1 - rop*op dans cache2
-        padic_poly_mul(cache2, cache1, cache2, ctx->ctx); // rop*(1 - rop*op) dans cache2
-        padic_poly_add(cache2, cache1, cache2, ctx->ctx); // rop - rop*(1 - rop*op) dans cache2
-        _padic_poly_div_eucl(cache2, M, cache2, cache3, ctx->ctx);
-        padic_poly_set(rop, cache2, ctx->ctx); //
+        padic_poly_mul(cache2, cache1, cache2, ctx -> ctx); // rop*op dans cache2
+        _padic_poly_div_eucl(cache2, M, cache2, cache3, ctx -> ctx);
+        padic_poly_sub(cache2, un, cache2, ctx -> ctx); // 1 - rop*op dans cache2
+        padic_poly_mul(cache2, cache1, cache2, ctx -> ctx); // rop*(1 - rop*op) dans cache2
+        padic_poly_add(cache2, cache1, cache2, ctx -> ctx); // rop - rop*(1 - rop*op) dans cache2
+        _padic_poly_div_eucl(cache2, M, cache2, cache3, ctx -> ctx);
+        padic_poly_set(rop, cache2, ctx -> ctx); //
         
 
-        //------ FAIRE LES CLEARS
+        padic_poly_clear(rop_mod_pNr);
+        padic_poly_clear(M_mod_pNr);
+        padic_poly_clear(op_mod_pNr);
+        padic_poly_clear(cache1);
+        padic_poly_clear(cache2);
+        padic_poly_clear(cache3);
+        padic_poly_clear(un);
     }
 
         // printf("rop = ");
-        // padic_poly_print(rop, ctx->ctx);
+        // padic_poly_print(rop, ctx -> ctx);
         // printf("\n");
 }
 
@@ -100,4 +113,5 @@ void n2adic_inv(n2adic_t rop, n2adic_t op, n2adic_ctx_t n2adic_ctx)
     _n2adic_inv_auxi(auxi, op, n2adic_ctx -> M, n2adic_ctx);
 
     n2adic_set(rop, auxi, n2adic_ctx);
+    n2adic_clear(auxi);
 }

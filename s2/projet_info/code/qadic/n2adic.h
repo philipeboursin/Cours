@@ -12,11 +12,13 @@
 
 //-------------------- Introduction
 /* Ce module permet de faire des calculs sur \mathbb{Q}_{2^d}, en représentant l'extension comme un quotient de \mathbb{Q}_2[X] par le module de Teichmüller M de m \in \mathbb{F}_2[X] un polynôme irréductible.
-Cela facilite notammenet les calculs de substitution de Frobenius. */
+Cela facilite notamment les calculs de substitution de Frobenius. */
 
 
 //-------------------- Structure de données
 typedef padic_poly_t n2adic_t;
+
+int n2adic_prec(n2adic_t x);
 
 
 //-------------------- Contexte
@@ -40,6 +42,8 @@ void n2adic_ctx_rep(padic_poly_t P, n2adic_ctx_t C);
 //-------------------- Gestion de la mémoire
 void n2adic_init(n2adic_t x, n2adic_ctx_t n2adic_ctx);
 
+void n2adic_init2(n2adic_t x, int prec, n2adic_ctx_t n2adic_ctx);
+
 void n2adic_clear(n2adic_t x);
 
 void n2adic_ctx_clear(n2adic_ctx_t C);
@@ -49,6 +53,10 @@ void n2adic_ctx_clear(n2adic_ctx_t C);
 void n2adic_set(n2adic_t rop, n2adic_t op, n2adic_ctx_t n2adic_ctx);
 
 void n2adic_set_padic_poly(n2adic_t rop, padic_poly_t op, n2adic_ctx_t n2adic_ctx);
+
+void n2adic_set_fmpz_poly(n2adic_t rop, fmpz_poly_t op, n2adic_ctx_t n2adic_ctx);
+
+void n2adic_get_fmpz_poly(fmpz_poly_t rop, n2adic_t op, n2adic_ctx_t n2adic_ctx);
 
 void n2adic_one(n2adic_t rop);
 
@@ -68,9 +76,13 @@ void n2adic_sub(n2adic_t rop, n2adic_t op1, n2adic_t op2, n2adic_ctx_t ctx);
 
 void n2adic_mul(n2adic_t rop, n2adic_t op1, n2adic_t op2, n2adic_ctx_t ctx);
 
-// void _padic_poly_euclide_etendu(padic_poly_t U, padic_poly_t V, padic_poly_t A, padic_poly_t B, padic_ctx_t ctx);
-
 void n2adic_inv(n2adic_t rop, n2adic_t op, n2adic_ctx_t n2adic_ctx);
+
+
+//-------------------- Fonctions spéciales
+void n2adic_frobenius_substitution(n2adic_t rop, n2adic_t op, n2adic_ctx_t ctx);
+
+// void n2adic_inv_frobenius_substitution(n2adic_t rop, n2adic_t op, n2adic_ctx_t ctx);
 
 
 //-------------------- Misc

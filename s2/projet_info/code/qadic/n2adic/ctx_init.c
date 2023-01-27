@@ -1,6 +1,6 @@
 #include "n2adic.h"
 
-
+/* Initialise un contexte n2adique représentant une extension de degré deg de \mathbb{Q}_2. La précision donnée en argument est la précision maximale à laquelle les calculs pourront être réalisés. */
 void _comp_moins_x(padic_poly_t P, padic_poly_t Q, padic_ctx_t C)
 {
     int N = padic_poly_prec(Q);
@@ -267,13 +267,13 @@ void _n2adic_ctx_init_poly(n2adic_ctx_t n2adic_ctx, fmpz_poly_t m, int prec, slo
     fmpz_init_set_ui(deux, 2);
 
 
-    (*n2adic_ctx).prec = prec;
-    (*n2adic_ctx).deg = fmpz_poly_degree(m);
-    padic_ctx_init((*n2adic_ctx).ctx, deux, min, max, mode);
+    n2adic_ctx -> prec = prec;
+    n2adic_ctx -> deg = fmpz_poly_degree(m);
+    padic_ctx_init(n2adic_ctx -> ctx, deux, min, max, mode);
 
-    padic_poly_set_fmpz_poly(lift, m, (*n2adic_ctx).ctx);
-    padic_poly_init2((*n2adic_ctx).M, padic_poly_degree(lift), prec);
-    _teichmuller_modulus((*n2adic_ctx).M, lift, prec, (*n2adic_ctx).ctx);
+    padic_poly_set_fmpz_poly(lift, m, n2adic_ctx -> ctx);
+    padic_poly_init2(n2adic_ctx -> M, padic_poly_degree(lift), prec);
+    _teichmuller_modulus(n2adic_ctx -> M, lift, prec, n2adic_ctx -> ctx);
     
     padic_poly_clear(lift);
     fmpz_clear(deux);

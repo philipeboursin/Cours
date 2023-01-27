@@ -1,11 +1,13 @@
 #include "n2adic.h"
 
-void frobenius_substitution(n2adic_t rop, n2adic_t op, n2adic_ctx_t ctx) // res prens la valeur \Sigma(x)
+
+/* Calcule la substitution de Frobenius de op, \Sigma(op), et le renvoie dans rop. Supporte l'aliasing */
+void n2adic_frobenius_substitution(n2adic_t rop, n2adic_t op, n2adic_ctx_t ctx)
 {
     n2adic_t cache;
-    n2adic_init(cache, ctx);
+    n2adic_init2(cache, n2adic_prec(op), ctx);
 
-    padic_poly_compose_pow(cache, op, 2, ctx->ctx);
+    padic_poly_compose_pow(cache, op, 2, ctx -> ctx);
     // CompoXk(res,x,(*((*qC).C)).p, (*qC).C);
     n2adic_reduce(cache, ctx);
     n2adic_set(rop, cache, ctx);

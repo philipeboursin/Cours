@@ -59,6 +59,8 @@ void _coeff_symetry(padic_poly_t P, padic_poly_t Q, padic_ctx_t C) // Procédure
     }
 
     padic_poly_set(P, R, C);
+
+    padic_poly_clear(R);
     padic_clear(padic_cache);
 }
 
@@ -122,15 +124,24 @@ void _padic_poly_div_eucl(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_
     _padic_poly_div_eucl_auxi(A, B_monic, R, Q, ctx);
 
     padic_poly_scalar_mul_padic(Q, Q, c, ctx);
+
+    padic_clear(c);
+    padic_clear(d);
+    padic_poly_clear(B_monic);
 }
 
 void n2adic_reduce(n2adic_t x, n2adic_ctx_t n2adic_ctx)
 {
+    int prec = padic_poly_prec(x);
     n2adic_t y;
+    padic_poly_t Mprec;
 
-    n2adic_init(y, n2adic_ctx);
-    _padic_poly_div_eucl(x, (*n2adic_ctx).M, x, y, (*n2adic_ctx).ctx);
-    padic_poly_reduce(x, (*n2adic_ctx).ctx);
+    n2adic_init2(y, prec, n2adic_ctx);
+    padic_poly_init2(Mprec, (n2adic_ctx -> deg) + 1, prec);
+    padic_poly_set(Mprec, n2adic_ctx -> M, n2adic_ctx -> ctx);
+
+    _padic_poly_div_eucl(x, Mprec, x, y, n2adic_ctx -> ctx);
+    padic_poly_reduce(x, n2adic_ctx -> ctx);
 
     n2adic_clear(y);
 }

@@ -6,7 +6,7 @@ INCLUDE := -I.
 LINK := gcc
 LINK_ARGS := -lflint -lgmp
 
-TARGETS := bin/t-ctx_init.out bin/t-init.out bin/t-reduce.out bin/t-inv.out bin/t-div_eucl.out
+TARGETS := bin/t-ctx_init.out bin/t-init.out bin/t-reduce.out bin/t-inv.out bin/t-div_eucl.out bin/t-frobenius_substitution.out
 SRC := $(shell find n2adic -type f -name '*.c')
 OBJ := $(patsubst n2adic/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
@@ -29,12 +29,14 @@ $(BIN_DIR):
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
+# Création des objets pour les fonctions du module n2adic et des tests
 obj/%.o: n2adic/%.c n2adic.h | $(OBJ_DIR)
 	$(CC) $(CC_ARGS) $(INCLUDE) -o $@ -c $<
 
 obj/%.o: test/%.c n2adic.h | $(OBJ_DIR)
 	$(CC) $(CC_ARGS) $(INCLUDE) -o $@ -c $<
 
+# Création des binaires pour les tests
 bin/t-ctx_init.out: obj/t-ctx_init.o $(OBJ) | $(BIN_DIR)
 	$(LINK) -o $@ $^ $(LINK_ARGS)
 
@@ -48,4 +50,7 @@ bin/t-inv.out: obj/t-inv.o $(OBJ) | $(BIN_DIR)
 	$(LINK) -o $@ $^ $(LINK_ARGS)
 
 bin/t-div_eucl.out: obj/t-div_eucl.o $(OBJ) | $(BIN_DIR)
+	$(LINK) -o $@ $^ $(LINK_ARGS)
+
+bin/t-frobenius_substitution.out: obj/t-frobenius_substitution.o $(OBJ) | $(BIN_DIR)
 	$(LINK) -o $@ $^ $(LINK_ARGS)
