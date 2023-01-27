@@ -37,7 +37,7 @@
         \subsection{Problématique}
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=.5\textwidth]{03}
+                \includegraphics[width=.5\textwidth]{pictures/03}
             \end{figure}
             \subsubsection{Algorithme de signature naif}
                 On signe avec $f^{-1}(M) = M^d[n]$. Déjà, on doit supposer que $0 \leq M < n$ car sinon on aurait plusieurs messages avec la même signature.
@@ -45,7 +45,7 @@
                     \item Si $M$ est grand, on pourrait écrire $M = \sum M_kn^k$ avec $M_k \in [0, n-1]$, puis on signe par blocs, pas terrible ... 
                     \begin{figure}[H]
                         \centering
-                        \includegraphics[width=.5\textwidth]{04}
+                        \includegraphics[width=.5\textwidth]{pictures/04}
                     \end{figure}
                     \item Problème 2 : Si Alice envoie deux messages signés $(M,S)$ et $(M',S')$, alors charlie peut signer $MM'$ en calculant $SS'$.
                     \item Problème 3 : Si Alice envoie un message $M,S$, alors charlie peut envoyer $M^2, S^2$, $\lambda^eM, \lambda S$.
@@ -55,7 +55,7 @@
             \subsubsection{Paradigme "hash and sign"}
                 \begin{figure}[H]
                     \centering
-                    \includegraphics[width=.5\textwidth]{05 }
+                    \includegraphics[width=.5\textwidth]{pictures/05 }
                 \end{figure}
 
         \subsection{Fonctions de hachage}
@@ -115,7 +115,7 @@
             
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=.7\textwidth]{06}
+                \includegraphics[width=.7\textwidth]{pictures/06}
             \end{figure} \noindent
 
             \begin{theo}
@@ -143,7 +143,7 @@
                 
                 \begin{figure}[H]
                     \centering
-                    \includegraphics[width=.7\textwidth]{07}
+                    \includegraphics[width=.7\textwidth]{pictures/07}
                 \end{figure} \noindent
                 
                 Mais comme $M$ et $M'$ collisionnent, alors le haché de ces deux fichiers est le même et on a bien obtenu ce que l'on voulait.
@@ -272,7 +272,7 @@
         \subsection{Attaque de Hastad}
             \begin{figure}[H]
                 \centering
-                \includegraphics[width=.7\textwidth]{08}
+                \includegraphics[width=.7\textwidth]{pictures/08}
             \end{figure} \noindent
 
             Piste de réparation : l'utilisateur numéro $i$ publie $N_i$, $e_i$ (son modulo et son exposant publique), et $f_i \in \znz{N_i}[x]$, et il envoie $(f(M_i))^{e_i} [N_i]$. 
@@ -466,10 +466,70 @@
             \end{align*}
 
         \subsection{Attaques par injection de fautes}
-            \cor{Figure 1}
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=.5\textwidth]{pictures/09}
+            \end{figure} \noindent
             \begin{itemize}
                 \item Lasers
                 \item Champ électromagnétique, courants de foucault
                 \item Pic d'alimentation électrique
             \end{itemize}
-            1996 : Boneh, Lipton, de Millo
+            1996 : Boneh, Lipton, de Millo... (voir notes) 
+
+            \subsubsection{Contre-mesures :}
+                \begin{enumerate}
+                    \item Vérifier le résultat avant de le renvoyer : on vérifie que $y^e = x [n]$.
+                    \item Faire plusieurs fois le calcul (avec potentiellement des implémentations différentes).
+                    \item Empêcher physiquement les attaques par fautes.
+                    \item Code correcteur d'erreur.
+                    \item \begin{figure}[H]
+                        \centering
+                        \includegraphics[width=.5\textwidth]{pictures/10}
+                    \end{figure} \noindent
+                \end{enumerate}
+
+            \begin{remq}
+                Attaques "safe errors" :
+                \begin{algorithm}
+                    \caption{$y = x^d [n]$}
+                    \begin{algorithmic}
+                        \Function{Square and multiply}{$x, d, n$}
+                            \State $y \gets 1$
+                            \For{$i$ de $k - 1$ à $0$}
+                                \State $y_0 \gets y^2[n]$
+                                \State $y_1 \gets y_0x [n]$
+                                \State $y \gets y_{d_i}$
+                            \EndFor
+                        \State \Return $y$
+                        \EndFunction
+                    \end{algorithmic}
+                \end{algorithm}
+            \end{remq}
+
+        \subsection{Bug attack (Shamir)}
+            \begin{description}
+                \item[Hypothèse :] la multiplication $\mathrm{MULT}$ est bug. $\exists a_0, b_0$ tels que $\mathrm{MULT}(a_0, b_0) \neq a_0 b_0$, et si $(a, b) \neq (a_0, b_0)$, alors $\mathrm{MULT}(a, b) = ab$ (disons $a, b$ de $32$ bits).
+                \item[Attaque : ] 
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=.5\textwidth]{pictures/11}
+                \end{figure} \noindent Supposons que $p < x < q \Rightarrow x_q = x$, $x_p \neq x$ (remarque : l'attaquant ne connaît pas $p$ et $q$, mais il suffit de prendre $x \simeq \sqrt{n}$). A la premièr étape de l'algo square and multiply, $x_q$ est forcément squared. Ainsi si on choisit $x_q = x$ comme
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=.5\textwidth]{pictures/12}
+                \end{figure} \noindent
+                on a introduit une erreur dans le calcul de $y_q$. Et comme $x > p$, alors $x_p \neq x$, et le modulo $p$ réalisé pour passer de $x$ à $x_p$ change les derniers blocs de $x$, et donc il n'y aura pas de faute pour calculer $y_p$. Ainsi $y$ est faux, notons $y^*$ le résultat, alors il suffit de calculer $\gcd ((y^*)^e - x, n)$ pour trouver $p$. 
+            \end{description}
+
+        \subsection{Kleptographie (Moti Yung)}
+            \begin{expl}
+                Générateur "truqué" de clés RSA. On génère $n$ de la forme $n = n_1 \| n_2$, $n_i$ de 1024 bits ;
+                \begin{enumerate}
+                    \item On génère $n_1$ aléaoire de 1024 bits
+                    \item On déduis $p$ de $n_1$ : "$p = \mathrm{AES}_k(n_1)$" (on chiffre $n_1$, et si le résultat n'est pas premier, on l'incrémente jusqu'à ce qu'il soit premier)
+                    \item On fait la division euclidienne de $n_1 \| [1 \cdots 1]$ (ce nombre fait 2048 bits) par $p$, de quotient $q$ et de reste $r$ (et pareil si $q$ n'est pas premier on l'incrémente jusqu'à ce qu'il soit premier). Ainsi $n_1 \| [1 \cdots 1] = pq + r$. On prend donc $n_2 = [1 \cdots 1] - r$
+                \end{enumerate}
+                Si on sait qu'un clé à été générée par un tel algo, alors on peut retrouver $p$ (et $q$) facilement en réalisant l'étape $2$. Ainsi un attaquant pourrait vendre cet algo comme un algo générant des clés RSA, et retrouver les clés privées associées aux clés publiques générées par les utilisateurs de l'algo.
+            \end{expl}
+            
