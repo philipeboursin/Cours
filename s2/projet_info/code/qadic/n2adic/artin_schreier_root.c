@@ -8,10 +8,9 @@ void n2adic_artin_schreier_root_auxi(n2adic_t x, n2adic_t alpha, n2adic_t beta, 
     {
         fmpz_t deux;
         fmpz_poly_t inter;
+        fmpz_mod_ctx_t mod2_ctx;
         fmpz_mod_poly_t m;
         fq_ctx_t fq_ctx;
-        fmpz_mod_ctx_t mod2_ctx;
-        
         fq_t alpha1;
         fq_t gamma1;
 
@@ -40,7 +39,13 @@ void n2adic_artin_schreier_root_auxi(n2adic_t x, n2adic_t alpha, n2adic_t beta, 
         fq_get_fmpz_poly(inter, alpha1, fq_ctx);
         n2adic_set_fmpz_poly(x, inter, ctx);
 
-        // FAIRE LES CLEARS
+        fq_clear(alpha1, fq_ctx);
+        fq_clear(gamma1, fq_ctx);
+        fq_ctx_clear(fq_ctx);
+        fmpz_mod_poly_clear(m, mod2_ctx);
+        fmpz_mod_ctx_clear(mod2_ctx);
+        fmpz_poly_clear(inter);
+        fmpz_clear(deux);
     }
     else
     {
@@ -81,7 +86,14 @@ void n2adic_artin_schreier_root_auxi(n2adic_t x, n2adic_t alpha, n2adic_t beta, 
         n2adic_set(cache2, xr, ctx);
         n2adic_add(x, cache1, cache2, ctx);
 
-        // FAIRE LES CLEARS
+        n2adic_clear(xr);
+        n2adic_clear(gammar);
+        n2adic_clear(Deltar);
+        n2adic_clear(cache1);
+        n2adic_clear(cache2);
+        padic_clear(deux);
+        padic_clear(deux_pow_Nr);
+        padic_clear(deux_pow_mNr);
     }
 }
 

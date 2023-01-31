@@ -49,4 +49,13 @@ int main()
     }
     printf("Test de l'algorithme de résolution de l'équation d'Artin Schreier : on la résout 10000 fois avec des paramètres aléatoires, et on vérifie que l'algorithme renvoie le bon résultat en vérifiant qu'il satisfait l'équation. Affiche 1 si le test est validé, 0 sinon. \n");
     printf("%d\n", b);
+
+    n2adic_ctx_clear(ctx);
+    n2adic_clear(x);
+    n2adic_clear(alpha);
+    n2adic_clear(beta);
+    n2adic_clear(gamma);
+    n2adic_clear(cache1);
+    n2adic_clear(cache2);
+    flint_randclear(state);
 }

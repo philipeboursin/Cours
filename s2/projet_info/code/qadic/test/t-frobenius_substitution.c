@@ -25,4 +25,9 @@ int main()
 
     n2adic_print(y, ctx);    
     printf("\n");
+
+    n2adic_clear(x);
+    n2adic_clear(y);
+    n2adic_ctx_clear(ctx);
+    flint_randclear(state);
 }

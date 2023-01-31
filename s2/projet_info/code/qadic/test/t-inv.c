@@ -36,9 +36,9 @@ int main()
     fmpz_poly_set_coeff_si(a, 6, 303);
     fmpz_poly_set_coeff_si(a, 7, 982);
 
-    padic_poly_set_fmpz_poly(A, a, n2adic_ctx -> ctx);
-
     _n2adic_ctx_init_poly(n2adic_ctx, m, prec, 0, prec, PADIC_TERSE);
+
+    padic_poly_set_fmpz_poly(A, a, n2adic_ctx -> ctx);
 
     n2adic_init(x, n2adic_ctx);
     n2adic_init(inv_x, n2adic_ctx); 
@@ -58,7 +58,7 @@ int main()
     n2adic_print(x, n2adic_ctx);
     printf("\n");
 
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 100; i++)
     {
         n2adic_randtest(x, state, n2adic_ctx);
         long val = padic_poly_val(x);

@@ -143,5 +143,6 @@ void n2adic_reduce(n2adic_t x, n2adic_ctx_t n2adic_ctx)
     _padic_poly_div_eucl(x, Mprec, x, y, n2adic_ctx -> ctx);
     padic_poly_reduce(x, n2adic_ctx -> ctx);
 
+    padic_poly_clear(Mprec);
     n2adic_clear(y);
 }

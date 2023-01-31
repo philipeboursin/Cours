@@ -56,4 +56,13 @@ int main()
         printf("A = BQ + R ? %d\n", padic_poly_equal(A, cache));
         // printf("deg R < deg B ? %d\n", padic_poly_degree(R= <))
     }
+
+    fmpz_clear(deux);
+    padic_ctx_clear(ctx);
+    padic_poly_clear(A);
+    padic_poly_clear(B);
+    padic_poly_clear(Q);
+    padic_poly_clear(R);
+    padic_poly_clear(cache);
+    flint_randclear(state);
 }

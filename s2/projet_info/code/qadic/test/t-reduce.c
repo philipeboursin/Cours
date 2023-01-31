@@ -14,6 +14,7 @@ int main()
     
     fmpz_poly_init(m);
     fmpz_poly_init(a);
+    fmpz_poly_init(b);
     padic_poly_init2(M, deg + 1, prec);
 
     fmpz_poly_set_coeff_si(m, 0, 1);
@@ -46,7 +47,6 @@ int main()
 
     n2adic_t x;
     n2adic_t y;
-    padic_t un;
 
 
     n2adic_init(x, n2adic_ctx);
@@ -67,7 +67,6 @@ int main()
 
     fmpz_poly_clear(a);
     fmpz_poly_clear(b);
-    padic_clear(un);
     n2adic_clear(x);
     n2adic_clear(y);
     n2adic_ctx_clear(n2adic_ctx);
