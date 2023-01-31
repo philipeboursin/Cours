@@ -24,18 +24,20 @@ slong n2adic_val(n2adic_t x);
 
 
 //-------------------- Contexte
-enum rep_type {TEICHMULLER, SPARSE, NORMAL_BASIS};
+enum rep_type {TEICHMULLER, SPARSE, NORMAL_BASIS}; // Pour savoir dans le contexte quel type de polynôme représente l'extension.
 
 typedef struct _n2adic_ctx_t
 {
-    slong prec; // Précision des calculs dans l'extension
+    slong prec; // Précision macimale des calculs dans l'extension
     slong deg; // Degré de l'extension
-    enum rep_type type;
+    enum rep_type type; // Type de représentant 
     fmpz_t p; // Nombre premier tel que p = q^deg
     n2adic_t* C;// Pointeur vers un tableau contenant les éléments C_j \in Z_q
     padic_ctx_t ctx; // Contexte p-adique associé au sous-corps de l'extension
     padic_poly_t M; // Polynôme représentant de l'extension
 } n2adic_ctx_t[1];
+
+void n2adic_ctx_init_padic_poly(n2adic_ctx_t n2adic_ctx, padic_poly_t M, padic_ctx_t padic_ctx, enum rep_type type, slong prec);
 
 void _n2adic_ctx_init_teichmuller(n2adic_ctx_t n2adic_ctx, fmpz_poly_t m, slong prec, slong min, slong max, enum padic_print_mode mode);
 
@@ -76,6 +78,8 @@ void n2adic_randtest(n2adic_t x, flint_rand_t state, n2adic_ctx_t ctx);
 
 //-------------------- Comparaison
 int n2adic_equal(n2adic_t x, n2adic_t y);
+
+int n2adic_is_one(n2adic_t x);
 
 
 //-------------------- Opérations arithmétiques

@@ -2,6 +2,7 @@
 
 int main()
 {
+    printf("-------------------- TEST DE inv.c --------------------\n");
     n2adic_ctx_t n2adic_ctx;    
     fmpz_poly_t m;
     padic_poly_t M;
@@ -47,17 +48,15 @@ int main()
 
     n2adic_inv(inv_x, x, n2adic_ctx);
 
-    printf("x = ");
+    printf("Test du handbook, page 247 :\n");
+    printf("a = ");
     n2adic_print(x, n2adic_ctx);
     printf("\n");
-    printf("x^{-1} = ");
+    printf("a^{-1} = ");
     n2adic_print(inv_x, n2adic_ctx);
     printf("\n");
-    n2adic_mul(x, x, inv_x, n2adic_ctx);
-    printf("xx^{-1} = ");
-    n2adic_print(x, n2adic_ctx);
-    printf("\n");
 
+    int b = 1;
     for (int i = 0; i < 100; i++)
     {
         n2adic_randtest(x, state, n2adic_ctx);
@@ -67,11 +66,11 @@ int main()
         {
             n2adic_inv(inv_x, x, n2adic_ctx);
             n2adic_mul(x, x, inv_x, n2adic_ctx);
-            printf("xx^{-1} = ");
-            n2adic_print(x, n2adic_ctx);
-            printf("\n");
+            if (n2adic_is_one(x) != 1) b = 0;
         }
     }
+    printf("Test de la procédure d'inversion dans Zq : on inverse des éléments aléatoires de Zq (inversibles) et on vérifie que le produit d'eux-même avec leur inverse vaut 1. Si le test est passé, affiche 1, sinon 0.\n");
+    printf("%d\n", b);
 
     n2adic_clear(x);
     n2adic_clear(inv_x);

@@ -270,7 +270,6 @@ void _cj_precomputation(n2adic_t** pC, n2adic_ctx_t ctx)
     padic_init2(un, ctx-> prec);
     padic_one(un);
 
-
     *pC = (n2adic_t*) malloc(p*sizeof(n2adic_t)); // Tableau d'adresses pour les C_j
     for (int j = 0; j < p; j++)
     {
