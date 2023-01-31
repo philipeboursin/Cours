@@ -1,73 +1,98 @@
 #include "n2adic.h"
 
-// void artin_schreier_root(n2adic_t x, n2adic_t alpha, n2adic_t beta, n2adic_t gamma, n2adic_ctx_t ctx)
-// {
-//     int prec = n2adic_prec(x);
-//     padic_poly_t x_auxi;
-//     padic_poly_t alpha_auxi;
-//     padic_poly_t beta_auxi;
-//     padic_poly_t gamma_auxi;
+void n2adic_artin_schreier_root_auxi(n2adic_t x, n2adic_t alpha, n2adic_t beta, n2adic_t gamma, n2adic_ctx_t ctx)
+{
+    int N = padic_poly_prec(x);
 
-//     padic_poly_init2(x_auxi, padic_poly_degree(x), prec);
-//     padic_poly_init2(alpha_auxi, padic_poly_degree(alpha), prec);
-//     padic_poly_init2(beta_auxi, padic_poly_degree(beta), prec);
-//     padic_poly_init2(gamma_auxi, padic_poly_degree(gamma), prec);
-
-//     padic_poly_set(alpha_auxi, alpha);
-//     padic_poly_set(beta_auxi, beta);
-//     padic_poly_set(gamma_auxi, gamma);
-
-//     _artin_schreier_root_auxi(x_auxi, alpha_auxi, beta_auxi, gamma_auxi, ctx);
-
-//     n2adic_set_padic_poly(x, x_auxi, ctx);
-
-//     // FAIRE LES CLEARS
-// }
-
-// void _artin_schreier_root_auxi(padic_poly_t x, padic_poly_t alpha, padic_poly_t beta, padic_poly_t gamma, padic_poly_t M, n2adic_ctx_t ctx)
-// {
-//     int prec = padic_poly_prec(M);
-//     if (prec == 1)
-//     {
-//         fmpz_t deux;
-//         fmpz_poly_t inter;
-//         fmpz_mod_poly_t m;
-//         fq_ctx_t fq_ctx;
-//         fmpz_mod_ctx_t mod2_ctx;
+    if (N == 1)
+    {
+        fmpz_t deux;
+        fmpz_poly_t inter;
+        fmpz_mod_poly_t m;
+        fq_ctx_t fq_ctx;
+        fmpz_mod_ctx_t mod2_ctx;
         
-//         fq_t alpha1;
-//         fq_t gamma1;
+        fq_t alpha1;
+        fq_t gamma1;
 
-//         fmpz_poly_init(inter);
-//         fmpz_init_set_ui(deux, 2);
-//         fmpz_mod_ctx_init(mod2_ctx, deux);
-//         fmpz_mod_poly_init(m, mod2_ctx);
-//         padic_poly_get_fmpz_poly(inter, M, ctx -> ctx);
-//         fmpz_mod_poly_set_fmpz_poly(m, inter, mod2_ctx);
-//         fq_ctx_init_modulus(fq_ctx, m, mod2_ctx, "x"); // Contexte F_{2^d} initialisé
+        fmpz_poly_init(inter);
+        fmpz_init_set_ui(deux, 2);
+        fmpz_mod_ctx_init(mod2_ctx, deux);
+        fmpz_mod_poly_init(m, mod2_ctx);
+        padic_poly_get_fmpz_poly(inter, ctx -> M, ctx -> ctx);
+        fmpz_mod_poly_set_fmpz_poly(m, inter, mod2_ctx);
+        fq_ctx_init_modulus(fq_ctx, m, mod2_ctx, "x"); // Contexte F_{2^d} initialisé
 
-//         fq_init(alpha1, fq_ctx);
-//         fq_init(gamma1, fq_ctx);
+        fq_init(alpha1, fq_ctx);
+        fq_init(gamma1, fq_ctx);
 
-//         padic_poly_get_fmpz_poly(inter, alpha, ctx -> ctx);
-//         fq_set_fmpz_poly(alpha1, inter, fq_ctx);
+        n2adic_get_fmpz_poly(inter, alpha, ctx);
+        fq_set_fmpz_poly(alpha1, inter, fq_ctx);
 
-//         padic_poly_get_fmpz_poly(inter, gamma, ctx -> ctx);
-//         fq_set_fmpz_poly(gamma1, inter, fq_ctx);
+        n2adic_get_fmpz_poly(inter, gamma, ctx);
+        fq_set_fmpz_poly(gamma1, inter, fq_ctx);
 
-//         fq_neg(gamma1, gamma1, fq_ctx);
-//         fq_inv(alpha1, alpha1, fq_ctx);
-//         fq_mul(alpha1, alpga1, gamma1, fq_ctx);
-//         fq_pth_root(alpha1, alpha1, fq_ctx);
+        fq_neg(gamma1, gamma1, fq_ctx);
+        fq_inv(alpha1, alpha1, fq_ctx);
+        fq_mul(alpha1, alpha1, gamma1, fq_ctx);
+        fq_pth_root(alpha1, alpha1, fq_ctx);
 
-//         fq_get_fmpz_poly(inter, alpha1, fq_ctx);
-//         padic_poly_set_fmpz_poly(x, inter, ctx -> ctx);
+        fq_get_fmpz_poly(inter, alpha1, fq_ctx);
+        n2adic_set_fmpz_poly(x, inter, ctx);
 
-//         // FAIRE LES CLEARS
-//     }
-//     else
-//     {
-//         int Nr = (N >> 1) + (N & 1);
+        // FAIRE LES CLEARS
+    }
+    else
+    {
+        int Nr = (N >> 1) + (N & 1); // Nr contient N' la partie entière supérieure de N
+        n2adic_t xr;
+        n2adic_t gammar;
+        n2adic_t Deltar;
+        n2adic_t cache1;
+        n2adic_t cache2;
+        padic_t deux;
+        padic_t deux_pow_Nr;
+        padic_t deux_pow_mNr;
 
-//     }
-// }
+        n2adic_init2(xr, Nr, ctx);
+        n2adic_init2(gammar, N - Nr, ctx);
+        n2adic_init2(Deltar, N - Nr, ctx);
+        n2adic_init2(cache1, N, ctx);
+        n2adic_init2(cache2, N, ctx);
+        padic_init2(deux, N);
+        padic_init2(deux_pow_mNr, N);
+        padic_init2(deux_pow_Nr, N);
+        padic_set_ui(deux, 2, ctx -> ctx);
+        padic_pow_si(deux_pow_Nr, deux, Nr, ctx -> ctx); // deux_pow_Nr contient 2^{N'}
+        padic_pow_si(deux_pow_mNr, deux, -Nr, ctx -> ctx); // deux_pow_mNr contient 2^{-N'}
+
+        n2adic_artin_schreier_root_auxi(xr, alpha, beta, gamma, ctx);
+        n2adic_set(cache1, xr, ctx); // cache1 contient x', à précision N
+        n2adic_frobenius_substitution(cache2, cache1, ctx);
+        n2adic_mul(cache2, alpha, cache2, ctx); // cache2 contient \alpha \Sigma(x')
+        n2adic_mul(cache1, beta, cache1, ctx); // cache1 contient \beta x'
+        n2adic_add(cache2, cache1, cache2, ctx); // cache2 contient \alpha \Sigma(x') + \beta x'
+        n2adic_add(cache2, cache2, gamma, ctx); // cache2 contient \alpha \Sigma(x') + \beta x' + \gamma
+        padic_poly_scalar_mul_padic(cache2, cache2, deux_pow_mNr, ctx -> ctx); // cache 2 contient gamma'
+        n2adic_set(gammar, cache2, ctx);
+        n2adic_artin_schreier_root_auxi(Deltar, alpha, beta, gammar, ctx);
+        n2adic_set(cache1, Deltar, ctx);
+        padic_poly_scalar_mul_padic(cache1, cache1, deux_pow_Nr, ctx -> ctx); // cache 2 contient gamma'
+        n2adic_set(cache2, xr, ctx);
+        n2adic_add(x, cache1, cache2, ctx);
+
+        // FAIRE LES CLEARS
+    }
+}
+
+void n2adic_artin_schreier_root(n2adic_t x, n2adic_t alpha, n2adic_t beta, n2adic_t gamma, n2adic_ctx_t ctx)
+{
+    int prec = n2adic_prec(x);
+    n2adic_t x_auxi;
+
+    n2adic_init2(x_auxi, prec, ctx);
+    n2adic_artin_schreier_root_auxi(x_auxi, alpha, beta, gamma, ctx);
+    n2adic_set(x, x_auxi, ctx);
+
+    n2adic_clear(x_auxi);
+}

@@ -20,6 +20,8 @@ typedef padic_poly_t n2adic_t;
 
 int n2adic_prec(n2adic_t x);
 
+slong n2adic_val(n2adic_t x);
+
 
 //-------------------- Contexte
 typedef struct _n2adic_ctx_t
@@ -83,6 +85,8 @@ void n2adic_inv(n2adic_t rop, n2adic_t op, n2adic_ctx_t n2adic_ctx);
 void n2adic_frobenius_substitution(n2adic_t rop, n2adic_t op, n2adic_ctx_t ctx);
 
 // void n2adic_inv_frobenius_substitution(n2adic_t rop, n2adic_t op, n2adic_ctx_t ctx);
+
+void n2adic_artin_schreier_root(n2adic_t x, n2adic_t alpha, n2adic_t beta, n2adic_t gamma, n2adic_ctx_t ctx);
 
 
 //-------------------- Misc
