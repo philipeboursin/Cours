@@ -24,13 +24,15 @@ int main()
     n2adic_init(cache1, ctx);
     n2adic_init(cache2, ctx);
 
-    for (int i = 0; i < 100; i++)
+    int b = 1;
+
+    for (int i = 0; i < 10000; i++)
     {
         n2adic_randtest(alpha, state, ctx);
         n2adic_randtest(beta, state, ctx);
         n2adic_randtest(gamma, state, ctx);
 
-        if (n2adic_val(beta) > 0 && n2adic_val(alpha) == 0)
+        if (n2adic_val(beta) > 0 && n2adic_val(alpha) == 0 && n2adic_val(gamma) >= 0)
         {
             n2adic_artin_schreier_root(x, alpha, beta, gamma, ctx);
             n2adic_frobenius_substitution(cache1, x, ctx);
@@ -38,10 +40,13 @@ int main()
             n2adic_mul(cache2, beta, x, ctx);
             n2adic_add(cache1, cache2, cache1, ctx);
             n2adic_add(cache1, gamma, cache1, ctx);
-            
-            printf("aled = ");
-            n2adic_print(cache1, ctx);
-            printf("\n");
+
+            if (padic_poly_is_zero(cache1) == 0)
+            {
+                b = 0;
+            }
         }
     }
+    printf("Test de l'algorithme de résolution de l'équation d'Artin Schreier : on la résout 10000 fois avec des paramètres aléatoires, et on vérifie que l'algorithme renvoie le bon résultat en vérifiant qu'il satisfait l'équation. Affiche 1 si le test est validé, 0 sinon. \n");
+    printf("%d\n", b);
 }

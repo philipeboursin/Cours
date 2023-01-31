@@ -18,7 +18,7 @@ Cela facilite notamment les calculs de substitution de Frobenius. */
 //-------------------- Structure de données
 typedef padic_poly_t n2adic_t;
 
-int n2adic_prec(n2adic_t x);
+slong n2adic_prec(n2adic_t x);
 
 slong n2adic_val(n2adic_t x);
 
