@@ -11,7 +11,7 @@
 #include "flint/fq.h"
 
 //-------------------- Introduction
-/* Ce module permet de faire des calculs sur \mathbb{Q}_{2^d}, en représentant l'extension comme un quotient de \mathbb{Q}_2[X] par le module de Teichmüller M de m \in \mathbb{F}_2[X] un polynôme irréductible.
+/* Ce module permet de faire des calculs sur \mathbb{Z}_{2^d}, en représentant l'extension comme un quotient de \mathbb{Z}_2[X] par le module de Teichmüller M de m \in \mathbb{F}_2[X] un polynôme irréductible.
 Cela facilite notamment les calculs de substitution de Frobenius. */
 
 
@@ -67,6 +67,10 @@ void n2adic_one(n2adic_t rop);
 void n2adic_randtest(n2adic_t x, flint_rand_t state, n2adic_ctx_t ctx);
 
 
+//-------------------- Comparaison
+int n2adic_equal(n2adic_t x, n2adic_t y);
+
+
 //-------------------- Opérations arithmétiques
 void _padic_poly_div_eucl(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_poly_t Q, padic_ctx_t C);
 
@@ -84,7 +88,7 @@ void n2adic_inv(n2adic_t rop, n2adic_t op, n2adic_ctx_t n2adic_ctx);
 //-------------------- Fonctions spéciales
 void n2adic_frobenius_substitution(n2adic_t rop, n2adic_t op, n2adic_ctx_t ctx);
 
-// void n2adic_inv_frobenius_substitution(n2adic_t rop, n2adic_t op, n2adic_ctx_t ctx);
+void n2adic_inv_frobenius_substitution(n2adic_t rop, n2adic_t op, n2adic_ctx_t ctx);
 
 void n2adic_artin_schreier_root(n2adic_t x, n2adic_t alpha, n2adic_t beta, n2adic_t gamma, n2adic_ctx_t ctx);
 

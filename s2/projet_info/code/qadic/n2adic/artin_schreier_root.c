@@ -1,6 +1,6 @@
 #include "n2adic.h"
 
-void n2adic_artin_schreier_root_auxi(n2adic_t x, n2adic_t alpha, n2adic_t beta, n2adic_t gamma, n2adic_ctx_t ctx)
+void _n2adic_artin_schreier_root_auxi(n2adic_t x, n2adic_t alpha, n2adic_t beta, n2adic_t gamma, n2adic_ctx_t ctx)
 {
     int N = padic_poly_prec(x);
 
@@ -71,7 +71,7 @@ void n2adic_artin_schreier_root_auxi(n2adic_t x, n2adic_t alpha, n2adic_t beta, 
         padic_pow_si(deux_pow_Nr, deux, Nr, ctx -> ctx); // deux_pow_Nr contient 2^{N'}
         padic_pow_si(deux_pow_mNr, deux, -Nr, ctx -> ctx); // deux_pow_mNr contient 2^{-N'}
 
-        n2adic_artin_schreier_root_auxi(xr, alpha, beta, gamma, ctx);
+        _n2adic_artin_schreier_root_auxi(xr, alpha, beta, gamma, ctx);
         n2adic_set(cache1, xr, ctx); // cache1 contient x', à précision N
         n2adic_frobenius_substitution(cache2, cache1, ctx);
         n2adic_mul(cache2, alpha, cache2, ctx); // cache2 contient \alpha \Sigma(x')
@@ -80,7 +80,7 @@ void n2adic_artin_schreier_root_auxi(n2adic_t x, n2adic_t alpha, n2adic_t beta, 
         n2adic_add(cache2, cache2, gamma, ctx); // cache2 contient \alpha \Sigma(x') + \beta x' + \gamma
         padic_poly_scalar_mul_padic(cache2, cache2, deux_pow_mNr, ctx -> ctx); // cache 2 contient gamma'
         n2adic_set(gammar, cache2, ctx);
-        n2adic_artin_schreier_root_auxi(Deltar, alpha, beta, gammar, ctx);
+        _n2adic_artin_schreier_root_auxi(Deltar, alpha, beta, gammar, ctx);
         n2adic_set(cache1, Deltar, ctx);
         padic_poly_scalar_mul_padic(cache1, cache1, deux_pow_Nr, ctx -> ctx); // cache 2 contient gamma'
         n2adic_set(cache2, xr, ctx);
@@ -103,7 +103,7 @@ void n2adic_artin_schreier_root(n2adic_t x, n2adic_t alpha, n2adic_t beta, n2adi
     n2adic_t x_auxi;
 
     n2adic_init2(x_auxi, prec, ctx);
-    n2adic_artin_schreier_root_auxi(x_auxi, alpha, beta, gamma, ctx);
+    _n2adic_artin_schreier_root_auxi(x_auxi, alpha, beta, gamma, ctx);
     n2adic_set(x, x_auxi, ctx);
 
     n2adic_clear(x_auxi);

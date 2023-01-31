@@ -26,12 +26,12 @@ int main()
     n2adic_ctx_init(n2adic_ctx, deg, prec, 0, prec, PADIC_TERSE);
 
     n2adic_ctx_rep(M, n2adic_ctx);
-    padic_poly_print(M, (*n2adic_ctx).ctx);
+    padic_poly_print(M, n2adic_ctx -> ctx);
     printf("\n");
 
     n2adic_t x;
     n2adic_init(x, n2adic_ctx);
-    padic_poly_set_fmpz_poly(x, b, (*n2adic_ctx).ctx);
+    n2adic_set_fmpz_poly(x, b, n2adic_ctx);
 
     n2adic_reduce(x, n2adic_ctx);
     n2adic_print(x, n2adic_ctx);

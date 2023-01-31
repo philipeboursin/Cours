@@ -2,7 +2,7 @@
 
 int main()
 {
-    int deg = 5;
+    int deg = 6;
     int prec = 10;
     n2adic_ctx_t ctx;
     n2adic_t x;
