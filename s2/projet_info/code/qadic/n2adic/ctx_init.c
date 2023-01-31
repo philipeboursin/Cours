@@ -3,7 +3,7 @@
 /* Initialise un contexte n2adique représentant une extension de degré deg de \mathbb{Q}_2. La précision donnée en argument est la précision maximale à laquelle les calculs pourront être réalisés. */
 void _comp_moins_x(padic_poly_t P, padic_poly_t Q, padic_ctx_t C)
 {
-    int N = padic_poly_prec(Q);
+    slong N = padic_poly_prec(Q);
 
     padic_t moins_un;
     padic_poly_t moins_X;
@@ -22,8 +22,8 @@ void _comp_moins_x(padic_poly_t P, padic_poly_t Q, padic_ctx_t C)
 
 void _precomp_x2(padic_poly_t P, padic_poly_t Q, padic_ctx_t C)
 {
-    int N = padic_poly_prec(Q);
-    int deg = padic_poly_degree(Q);
+    slong N = padic_poly_prec(Q);
+    slong deg = padic_poly_degree(Q);
 
     padic_t padic_temp;
     padic_poly_t padic_poly_temp;
@@ -31,7 +31,7 @@ void _precomp_x2(padic_poly_t P, padic_poly_t Q, padic_ctx_t C)
     padic_init2(padic_temp, N);
     padic_poly_init2(padic_poly_temp, (deg + 1)/2, N);
 
-    for (int i = 0; i < deg + 1; i = i + 2)
+    for (slong i = 0; i < deg + 1; i = i + 2)
     {
         padic_poly_get_coeff_padic(padic_temp, Q, i, C);
         padic_poly_set_coeff_padic(padic_poly_temp, i/2, padic_temp, C);
@@ -44,9 +44,9 @@ void _precomp_x2(padic_poly_t P, padic_poly_t Q, padic_ctx_t C)
     padic_clear(padic_temp);
 }
 
-void _mul_2n(padic_poly_t P, padic_poly_t Q, int n, padic_ctx_t C)
+void _mul_2n(padic_poly_t P, padic_poly_t Q, slong n, padic_ctx_t C)
 {
-    int N = padic_poly_prec(Q);
+    slong N = padic_poly_prec(Q);
 
     padic_t deux_pow_n;
 
@@ -58,7 +58,7 @@ void _mul_2n(padic_poly_t P, padic_poly_t Q, int n, padic_ctx_t C)
     padic_clear(deux_pow_n);
 }
 
-void _teichmuller_modulus_increment(padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_poly_t V, int N, padic_ctx_t C)
+void _teichmuller_modulus_increment(padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_poly_t V, slong N, padic_ctx_t C)
 {
     if (N == 1)
     {
@@ -71,7 +71,7 @@ void _teichmuller_modulus_increment(padic_poly_t delta, padic_poly_t M0, padic_p
         padic_poly_t P2;
 
         //------ Algo
-        int Nr = (N >> 1) + (N & 1); // partie entiere superieure de N/2
+        slong Nr = (N >> 1) + (N & 1); // partie entiere superieure de N/2
         padic_poly_t deltar;
         padic_poly_init2(deltar, 0, Nr);
         _teichmuller_modulus_increment(deltar, M0, M1, V, Nr, C);
@@ -155,7 +155,7 @@ void _teichmuller_modulus_increment(padic_poly_t delta, padic_poly_t M0, padic_p
     }
 }
 
-void _teichmuller_modulus_auxi(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
+void _teichmuller_modulus_auxi(padic_poly_t M, padic_poly_t m, slong N, padic_ctx_t C)
 {
     if (N == 1)
     {
@@ -168,7 +168,7 @@ void _teichmuller_modulus_auxi(padic_poly_t M, padic_poly_t m, int N, padic_ctx_
         padic_poly_t P2;
 
         //------ Algo
-        int Nr = (N >> 1) + (N & 1); // partie entiere sup de N/2
+        slong Nr = (N >> 1) + (N & 1); // partie entiere sup de N/2
         padic_poly_t Mr;
         padic_poly_init2(Mr, 0, Nr);
         _teichmuller_modulus_auxi(Mr, m, Nr, C);
@@ -252,34 +252,73 @@ void _teichmuller_modulus_auxi(padic_poly_t M, padic_poly_t m, int N, padic_ctx_
     }
 }
 
-void _teichmuller_modulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C)
+void _teichmuller_modulus(padic_poly_t M, padic_poly_t m, slong N, padic_ctx_t C)
 {
     _teichmuller_modulus_auxi(M, m, N, C);
     if ((padic_poly_degree(m) % 2) == 1) padic_poly_neg(M, M, C);
 }
 
-void _n2adic_ctx_init_poly(n2adic_ctx_t n2adic_ctx, fmpz_poly_t m, int prec, slong min, slong max, enum padic_print_mode mode)
+void _cj_precomputation(n2adic_t** pC, n2adic_ctx_t ctx)
+{
+    slong p = fmpz_get_si(ctx -> p);
+    slong deg = ctx -> deg;
+    slong prec = ctx -> prec;
+    padic_t cache;
+    padic_t un;
+
+    padic_init2(cache, ctx-> prec);
+    padic_init2(un, ctx-> prec);
+    padic_one(un);
+
+
+    *pC = (n2adic_t*) malloc(p*sizeof(n2adic_t)); // Tableau d'adresses pour les C_j
+    for (int j = 0; j < p; j++)
+    {
+        n2adic_init2((*pC)[j], prec, ctx);
+        padic_poly_set_coeff_padic((*pC)[j], j*n_pow(p, deg - 1), un, ctx -> ctx);
+        n2adic_reduce((*pC)[j], ctx);
+    }
+
+    padic_clear(cache);
+    padic_clear(un);
+}
+
+void n2adic_ctx_init_padic_poly(n2adic_ctx_t n2adic_ctx, padic_poly_t M, padic_ctx_t padic_ctx, enum rep_type type, slong prec)
+{
+    n2adic_ctx -> prec = prec;
+    n2adic_ctx -> deg = padic_poly_degree(M);
+    n2adic_ctx -> type = type;
+    fmpz_init_set(n2adic_ctx -> p, padic_ctx -> p);
+    padic_ctx_init(n2adic_ctx -> ctx, padic_ctx -> p, padic_ctx -> min, padic_ctx -> max, padic_ctx -> mode);
+    padic_poly_init2(n2adic_ctx -> M, padic_poly_degree(M) + 1, prec);
+    padic_poly_set(n2adic_ctx -> M, M, padic_ctx);
+    _cj_precomputation(&(n2adic_ctx -> C), n2adic_ctx);
+}
+
+void _n2adic_ctx_init_teichmuller(n2adic_ctx_t n2adic_ctx, fmpz_poly_t m, slong prec, slong min, slong max, enum padic_print_mode mode)
 {
     padic_poly_t lift;
     fmpz_t deux;
+    padic_ctx_t padic_ctx;
+    padic_poly_t M;
 
-    padic_poly_init2(lift, fmpz_poly_degree(m), 1);
     fmpz_init_set_ui(deux, 2);
+    padic_ctx_init(padic_ctx, deux, min, max, mode);
 
+    padic_poly_init2(lift, fmpz_poly_degree(m) + 1, 1);
+    padic_poly_set_fmpz_poly(lift, m, padic_ctx);
 
-    n2adic_ctx -> prec = prec;
-    n2adic_ctx -> deg = fmpz_poly_degree(m);
-    padic_ctx_init(n2adic_ctx -> ctx, deux, min, max, mode);
-
-    padic_poly_set_fmpz_poly(lift, m, n2adic_ctx -> ctx);
-    padic_poly_init2(n2adic_ctx -> M, padic_poly_degree(lift), prec);
-    _teichmuller_modulus(n2adic_ctx -> M, lift, prec, n2adic_ctx -> ctx);
+    padic_poly_init2(M, padic_poly_degree(lift), prec);
+    _teichmuller_modulus(M, lift, prec, padic_ctx);
+    n2adic_ctx_init_padic_poly(n2adic_ctx, M, padic_ctx, TEICHMULLER, prec);
     
+    padic_poly_clear(M);
+    padic_ctx_clear(padic_ctx);
     padic_poly_clear(lift);
     fmpz_clear(deux);
 }
 
-void n2adic_ctx_init(n2adic_ctx_t n2adic_ctx, unsigned int deg, int prec, slong min, slong max, enum padic_print_mode mode)
+void n2adic_ctx_init_teichmuller(n2adic_ctx_t n2adic_ctx, slong deg, slong prec, slong min, slong max, enum padic_print_mode mode)
 {
     fmpz_poly_t m;
     fmpz_mod_ctx_t ctx_mod;
@@ -296,7 +335,7 @@ void n2adic_ctx_init(n2adic_ctx_t n2adic_ctx, unsigned int deg, int prec, slong 
     fmpz_mod_poly_randtest_sparse_irreducible(m_modp, state, deg + 1, ctx_mod);
     fmpz_mod_poly_get_fmpz_poly(m, m_modp, ctx_mod);
 
-    _n2adic_ctx_init_poly(n2adic_ctx, m, prec, min, max, mode);
+    _n2adic_ctx_init_teichmuller(n2adic_ctx, m, prec, min, max, mode);
 
     fmpz_poly_clear(m);
     fmpz_mod_poly_clear(m_modp, ctx_mod);

@@ -23,10 +23,15 @@ int main()
     fmpz_poly_set_coeff_si(b, 1, -1);
     fmpz_poly_set_coeff_si(b, n_pow(2, deg), 1);
 
-    n2adic_ctx_init(n2adic_ctx, deg, prec, 0, prec, PADIC_TERSE);
+    n2adic_ctx_init_teichmuller(n2adic_ctx, deg, prec, 0, prec, PADIC_TERSE);
 
     n2adic_ctx_rep(M, n2adic_ctx);
     padic_poly_print(M, n2adic_ctx -> ctx);
+    printf("\n");
+
+    n2adic_print((n2adic_ctx -> C)[0], n2adic_ctx);
+    printf("\n");
+    n2adic_print((n2adic_ctx -> C)[1], n2adic_ctx);
     printf("\n");
 
     n2adic_t x;

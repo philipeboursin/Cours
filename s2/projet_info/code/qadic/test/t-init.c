@@ -18,7 +18,7 @@ int main()
     fmpz_poly_set_coeff_si(m, 4, 1);
     fmpz_poly_set_coeff_si(m, 8, 1);
 
-    _n2adic_ctx_init_poly(n2adic_ctx, m, prec, 0, prec, PADIC_TERSE);
+    _n2adic_ctx_init_teichmuller(n2adic_ctx, m, prec, 0, prec, PADIC_TERSE);
 
     n2adic_t x;
     n2adic_init(x, n2adic_ctx); 

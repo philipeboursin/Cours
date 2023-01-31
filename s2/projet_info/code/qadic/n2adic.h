@@ -24,19 +24,24 @@ slong n2adic_val(n2adic_t x);
 
 
 //-------------------- Contexte
+enum rep_type {TEICHMULLER, SPARSE, NORMAL_BASIS};
+
 typedef struct _n2adic_ctx_t
 {
-    int prec; // Précision des calculs dans l'extension
-    int deg; // Degré de l'extension
+    slong prec; // Précision des calculs dans l'extension
+    slong deg; // Degré de l'extension
+    enum rep_type type;
+    fmpz_t p; // Nombre premier tel que p = q^deg
+    n2adic_t* C;// Pointeur vers un tableau contenant les éléments C_j \in Z_q
     padic_ctx_t ctx; // Contexte p-adique associé au sous-corps de l'extension
     padic_poly_t M; // Polynôme représentant de l'extension
 } n2adic_ctx_t[1];
 
-void _n2adic_ctx_init_poly(n2adic_ctx_t n2adic_ctx, fmpz_poly_t m, int prec, slong min, slong max, enum padic_print_mode mode);
+void _n2adic_ctx_init_teichmuller(n2adic_ctx_t n2adic_ctx, fmpz_poly_t m, slong prec, slong min, slong max, enum padic_print_mode mode);
 
-void n2adic_ctx_init(n2adic_ctx_t n2adic_ctx, unsigned int deg, int prec, slong min, slong max, enum padic_print_mode mode);
+void n2adic_ctx_init_teichmuller(n2adic_ctx_t n2adic_ctx, slong deg, slong prec, slong min, slong max, enum padic_print_mode mode); // p vaut forcément 2 pour quand on initialise avec cette procédure (voué à changer)
 
-void _teichmuller_modulus(padic_poly_t M, padic_poly_t m, int N, padic_ctx_t C);
+void _teichmuller_modulus(padic_poly_t M, padic_poly_t m, slong N, padic_ctx_t C);
 
 void n2adic_ctx_rep(padic_poly_t P, n2adic_ctx_t C);
 
@@ -44,7 +49,7 @@ void n2adic_ctx_rep(padic_poly_t P, n2adic_ctx_t C);
 //-------------------- Gestion de la mémoire
 void n2adic_init(n2adic_t x, n2adic_ctx_t n2adic_ctx);
 
-void n2adic_init2(n2adic_t x, int prec, n2adic_ctx_t n2adic_ctx);
+void n2adic_init2(n2adic_t x, slong prec, n2adic_ctx_t n2adic_ctx);
 
 void n2adic_clear(n2adic_t x);
 
@@ -61,6 +66,8 @@ void n2adic_set_fmpz_poly(n2adic_t rop, fmpz_poly_t op, n2adic_ctx_t n2adic_ctx)
 void n2adic_get_fmpz_poly(fmpz_poly_t rop, n2adic_t op, n2adic_ctx_t n2adic_ctx);
 
 void n2adic_one(n2adic_t rop);
+
+void n2adic_zero(n2adic_t rop);
 
 
 //-------------------- Randomisation

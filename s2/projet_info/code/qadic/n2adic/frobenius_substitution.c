@@ -4,13 +4,24 @@
 /* Calcule la substitution de Frobenius de op, \Sigma(op), et le renvoie dans rop. Supporte l'aliasing */
 void n2adic_frobenius_substitution(n2adic_t rop, n2adic_t op, n2adic_ctx_t ctx)
 {
-    n2adic_t cache;
-    n2adic_init2(cache, n2adic_prec(op), ctx);
+    if ((ctx -> type) == TEICHMULLER)
+    {
+        n2adic_t cache;
+        n2adic_init2(cache, n2adic_prec(op), ctx);
 
-    padic_poly_compose_pow(cache, op, 2, ctx -> ctx);
-    // CompoXk(res,x,(*((*qC).C)).p, (*qC).C);
-    n2adic_reduce(cache, ctx);
-    n2adic_set(rop, cache, ctx);
+        padic_poly_compose_pow(cache, op, 2, ctx -> ctx);
+        // CompoXk(res,x,(*((*qC).C)).p, (*qC).C);
+        n2adic_reduce(cache, ctx);
+        n2adic_set(rop, cache, ctx);
 
-    n2adic_clear(cache);
+        n2adic_clear(cache);
+    }
+    else if ((ctx -> type) == SPARSE)
+    {
+        printf("Erreur : non implémenté.");
+    }
+    else
+    {
+        printf("Erreur : non implémenté.");
+    }
 }

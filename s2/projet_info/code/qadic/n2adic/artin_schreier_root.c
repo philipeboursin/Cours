@@ -2,7 +2,7 @@
 
 void _n2adic_artin_schreier_root_auxi(n2adic_t x, n2adic_t alpha, n2adic_t beta, n2adic_t gamma, n2adic_ctx_t ctx)
 {
-    int N = padic_poly_prec(x);
+    slong N = padic_poly_prec(x);
 
     if (N == 1)
     {
@@ -49,7 +49,7 @@ void _n2adic_artin_schreier_root_auxi(n2adic_t x, n2adic_t alpha, n2adic_t beta,
     }
     else
     {
-        int Nr = (N >> 1) + (N & 1); // Nr contient N' la partie entière supérieure de N
+        slong Nr = (N >> 1) + (N & 1); // Nr contient N' la partie entière supérieure de N
         n2adic_t xr;
         n2adic_t gammar;
         n2adic_t Deltar;
@@ -99,7 +99,7 @@ void _n2adic_artin_schreier_root_auxi(n2adic_t x, n2adic_t alpha, n2adic_t beta,
 
 void n2adic_artin_schreier_root(n2adic_t x, n2adic_t alpha, n2adic_t beta, n2adic_t gamma, n2adic_ctx_t ctx)
 {
-    int prec = n2adic_prec(x);
+    slong prec = n2adic_prec(x);
     n2adic_t x_auxi;
 
     n2adic_init2(x_auxi, prec, ctx);

@@ -12,7 +12,7 @@ int main()
     n2adic_t y;
 
     flint_randinit(state);
-    n2adic_ctx_init(ctx, deg, prec, 0, prec, PADIC_TERSE);
+    n2adic_ctx_init_teichmuller(ctx, deg, prec, 0, prec, PADIC_TERSE);
     n2adic_init2(x, prec, ctx);
     n2adic_init2(y, prec - 1, ctx);
 
