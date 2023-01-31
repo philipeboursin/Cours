@@ -128,7 +128,7 @@ void _padic_poly_div_eucl(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_
     padic_clear(c);
     padic_clear(d);
     padic_poly_clear(B_monic);
-}
+}   
 
 void n2adic_reduce(n2adic_t x, n2adic_ctx_t n2adic_ctx)
 {

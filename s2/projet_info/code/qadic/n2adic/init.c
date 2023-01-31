@@ -1,5 +1,6 @@
 #include "n2adic.h"
 
+// Initialise x à la précision de l'extension
 void n2adic_init(n2adic_t x, n2adic_ctx_t n2adic_ctx)
 {
     padic_poly_init2(x, n2adic_ctx -> deg, n2adic_ctx -> prec);
