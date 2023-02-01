@@ -3,6 +3,7 @@
 
 int main()
 {
+    printf("-------------------- TEST DE n2adic_reduce --------------------\n");
     n2adic_ctx_t n2adic_ctx;
     
     fmpz_poly_t m;

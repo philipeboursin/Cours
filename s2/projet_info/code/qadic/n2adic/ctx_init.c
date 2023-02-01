@@ -248,7 +248,6 @@ void _teichmuller_modulus_auxi(padic_poly_t M, padic_poly_t m, slong N, padic_ct
         padic_poly_clear(M1);
         padic_poly_clear(V);
         padic_poly_clear(delta);
-
     }
 }
 
@@ -263,23 +262,33 @@ void _cj_precomputation(n2adic_t** pC, n2adic_ctx_t ctx)
     slong p = fmpz_get_si(ctx -> p);
     slong deg = ctx -> deg;
     slong prec = ctx -> prec;
-    padic_t cache;
-    padic_t un;
 
-    padic_init2(cache, ctx-> prec);
-    padic_init2(un, ctx-> prec);
-    padic_one(un);
+    fmpz_t e; // p^(d - 1)
+    n2adic_t C_1; // X^(p^(d - 1))
+    n2adic_t C_j; // C_j
+    fmpz_poly_t f;
+
+    fmpz_init_set_ui(e, n_pow(p, deg - 1)); // e = p^(d - 1)
+    n2adic_init(C_1, ctx);
+    n2adic_init(C_j, ctx);
+    fmpz_poly_init(f);
+    fmpz_poly_set_coeff_si(f, 1, 1);
+    n2adic_set_fmpz_poly(C_1, f, ctx); // C_1 contient X
+    n2adic_pow(C_1, C_1, e, ctx); // C_1 contient X^e
+    n2adic_one(C_j); // C_j contient 1
 
     *pC = (n2adic_t*) malloc(p*sizeof(n2adic_t)); // Tableau d'adresses pour les C_j
-    for (int j = 0; j < p; j++)
+    for (slong j = 0; j < p; j++)
     {
         n2adic_init2((*pC)[j], prec, ctx);
-        padic_poly_set_coeff_padic((*pC)[j], j*n_pow(p, deg - 1), un, ctx -> ctx);
-        n2adic_reduce((*pC)[j], ctx);
+        n2adic_set((*pC)[j], C_j, ctx);
+        n2adic_mul(C_j, C_j, C_1, ctx);
     }
 
-    padic_clear(cache);
-    padic_clear(un);
+    fmpz_clear(e);
+    n2adic_clear(C_1);
+    n2adic_clear(C_j);
+    fmpz_poly_clear(f);
 }
 
 void n2adic_ctx_init_padic_poly(n2adic_ctx_t n2adic_ctx, padic_poly_t M, padic_ctx_t padic_ctx, enum rep_type type, slong prec)
@@ -291,7 +300,7 @@ void n2adic_ctx_init_padic_poly(n2adic_ctx_t n2adic_ctx, padic_poly_t M, padic_c
     padic_ctx_init(n2adic_ctx -> ctx, padic_ctx -> p, padic_ctx -> min, padic_ctx -> max, padic_ctx -> mode);
     padic_poly_init2(n2adic_ctx -> M, padic_poly_degree(M) + 1, prec);
     padic_poly_set(n2adic_ctx -> M, M, padic_ctx);
-    _cj_precomputation(&(n2adic_ctx -> C), n2adic_ctx);
+    if (type == TEICHMULLER) _cj_precomputation(&(n2adic_ctx -> C), n2adic_ctx);
 }
 
 void _n2adic_ctx_init_teichmuller(n2adic_ctx_t n2adic_ctx, fmpz_poly_t m, slong prec, slong min, slong max, enum padic_print_mode mode)

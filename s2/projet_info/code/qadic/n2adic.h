@@ -9,6 +9,8 @@
 #include "flint/fmpz_mod.h"
 #include "flint/fmpz_mod_poly.h"
 #include "flint/fq.h"
+#include "flint/ulong_extras.h"
+
 
 //-------------------- Introduction
 /* Ce module permet de faire des calculs sur \mathbb{Z}_{2^d}, en représentant l'extension comme un quotient de \mathbb{Z}_2[X] par le module de Teichmüller M de m \in \mathbb{F}_2[X] un polynôme irréductible.
@@ -32,7 +34,7 @@ typedef struct _n2adic_ctx_t
     slong deg; // Degré de l'extension
     enum rep_type type; // Type de représentant 
     fmpz_t p; // Nombre premier tel que p = q^deg
-    n2adic_t* C;// Pointeur vers un tableau contenant les éléments C_j \in Z_q
+    n2adic_t* C;// Pointeur vers un tableau contenant les éléments C_j \in Z_q. Reste nul si le type n'est pas TEICHMULLER
     padic_ctx_t ctx; // Contexte p-adique associé au sous-corps de l'extension
     padic_poly_t M; // Polynôme représentant de l'extension
 } n2adic_ctx_t[1];
@@ -94,6 +96,8 @@ void n2adic_sub(n2adic_t rop, n2adic_t op1, n2adic_t op2, n2adic_ctx_t ctx);
 void n2adic_mul(n2adic_t rop, n2adic_t op1, n2adic_t op2, n2adic_ctx_t ctx);
 
 void n2adic_inv(n2adic_t rop, n2adic_t op, n2adic_ctx_t n2adic_ctx);
+
+void n2adic_pow(n2adic_t rop, n2adic_t op, fmpz_t e, n2adic_ctx_t ctx);
 
 
 //-------------------- Fonctions spéciales

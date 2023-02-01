@@ -2,6 +2,7 @@
 
 int main()
 {
+    printf("-------------------- TEST DE n2adic_artin_schreier_root --------------------\n");
     int deg = 6;
     int prec = 10;
     n2adic_ctx_t ctx;
@@ -47,7 +48,7 @@ int main()
             }
         }
     }
-    printf("Test de l'algorithme de résolution de l'équation d'Artin Schreier : on la résout 10000 fois avec des paramètres aléatoires, et on vérifie que l'algorithme renvoie le bon résultat en vérifiant qu'il satisfait l'équation. Affiche 1 si le test est validé, 0 sinon. \n");
+    printf("Test sur plusieurs instances : on résout l'équation 10000 fois avec des paramètres aléatoires, et on vérifie que l'algorithme renvoie le bon résultat en vérifiant qu'il satisfait l'équation. Si le test est passé, affiche 1, sinon 0.\n");
     printf("%d\n", b);
 
     n2adic_ctx_clear(ctx);

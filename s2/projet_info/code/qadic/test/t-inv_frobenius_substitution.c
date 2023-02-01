@@ -2,6 +2,7 @@
 
 int main()
 {
+    printf("-------------------- TEST DE n2adic_inv_frobenius_substitution --------------------\n");
     int deg = 6;
     int prec = 10;
 
@@ -27,7 +28,7 @@ int main()
             b = 0;
         }
     }
-    printf("Test de la substitution du Frobenius inverse : on calcule des inverses pour 10000 éléments de Zq aléatoires, et on vérifie qu'en appliquant Sigma on retombe bien sur l'élément de départ. Affiche 1 is le test est passé, 0 sinon.\n");
+    printf("Test sur plusieurs instances : on calcule des inverses pour 10000 éléments de Zq aléatoires, et on vérifie qu'en appliquant Sigma on retombe bien sur l'élément de départ. Si le test est passé, affiche 1, sinon 0.\n");
     printf("%d\n", b);
 
     flint_randclear(state);

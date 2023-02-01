@@ -3,7 +3,6 @@
 void _n2adic_inv_auxi(n2adic_t rop, n2adic_t op, n2adic_ctx_t ctx)
 {
     int N = padic_poly_prec(rop);
-
     if (N == 1)
     {
         fmpz_t deux;

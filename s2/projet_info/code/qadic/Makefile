@@ -43,7 +43,7 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
 
-# Création des objets pour les fonctions du module n2adic et des tests
+# Création des objets pour les fonctions du module n2adic et les tests
 obj/%.o: n2adic/%.c n2adic.h | $(OBJ_DIR)
 	$(CC) $(CC_ARGS) $(INCLUDE) -o $@ -c $<
 
