@@ -57,18 +57,19 @@ int main()
     printf("\n");
 
     int b = 1;
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 1000; i++)
     {
         n2adic_randtest(x, state, n2adic_ctx);
         long val = padic_poly_val(x);
-        // printf("%ld\n", val);
         if (val == 0)
         {
+            // printf("%ld\n", val);
             n2adic_inv(inv_x, x, n2adic_ctx);
             n2adic_mul(x, x, inv_x, n2adic_ctx);
             if (n2adic_is_one(x) != 1) b = 0;
         }
     }
+
     printf("Test sur plusieurs instances : on inverse des éléments aléatoires de Zq (inversibles) et on vérifie que le produit d'eux-même avec leur inverse vaut 1. Si le test est passé, affiche 1, sinon 0.\n");
     printf("%d\n", b);
 

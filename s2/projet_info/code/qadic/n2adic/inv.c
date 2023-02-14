@@ -77,9 +77,10 @@ void _n2adic_inv_auxi(n2adic_t rop, n2adic_t op, n2adic_ctx_t ctx)
 // Inverse op et met le résultat dans rop. Supporte l'aliasing
 void n2adic_inv(n2adic_t rop, n2adic_t op, n2adic_ctx_t n2adic_ctx)
 {
-    if (n2adic_val(rop) != 0)
+    if (n2adic_val(op) != 0)
     {
-        printf("n2adic_inv exception : rop n'est pas inversible.\n");
+        printf("n2adic_inv exception : op n'est pas inversible.\n");
+        exit(-1);
     }
     else
     {
