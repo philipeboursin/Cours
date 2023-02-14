@@ -1,6 +1,5 @@
 #include "n2adic.h"
 
-/* Initialise un contexte n2adique représentant une extension de degré deg de \mathbb{Q}_2. La précision donnée en argument est la précision maximale à laquelle les calculs pourront être réalisés. */
 void _comp_moins_x(padic_poly_t P, padic_poly_t Q, padic_ctx_t C)
 {
     slong N = padic_poly_prec(Q);
@@ -297,7 +296,7 @@ void n2adic_ctx_init_padic_poly(n2adic_ctx_t n2adic_ctx, padic_poly_t M, padic_c
     n2adic_ctx -> deg = padic_poly_degree(M);
     n2adic_ctx -> type = type;
     fmpz_init_set(n2adic_ctx -> p, padic_ctx -> p);
-    padic_ctx_init(n2adic_ctx -> ctx, padic_ctx -> p, padic_ctx -> min, padic_ctx -> max, padic_ctx -> mode);
+    padic_ctx_init(n2adic_ctx -> pctx, padic_ctx -> p, padic_ctx -> min, padic_ctx -> max, padic_ctx -> mode);
     padic_poly_init2(n2adic_ctx -> M, padic_poly_degree(M) + 1, padic_poly_prec(M));
     padic_poly_set(n2adic_ctx -> M, M, padic_ctx);
     if (type == TEICHMULLER) _cj_precomputation(&(n2adic_ctx -> C), n2adic_ctx);
@@ -350,4 +349,43 @@ void n2adic_ctx_init_teichmuller(n2adic_ctx_t n2adic_ctx, slong deg, slong prec,
     fmpz_mod_ctx_clear(ctx_mod);
     flint_randclear(state);
     fmpz_clear(deux);
+}
+
+void _n2adic_ctx_init(n2adic_ctx_t n2adic_ctx, fmpz_poly_t m, fmpz_t p, slong prec, slong min, slong max, enum padic_print_mode mode)
+{
+    padic_poly_t lift;
+    padic_ctx_t padic_ctx;
+
+    padic_ctx_init(padic_ctx, p, min, max, mode);
+
+    padic_poly_init2(lift, fmpz_poly_degree(m) + 1, prec);
+    padic_poly_set_fmpz_poly(lift, m, padic_ctx);
+
+    n2adic_ctx_init_padic_poly(n2adic_ctx, lift, padic_ctx, SPARSE);
+    
+    padic_ctx_clear(padic_ctx);
+    padic_poly_clear(lift);
+}
+
+void n2adic_ctx_init(n2adic_ctx_t n2adic_ctx, fmpz_t p, slong deg, slong prec, slong min, slong max, enum padic_print_mode mode)
+{
+    fmpz_poly_t m;
+    fmpz_mod_ctx_t ctx_mod;
+    fmpz_mod_poly_t m_modp;
+    flint_rand_t state;
+
+    fmpz_mod_ctx_init(ctx_mod, p);
+    fmpz_mod_poly_init(m_modp, ctx_mod);
+    flint_randinit(state);
+    fmpz_poly_init(m);
+
+    fmpz_mod_poly_randtest_sparse_irreducible(m_modp, state, deg + 1, ctx_mod);
+    fmpz_mod_poly_get_fmpz_poly(m, m_modp, ctx_mod);
+
+    _n2adic_ctx_init(n2adic_ctx, m, p, prec, min, max, mode);
+
+    fmpz_poly_clear(m);
+    fmpz_mod_poly_clear(m_modp, ctx_mod);
+    fmpz_mod_ctx_clear(ctx_mod);
+    flint_randclear(state);
 }

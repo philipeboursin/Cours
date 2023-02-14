@@ -52,8 +52,8 @@ int main()
 
     n2adic_init(x, n2adic_ctx);
     n2adic_init(y, n2adic_ctx);
-    padic_poly_set_fmpz_poly(x, a, (*n2adic_ctx).ctx);
-    padic_poly_set_fmpz_poly(y, b, (*n2adic_ctx).ctx);
+    padic_poly_set_fmpz_poly(x, a, n2adic_ctx -> pctx);
+    padic_poly_set_fmpz_poly(y, b, n2adic_ctx -> pctx);
 
     n2adic_print(x, n2adic_ctx);
     printf("\n");

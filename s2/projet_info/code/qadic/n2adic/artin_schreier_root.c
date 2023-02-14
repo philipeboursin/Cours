@@ -18,7 +18,7 @@ void _n2adic_artin_schreier_root_auxi(n2adic_t x, n2adic_t alpha, n2adic_t beta,
         fmpz_init_set_ui(deux, 2);
         fmpz_mod_ctx_init(mod2_ctx, deux);
         fmpz_mod_poly_init(m, mod2_ctx);
-        padic_poly_get_fmpz_poly(inter, ctx -> M, ctx -> ctx);
+        padic_poly_get_fmpz_poly(inter, ctx -> M, ctx -> pctx);
         fmpz_mod_poly_set_fmpz_poly(m, inter, mod2_ctx);
         fq_ctx_init_modulus(fq_ctx, m, mod2_ctx, "x"); // Contexte F_{2^d} initialisé
 
@@ -67,9 +67,9 @@ void _n2adic_artin_schreier_root_auxi(n2adic_t x, n2adic_t alpha, n2adic_t beta,
         padic_init2(deux, N);
         padic_init2(deux_pow_mNr, N);
         padic_init2(deux_pow_Nr, N);
-        padic_set_ui(deux, 2, ctx -> ctx);
-        padic_pow_si(deux_pow_Nr, deux, Nr, ctx -> ctx); // deux_pow_Nr contient 2^{N'}
-        padic_pow_si(deux_pow_mNr, deux, -Nr, ctx -> ctx); // deux_pow_mNr contient 2^{-N'}
+        padic_set_ui(deux, 2, ctx -> pctx);
+        padic_pow_si(deux_pow_Nr, deux, Nr, ctx -> pctx); // deux_pow_Nr contient 2^{N'}
+        padic_pow_si(deux_pow_mNr, deux, -Nr, ctx -> pctx); // deux_pow_mNr contient 2^{-N'}
 
         _n2adic_artin_schreier_root_auxi(xr, alpha, beta, gamma, ctx);
         n2adic_set(cache1, xr, ctx); // cache1 contient x', à précision N
@@ -78,11 +78,11 @@ void _n2adic_artin_schreier_root_auxi(n2adic_t x, n2adic_t alpha, n2adic_t beta,
         n2adic_mul(cache1, beta, cache1, ctx); // cache1 contient \beta x'
         n2adic_add(cache2, cache1, cache2, ctx); // cache2 contient \alpha \Sigma(x') + \beta x'
         n2adic_add(cache2, cache2, gamma, ctx); // cache2 contient \alpha \Sigma(x') + \beta x' + \gamma
-        padic_poly_scalar_mul_padic(cache2, cache2, deux_pow_mNr, ctx -> ctx); // cache 2 contient gamma'
+        padic_poly_scalar_mul_padic(cache2, cache2, deux_pow_mNr, ctx -> pctx); // cache 2 contient gamma'
         n2adic_set(gammar, cache2, ctx);
         _n2adic_artin_schreier_root_auxi(Deltar, alpha, beta, gammar, ctx);
         n2adic_set(cache1, Deltar, ctx);
-        padic_poly_scalar_mul_padic(cache1, cache1, deux_pow_Nr, ctx -> ctx); // cache 2 contient gamma'
+        padic_poly_scalar_mul_padic(cache1, cache1, deux_pow_Nr, ctx -> pctx); // cache 2 contient gamma'
         n2adic_set(cache2, xr, ctx);
         n2adic_add(x, cache1, cache2, ctx);
 

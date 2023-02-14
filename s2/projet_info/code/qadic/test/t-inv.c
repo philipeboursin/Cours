@@ -39,7 +39,7 @@ int main()
 
     _n2adic_ctx_init_teichmuller(n2adic_ctx, m, prec, 0, prec, PADIC_TERSE);
 
-    padic_poly_set_fmpz_poly(A, a, n2adic_ctx -> ctx);
+    padic_poly_set_fmpz_poly(A, a, n2adic_ctx -> pctx);
 
     n2adic_init(x, n2adic_ctx);
     n2adic_init(inv_x, n2adic_ctx); 

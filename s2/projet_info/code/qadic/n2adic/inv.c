@@ -16,7 +16,7 @@ void _n2adic_inv_auxi(n2adic_t rop, n2adic_t op, n2adic_ctx_t ctx)
         fmpz_init_set_ui(deux, 2);
         fmpz_mod_ctx_init(mod2_ctx, deux);
         fmpz_poly_init(inter);
-        padic_poly_get_fmpz_poly(inter, ctx -> M, ctx -> ctx);
+        padic_poly_get_fmpz_poly(inter, ctx -> M, ctx -> pctx);
         fmpz_mod_poly_init(m, mod2_ctx);
         fmpz_mod_poly_set_fmpz_poly(m, inter, mod2_ctx);
 
@@ -77,11 +77,18 @@ void _n2adic_inv_auxi(n2adic_t rop, n2adic_t op, n2adic_ctx_t ctx)
 // Inverse op et met le résultat dans rop. Supporte l'aliasing
 void n2adic_inv(n2adic_t rop, n2adic_t op, n2adic_ctx_t n2adic_ctx)
 {
-    n2adic_t auxi;
-    n2adic_init(auxi, n2adic_ctx);
+    if (n2adic_val(rop) != 0)
+    {
+        printf("n2adic_inv exception : rop n'est pas inversible.\n");
+    }
+    else
+    {
+        n2adic_t auxi;
+        n2adic_init(auxi, n2adic_ctx);
 
-    _n2adic_inv_auxi(auxi, op, n2adic_ctx);
+        _n2adic_inv_auxi(auxi, op, n2adic_ctx);
 
-    n2adic_set(rop, auxi, n2adic_ctx);
-    n2adic_clear(auxi);
+        n2adic_set(rop, auxi, n2adic_ctx);
+        n2adic_clear(auxi);
+    }
 }

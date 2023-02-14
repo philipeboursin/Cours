@@ -10,8 +10,8 @@ void _n2adic_choisi_coeff(n2adic_t rop, n2adic_t op, int j, n2adic_ctx_t ctx)
 
     for (slong k = 0; 2*k + j < d; k++)
     {
-        padic_poly_get_coeff_padic(cache, op, 2*k + j, ctx -> ctx);
-        padic_poly_set_coeff_padic(rop, k, cache, ctx -> ctx);
+        padic_poly_get_coeff_padic(cache, op, 2*k + j, ctx -> pctx);
+        padic_poly_set_coeff_padic(rop, k, cache, ctx -> pctx);
     }
 
     padic_clear(cache);

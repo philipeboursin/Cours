@@ -26,7 +26,7 @@ int main()
     n2adic_ctx_init_teichmuller(n2adic_ctx, deg, prec, 0, prec, PADIC_TERSE);
 
     n2adic_ctx_rep(M, n2adic_ctx);
-    padic_poly_print(M, n2adic_ctx -> ctx);
+    padic_poly_print(M, n2adic_ctx -> pctx);
     printf("\n");
 
     n2adic_print((n2adic_ctx -> C)[0], n2adic_ctx);

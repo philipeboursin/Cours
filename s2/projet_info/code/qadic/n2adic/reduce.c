@@ -138,10 +138,10 @@ void n2adic_reduce(n2adic_t x, n2adic_ctx_t n2adic_ctx)
 
     n2adic_init2(y, prec, n2adic_ctx);
     padic_poly_init2(Mprec, (n2adic_ctx -> deg) + 1, prec);
-    padic_poly_set(Mprec, n2adic_ctx -> M, n2adic_ctx -> ctx);
+    padic_poly_set(Mprec, n2adic_ctx -> M, n2adic_ctx -> pctx);
 
-    _padic_poly_div_eucl(x, Mprec, x, y, n2adic_ctx -> ctx);
-    padic_poly_reduce(x, n2adic_ctx -> ctx);
+    _padic_poly_div_eucl(x, Mprec, x, y, n2adic_ctx -> pctx);
+    padic_poly_reduce(x, n2adic_ctx -> pctx);
 
     padic_poly_clear(Mprec);
     n2adic_clear(y);
