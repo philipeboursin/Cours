@@ -291,14 +291,14 @@ void _cj_precomputation(n2adic_t** pC, n2adic_ctx_t ctx)
     fmpz_poly_clear(f);
 }
 
-void n2adic_ctx_init_padic_poly(n2adic_ctx_t n2adic_ctx, padic_poly_t M, padic_ctx_t padic_ctx, enum rep_type type, slong prec)
+void n2adic_ctx_init_padic_poly(n2adic_ctx_t n2adic_ctx, padic_poly_t M, padic_ctx_t padic_ctx, enum rep_type type)
 {
-    n2adic_ctx -> prec = prec;
+    n2adic_ctx -> prec = padic_poly_prec(M);
     n2adic_ctx -> deg = padic_poly_degree(M);
     n2adic_ctx -> type = type;
     fmpz_init_set(n2adic_ctx -> p, padic_ctx -> p);
     padic_ctx_init(n2adic_ctx -> ctx, padic_ctx -> p, padic_ctx -> min, padic_ctx -> max, padic_ctx -> mode);
-    padic_poly_init2(n2adic_ctx -> M, padic_poly_degree(M) + 1, prec);
+    padic_poly_init2(n2adic_ctx -> M, padic_poly_degree(M) + 1, padic_poly_prec(M));
     padic_poly_set(n2adic_ctx -> M, M, padic_ctx);
     if (type == TEICHMULLER) _cj_precomputation(&(n2adic_ctx -> C), n2adic_ctx);
 }
@@ -318,7 +318,7 @@ void _n2adic_ctx_init_teichmuller(n2adic_ctx_t n2adic_ctx, fmpz_poly_t m, slong 
 
     padic_poly_init2(M, padic_poly_degree(lift), prec);
     _teichmuller_modulus(M, lift, prec, padic_ctx);
-    n2adic_ctx_init_padic_poly(n2adic_ctx, M, padic_ctx, TEICHMULLER, prec);
+    n2adic_ctx_init_padic_poly(n2adic_ctx, M, padic_ctx, TEICHMULLER);
     
     padic_poly_clear(M);
     padic_ctx_clear(padic_ctx);
