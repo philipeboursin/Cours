@@ -1,0 +1,33 @@
+#include "zqadic.h"
+
+
+// COMPLETER CE TEST
+int main()
+{
+    int prec = 10;
+    int deg = 5;
+    flint_rand_t state;
+    zqadic_ctx_t ctx;
+    zqadic_t x;
+    zqadic_t y;
+
+    flint_randinit(state);
+    zqadic_ctx_init_teichmuller(ctx, deg, prec, 0, prec, PADIC_TERSE);
+    zqadic_init2(x, prec, ctx);
+    zqadic_init2(y, prec - 1, ctx);
+
+    zqadic_randtest(x, state, ctx);
+    zqadic_print(x, ctx);
+    printf("\n");
+
+    zqadic_set(y, x, ctx);
+    zqadic_frobenius_substitution(y, y, ctx);
+
+    zqadic_print(y, ctx);    
+    printf("\n");
+
+    zqadic_clear(x);
+    zqadic_clear(y);
+    zqadic_ctx_clear(ctx);
+    flint_randclear(state);
+}
