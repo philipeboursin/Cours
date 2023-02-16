@@ -32,7 +32,7 @@ slong zqadic_val(zqadic_t x);
 //-------------------- Contexte
 /* Un contexte d'entiers $q$-adiques contient les informations nécessaires aux calculs dans $\\mathbb{Z}_q$, ainsi que différents éléments précalculés permettant d'accélérer certains calculs. */
 
-/* Différents types de polynômes pouvant représenter l'extension $\\mathbb{Q}_q$ de $\\mathbb{Q}_p$. */
+/* Différents types de polynômes pouvant représenter l'extension $\\mathbb{Z}_q$ de $\\mathbb{Z}_p$. */
 enum rep_type {TEICHMULLER, SPARSE};
 
 /* Type représentant un contexte d'entiers $q$-adiques. */
