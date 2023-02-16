@@ -1,6 +1,5 @@
 #include "zqadic.h"
 
-
 void zqadic_composition(zqadic_t rop, zqadic_t op1, zqadic_t op2, zqadic_ctx_t ctx)
 {
     slong prec = zqadic_prec(rop);
