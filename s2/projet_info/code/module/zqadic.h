@@ -137,7 +137,7 @@ void zqadic_add(zqadic_t rop, zqadic_t op1, zqadic_t op2, zqadic_ctx_t ctx);
 /* Réalise la soustration de <op1> avec <op2>. Met le résultat dans <rop>. */
 void zqadic_sub(zqadic_t rop, zqadic_t op1, zqadic_t op2, zqadic_ctx_t ctx);
 
-/* Met $-$<op> dans <rop>. */
+/* Met l'opposé de <op> dans <rop>. */
 void zqadic_neg(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx);
 
 /* Réalise la multiplication de <op1> avec <op2>. Met le résultat dans <rop>. */

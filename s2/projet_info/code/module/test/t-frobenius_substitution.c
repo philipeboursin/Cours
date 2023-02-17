@@ -3,7 +3,7 @@
 int main()
 {
     int prec = 10;
-    int deg = 5;
+    int deg = 8;
     fmpz_t deux;
     flint_rand_t state;
     padic_ctx_t pctx;
@@ -43,15 +43,15 @@ int main()
     zqadic_init(x, ctx_teich);
     zqadic_init(y, ctx_teich);
 
-    for (int i = 0; i < 10; i++) zqadic_randtest(x, state, ctx_sparse);
+    for (int i = 0; i < 13; i++) zqadic_randtest(x, state, ctx_sparse);
 
     zqadic_frobenius_substitution(y, x, ctx_sparse);
-    printf("M = ");
+    printf("Sigma(a) = ");
     zqadic_print(y, ctx_teich);
     printf("\n");
 
     zqadic_frobenius_substitution(y, x, ctx_teich);
-    printf("M = ");
+    printf("Sigma(a) = ");
     zqadic_print(y, ctx_sparse);
     printf("\n");
 }

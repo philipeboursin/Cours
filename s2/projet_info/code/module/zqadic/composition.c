@@ -1,6 +1,6 @@
 #include "zqadic.h"
 
-void zqadic_composition(zqadic_t rop, zqadic_t op1, zqadic_t op2, zqadic_ctx_t ctx)
+void _zqadic_composition(zqadic_t rop, zqadic_t op1, zqadic_t op2, zqadic_ctx_t ctx)
 {
     slong prec = zqadic_prec(rop);
     slong deg = ctx -> deg;
@@ -73,4 +73,28 @@ void zqadic_composition(zqadic_t rop, zqadic_t op1, zqadic_t op2, zqadic_ctx_t c
     zqadic_set(rop, rop_auxi, ctx);
 
     // FAIRE LES CLEARS
+}
+
+void zqadic_composition(zqadic_t rop, zqadic_t op1, zqadic_t op2, zqadic_ctx_t ctx)
+{
+    slong prec = zqadic_prec(rop);
+
+    zqadic_t rop_auxi;
+    zqadic_t op1_auxi;
+    zqadic_t op2_auxi;
+
+    zqadic_init2(rop_auxi, prec, ctx);
+    zqadic_init2(op1_auxi, prec, ctx);
+    zqadic_init2(op2_auxi, prec, ctx);
+
+    zqadic_set(op1_auxi, op1, ctx);
+    zqadic_set(op2_auxi, op2, ctx);
+
+    _zqadic_composition(rop_auxi, op1_auxi, op2_auxi, ctx);
+
+    zqadic_set(rop, rop_auxi, ctx);
+
+    zqadic_clear(rop_auxi);
+    zqadic_clear(op1_auxi);
+    zqadic_clear(op2_auxi);
 }

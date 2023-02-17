@@ -1,27 +1,42 @@
 #include "zqadic.h"
 
-void _zqadic_newton_iteration(zqadic_t rop, padic_poly_t M, zqadic_t op, slong k, slong n, slong prec, zqadic_ctx_t ctx)
+
+// Ne fonctionne qu'avec k = 0 pour le moment
+void _zqadic_newton_iteration(zqadic_t rop, padic_poly_t M, zqadic_t op, slong k, zqadic_ctx_t ctx)
 {
-    if (prec <= n)
+    slong npk = zqadic_prec(op); // n + k
+    slong Npk = zqadic_prec(rop); // N + k
+
+    if (Npk <= npk) // équivalent à N <= n
     {
         zqadic_set(rop, op, ctx);
     }
     else
     {
-        slong Nr = ((prec + k) >> 1) + ((prec + k) & 1);
+        slong Nr = (Npk >> 1) + (Npk & 1); // \lceil (N + k)/2 \rceil
+        slong Npkr = Nr + k;
+
+        zqadic_t ropr;
+        zqadic_t z;
+        zqadic_t Mz;
+        zqadic_t Mrz;
+        padic_poly_t M_auxi;
         padic_poly_t Mr;
-        padic_poly_t Mz;
-        padic_poly_t Mrz;
 
+        zqadic_init2(ropr, Npkr, ctx);
+        zqadic_init2(z, Npk, ctx);
+        zqadic_init2(Mz, Npk, ctx);
+        zqadic_init2(Mrz, Npkr, ctx);
+        padic_poly_init2(M_auxi, (ctx -> deg) + 1, Npkr);
+        padic_poly_init2(Mr, ctx -> deg, Npk);
 
-        padic_poly_init2(Mr, 0, padic_poly_prec(M));
-        padic_poly_init2(Mz, 0, padic_poly_prec(M));
-        padic_poly_init2(Mrz, 0, padic_poly_prec(M));
+        padic_poly_set(M_auxi, M, ctx -> pctx);
         padic_poly_derivative(Mr, M, ctx -> pctx);
+        _zqadic_newton_iteration(ropr, M_auxi, op, k, ctx);
+        zqadic_set(z, ropr, ctx);
 
-        _zqadic_newton_iteration(rop, M, op, k, n, Nr, ctx);
-        zqadic_composition(Mz, M, rop, ctx);
-        zqadic_composition(Mrz, Mr, rop, ctx);
+        zqadic_composition(Mz, M, z, ctx);
+        zqadic_composition(Mrz, Mr, ropr, ctx);
         zqadic_inv(Mrz, Mrz, ctx);
         zqadic_mul(Mrz, Mrz, Mz, ctx);
         zqadic_sub(rop, rop, Mrz, ctx);
@@ -30,16 +45,24 @@ void _zqadic_newton_iteration(zqadic_t rop, padic_poly_t M, zqadic_t op, slong k
     }
 }
 
-void zqadic_newton_iteration(zqadic_t rop, padic_poly_t M, zqadic_t op, slong k, slong n, slong prec, zqadic_ctx_t ctx)
+// Précision de rop : N + k
+void zqadic_newton_iteration(zqadic_t rop, padic_poly_t M, zqadic_t op, slong k, zqadic_ctx_t ctx)
 {
+    slong Npk = zqadic_prec(rop);
+
     zqadic_t rop_auxi;
-    zqadic_init2(rop_auxi, zqadic_prec(rop), ctx);
-    _zqadic_newton_iteration(rop_auxi, M, op, k, n, prec, ctx);
+    padic_poly_t M_auxi;
+
+    zqadic_init2(rop_auxi, Npk, ctx);
+    padic_poly_init2(M_auxi, (ctx -> deg) + 1, Npk);
+
+    _zqadic_newton_iteration(rop_auxi, M_auxi, op, k, ctx);
     zqadic_set(rop, rop_auxi, ctx);
+
     // FAIRE LES CLEARS
 }
 
-void zqadic_frobenius_substitution(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx)
+void _zqadic_frobenius_substitution(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx)
 {
     if ((ctx -> type) == TEICHMULLER)
     {
@@ -66,11 +89,45 @@ void zqadic_frobenius_substitution(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx)
 
         padic_poly_set_coeff_padic(xp, p, one, ctx -> pctx);
 
-        zqadic_newton_iteration(frob, ctx -> M, xp, 0, 1, zqadic_prec(rop), ctx);
+        //
+        padic_poly_t Mr;
+        padic_poly_init2(Mr, 0, ctx -> prec);
+        padic_poly_derivative(Mr, ctx -> M, ctx -> pctx);
+        zqadic_composition(Mr, Mr, op, ctx);
+        printf("v(f'(a)) = %ld", zqadic_val(Mr));
+        printf("\n");
+        //
+
+        printf("X^p = ");
+        zqadic_print(xp, ctx);
+        printf("\n");
+
+        zqadic_newton_iteration(frob, ctx -> M, xp, 0, 1, ctx);
+        printf("Sigma(X) = ");
+        zqadic_print(frob , ctx);
+        printf("\n");
         zqadic_composition(rop, op, frob, ctx);
         // printf("zqadic_frobenius_substitution exception : non implémenté.");
         // exit(-1);
 
         // FAIRE LES CLEARS
     }
+}
+
+void zqadic_frobenius_substitution(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx)
+{
+    slong prec = zqadic_prec(rop);
+    zqadic_t rop_auxi;
+    zqadic_t op_auxi;
+
+    zqadic_init2(rop_auxi, prec, ctx);
+    zqadic_init2(op_auxi, prec, ctx);
+
+    zqadic_set(op_auxi, op, ctx);
+    _zqadic_frobenius_substitution(rop_auxi, op_auxi, ctx);
+
+    zqadic_set(rop, rop_auxi, ctx);
+
+    zqadic_clear(rop_auxi);
+    zqadic_clear(op_auxi);
 }
