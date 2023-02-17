@@ -299,7 +299,7 @@ void zqadic_ctx_init_padic_poly(zqadic_ctx_t zqadic_ctx, padic_poly_t M, padic_c
     padic_ctx_init(zqadic_ctx -> pctx, padic_ctx -> p, padic_ctx -> min, padic_ctx -> max, padic_ctx -> mode);
     padic_poly_init2(zqadic_ctx -> M, padic_poly_degree(M) + 1, padic_poly_prec(M));
     padic_poly_set(zqadic_ctx -> M, M, padic_ctx);
-    if (type == TEICHMULLER) _cj_precomputation(&(zqadic_ctx -> C), zqadic_ctx);
+    _cj_precomputation(&(zqadic_ctx -> C), zqadic_ctx);
 }
 
 void _zqadic_ctx_init_teichmuller(zqadic_ctx_t zqadic_ctx, fmpz_poly_t m, slong prec, slong min, slong max, enum padic_print_mode mode)

@@ -4,13 +4,14 @@ void _zqadic_choisi_coeff(zqadic_t rop, zqadic_t op, int j, zqadic_ctx_t ctx)
 {
     slong N = zqadic_prec(rop);
     slong d = ctx -> deg;
+    slong p = fmpz_get_si(ctx -> p);
 
     padic_t cache;
     padic_init2(cache, N);
 
-    for (slong k = 0; 2*k + j < d; k++)
+    for (slong k = 0; p*k + j < d; k++)
     {
-        padic_poly_get_coeff_padic(cache, op, 2*k + j, ctx -> pctx);
+        padic_poly_get_coeff_padic(cache, op, p*k + j, ctx -> pctx);
         padic_poly_set_coeff_padic(rop, k, cache, ctx -> pctx);
     }
 
@@ -19,9 +20,9 @@ void _zqadic_choisi_coeff(zqadic_t rop, zqadic_t op, int j, zqadic_ctx_t ctx)
 
 void zqadic_inv_frobenius_substitution(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx)
 {
-    if ((ctx -> type) == TEICHMULLER)
+    slong N = zqadic_prec(rop);
+    if ((ctx -> type) == TEICHMULLER || N == 1)
     {
-        slong N = zqadic_prec(rop);
         slong p = fmpz_get_si(ctx -> p);
 
         zqadic_t op_auxi; // Pour emmener op à la précision de rop.

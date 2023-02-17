@@ -13,7 +13,10 @@ void _zqadic_newton_iteration(zqadic_t rop, padic_poly_t M, zqadic_t op, slong k
         padic_poly_t Mz;
         padic_poly_t Mrz;
 
+
         padic_poly_init2(Mr, 0, padic_poly_prec(M));
+        padic_poly_init2(Mz, 0, padic_poly_prec(M));
+        padic_poly_init2(Mrz, 0, padic_poly_prec(M));
         padic_poly_derivative(Mr, M, ctx -> pctx);
 
         _zqadic_newton_iteration(rop, M, op, k, n, Nr, ctx);
@@ -60,6 +63,7 @@ void zqadic_frobenius_substitution(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx)
         zqadic_init2(xp, 1, ctx);
         padic_init2(one, 1);
         padic_one(one);
+
         padic_poly_set_coeff_padic(xp, p, one, ctx -> pctx);
 
         zqadic_newton_iteration(frob, ctx -> M, xp, 0, 1, zqadic_prec(rop), ctx);
