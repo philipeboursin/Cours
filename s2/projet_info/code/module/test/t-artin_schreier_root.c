@@ -16,7 +16,10 @@ int main()
 
     flint_randinit(state);
 
-    zqadic_ctx_init_teichmuller(ctx, deg, prec, 0, prec, PADIC_TERSE);
+    fmpz_t p;
+    fmpz_init_set_ui(p, 2);
+    // zqadic_ctx_init_teichmuller(ctx, deg, prec, 0, prec, PADIC_TERSE);
+    zqadic_ctx_init(ctx, p, deg, prec, 0, prec, PADIC_TERSE);
     
     zqadic_init(x, ctx);
     zqadic_init(alpha, ctx);
@@ -41,7 +44,6 @@ int main()
             zqadic_mul(cache2, beta, x, ctx);
             zqadic_add(cache1, cache2, cache1, ctx);
             zqadic_add(cache1, gamma, cache1, ctx);
-
             if (padic_poly_is_zero(cache1) == 0)
             {
                 b = 0;

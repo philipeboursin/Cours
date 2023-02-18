@@ -1,0 +1,13 @@
+{ 
+   "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch gdb-multiarch",
+            "type": "cppdbg",
+            "request": "launch",
+            "MIMode": "gdb",
+            "program": "D:\\bureau\\documents\\travail\\annee_2022-2023\\s2\\projet_info\\code\\module\\bin\\t-artin_schreier_root.out",
+			"cwd": "D:\\bureau\\documents\\travail\\annee_2022-2023\\s2\\projet_info\\code\\module\\bin"
+        }
+    ]
+}

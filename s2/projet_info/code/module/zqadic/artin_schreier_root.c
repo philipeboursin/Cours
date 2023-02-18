@@ -6,6 +6,7 @@ void _zqadic_artin_schreier_root_auxi(zqadic_t x, zqadic_t alpha, zqadic_t beta,
 
     if (N == 1)
     {
+
         zqadic_t cache;
 
         zqadic_init2(cache, 1, ctx);
@@ -44,6 +45,12 @@ void _zqadic_artin_schreier_root_auxi(zqadic_t x, zqadic_t alpha, zqadic_t beta,
 
         _zqadic_artin_schreier_root_auxi(xr, alpha, beta, gamma, ctx);
         zqadic_set(cache1, xr, ctx); // cache1 contient x', à précision N
+
+        // printf("N = %ld\n", N);
+        // printf("cache 1 = ");
+        // zqadic_print(cache1, ctx);
+        // printf("\n");
+        
         zqadic_frobenius_substitution(cache2, cache1, ctx);
         zqadic_mul(cache2, alpha, cache2, ctx); // cache2 contient \alpha \Sigma(x')
         zqadic_mul(cache1, beta, cache1, ctx); // cache1 contient \beta x'
@@ -70,6 +77,7 @@ void _zqadic_artin_schreier_root_auxi(zqadic_t x, zqadic_t alpha, zqadic_t beta,
 
 void zqadic_artin_schreier_root(zqadic_t x, zqadic_t alpha, zqadic_t beta, zqadic_t gamma, zqadic_ctx_t ctx)
 {
+
     slong prec = zqadic_prec(x);
     zqadic_t x_auxi;
 

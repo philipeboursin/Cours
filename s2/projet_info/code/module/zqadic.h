@@ -1,3 +1,7 @@
+#ifndef ZQADIC_H
+#define ZQADIC_H
+
+// Includes
 #include "stdio.h"
 #include "stdlib.h"
 #include "gmp.h"
@@ -11,6 +15,7 @@
 #include "flint/fq.h"
 #include "flint/ulong_extras.h"
 
+// Include guard
 
 //-------------------- Introduction
 /* Soit $p$ un nombre premier et $q = p^d \\in \\mathbb{Z}$. Ce module permet de faire des calculs sur $\\mathbb{Z}_{q}$, en représentant l'extension comme un quotient de $\\mathbb{Z}_p[X]$ par un polynôme $M \\in \\mathbb{F}_p[X]$ irréductible.*/
@@ -119,6 +124,9 @@ void zqadic_randtest(zqadic_t x, flint_rand_t state, zqadic_ctx_t ctx);
 /* Renvoie <1> si et seulement si <x> $=$ <y>. */
 int zqadic_equal(zqadic_t x, zqadic_t y);
 
+/* Renvoie <1> si et seulement si <x> $= 0$. */
+int zqadic_is_zero(zqadic_t x);
+
 /* Renvoie <1> si et seulement si <x> $= 1$. */
 int zqadic_is_one(zqadic_t x);
 
@@ -169,3 +177,5 @@ void zqadic_artin_schreier_root(zqadic_t x, zqadic_t alpha, zqadic_t beta, zqadi
 
 /* Affiche un <x> de $\\mathbb{Z}_q$, représenté comme un élément de $\\mathbb{Z}_p[X]$. Les coefficients de ce polynôme (dans $\\mathbb{Z}_p$) seront affichés selon le mode spécifié dans le contexte $p$-adique associé à <ctx> (<ctx -> ctxp>). */
 void zqadic_print(zqadic_t x, zqadic_ctx_t ctx);
+
+#endif

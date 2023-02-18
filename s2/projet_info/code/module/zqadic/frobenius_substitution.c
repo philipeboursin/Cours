@@ -5,10 +5,7 @@ void _zqadic_newton_iteration(zqadic_t rop, padic_poly_t M, zqadic_t op, slong k
 {
     slong Npk = zqadic_prec(rop); // N + k
 
-    if (Npk <= zqadic_prec(op)) // équivalent à N <= n, zqadic_prec(op) = n + k
-    {
-        zqadic_set(rop, op, ctx);
-    }
+    if (Npk <= zqadic_prec(op)) zqadic_set(rop, op, ctx); // équivalent à N <= n, zqadic_prec(op) = n + k
     else
     {
         slong Nr = (Npk >> 1) + (Npk & 1); // \lceil (N + k)/2 \rceil
@@ -32,15 +29,7 @@ void _zqadic_newton_iteration(zqadic_t rop, padic_poly_t M, zqadic_t op, slong k
         padic_poly_derivative(Mr, M, ctx -> pctx);
         _zqadic_newton_iteration(ropr, M_auxi, op, k, ctx);
         zqadic_set(z, ropr, ctx);
-                
-        // printf("M = ");
-        // zqadic_print(M, ctx);
-        // printf("\n");
-
         zqadic_padic_poly_evaluation(Mz, M, z, ctx);
-        // printf("f(z) = ");
-        // zqadic_print(Mz, ctx);
-        // printf("\n");
         zqadic_padic_poly_evaluation(Mrz, Mr, ropr, ctx);
         zqadic_inv(Mrz, Mrz, ctx);
         zqadic_mul(rop, Mrz, Mz, ctx);
@@ -58,6 +47,7 @@ void _zqadic_newton_iteration(zqadic_t rop, padic_poly_t M, zqadic_t op, slong k
 // Précision de rop : N + k
 void zqadic_newton_iteration(zqadic_t rop, padic_poly_t M, zqadic_t op, slong k, zqadic_ctx_t ctx)
 {
+
     slong Npk = zqadic_prec(rop);
 
     zqadic_t rop_auxi;
@@ -82,7 +72,6 @@ void _zqadic_frobenius_substitution(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx)
         zqadic_init2(cache, zqadic_prec(op), ctx);
 
         padic_poly_compose_pow(cache, op, 2, ctx -> pctx);
-        // CompoXk(res,x,(*((*qC).C)).p, (*qC).C);
         zqadic_reduce(cache, ctx);
         zqadic_set(rop, cache, ctx);
 
@@ -90,6 +79,7 @@ void _zqadic_frobenius_substitution(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx)
     }
     else
     {
+
         zqadic_t frob;
         zqadic_t xp;
         padic_t one;
@@ -100,28 +90,8 @@ void _zqadic_frobenius_substitution(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx)
         padic_one(one);
 
         padic_poly_set_coeff_padic(xp, p, one, ctx -> pctx);
-
-        //
-        // padic_poly_t Mr;
-        // padic_poly_init2(Mr, 0, ctx -> prec);
-        // padic_poly_derivative(Mr, ctx -> M, ctx -> pctx);
-        // zqadic_padic_poly_evaluation(Mr, Mr, xp, ctx);
-        // printf("v(f'(a)) = %ld\n f'(a) = ", zqadic_val(Mr));
-        // padic_poly_print(Mr, ctx -> pctx);
-        // printf("\n");
-        // //
-
-        // printf("X^p = ");
-        // zqadic_print(xp, ctx);
-        // printf("\n");
-
         zqadic_newton_iteration(frob, ctx -> M, xp, 0, ctx);
-        // printf("Sigma(X) = ");
-        // zqadic_print(frob , ctx);
-        // printf("\n");
         zqadic_padic_poly_evaluation(rop, op, frob, ctx);
-        // printf("zqadic_frobenius_substitution exception : non implémenté.");
-        // exit(-1);
 
         zqadic_clear(frob);
         zqadic_clear(xp);
@@ -137,6 +107,7 @@ void zqadic_frobenius_substitution(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx)
 
     zqadic_init2(rop_auxi, prec, ctx);
     zqadic_init2(op_auxi, prec, ctx);
+
 
     zqadic_set(op_auxi, op, ctx);
     _zqadic_frobenius_substitution(rop_auxi, op_auxi, ctx);
