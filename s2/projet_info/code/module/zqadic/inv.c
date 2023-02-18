@@ -75,7 +75,7 @@ void _zqadic_inv_auxi(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx)
 }
 
 // Inverse op et met le résultat dans rop. Supporte l'aliasing
-void zqadic_inv(zqadic_t rop, zqadic_t op, zqadic_ctx_t zqadic_ctx)
+void zqadic_inv(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx)
 {
     if (zqadic_val(op) != 0)
     {
@@ -84,12 +84,18 @@ void zqadic_inv(zqadic_t rop, zqadic_t op, zqadic_ctx_t zqadic_ctx)
     }
     else
     {
-        zqadic_t auxi;
-        zqadic_init(auxi, zqadic_ctx);
+        slong N = zqadic_prec(rop);
+        zqadic_t rop_auxi;
+        zqadic_t op_auxi;
 
-        _zqadic_inv_auxi(auxi, op, zqadic_ctx);
+        zqadic_init2(rop_auxi, N, ctx);
+        zqadic_init2(op_auxi, N, ctx);
 
-        zqadic_set(rop, auxi, zqadic_ctx);
-        zqadic_clear(auxi);
+        zqadic_set(op_auxi, op, ctx);
+        _zqadic_inv_auxi(rop_auxi, op_auxi, ctx);
+        zqadic_set(rop, rop_auxi, ctx);
+
+        zqadic_clear(rop_auxi);
+        zqadic_clear(op_auxi);
     }
 }

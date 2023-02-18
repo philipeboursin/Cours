@@ -150,7 +150,7 @@ void zqadic_inv(zqadic_t rop, zqadic_t op, zqadic_ctx_t zqadic_ctx);
 void zqadic_pow(zqadic_t rop, zqadic_t op, fmpz_t e, zqadic_ctx_t ctx);
 
 /* Calcule la composition (en tant que polynômes) de <op1> avec <op2>. Met le résultat dans <rop>. Utilise l'astuce de Paterson-Stockmeyer. */
-void zqadic_composition(zqadic_t rop, zqadic_t op1, zqadic_t op2, zqadic_ctx_t ctx);
+void zqadic_padic_poly_evaluation(zqadic_t rop, zqadic_t op1, zqadic_t op2, zqadic_ctx_t ctx);
 
 
 //-------------------- Fonctions spéciales

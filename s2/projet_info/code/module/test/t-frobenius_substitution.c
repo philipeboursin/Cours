@@ -43,7 +43,7 @@ int main()
     zqadic_init(x, ctx_teich);
     zqadic_init(y, ctx_teich);
 
-    for (int i = 0; i < 13; i++) zqadic_randtest(x, state, ctx_sparse);
+    for (int i = 0; i < 10; i++) zqadic_randtest(x, state, ctx_sparse);
 
     zqadic_frobenius_substitution(y, x, ctx_sparse);
     printf("Sigma(a) = ");
@@ -54,4 +54,14 @@ int main()
     printf("Sigma(a) = ");
     zqadic_print(y, ctx_sparse);
     printf("\n");
+    
+    fmpz_clear(deux);
+    flint_randclear(state);
+    zqadic_ctx_clear(ctx_teich);
+    zqadic_ctx_clear(ctx_sparse);
+    padic_ctx_clear(pctx);
+    zqadic_clear(x);
+    zqadic_clear(y);
+    padic_poly_clear(M);
+    fmpz_poly_clear(m);
 }
