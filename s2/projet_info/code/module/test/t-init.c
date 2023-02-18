@@ -2,7 +2,7 @@
 
 int main()
 {
-    zqadic_ctx_t zqadic_ctx;    
+    zqadic_ctx_t ctx;    
     fmpz_poly_t m;
     padic_poly_t M;
 
@@ -18,13 +18,13 @@ int main()
     fmpz_poly_set_coeff_si(m, 4, 1);
     fmpz_poly_set_coeff_si(m, 8, 1);
 
-    _zqadic_ctx_init_teichmuller(zqadic_ctx, m, prec, 0, prec, PADIC_TERSE);
+    _zqadic_ctx_init_teichmuller(ctx, m, prec, 0, prec, PADIC_TERSE);
 
     zqadic_t x;
-    zqadic_init(x, zqadic_ctx); 
+    zqadic_init(x, ctx); 
 
     zqadic_clear(x);
-    zqadic_ctx_clear(zqadic_ctx);
+    zqadic_ctx_clear(ctx);
     fmpz_poly_clear(m);
     padic_poly_clear(M);
 }

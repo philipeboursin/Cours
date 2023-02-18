@@ -1,5 +1,7 @@
+// Include guard
 #ifndef ZQADIC_H
 #define ZQADIC_H
+
 
 // Includes
 #include "stdio.h"
@@ -15,7 +17,6 @@
 #include "flint/fq.h"
 #include "flint/ulong_extras.h"
 
-// Include guard
 
 //-------------------- Introduction
 /* Soit $p$ un nombre premier et $q = p^d \\in \\mathbb{Z}$. Ce module permet de faire des calculs sur $\\mathbb{Z}_{q}$, en représentant l'extension comme un quotient de $\\mathbb{Z}_p[X]$ par un polynôme $M \\in \\mathbb{F}_p[X]$ irréductible.*/
@@ -72,6 +73,9 @@ void zqadic_ctx_init(zqadic_ctx_t zqadic_ctx, fmpz_t p, slong deg, slong prec, s
 
 /* Procédure permettant de récupérer le représentant d'un contexte d'entiers $q$-adiques <zqadic_ctx_t>. Met le résultat dans <P>. */
 void zqadic_ctx_rep(padic_poly_t P, zqadic_ctx_t ctx);
+
+/* Procédure permettant de changer la précision maximale d'un contexte. */
+void zqadic_ctx_change_prec(zqadic_ctx_t ctx, slong prec);
 
 
 //-------------------- Gestion de la mémoire

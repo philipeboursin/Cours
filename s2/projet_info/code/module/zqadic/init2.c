@@ -1,6 +1,5 @@
 #include "zqadic.h"
 
-// Initialise x à la précision donnée en argument prec
 void zqadic_init2(zqadic_t x, slong prec, zqadic_ctx_t zqadic_ctx)
 {
     if (((zqadic_ctx -> type) == TEICHMULLER) && (prec > (zqadic_ctx -> prec)))
