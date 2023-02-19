@@ -1,6 +1,6 @@
 #include "zqadic.h"
 
-void _zqadic_artin_schreier_root_auxi(zqadic_t x, zqadic_t alpha, zqadic_t beta, zqadic_t gamma, zqadic_ctx_t ctx)
+void _zqadic_artin_schreier_root(zqadic_t x, zqadic_t alpha, zqadic_t beta, zqadic_t gamma, zqadic_ctx_t ctx)
 {
     slong N = padic_poly_prec(x);
 
@@ -27,34 +27,34 @@ void _zqadic_artin_schreier_root_auxi(zqadic_t x, zqadic_t alpha, zqadic_t beta,
         zqadic_t Deltar;
         zqadic_t cache1;
         zqadic_t cache2;
-        padic_t deux;
-        padic_t deux_pow_Nr;
-        padic_t deux_pow_mNr;
+        padic_t p;
+        padic_t p_pow_Nr;
+        padic_t p_pow_mNr;
 
         zqadic_init2(xr, Nr, ctx);
         zqadic_init2(gammar, N - Nr, ctx);
         zqadic_init2(Deltar, N - Nr, ctx);
         zqadic_init2(cache1, N, ctx);
         zqadic_init2(cache2, N, ctx);
-        padic_init2(deux, N);
-        padic_init2(deux_pow_mNr, N);
-        padic_init2(deux_pow_Nr, N);
-        padic_set_ui(deux, 2, ctx -> pctx);
-        padic_pow_si(deux_pow_Nr, deux, Nr, ctx -> pctx); // deux_pow_Nr contient 2^{N'}
-        padic_pow_si(deux_pow_mNr, deux, -Nr, ctx -> pctx); // deux_pow_mNr contient 2^{-N'}
+        padic_init2(p, N);
+        padic_init2(p_pow_mNr, N);
+        padic_init2(p_pow_Nr, N);
+        padic_set_fmpz(p, ctx -> p, ctx -> pctx);
+        padic_pow_si(p_pow_Nr, p, Nr, ctx -> pctx); // p_pow_Nr contient p^{N'}
+        padic_pow_si(p_pow_mNr, p, -Nr, ctx -> pctx); // p_pow_mNr contient p^{-N'}
 
-        _zqadic_artin_schreier_root_auxi(xr, alpha, beta, gamma, ctx);
+        _zqadic_artin_schreier_root(xr, alpha, beta, gamma, ctx);
         zqadic_set(cache1, xr, ctx); // cache1 contient x', à précision N
         zqadic_frobenius_substitution(cache2, cache1, ctx);
         zqadic_mul(cache2, alpha, cache2, ctx); // cache2 contient \alpha \Sigma(x')
         zqadic_mul(cache1, beta, cache1, ctx); // cache1 contient \beta x'
         zqadic_add(cache2, cache1, cache2, ctx); // cache2 contient \alpha \Sigma(x') + \beta x'
         zqadic_add(cache2, cache2, gamma, ctx); // cache2 contient \alpha \Sigma(x') + \beta x' + \gamma
-        padic_poly_scalar_mul_padic(cache2, cache2, deux_pow_mNr, ctx -> pctx); // cache 2 contient gamma'
+        padic_poly_scalar_mul_padic(cache2, cache2, p_pow_mNr, ctx -> pctx); // cache2 contient gamma'
         zqadic_set(gammar, cache2, ctx);
-        _zqadic_artin_schreier_root_auxi(Deltar, alpha, beta, gammar, ctx);
+        _zqadic_artin_schreier_root(Deltar, alpha, beta, gammar, ctx);
         zqadic_set(cache1, Deltar, ctx);
-        padic_poly_scalar_mul_padic(cache1, cache1, deux_pow_Nr, ctx -> pctx); // cache 2 contient gamma'
+        padic_poly_scalar_mul_padic(cache1, cache1, p_pow_Nr, ctx -> pctx); // cache2 contient gamma'
         zqadic_set(cache2, xr, ctx);
         zqadic_add(x, cache1, cache2, ctx);
 
@@ -63,9 +63,9 @@ void _zqadic_artin_schreier_root_auxi(zqadic_t x, zqadic_t alpha, zqadic_t beta,
         zqadic_clear(Deltar);
         zqadic_clear(cache1);
         zqadic_clear(cache2);
-        padic_clear(deux);
-        padic_clear(deux_pow_Nr);
-        padic_clear(deux_pow_mNr);
+        padic_clear(p);
+        padic_clear(p_pow_Nr);
+        padic_clear(p_pow_mNr);
     }
 }
 
@@ -76,7 +76,7 @@ void zqadic_artin_schreier_root(zqadic_t x, zqadic_t alpha, zqadic_t beta, zqadi
     zqadic_t x_auxi;
 
     zqadic_init2(x_auxi, prec, ctx);
-    _zqadic_artin_schreier_root_auxi(x_auxi, alpha, beta, gamma, ctx);
+    _zqadic_artin_schreier_root(x_auxi, alpha, beta, gamma, ctx);
     zqadic_set(x, x_auxi, ctx);
 
     zqadic_clear(x_auxi);

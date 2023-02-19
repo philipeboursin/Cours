@@ -5,7 +5,6 @@ void _zqadic_inv_auxi(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx)
     int N = padic_poly_prec(rop);
     if (N == 1)
     {
-        fmpz_t deux;
         fmpz_poly_t inter; // variable cache pour stocker un polybnôme à coefficient entiers (fait le pont entre les corps finis et les qadiques)
         fmpz_mod_poly_t m; // réduction modulo 2 de inter (même si ses coefficients sont déjà 0 ou 1 vu la précision de op)
         fq_ctx_t fq_ctx; // Contexte F_2^d défini par M
@@ -13,8 +12,7 @@ void _zqadic_inv_auxi(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx)
         fq_t a; // op vu comme un élément de Fq
         fq_t inv_a; // l'inverse de a
 
-        fmpz_init_set_ui(deux, 2);
-        fmpz_mod_ctx_init(mod2_ctx, deux);
+        fmpz_mod_ctx_init(mod2_ctx, ctx -> p);
         fmpz_poly_init(inter);
         padic_poly_get_fmpz_poly(inter, ctx -> M, ctx -> pctx);
         fmpz_mod_poly_init(m, mod2_ctx);
@@ -38,7 +36,6 @@ void _zqadic_inv_auxi(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx)
         fmpz_mod_poly_clear(m, mod2_ctx);
         fmpz_mod_ctx_clear(mod2_ctx);
         fmpz_poly_clear(inter);
-        fmpz_clear(deux);
     }
     else
     {

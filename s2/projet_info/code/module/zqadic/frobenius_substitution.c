@@ -71,7 +71,7 @@ void _zqadic_frobenius_substitution(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx)
         zqadic_t cache;
         zqadic_init2(cache, zqadic_prec(op), ctx);
 
-        padic_poly_compose_pow(cache, op, 2, ctx -> pctx);
+        padic_poly_compose_pow(cache, op, fmpz_get_si(ctx -> p), ctx -> pctx);
         zqadic_reduce(cache, ctx);
         zqadic_set(rop, cache, ctx);
 

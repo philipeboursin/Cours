@@ -47,6 +47,7 @@ int main()
             if (padic_poly_is_zero(cache1) == 0)
             {
                 b = 0;
+                printf("aled\n");
             }
         }
     }

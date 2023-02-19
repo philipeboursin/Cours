@@ -57,7 +57,7 @@ typedef struct _zqadic_ctx_t
 void zqadic_ctx_init_padic_poly(zqadic_ctx_t zqadic_ctx, padic_poly_t M, padic_ctx_t padic_ctx, enum rep_type type);
 
 /* Procédure calculant le module de Teichmuller de <m> $\\in \\mathbb{F}_p[X]$, vu comme un polynôme de $\\mathbb{Z}_p[X]$, à précision <N>. Le résultat est mis dans <M>. Ne marche qu'avec $p = 2$ (dans le contexte) */
-void _teichmuller_modulus(padic_poly_t M, padic_poly_t m, slong N, padic_ctx_t C);
+void zqadic_teichmuller_modulus(padic_poly_t M, padic_poly_t m, slong N, padic_ctx_t C);
 
 /* Procédure permettant d'initialiser un contexte <zqadic_ctx>, avec comme représentant le module de Teichmuller de <m> $\\in \\mathbb{F}_p[X]$ vu comme un polynôme de $\\mathbb{Z}[X]$. Les informations <min>, <max> et <mode> permettent d'initialiser le contexte $p$-adique dans lequel seront représentés les coefficients des polynômes représentant les éléments de $\\mathbb{Z}_q$ (voir padic.h). Ne fonctionne qu'avec $p = 2$  */
 void _zqadic_ctx_init_teichmuller(zqadic_ctx_t zqadic_ctx, fmpz_poly_t m, slong prec, slong min, slong max, enum padic_print_mode mode);
@@ -162,7 +162,7 @@ void zqadic_inv(zqadic_t rop, zqadic_t op, zqadic_ctx_t zqadic_ctx);
 void zqadic_pow(zqadic_t rop, zqadic_t op, fmpz_t e, zqadic_ctx_t ctx);
 
 /* Calcule la composition (en tant que polynômes) de <op1> avec <op2>. Met le résultat dans <rop>. Utilise l'astuce de Paterson-Stockmeyer. */
-void zqadic_padic_poly_evaluation(zqadic_t rop, zqadic_t op1, zqadic_t op2, zqadic_ctx_t ctx);
+void zqadic_padic_poly_evaluation(zqadic_t rop, padic_poly_t op1, zqadic_t op2, zqadic_ctx_t ctx);
 
 
 //-------------------- Fonctions spéciales

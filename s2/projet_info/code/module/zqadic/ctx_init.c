@@ -57,7 +57,7 @@ void _mul_2n(padic_poly_t P, padic_poly_t Q, slong n, padic_ctx_t C)
     padic_clear(deux_pow_n);
 }
 
-void _teichmuller_modulus_increment(padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_poly_t V, slong N, padic_ctx_t C)
+void _zqadic_teichmuller_modulus_increment(padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_poly_t V, slong N, padic_ctx_t C)
 {
     if (N == 1)
     {
@@ -73,7 +73,7 @@ void _teichmuller_modulus_increment(padic_poly_t delta, padic_poly_t M0, padic_p
         slong Nr = (N >> 1) + (N & 1); // partie entiere superieure de N/2
         padic_poly_t deltar;
         padic_poly_init2(deltar, 0, Nr);
-        _teichmuller_modulus_increment(deltar, M0, M1, V, Nr, C);
+        _zqadic_teichmuller_modulus_increment(deltar, M0, M1, V, Nr, C);
         
 
         // definition de delta0
@@ -134,7 +134,7 @@ void _teichmuller_modulus_increment(padic_poly_t delta, padic_poly_t M0, padic_p
 
         padic_poly_init2(Delta, 0, N - Nr);
 
-        _teichmuller_modulus_increment(Delta, M0, M1, Vr, N - Nr, C);
+        _zqadic_teichmuller_modulus_increment(Delta, M0, M1, Vr, N - Nr, C);
 
         // definition de delta
         padic_poly_init2(P1, 0, N);
@@ -154,7 +154,7 @@ void _teichmuller_modulus_increment(padic_poly_t delta, padic_poly_t M0, padic_p
     }
 }
 
-void _teichmuller_modulus_auxi(padic_poly_t M, padic_poly_t m, slong N, padic_ctx_t C)
+void _zqadic_teichmuller_modulus(padic_poly_t M, padic_poly_t m, slong N, padic_ctx_t C)
 {
     if (N == 1)
     {
@@ -170,7 +170,7 @@ void _teichmuller_modulus_auxi(padic_poly_t M, padic_poly_t m, slong N, padic_ct
         slong Nr = (N >> 1) + (N & 1); // partie entiere sup de N/2
         padic_poly_t Mr;
         padic_poly_init2(Mr, 0, Nr);
-        _teichmuller_modulus_auxi(Mr, m, Nr, C);
+        _zqadic_teichmuller_modulus(Mr, m, Nr, C);
 
         // definition de M0
         padic_poly_t M0;
@@ -228,7 +228,7 @@ void _teichmuller_modulus_auxi(padic_poly_t M, padic_poly_t m, slong N, padic_ct
         // definition de delta
         padic_poly_t delta;
         padic_poly_init2(delta, 0, N - Nr);
-        _teichmuller_modulus_increment(delta, M0, M1, V, N - Nr, C);
+        _zqadic_teichmuller_modulus_increment(delta, M0, M1, V, N - Nr, C);
 
 
         //definition de M
@@ -250,9 +250,9 @@ void _teichmuller_modulus_auxi(padic_poly_t M, padic_poly_t m, slong N, padic_ct
     }
 }
 
-void _teichmuller_modulus(padic_poly_t M, padic_poly_t m, slong N, padic_ctx_t C)
+void zqadic_teichmuller_modulus(padic_poly_t M, padic_poly_t m, slong N, padic_ctx_t C)
 {
-    _teichmuller_modulus_auxi(M, m, N, C);
+    _zqadic_teichmuller_modulus(M, m, N, C);
     if ((padic_poly_degree(m) % 2) == 1) padic_poly_neg(M, M, C);
 }
 
@@ -316,7 +316,7 @@ void _zqadic_ctx_init_teichmuller(zqadic_ctx_t zqadic_ctx, fmpz_poly_t m, slong 
     padic_poly_set_fmpz_poly(lift, m, padic_ctx);
 
     padic_poly_init2(M, padic_poly_degree(lift), prec);
-    _teichmuller_modulus(M, lift, prec, padic_ctx);
+    zqadic_teichmuller_modulus(M, lift, prec, padic_ctx);
     zqadic_ctx_init_padic_poly(zqadic_ctx, M, padic_ctx, TEICHMULLER);
     
     padic_poly_clear(M);
