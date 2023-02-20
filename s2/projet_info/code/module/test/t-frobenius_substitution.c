@@ -3,24 +3,22 @@
 int main()
 {
     printf("-------------------- TEST DE zqadic_frobenius_substitution --------------------\n");
+    printf("Test 1 : on vérifie que le frobenius SPARSE fonctionne bien en le calculant avec un modulo TEICHMULLER indiqué dans le contexte comme SPARSE. Le test passe si les deux calculs donnent le même résultat.\n");
 
-    int prec = 10;
-    int deg = 9;
+    slong prec = 10;
+    slong deg = 9;
+
     fmpz_t deux;
     flint_rand_t state;
     padic_ctx_t pctx;
-    zqadic_ctx_t ctx_teich;
-    zqadic_ctx_t ctx_sparse;
-    zqadic_t x;
-    zqadic_t y;
+    zqadic_ctx_t ctx_teich, ctx_sparse, ctx;
+    zqadic_t x, y, a;
     padic_poly_t M;
     fmpz_poly_t m;
 
     flint_randinit(state);
-
     padic_poly_init2(M, deg + 1, prec);
     fmpz_poly_init(m);
-
     fmpz_init_set_ui(deux, 2);
     padic_ctx_init(pctx, deux, 0, prec, PADIC_TERSE);
 
@@ -45,23 +43,30 @@ int main()
     zqadic_init(x, ctx_teich);
     zqadic_init(y, ctx_teich);
 
+
     for (int i = 0; i < 10; i++) zqadic_randtest(x, state, ctx_sparse);
 
+    printf("x = ");
+    zqadic_print(x, ctx_teich);
+    printf("\n");
+
     zqadic_frobenius_substitution(y, x, ctx_sparse);
-    printf("Sigma(a) = ");
+    
+    printf("Sigma(x) calculé dans le contexte TEICHMULLER : ");
     zqadic_print(y, ctx_teich);
     printf("\n");
 
     zqadic_frobenius_substitution(y, x, ctx_teich);
-    printf("Sigma(a) = ");
+    printf("Sigma(a) calculé dans le contexte SPARSE : ");
     zqadic_print(y, ctx_sparse);
     printf("\n");
     
-    zqadic_ctx_t ctx;
+    printf("Test 2 : on vérifie que Sigma(a)^d = a.\n");
+ 
     zqadic_ctx_init_teichmuller(ctx, deg, prec, 0, prec, PADIC_TERSE);
-    zqadic_t a;
-
+    // zqadic_ctx_init(ctx, deux, deg, prec, 0, prec, PADIC_TERSE);
     zqadic_init2(a, prec, ctx);
+
     for (int i = 0; i < 13; i++) zqadic_randtest(a, state, ctx);
 
     printf("x = ");
@@ -72,10 +77,10 @@ int main()
     {
         zqadic_frobenius_substitution(a, a, ctx);
     }
+ 
     printf("Sigma^d(x) = ");
     zqadic_print(a, ctx);
     printf("\n");
-    
 
     fmpz_clear(deux);
     flint_randclear(state);

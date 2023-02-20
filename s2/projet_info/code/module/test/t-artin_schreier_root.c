@@ -14,8 +14,8 @@ int main()
     flint_rand_t state;
 
     fmpz_init_set_ui(p, 2);
-    zqadic_ctx_init(ctx, p, deg, prec, 0, prec, PADIC_TERSE);
-    // zqadic_ctx_init_teichmuller(ctx, deg, prec, 0, prec, PADIC_TERSE);
+    // zqadic_ctx_init(ctx, p, deg, prec, 0, prec, PADIC_TERSE);
+    zqadic_ctx_init_teichmuller(ctx, deg, prec, 0, prec, PADIC_TERSE);
     flint_randinit(state);
     zqadic_init(x, ctx);
     zqadic_init(alpha, ctx);
