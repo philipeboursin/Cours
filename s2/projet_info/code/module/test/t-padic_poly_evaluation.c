@@ -2,40 +2,38 @@
 
 int main()
 {
+    printf("-------------------- TEST DE padic_poly_evaluation --------------------\n");
+
     fmpz_t p;
     zqadic_ctx_t ctx;
-    padic_t a;
     padic_poly_t P;
-    zqadic_t x;
+    padic_t a, one;
+    zqadic_t x, xp;
 
-    int deg = 5;
-    int prec = 10;
+    slong deg = 33;
+    slong prec = 12;
 
     fmpz_init_set_ui(p, 2);
     zqadic_ctx_init_teichmuller(ctx, deg, prec, 0, prec, PADIC_TERSE);
-
     zqadic_init(x, ctx);
     padic_poly_init2(P, 0, prec);
     padic_init2(a, prec);
-    padic_set_ui(a, 2, ctx -> pctx);
+    zqadic_init2(xp, 1, ctx);
+    padic_init2(one, 1);
 
+    padic_set_ui(a, 2, ctx -> pctx);
     padic_poly_set_coeff_padic(P, 2, a, ctx -> pctx);
     zqadic_set_padic_poly(x, P, ctx);
 
-    printf("x = ");
-    zqadic_print(x, ctx);
-    printf("\n");
+    printf("Test 1 : on évalue 2X^2 avec lui même.\n");
 
     zqadic_padic_poly_evaluation(x, x, x, ctx);
     
-    printf("x = ");
+    printf("2(2X^2)^2 = ");
     zqadic_print(x, ctx);
     printf("\n");
 
-    zqadic_t xp;
-    padic_t one;
-    zqadic_init2(xp, 1, ctx);
-    padic_init2(one, 1);
+    printf("Test 2 : on évalue M modulo d'un contexte teichmuller avec X^p.\n");
 
     padic_one(one);
     padic_poly_set_coeff_padic(xp, fmpz_get_ui(p), one, ctx -> pctx);

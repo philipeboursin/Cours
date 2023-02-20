@@ -4,17 +4,16 @@ void zqadic_pow(zqadic_t rop, zqadic_t op, fmpz_t e, zqadic_ctx_t ctx)
 {
     slong prec = zqadic_prec(rop);
 
-    zqadic_t temp;
-    zqadic_t pow;
-    fmpz_t q;
-    fmpz_t r;
+    zqadic_t temp, pow;
+    fmpz_t q, r;
 
     zqadic_init2(temp, prec, ctx);
     zqadic_init2(pow, prec, ctx);
-    zqadic_one(temp);
-    zqadic_set(pow, op, ctx);
     fmpz_init_set(q, e);
     fmpz_init(r);
+
+    zqadic_set(pow, op, ctx);
+    zqadic_one(temp);
 
     while (fmpz_is_zero(q) != 1)
     {
@@ -26,6 +25,7 @@ void zqadic_pow(zqadic_t rop, zqadic_t op, fmpz_t e, zqadic_ctx_t ctx)
         }
         zqadic_mul(pow, pow, pow, ctx);
     }
+    
     zqadic_set(rop, temp, ctx);
 
     zqadic_clear(temp);

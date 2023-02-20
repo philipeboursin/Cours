@@ -56,8 +56,8 @@ typedef struct _zqadic_ctx_t
 /* Procédure permettant d'initialiser un contexte <zqadic_ctx> à partir d'un polynôme <M> $\\in \\mathbb{Z}_p$ (supposé irréductible), dans un contexte <padic_ctx>. La précision maximale de l'extension sera donnée par la précision de <M> si <type == TEICHMULLER>. */
 void zqadic_ctx_init_padic_poly(zqadic_ctx_t zqadic_ctx, padic_poly_t M, padic_ctx_t padic_ctx, enum rep_type type);
 
-/* Procédure calculant le module de Teichmuller de <m> $\\in \\mathbb{F}_p[X]$, vu comme un polynôme de $\\mathbb{Z}_p[X]$, à précision <N>. Le résultat est mis dans <M>. Ne marche qu'avec $p = 2$ (dans le contexte) */
-void zqadic_teichmuller_modulus(padic_poly_t M, padic_poly_t m, slong N, padic_ctx_t C);
+/* Procédure calculant le module de Teichmuller de <m> $\\in \\mathbb{F}_p[X]$, vu comme un polynôme de $\\mathbb{Z}_p[X]$, à précision la précision de <M>. Le résultat est mis dans <M>. Ne marche qu'avec $p = 2$ (dans le contexte) */
+void zqadic_teichmuller_modulus(padic_poly_t M, padic_poly_t m, padic_ctx_t C);
 
 /* Procédure permettant d'initialiser un contexte <zqadic_ctx>, avec comme représentant le module de Teichmuller de <m> $\\in \\mathbb{F}_p[X]$ vu comme un polynôme de $\\mathbb{Z}[X]$. Les informations <min>, <max> et <mode> permettent d'initialiser le contexte $p$-adique dans lequel seront représentés les coefficients des polynômes représentant les éléments de $\\mathbb{Z}_q$ (voir padic.h). Ne fonctionne qu'avec $p = 2$  */
 void _zqadic_ctx_init_teichmuller(zqadic_ctx_t zqadic_ctx, fmpz_poly_t m, slong prec, slong min, slong max, enum padic_print_mode mode);
@@ -81,10 +81,10 @@ void zqadic_ctx_change_prec(zqadic_ctx_t ctx, slong prec);
 //-------------------- Gestion de la mémoire
 
 /* Permet d'initialiser la mémoire nécessaire pour un <x> $\\in \\mathbb{Z}_q$. La précision par défaut est donnée par la précision du contexte <zqadic_ctx>. */
-void zqadic_init(zqadic_t x, zqadic_ctx_t zqadic_ctx);
+void zqadic_init(zqadic_t x, zqadic_ctx_t ctx);
 
 /* Permet d'initialiser la mémoire nécessaire opur un <x> $\\in \\mathbb{Z}_q$, à précision <prec>. */
-void zqadic_init2(zqadic_t x, slong prec, zqadic_ctx_t zqadic_ctx);
+void zqadic_init2(zqadic_t x, slong prec, zqadic_ctx_t ctx);
 
 /* Permet de libérer la mémoire allouée pour <x>. */
 void zqadic_clear(zqadic_t x);
@@ -102,13 +102,13 @@ void zqadic_set(zqadic_t rop, zqadic_t op, zqadic_ctx_t zqadic_ctx);
 void zqadic_set_padic(zqadic_t rop, padic_t op, zqadic_ctx_t ctx);
 
 /* Met dans <rop> le représentant réduit modulo le polynôme représentant $\\mathbb{Z}_q$ de <op>. */
-void zqadic_set_padic_poly(zqadic_t rop, padic_poly_t op, zqadic_ctx_t zqadic_ctx);
+void zqadic_set_padic_poly(zqadic_t rop, padic_poly_t op, zqadic_ctx_t ctx);
 
 /* Met dans <rop> le représentant réduit modulo le polynôme représentant $\\mathbb{Z}_q$ de l'inclusion canonique de <op> $\\in \\mathbb{Z}[X]$ dans $\\mathbb{Z}_p[X]$. */
-void zqadic_set_fmpz_poly(zqadic_t rop, fmpz_poly_t op, zqadic_ctx_t zqadic_ctx);
+void zqadic_set_fmpz_poly(zqadic_t rop, fmpz_poly_t op, zqadic_ctx_t ctx);
 
 /* Met dans rop le relèvement canonique de <op> $\\in \\mathbb{Z}_q$, vu comme un élément de $\\mathbb{Z}_p[X]$ à précision donnée, donc un élément de $(\\mathbb{Z}/p^{prec} \\mathbb{Z})[X]$. */
-void zqadic_get_fmpz_poly(fmpz_poly_t rop, zqadic_t op, zqadic_ctx_t zqadic_ctx);
+void zqadic_get_fmpz_poly(fmpz_poly_t rop, zqadic_t op, zqadic_ctx_t ctx);
 
 /* Met $1$ dans <rop>. */
 void zqadic_one(zqadic_t rop);
@@ -125,20 +125,20 @@ void zqadic_randtest(zqadic_t x, flint_rand_t state, zqadic_ctx_t ctx);
 
 //-------------------- Comparaison
 
-/* Renvoie <1> si et seulement si <x> $=$ <y>. */
+/* Renvoie <1> si et seulement si <x> $=$ <y>. Suppose que <x> et <y> sont réduits. */
 int zqadic_equal(zqadic_t x, zqadic_t y);
 
-/* Renvoie <1> si et seulement si <x> $= 0$. */
+/* Renvoie <1> si et seulement si <x> $= 0$. Suppose que <x> et <y> sont réduits. */
 int zqadic_is_zero(zqadic_t x);
 
-/* Renvoie <1> si et seulement si <x> $= 1$. */
+/* Renvoie <1> si et seulement si <x> $= 1$. Suppose que <x> et <y> sont réduits. */
 int zqadic_is_one(zqadic_t x);
 
 
 //-------------------- Opérations arithmétiques
 
-/* PAS CLAIR */
-void _padic_poly_div_eucl(padic_poly_t R, padic_poly_t Q, padic_poly_t A, padic_poly_t B, padic_ctx_t C);
+/* Réalise la division euclidienne de A par B dans $\mathbb{Z}_p[X]$. Suppose que $B$ est unitaire. */
+void padic_poly_eucl_div(padic_poly_t R, padic_poly_t Q, padic_poly_t A, padic_poly_t B, padic_ctx_t C);
 
 /* Met sous forme réduite <x> $\\in \\mathbb{Z}_q$. */
 void zqadic_reduce(zqadic_t x, zqadic_ctx_t C);
@@ -156,7 +156,7 @@ void zqadic_neg(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx);
 void zqadic_mul(zqadic_t rop, zqadic_t op1, zqadic_t op2, zqadic_ctx_t ctx);
 
 /* Inverse <op>, en supposant qu'il est inversible. Met le résultat dans <rop>. */
-void zqadic_inv(zqadic_t rop, zqadic_t op, zqadic_ctx_t zqadic_ctx);
+void zqadic_inv(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx);
 
 /* Met <op> à la puissance <e> dans rop. */
 void zqadic_pow(zqadic_t rop, zqadic_t op, fmpz_t e, zqadic_ctx_t ctx);
@@ -183,7 +183,47 @@ void zqadic_artin_schreier_root(zqadic_t x, zqadic_t alpha, zqadic_t beta, zqadi
 void zqadic_print(zqadic_t x, zqadic_ctx_t ctx);
 
 
-//-------------------- Annexe
-void _coeff_symetry(padic_poly_t P, padic_poly_t Q, padic_ctx_t C);
+//-------------------- Procédures annexes
+
+/* Pour précalculer les $C_j$ */
+void zqadic_cj_precomputation(zqadic_t** pC, slong prec, zqadic_ctx_t ctx);
+
+void _zqadic_teichmuller_modulus(padic_poly_t M, padic_poly_t m, padic_ctx_t C);
+
+/* Composition avec $-X$ */
+void zqadic_comp_moins_x(padic_poly_t P, padic_poly_t Q, padic_ctx_t C);
+
+/* Précomposition avec $X^2$ */
+void zqadic_precomp_x2(padic_poly_t P, padic_poly_t Q, padic_ctx_t C);
+
+/* Multiplication par $p^n$ */
+void zqadic_mul_pn(padic_poly_t P, padic_poly_t Q, slong n, padic_ctx_t C);
+
+void _zqadic_artin_schreier_root(zqadic_t x, zqadic_t alpha, zqadic_t beta, zqadic_t gamma, zqadic_ctx_t ctx);
+
+void _zqadic_frobenius_substitution(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx);
+
+/* Implémentation incomlplète : ne fonctionne qu'avec $k = 0$. Suffit pour calculer des Frobenius sparse. */
+void zqadic_newton_iteration(zqadic_t rop, padic_poly_t M, zqadic_t op, slong k, zqadic_ctx_t ctx);
+
+void _zqadic_newton_iteration(zqadic_t rop, padic_poly_t M, zqadic_t op, slong k, zqadic_ctx_t ctx);
+
+void _padic_poly_newton_inv(padic_poly_t rop, padic_poly_t op, slong n, padic_ctx_t ctx);
+
+void padic_poly_newton_inv(padic_poly_t rop, padic_poly_t op, slong n, padic_ctx_t ctx);
+
+/* Renvoie un polynôme avec les coefficientes symétrisés */
+void padic_poly_symetric(padic_poly_t P, padic_poly_t Q, padic_ctx_t C);
+
+void _padic_poly_eucl_div(padic_poly_t R, padic_poly_t Q, padic_poly_t A, padic_poly_t B, padic_ctx_t C);
+
+void _zqadic_inv_frobenius_substitution(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx);
+
+void zqadic_choisi_coeff(zqadic_t rop, zqadic_t op, int j, zqadic_ctx_t ctx);
+
+void _zqadic_inv(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx);
+
+void _zqadic_padic_poly_evaluation(zqadic_t rop, padic_poly_t f, zqadic_t op2, zqadic_ctx_t ctx);
+
 
 #endif

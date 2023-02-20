@@ -1,6 +1,5 @@
 #include "zqadic.h"
 
-/* Free d'un contexte $2^n$-adique */
 void zqadic_ctx_clear(zqadic_ctx_t ctx)
 {
     slong p = fmpz_get_si(ctx -> p);

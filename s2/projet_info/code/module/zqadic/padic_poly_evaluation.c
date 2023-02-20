@@ -2,8 +2,8 @@
 
 void _zqadic_padic_poly_evaluation(zqadic_t rop, padic_poly_t f, zqadic_t op2, zqadic_ctx_t ctx)
 {
-    
     slong deg = padic_poly_degree(f);
+    
     if (deg <= 0) zqadic_set(rop, f, ctx);
     else
     {
@@ -12,14 +12,8 @@ void _zqadic_padic_poly_evaluation(zqadic_t rop, padic_poly_t f, zqadic_t op2, z
         if (B*B != deg) B += 1; // B contient \lceil \sqrt{d} \rceil
 
         padic_poly_t f_auxi;
-        zqadic_t op2_auxi;
-        zqadic_t rop_auxi;
-        zqadic_t sum;
-        zqadic_t cache;
-        zqadic_t op2_pow_i;
         zqadic_t tab[B + 1];
-        zqadic_t YB;
-        zqadic_t YBj;
+        zqadic_t op2_auxi, rop_auxi, sum, cache, op2_pow_i, YB, YBj;
         padic_t a;
 
         padic_poly_init2(f_auxi, deg + 1, prec);
@@ -85,9 +79,7 @@ void zqadic_padic_poly_evaluation(zqadic_t rop, padic_poly_t f, zqadic_t op2, zq
 {
     slong prec = zqadic_prec(rop);
 
-    zqadic_t rop_auxi;
-    zqadic_t f_auxi;
-    zqadic_t op2_auxi;
+    zqadic_t rop_auxi, f_auxi, op2_auxi;
 
     zqadic_init2(rop_auxi, prec, ctx);
     padic_poly_init2(f_auxi, padic_poly_degree(f) + 1, prec);

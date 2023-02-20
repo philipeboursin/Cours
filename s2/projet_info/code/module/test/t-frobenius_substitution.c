@@ -2,6 +2,8 @@
 
 int main()
 {
+    printf("-------------------- TEST DE zqadic_frobenius_substitution --------------------\n");
+
     int prec = 10;
     int deg = 9;
     fmpz_t deux;
@@ -84,4 +86,6 @@ int main()
     zqadic_clear(y);
     padic_poly_clear(M);
     fmpz_poly_clear(m);
+    zqadic_clear(a);
+    zqadic_ctx_clear(ctx);
 }

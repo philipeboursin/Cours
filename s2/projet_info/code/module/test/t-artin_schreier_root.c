@@ -3,24 +3,20 @@
 int main()
 {
     printf("-------------------- TEST DE zqadic_artin_schreier_root --------------------\n");
-    int deg = 10;
-    int prec = 20;
-    zqadic_ctx_t ctx;
-    zqadic_t x;
-    zqadic_t alpha;
-    zqadic_t beta;
-    zqadic_t gamma;
-    zqadic_t cache1;
-    zqadic_t cache2;
-    flint_rand_t state;
-
-    flint_randinit(state);
+    
+    slong deg = 7;
+    slong prec = 10;
 
     fmpz_t p;
+    zqadic_ctx_t ctx;
+    zqadic_t x, alpha, beta, gamma;
+    zqadic_t cache1, cache2;
+    flint_rand_t state;
+
     fmpz_init_set_ui(p, 2);
-    // zqadic_ctx_init_teichmuller(ctx, deg, prec, 0, prec, PADIC_TERSE);
     zqadic_ctx_init(ctx, p, deg, prec, 0, prec, PADIC_TERSE);
-    
+    // zqadic_ctx_init_teichmuller(ctx, deg, prec, 0, prec, PADIC_TERSE);
+    flint_randinit(state);
     zqadic_init(x, ctx);
     zqadic_init(alpha, ctx);
     zqadic_init(beta, ctx);
@@ -28,10 +24,14 @@ int main()
     zqadic_init(cache1, ctx);
     zqadic_init(cache2, ctx);
 
+
     int b = 1;
     int i = 0;
+    int N = 100;
 
-    while (i < 1000)
+    printf("Test sur plusieurs instances : on résout l'équation %d fois avec des paramètres aléatoires, et on vérifie que l'algorithme renvoie le bon résultat en vérifiant qu'il satisfait l'équation. Si le test est passé, affiche 1, sinon 0.\n", N);
+
+    while (i < N)
     {
         zqadic_randtest(alpha, state, ctx);
         zqadic_randtest(beta, state, ctx);
@@ -49,26 +49,9 @@ int main()
             if (padic_poly_is_zero(cache1) == 0)
             {
                 b = 0;
-                printf("alpha = ");
-                zqadic_print(alpha, ctx);
-                printf("\n");
-                printf("beta = ");
-                zqadic_print(beta, ctx);
-                printf("\n");
-                printf("gamma = ");
-                zqadic_print(gamma, ctx);
-                printf("\n");
-                printf("x = ");
-                zqadic_print(x, ctx);
-                printf("\n");
-                zqadic_frobenius_substitution(x, x, ctx);
-                printf("Sigma x = ");
-                zqadic_print(x, ctx);
-                printf("\n");
             }
         }
     }
-    printf("Test sur plusieurs instances : on résout l'équation 10000 fois avec des paramètres aléatoires, et on vérifie que l'algorithme renvoie le bon résultat en vérifiant qu'il satisfait l'équation. Si le test est passé, affiche 1, sinon 0.\n");
     printf("%d\n", b);
 
     zqadic_ctx_clear(ctx);

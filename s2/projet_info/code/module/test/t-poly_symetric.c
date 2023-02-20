@@ -2,8 +2,10 @@
 
 int main()
 {
-    int prec = 10;
-    int deg = 10;
+    printf("-------------------- TEST DE padic_poly_symetric --------------------\n");
+
+    slong prec = 10;
+    slong deg = 10;
 
     fmpz_t p;
     padic_ctx_t ctx;
@@ -20,8 +22,13 @@ int main()
     printf("P = ");
     padic_poly_print(P, ctx);
     printf("\n");
-    _coeff_symetry(P, P, ctx);
-    printf("P renversé = ");
+    padic_poly_symetric(P, P, ctx);
+    printf("Symétrique de P = ");
     padic_poly_print(P, ctx);
     printf("\n");
+
+    fmpz_clear(p);
+    padic_poly_clear(P);
+    padic_ctx_clear(ctx);
+    flint_randclear(state);
 }

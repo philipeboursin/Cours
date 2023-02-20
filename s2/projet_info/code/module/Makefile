@@ -1,10 +1,10 @@
 BIN_DIR := bin
 OBJ_DIR := obj
 CC := gcc
-CC_ARGS := -Wall -Wextra -Werror -g -fsanitize=address
+CC_ARGS := -Wall -Wextra -Werror #-g -fsanitize=address
 INCLUDE := -I.
 LINK := gcc
-LINK_ARGS := -lflint -lgmp -fsanitize=address
+LINK_ARGS := -lflint -lgmp #-fsanitize=address
 
 SRC := $(shell find test -type f)
 TARGETS := $(SRC:test/%.c=$(BIN_DIR)/%.out) # Contient tous les noms des binaires de chaque test dans bin

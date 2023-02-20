@@ -1,6 +1,6 @@
 #include "zqadic.h"
 
-void _comp_moins_x(padic_poly_t P, padic_poly_t Q, padic_ctx_t C)
+void zqadic_comp_moins_x(padic_poly_t P, padic_poly_t Q, padic_ctx_t C)
 {
     slong N = padic_poly_prec(Q);
 
@@ -19,7 +19,7 @@ void _comp_moins_x(padic_poly_t P, padic_poly_t Q, padic_ctx_t C)
     padic_poly_clear(moins_X);
 }
 
-void _precomp_x2(padic_poly_t P, padic_poly_t Q, padic_ctx_t C)
+void zqadic_precomp_x2(padic_poly_t P, padic_poly_t Q, padic_ctx_t C)
 {
     slong N = padic_poly_prec(Q);
     slong deg = padic_poly_degree(Q);
@@ -43,75 +43,60 @@ void _precomp_x2(padic_poly_t P, padic_poly_t Q, padic_ctx_t C)
     padic_clear(padic_temp);
 }
 
-void _mul_2n(padic_poly_t P, padic_poly_t Q, slong n, padic_ctx_t C)
+void zqadic_mul_pn(padic_poly_t P, padic_poly_t Q, slong n, padic_ctx_t C)
 {
     slong N = padic_poly_prec(Q);
 
     padic_t deux_pow_n;
 
     padic_init2(deux_pow_n, N);
-    padic_set_ui(deux_pow_n, 2, C);
+    padic_set_fmpz(deux_pow_n, C -> p, C);
     padic_pow_si(deux_pow_n, deux_pow_n, n, C);
     padic_poly_scalar_mul_padic(P, Q, deux_pow_n, C);
 
     padic_clear(deux_pow_n);
 }
 
-void _zqadic_teichmuller_modulus_increment(padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_poly_t V, slong N, padic_ctx_t C)
+void _zqadic_teichmuller_modulus_increment(padic_poly_t delta, padic_poly_t M0, padic_poly_t M1, padic_poly_t V, padic_ctx_t C)
 {
-    if (N == 1)
-    {
-        padic_poly_neg(delta, V, C);
-    }
+    slong N = padic_poly_prec(delta);
+
+    if (N == 1) padic_poly_neg(delta, V, C);
     else
     {
-        // variables cache
-        padic_poly_t P1;
-        padic_poly_t P2;
+        slong Nr = (N >> 1) + (N & 1); // partie entiere supérieureerieure de N/2
 
-        //------ Algo
-        slong Nr = (N >> 1) + (N & 1); // partie entiere superieure de N/2
-        padic_poly_t deltar;
+        padic_poly_t P1, P2; // Variables cache
+        padic_poly_t Delta, deltar, delta0, delta1, Vr; // \Delta, \delta', \delta_0, \delta_1, V'
+
         padic_poly_init2(deltar, 0, Nr);
-        _zqadic_teichmuller_modulus_increment(deltar, M0, M1, V, Nr, C);
-        
+        _zqadic_teichmuller_modulus_increment(deltar, M0, M1, V, C);
 
-        // definition de delta0
-        padic_poly_t delta0;
-
+        // calcul de delta0
         padic_poly_init2(delta0, 0, N);
         padic_poly_init2(P1, 0, N + 1);
         padic_poly_init2(P2, 0, N + 1);
 
         padic_poly_set(P1, deltar, C);
-        _comp_moins_x(P2, P1, C);
+        zqadic_comp_moins_x(P2, P1, C);
         padic_poly_add(P1, P1, P2, C);
-        _mul_2n(delta0, P1, -1, C);
-        _precomp_x2(delta0, delta0, C);
+        zqadic_mul_pn(delta0, P1, -1, C);
+        zqadic_precomp_x2(delta0, delta0, C);
 
-        padic_poly_clear(P1);
-        padic_poly_clear(P2);
-
-        // definition de delta1
-        padic_poly_t delta1;
-
+        // calcul de delta1
         padic_poly_init2(delta1, 0, N);
-        padic_poly_init2(P1, 0, N + 1);
-        padic_poly_init2(P2, 0, N + 1);
 
         padic_poly_set(P1, deltar, C);
-        _comp_moins_x(P2, P1, C);
+        zqadic_comp_moins_x(P2, P1, C);
         padic_poly_sub(P1, P1, P2, C);
-        _mul_2n(delta1, P1, -1, C);
+        zqadic_mul_pn(delta1, P1, -1, C);
         padic_poly_shift_right(delta1, delta1, 1, C); // division par X
-        _precomp_x2(delta1, delta1, C);
+        zqadic_precomp_x2(delta1, delta1, C);
 
         padic_poly_clear(P1);
         padic_poly_clear(P2);
 
-        // definition Vr
-        padic_poly_t Vr;
-
+        // calcul de Vr
         padic_poly_init2(Vr, 0, N - Nr);
         padic_poly_init2(P1, 0, N);
         padic_poly_init2(P2, 0, N);
@@ -120,32 +105,29 @@ void _zqadic_teichmuller_modulus_increment(padic_poly_t delta, padic_poly_t M0, 
         padic_poly_mul(P2, M1, delta1, C);
         padic_poly_shift_left(P2, P2, 1, C);
         padic_poly_sub(P1, P1, P2, C);
-        _mul_2n(P1, P1, 1, C);
+        zqadic_mul_pn(P1, P1, 1, C);
         padic_poly_sub(P1, deltar, P1, C);
         padic_poly_add(P1, V, P1, C);
-        _mul_2n(Vr, P1, -Nr, C);
+        zqadic_mul_pn(Vr, P1, -Nr, C);
 
         padic_poly_clear(P1);
         padic_poly_clear(P2);
 
-
-        // definition de Delta
-        padic_poly_t Delta;
-
+        // calcul de Delta
         padic_poly_init2(Delta, 0, N - Nr);
 
-        _zqadic_teichmuller_modulus_increment(Delta, M0, M1, Vr, N - Nr, C);
+        _zqadic_teichmuller_modulus_increment(Delta, M0, M1, Vr, C);
 
-        // definition de delta
+        // calcul de delta
         padic_poly_init2(P1, 0, N);
 
         padic_poly_set(P1, Delta, C);
-        _mul_2n(P1, P1, Nr, C);
+        zqadic_mul_pn(P1, P1, Nr, C);
         padic_poly_add(delta, deltar, P1, C);
 
         padic_poly_clear(P1);
 
-        // clear des différentes variables
+        // clears
         padic_poly_clear(delta0);
         padic_poly_clear(delta1);
         padic_poly_clear(Vr);
@@ -154,62 +136,47 @@ void _zqadic_teichmuller_modulus_increment(padic_poly_t delta, padic_poly_t M0, 
     }
 }
 
-void _zqadic_teichmuller_modulus(padic_poly_t M, padic_poly_t m, slong N, padic_ctx_t C)
+void _zqadic_teichmuller_modulus(padic_poly_t M, padic_poly_t m, padic_ctx_t C)
 {
-    if (N == 1)
-    {
-        padic_poly_set(M, m, C);
-    }
+    slong N = padic_poly_prec(M);
+    
+    if (N == 1) padic_poly_set(M, m, C);
     else
     {
-        // variables cache
-        padic_poly_t P1;
-        padic_poly_t P2;
+        slong Nr = (N >> 1) + (N & 1); // partie entiere supérieure de N/2
 
-        //------ Algo
-        slong Nr = (N >> 1) + (N & 1); // partie entiere sup de N/2
-        padic_poly_t Mr;
+        padic_poly_t P1, P2; // variables cache
+        padic_poly_t Mr, M0, M1, V, delta; // M', M_0, M_1, V, \delta 
+
         padic_poly_init2(Mr, 0, Nr);
-        _zqadic_teichmuller_modulus(Mr, m, Nr, C);
+
+        _zqadic_teichmuller_modulus(Mr, m, C);
 
         // definition de M0
-        padic_poly_t M0;
-
         padic_poly_init2(M0, 0, N);
         padic_poly_init2(P1, 0, N + 1);
         padic_poly_init2(P2, 0, N + 1);
 
-        padic_poly_set(P1, Mr, C); // Augmentation de la précision de M en prévision de la division par 2
-        _comp_moins_x(P2, P1, C);
+        padic_poly_set(P1, Mr, C);
+        zqadic_comp_moins_x(P2, P1, C);
         padic_poly_add(P1, P1, P2, C);
-        _mul_2n(M0, P1, -1, C);
-        _precomp_x2(M0, M0, C);
-
-        padic_poly_clear(P1);
-        padic_poly_clear(P2);
-
+        zqadic_mul_pn(M0, P1, -1, C);
+        zqadic_precomp_x2(M0, M0, C);
 
         // definition de M1
-        padic_poly_t M1;
-
         padic_poly_init2(M1, 0, N);
-        padic_poly_init2(P1, 0, N + 1);
-        padic_poly_init2(P2, 0, N + 1);
 
         padic_poly_set(P1, Mr, C);
-        _comp_moins_x(P2, P1, C);
+        zqadic_comp_moins_x(P2, P1, C);
         padic_poly_sub(P1, P1, P2, C);
-        _mul_2n(M1, P1, -1, C);
+        zqadic_mul_pn(M1, P1, -1, C);
         padic_poly_shift_right(M1, M1, 1, C); // division par X
-        _precomp_x2(M1, M1, C);
+        zqadic_precomp_x2(M1, M1, C);
 
         padic_poly_clear(P1);
         padic_poly_clear(P2);
 
-
         // definition de V
-        padic_poly_t V;
-
         padic_poly_init2(V, 0, N - Nr);
         padic_poly_init2(P1, 0, N);
         padic_poly_init2(P2, 0, N);
@@ -219,29 +186,26 @@ void _zqadic_teichmuller_modulus(padic_poly_t M, padic_poly_t m, slong N, padic_
         padic_poly_mul(P2, M0, M0, C);
         padic_poly_add(P1, P1, Mr, C);
         padic_poly_sub(P1, P1, P2, C);        
-        _mul_2n(V, P1, -Nr, C);
+        zqadic_mul_pn(V, P1, -Nr, C);
 
         padic_poly_clear(P1);
         padic_poly_clear(P2);
 
-
         // definition de delta
-        padic_poly_t delta;
         padic_poly_init2(delta, 0, N - Nr);
-        _zqadic_teichmuller_modulus_increment(delta, M0, M1, V, N - Nr, C);
 
+        _zqadic_teichmuller_modulus_increment(delta, M0, M1, V, C);
 
         //definition de M
         padic_poly_init2(P1, 0, N);
 
         padic_poly_set(P1, delta, C);
-        _mul_2n(P1, P1, Nr, C);
+        zqadic_mul_pn(P1, P1, Nr, C);
         padic_poly_add(M, Mr, P1, C);
 
         padic_poly_clear(P1);
 
-
-        // clear des variables 
+        // clears
         padic_poly_clear(Mr);
         padic_poly_clear(M0);
         padic_poly_clear(M1);
@@ -250,27 +214,35 @@ void _zqadic_teichmuller_modulus(padic_poly_t M, padic_poly_t m, slong N, padic_
     }
 }
 
-void zqadic_teichmuller_modulus(padic_poly_t M, padic_poly_t m, slong N, padic_ctx_t C)
+void zqadic_teichmuller_modulus(padic_poly_t M, padic_poly_t m, padic_ctx_t C)
 {
-    _zqadic_teichmuller_modulus(M, m, N, C);
+    slong N = padic_poly_prec(M);
+
+    padic_poly_t auxi;
+
+    padic_poly_init2(auxi, 0, N);
+
+    _zqadic_teichmuller_modulus(auxi, m, C);
+    padic_poly_set(M, auxi, C);
     if ((padic_poly_degree(m) % 2) == 1) padic_poly_neg(M, M, C);
+
+    padic_poly_clear(auxi);
 }
 
-void _cj_precomputation(zqadic_t** pC, zqadic_ctx_t ctx)
+void zqadic_cj_precomputation(zqadic_t** pC, slong prec, zqadic_ctx_t ctx)
 {
     slong p = fmpz_get_si(ctx -> p);
     slong deg = ctx -> deg;
-    slong prec = ctx -> prec;
 
     fmpz_t e; // p^(d - 1)
-    zqadic_t C_1; // X^(p^(d - 1))
-    zqadic_t C_j; // C_j
+    zqadic_t C_1, C_j; // X^(p^(d - 1)), C_j
     fmpz_poly_t f;
 
     fmpz_init_set_ui(e, n_pow(p, deg - 1)); // e = p^(d - 1)
     zqadic_init(C_1, ctx);
     zqadic_init(C_j, ctx);
     fmpz_poly_init(f);
+    
     fmpz_poly_set_coeff_si(f, 1, 1);
     zqadic_set_fmpz_poly(C_1, f, ctx); // C_1 contient X
     zqadic_pow(C_1, C_1, e, ctx); // C_1 contient X^e
@@ -299,24 +271,23 @@ void zqadic_ctx_init_padic_poly(zqadic_ctx_t zqadic_ctx, padic_poly_t M, padic_c
     padic_ctx_init(zqadic_ctx -> pctx, padic_ctx -> p, padic_ctx -> min, padic_ctx -> max, padic_ctx -> mode);
     padic_poly_init2(zqadic_ctx -> M, padic_poly_degree(M) + 1, padic_poly_prec(M));
     padic_poly_set(zqadic_ctx -> M, M, padic_ctx);
-    _cj_precomputation(&(zqadic_ctx -> C), zqadic_ctx);
+    if (type == SPARSE) zqadic_cj_precomputation(&(zqadic_ctx -> C), 1, zqadic_ctx); // Il sufft de calculer les C_j à précision 1 dans le cas où le modulo est creux
+    else zqadic_cj_precomputation(&(zqadic_ctx -> C), padic_poly_prec(M), zqadic_ctx);
 }
 
 void _zqadic_ctx_init_teichmuller(zqadic_ctx_t zqadic_ctx, fmpz_poly_t m, slong prec, slong min, slong max, enum padic_print_mode mode)
 {
-    padic_poly_t lift;
+    padic_poly_t lift, M;
     fmpz_t deux;
     padic_ctx_t padic_ctx;
-    padic_poly_t M;
 
     fmpz_init_set_ui(deux, 2);
     padic_ctx_init(padic_ctx, deux, min, max, mode);
 
     padic_poly_init2(lift, fmpz_poly_degree(m) + 1, 1);
     padic_poly_set_fmpz_poly(lift, m, padic_ctx);
-
     padic_poly_init2(M, padic_poly_degree(lift), prec);
-    zqadic_teichmuller_modulus(M, lift, prec, padic_ctx);
+    zqadic_teichmuller_modulus(M, lift, padic_ctx);
     zqadic_ctx_init_padic_poly(zqadic_ctx, M, padic_ctx, TEICHMULLER);
     
     padic_poly_clear(M);
@@ -341,7 +312,6 @@ void zqadic_ctx_init_teichmuller(zqadic_ctx_t zqadic_ctx, slong deg, slong prec,
 
     fmpz_mod_poly_randtest_sparse_irreducible(m_modp, state, deg + 1, ctx_mod);
     fmpz_mod_poly_get_fmpz_poly(m, m_modp, ctx_mod);
-
     _zqadic_ctx_init_teichmuller(zqadic_ctx, m, prec, min, max, mode);
 
     fmpz_poly_clear(m);
@@ -360,7 +330,6 @@ void _zqadic_ctx_init(zqadic_ctx_t zqadic_ctx, fmpz_poly_t m, fmpz_t p, slong pr
 
     padic_poly_init2(lift, fmpz_poly_degree(m) + 1, prec);
     padic_poly_set_fmpz_poly(lift, m, padic_ctx);
-
     zqadic_ctx_init_padic_poly(zqadic_ctx, lift, padic_ctx, SPARSE);
     
     padic_ctx_clear(padic_ctx);
@@ -381,7 +350,6 @@ void zqadic_ctx_init(zqadic_ctx_t zqadic_ctx, fmpz_t p, slong deg, slong prec, s
 
     fmpz_mod_poly_randtest_sparse_irreducible(m_modp, state, deg + 1, ctx_mod);
     fmpz_mod_poly_get_fmpz_poly(m, m_modp, ctx_mod);
-
     _zqadic_ctx_init(zqadic_ctx, m, p, prec, min, max, mode);
 
     fmpz_poly_clear(m);

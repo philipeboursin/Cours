@@ -10,10 +10,12 @@ void zqadic_ctx_change_prec(zqadic_ctx_t ctx, slong prec)
         
         padic_poly_init2(m, padic_poly_degree(ctx -> M) + 1, 1);
         padic_poly_init2(M, padic_poly_degree(ctx -> M) + 1, prec);
+        
         padic_poly_set(m, ctx -> M, ctx -> pctx);
-        zqadic_teichmuller_modulus(M, m, prec, ctx -> pctx);
+        zqadic_teichmuller_modulus(M, m, ctx -> pctx);
         padic_poly_set(ctx -> M, M, ctx -> pctx);
         (ctx -> prec) = prec;
+        zqadic_cj_precomputation(&(ctx -> C), prec, ctx);
 
         padic_poly_clear(m);
         padic_poly_clear(M);

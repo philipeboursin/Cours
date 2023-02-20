@@ -4,18 +4,15 @@ int main()
 {
     printf("-------------------- TEST DE zqadic_inv --------------------\n");
     zqadic_ctx_t zqadic_ctx;    
-    fmpz_poly_t m;
-    padic_poly_t M;
-    fmpz_poly_t a;
-    padic_poly_t A;
+    fmpz_poly_t m, a;
+    padic_poly_t M, A;
     flint_rand_t state;
-    zqadic_t x;
-    zqadic_t inv_x;
+    zqadic_t x, inv_x;
 
     flint_randinit(state);
 
-    int deg = 8; // Degré de l'extension
-    int prec = 10; // Précision du contexte
+    slong deg = 8; // Degré de l'extension
+    slong prec = 10; // Précision du contexte
     
     fmpz_poly_init(m);
     fmpz_poly_init(a);
@@ -44,8 +41,6 @@ int main()
     zqadic_init(x, zqadic_ctx);
     zqadic_init(inv_x, zqadic_ctx); 
     zqadic_set_padic_poly(x, A, zqadic_ctx);
-
-
     zqadic_inv(inv_x, x, zqadic_ctx);
 
     printf("Test du handbook, page 247 :\n");
@@ -56,21 +51,22 @@ int main()
     zqadic_print(inv_x, zqadic_ctx);
     printf("\n");
 
+    int N = 1000;
+    printf("Test sur plusieurs instances : on inverse %d éléments aléatoires de Zq (inversibles) et on vérifie que le produit d'eux-même avec leur inverse vaut 1. Si le test est passé, affiche 1, sinon 0.\n", N);
     int b = 1;
-    for (int i = 0; i < 1000; i++)
+
+    for (int i = 0; i < N; i++)
     {
         zqadic_randtest(x, state, zqadic_ctx);
         long val = padic_poly_val(x);
         if (val == 0)
         {
-            // printf("%ld\n", val);
             zqadic_inv(inv_x, x, zqadic_ctx);
             zqadic_mul(x, x, inv_x, zqadic_ctx);
             if (zqadic_is_one(x) != 1) b = 0;
         }
     }
 
-    printf("Test sur plusieurs instances : on inverse des éléments aléatoires de Zq (inversibles) et on vérifie que le produit d'eux-même avec leur inverse vaut 1. Si le test est passé, affiche 1, sinon 0.\n");
     printf("%d\n", b);
 
     zqadic_clear(x);
