@@ -4,7 +4,7 @@ int main()
 {
     printf("-------------------- TEST DE zqadic_artin_schreier_root --------------------\n");
     
-    slong deg = 7;
+    slong deg = 23;
     slong prec = 10;
 
     fmpz_t p;

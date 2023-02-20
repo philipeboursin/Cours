@@ -53,7 +53,7 @@ typedef struct _zqadic_ctx_t
     padic_poly_t M; // Polynôme représentant de l'extension
 } zqadic_ctx_t[1];
 
-/* Procédure permettant d'initialiser un contexte <zqadic_ctx> à partir d'un polynôme <M> $\\in \\mathbb{Z}_p$ (supposé irréductible), dans un contexte <padic_ctx>. La précision maximale de l'extension sera donnée par la précision de <M> si <type == TEICHMULLER>. */
+/* Procédure permettant d'initialiser un contexte <zqadic_ctx> à partir d'un polynôme <M> $\\in \\mathbb{Z}_p[X]$ (supposé irréductible), dans un contexte <padic_ctx>. La précision maximale de l'extension sera donnée par la précision de <M> si <type == TEICHMULLER>. */
 void zqadic_ctx_init_padic_poly(zqadic_ctx_t zqadic_ctx, padic_poly_t M, padic_ctx_t padic_ctx, enum rep_type type);
 
 /* Procédure calculant le module de Teichmuller de <m> $\\in \\mathbb{F}_p[X]$, vu comme un polynôme de $\\mathbb{Z}_p[X]$, à précision la précision de <M>. Le résultat est mis dans <M>. Ne marche qu'avec $p = 2$ (dans le contexte) */
@@ -62,7 +62,7 @@ void zqadic_teichmuller_modulus(padic_poly_t M, padic_poly_t m, padic_ctx_t C);
 /* Procédure permettant d'initialiser un contexte <zqadic_ctx>, avec comme représentant le module de Teichmuller de <m> $\\in \\mathbb{F}_p[X]$ vu comme un polynôme de $\\mathbb{Z}[X]$. Les informations <min>, <max> et <mode> permettent d'initialiser le contexte $p$-adique dans lequel seront représentés les coefficients des polynômes représentant les éléments de $\\mathbb{Z}_q$ (voir padic.h). Ne fonctionne qu'avec $p = 2$  */
 void _zqadic_ctx_init_teichmuller(zqadic_ctx_t zqadic_ctx, fmpz_poly_t m, slong prec, slong min, slong max, enum padic_print_mode mode);
 
-/* Procédure permettant d'initlaiser un contexte <zqadic_ctx>, avec comme un représentant le module de Teichmuller d'un polynôme alétoire pris dans $\\mathbb{F}_p[X]$. Les informations <min>, <max> et <mode> permettent d'initialiser le contexte $p$-adique dans lequel seront représentés les coefficients des polynômes représentant les éléments de $\\mathbb{Z}_q$ (voir padic.h). Ne fonctionne qu'avec $p = 2$ */
+/* Procédure permettant d'initialiser un contexte <zqadic_ctx>, avec comme un représentant le module de Teichmuller d'un polynôme alétoire pris dans $\\mathbb{F}_p[X]$. Les informations <min>, <max> et <mode> permettent d'initialiser le contexte $p$-adique dans lequel seront représentés les coefficients des polynômes représentant les éléments de $\\mathbb{Z}_q$ (voir padic.h). Ne fonctionne qu'avec $p = 2$ */
 void zqadic_ctx_init_teichmuller(zqadic_ctx_t zqadic_ctx, slong deg, slong prec, slong min, slong max, enum padic_print_mode mode);
 
 /* Procédure permettant d'initlaiser un contexte <zqadic_ctx>, avec comme représentant le relèvememnt creux de <m> $\\in \\mathbb{F}_p[X]$ vu comme un polynôme de $\\mathbb{Z}[X]$. Les informations <min>, <max> et <mode> permettent d'initialiser le contexte $p$-adique dans lequel seront représentés les coefficients des polynômes représentant les éléments de $\\mathbb{Z}_q$ (voir padic.h). */
@@ -83,7 +83,7 @@ void zqadic_ctx_change_prec(zqadic_ctx_t ctx, slong prec);
 /* Permet d'initialiser la mémoire nécessaire pour un <x> $\\in \\mathbb{Z}_q$. La précision par défaut est donnée par la précision du contexte <zqadic_ctx>. */
 void zqadic_init(zqadic_t x, zqadic_ctx_t ctx);
 
-/* Permet d'initialiser la mémoire nécessaire opur un <x> $\\in \\mathbb{Z}_q$, à précision <prec>. */
+/* Permet d'initialiser la mémoire nécessaire pour un <x> $\\in \\mathbb{Z}_q$, à précision <prec>. */
 void zqadic_init2(zqadic_t x, slong prec, zqadic_ctx_t ctx);
 
 /* Permet de libérer la mémoire allouée pour <x>. */
@@ -107,7 +107,7 @@ void zqadic_set_padic_poly(zqadic_t rop, padic_poly_t op, zqadic_ctx_t ctx);
 /* Met dans <rop> le représentant réduit modulo le polynôme représentant $\\mathbb{Z}_q$ de l'inclusion canonique de <op> $\\in \\mathbb{Z}[X]$ dans $\\mathbb{Z}_p[X]$. */
 void zqadic_set_fmpz_poly(zqadic_t rop, fmpz_poly_t op, zqadic_ctx_t ctx);
 
-/* Met dans rop le relèvement canonique de <op> $\\in \\mathbb{Z}_q$, vu comme un élément de $\\mathbb{Z}_p[X]$ à précision donnée, donc un élément de $(\\mathbb{Z}/p^{prec} \\mathbb{Z})[X]$. */
+/* Met dans <rop> le relèvement canonique de <op> $\\in \\mathbb{Z}_q$, vu comme un élément de $\\mathbb{Z}_p[X]$ à précision donnée, donc un élément de $(\\mathbb{Z}/p^{prec} \\mathbb{Z})[X]$. */
 void zqadic_get_fmpz_poly(fmpz_poly_t rop, zqadic_t op, zqadic_ctx_t ctx);
 
 /* Met $1$ dans <rop>. */
@@ -137,13 +137,13 @@ int zqadic_is_one(zqadic_t x);
 
 //-------------------- Opérations arithmétiques
 
-/* Réalise la division euclidienne de A par B dans $\mathbb{Z}_p[X]$. Suppose que $B$ est unitaire. */
+/* Réalise la division euclidienne de <A> par <B> dans $\mathbb{Z}_p[X]$. Suppose que <B> est unitaire. */
 void padic_poly_eucl_div(padic_poly_t R, padic_poly_t Q, padic_poly_t A, padic_poly_t B, padic_ctx_t C);
 
 /* Met sous forme réduite <x> $\\in \\mathbb{Z}_q$. */
 void zqadic_reduce(zqadic_t x, zqadic_ctx_t C);
 
-/* Additionne <op1> et <op2>. Met le résultat dans rop. */
+/* Additionne <op1> et <op2>. Met le résultat dans <rop>. */
 void zqadic_add(zqadic_t rop, zqadic_t op1, zqadic_t op2, zqadic_ctx_t ctx);
 
 /* Réalise la soustration de <op1> avec <op2>. Met le résultat dans <rop>. */
@@ -158,7 +158,7 @@ void zqadic_mul(zqadic_t rop, zqadic_t op1, zqadic_t op2, zqadic_ctx_t ctx);
 /* Inverse <op>, en supposant qu'il est inversible. Met le résultat dans <rop>. */
 void zqadic_inv(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx);
 
-/* Met <op> à la puissance <e> dans rop. */
+/* Met <op> à la puissance <e> dans <rop>. */
 void zqadic_pow(zqadic_t rop, zqadic_t op, fmpz_t e, zqadic_ctx_t ctx);
 
 /* Calcule la composition (en tant que polynômes) de <op1> avec <op2>. Met le résultat dans <rop>. Utilise l'astuce de Paterson-Stockmeyer. */
