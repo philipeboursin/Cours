@@ -42,20 +42,21 @@ void _padic_poly_newton_inv(padic_poly_t rop, padic_poly_t op, int n, padic_ctx_
     padic_poly_clear(auxi);
 }
 
-void _coeff_symetry(padic_poly_t P, padic_poly_t Q, padic_ctx_t C) // Procédure qui transforme P en un polynôme dont les coefficients sont ceux de Q renversés
+void _coeff_symetry(padic_poly_t P, padic_poly_t Q, padic_ctx_t C) // Procédure qui transforme P en un polynôme dont les coefficients sont ceux de Q renversés. Supporte l'aliasing
 {
-    int deg = padic_poly_degree(Q);
-    int N = padic_poly_prec(Q);
+    slong deg = padic_poly_degree(Q);
+    slong N = padic_poly_prec(Q);
 
     padic_poly_t R;
     padic_t padic_cache;
-    padic_poly_init2(R, deg, N);
+
+    padic_poly_init2(R, deg + 1, N);
     padic_init2(padic_cache, N);
 
-    for (int i = 0; i < deg + 1; i++)
+    for (slong i = 0; i < deg + 1; i++)
     {
         padic_poly_get_coeff_padic(padic_cache, Q, i, C);
-        padic_poly_set_coeff_padic(R, deg-i, padic_cache, C);
+        padic_poly_set_coeff_padic(R, deg - i, padic_cache, C);
     }
 
     padic_poly_set(P, R, C);
@@ -65,7 +66,7 @@ void _coeff_symetry(padic_poly_t P, padic_poly_t Q, padic_ctx_t C) // Procédure
 }
 
 // Ne fonctionne que si B est unitaire
-void _padic_poly_div_eucl_auxi(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_poly_t Q, padic_ctx_t C)
+void __padic_poly_div_eucl_auxi(padic_poly_t R, padic_poly_t Q, padic_poly_t A, padic_poly_t B, padic_ctx_t C)
 {
     int degA = padic_poly_degree(A);
     int degB = padic_poly_degree(B);
@@ -87,9 +88,8 @@ void _padic_poly_div_eucl_auxi(padic_poly_t A, padic_poly_t B, padic_poly_t R, p
         padic_poly_init2(P2, degA, N);
 
         _coeff_symetry(P2, B, C);
-        // padic_poly_inv_series(P2, P2, n, C);
+        // padic_poly_inv_series(P2, P2, n, C); // Ne fonctionne pas pour une raison inconnue
         _padic_poly_newton_inv(P2, P2, n, C);
-
         _coeff_symetry(P1, A, C);
         padic_poly_mul(P2, P1, P2, C);
         _padic_poly_set_length(P2, n);
@@ -103,31 +103,29 @@ void _padic_poly_div_eucl_auxi(padic_poly_t A, padic_poly_t B, padic_poly_t R, p
     }
 }
 
-// Fonctionne même avec B non unitaire, le divise par son coefficient directeur et utilise _padic_poly_div_eucl_auxi
-void _padic_poly_div_eucl(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_poly_t Q, padic_ctx_t ctx)
+// ne fonctionne qu'avec B unitaire
+void _padic_poly_div_eucl(padic_poly_t R, padic_poly_t Q, padic_poly_t A, padic_poly_t B, padic_ctx_t ctx)
 {
-    padic_t c;
-    padic_t d;
-    padic_poly_t B_monic;
+    slong prec = padic_poly_prec(R);
+    padic_poly_t R_auxi, Q_auxi, A_auxi, B_auxi;
 
-    int prec = padic_poly_prec(B);
-    int degB = padic_poly_degree(B);
+    padic_poly_init2(R_auxi, 0, prec);
+    padic_poly_init2(Q_auxi, 0, prec);
+    padic_poly_init2(A_auxi, 0, prec);
+    padic_poly_init2(B_auxi, 0, prec);
 
-    padic_init2(c, prec);
-    padic_init2(d, prec);
-    padic_poly_init2(B_monic, degB, prec);
+    padic_poly_set(A_auxi, A, ctx);
+    padic_poly_set(B_auxi, B, ctx);
 
-    padic_poly_get_coeff_padic(c, B, degB, ctx);
-    padic_inv(d, c, ctx); // d est l'inverse de c
-    padic_poly_scalar_mul_padic(B_monic, B, d, ctx);
+    __padic_poly_div_eucl_auxi(R_auxi, Q_auxi, A_auxi, B_auxi, ctx);
 
-    _padic_poly_div_eucl_auxi(A, B_monic, R, Q, ctx);
+    padic_poly_set(R, R_auxi, ctx);
+    padic_poly_set(Q, Q_auxi, ctx);
 
-    padic_poly_scalar_mul_padic(Q, Q, c, ctx);
-
-    padic_clear(c);
-    padic_clear(d);
-    padic_poly_clear(B_monic);
+    padic_poly_clear(R_auxi);
+    padic_poly_clear(Q_auxi);
+    padic_poly_clear(A_auxi);
+    padic_poly_clear(B_auxi);
 }   
 
 void zqadic_reduce(zqadic_t x, zqadic_ctx_t zqadic_ctx)
@@ -140,7 +138,7 @@ void zqadic_reduce(zqadic_t x, zqadic_ctx_t zqadic_ctx)
     padic_poly_init2(Mprec, (zqadic_ctx -> deg) + 1, prec);
     padic_poly_set(Mprec, zqadic_ctx -> M, zqadic_ctx -> pctx);
 
-    _padic_poly_div_eucl(x, Mprec, x, y, zqadic_ctx -> pctx);
+    _padic_poly_div_eucl(x, y, x, Mprec, zqadic_ctx -> pctx);
     padic_poly_reduce(x, zqadic_ctx -> pctx);
 
     padic_poly_clear(Mprec);

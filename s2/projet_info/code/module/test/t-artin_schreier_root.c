@@ -3,8 +3,8 @@
 int main()
 {
     printf("-------------------- TEST DE zqadic_artin_schreier_root --------------------\n");
-    int deg = 6;
-    int prec = 10;
+    int deg = 10;
+    int prec = 20;
     zqadic_ctx_t ctx;
     zqadic_t x;
     zqadic_t alpha;
@@ -29,8 +29,9 @@ int main()
     zqadic_init(cache2, ctx);
 
     int b = 1;
+    int i = 0;
 
-    for (int i = 0; i < 10000; i++)
+    while (i < 1000)
     {
         zqadic_randtest(alpha, state, ctx);
         zqadic_randtest(beta, state, ctx);
@@ -38,6 +39,7 @@ int main()
 
         if (zqadic_val(beta) > 0 && zqadic_val(alpha) == 0 && zqadic_val(gamma) >= 0)
         {
+            i++;
             zqadic_artin_schreier_root(x, alpha, beta, gamma, ctx);
             zqadic_frobenius_substitution(cache1, x, ctx);
             zqadic_mul(cache1, alpha, cache1, ctx);
@@ -47,7 +49,22 @@ int main()
             if (padic_poly_is_zero(cache1) == 0)
             {
                 b = 0;
-                printf("aled\n");
+                printf("alpha = ");
+                zqadic_print(alpha, ctx);
+                printf("\n");
+                printf("beta = ");
+                zqadic_print(beta, ctx);
+                printf("\n");
+                printf("gamma = ");
+                zqadic_print(gamma, ctx);
+                printf("\n");
+                printf("x = ");
+                zqadic_print(x, ctx);
+                printf("\n");
+                zqadic_frobenius_substitution(x, x, ctx);
+                printf("Sigma x = ");
+                zqadic_print(x, ctx);
+                printf("\n");
             }
         }
     }

@@ -14,7 +14,7 @@ int main()
     
     // fmpz_poly_t m;
     padic_poly_t M;
-    int deg = 8; // Degré de l'extension
+    int deg = 13; // Degré de l'extension
     int prec = 10; // Précision du contexte
     
     // fmpz_poly_init(m);

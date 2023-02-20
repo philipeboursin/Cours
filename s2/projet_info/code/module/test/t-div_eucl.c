@@ -10,9 +10,11 @@ int main()
     padic_poly_t R;
     padic_poly_t cache;
     flint_rand_t state;
+    padic_t one;
 
     int prec = 10;
 
+    padic_init2(one, prec);
     fmpz_init_set_ui(deux, 2);  
     padic_ctx_init(ctx, deux, 0, prec, PADIC_TERSE);
     padic_poly_init2(A, 9, prec);
@@ -21,14 +23,16 @@ int main()
     padic_poly_init2(R, 0, prec);
     padic_poly_init2(cache, 0, prec);
     flint_randinit(state);
+    padic_one(one);
 
     for (int i = 0; i < 3; i++)
     {
         padic_poly_randtest(A, state, 9, ctx);
-        padic_poly_randtest(B, state, 5, ctx);
+        padic_poly_randtest(B, state, 6, ctx);
+        padic_poly_set_coeff_padic(B, padic_poly_degree(B) + 1, one, ctx);
 
 
-        _padic_poly_div_eucl(A, B, R, Q, ctx); // A = BQ + R
+        _padic_poly_div_eucl(R, Q, A, B, ctx); // A = BQ + R
 
         padic_poly_mul(cache, B, Q, ctx);
         padic_poly_add(cache, cache, R, ctx); // Calcule BQ + R

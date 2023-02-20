@@ -69,8 +69,10 @@ void _zqadic_frobenius_substitution(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx)
     if ((ctx -> type) == TEICHMULLER)
     {
         zqadic_t cache;
-        zqadic_init2(cache, zqadic_prec(op), ctx);
+        
+        zqadic_init2(cache, zqadic_prec(rop), ctx);
 
+        // zqadic_compose_pow(cache, op, fmpz_get_si(ctx -> p), ctx);
         padic_poly_compose_pow(cache, op, fmpz_get_si(ctx -> p), ctx -> pctx);
         zqadic_reduce(cache, ctx);
         zqadic_set(rop, cache, ctx);
@@ -108,10 +110,8 @@ void zqadic_frobenius_substitution(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx)
     zqadic_init2(rop_auxi, prec, ctx);
     zqadic_init2(op_auxi, prec, ctx);
 
-
     zqadic_set(op_auxi, op, ctx);
     _zqadic_frobenius_substitution(rop_auxi, op_auxi, ctx);
-
     zqadic_set(rop, rop_auxi, ctx);
 
     zqadic_clear(rop_auxi);

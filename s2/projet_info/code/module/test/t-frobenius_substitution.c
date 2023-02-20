@@ -3,7 +3,7 @@
 int main()
 {
     int prec = 10;
-    int deg = 8;
+    int deg = 9;
     fmpz_t deux;
     flint_rand_t state;
     padic_ctx_t pctx;
@@ -55,6 +55,26 @@ int main()
     zqadic_print(y, ctx_sparse);
     printf("\n");
     
+    zqadic_ctx_t ctx;
+    zqadic_ctx_init_teichmuller(ctx, deg, prec, 0, prec, PADIC_TERSE);
+    zqadic_t a;
+
+    zqadic_init2(a, prec, ctx);
+    for (int i = 0; i < 13; i++) zqadic_randtest(a, state, ctx);
+
+    printf("x = ");
+    zqadic_print(a, ctx);
+    printf("\n");
+
+    for (int i = 0; i < deg; i++)
+    {
+        zqadic_frobenius_substitution(a, a, ctx);
+    }
+    printf("Sigma^d(x) = ");
+    zqadic_print(a, ctx);
+    printf("\n");
+    
+
     fmpz_clear(deux);
     flint_randclear(state);
     zqadic_ctx_clear(ctx_teich);

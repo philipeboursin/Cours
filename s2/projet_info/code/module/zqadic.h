@@ -138,7 +138,7 @@ int zqadic_is_one(zqadic_t x);
 //-------------------- Opérations arithmétiques
 
 /* PAS CLAIR */
-void _padic_poly_div_eucl(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_poly_t Q, padic_ctx_t C);
+void _padic_poly_div_eucl(padic_poly_t R, padic_poly_t Q, padic_poly_t A, padic_poly_t B, padic_ctx_t C);
 
 /* Met sous forme réduite <x> $\\in \\mathbb{Z}_q$. */
 void zqadic_reduce(zqadic_t x, zqadic_ctx_t C);
@@ -181,5 +181,9 @@ void zqadic_artin_schreier_root(zqadic_t x, zqadic_t alpha, zqadic_t beta, zqadi
 
 /* Affiche un <x> de $\\mathbb{Z}_q$, représenté comme un élément de $\\mathbb{Z}_p[X]$. Les coefficients de ce polynôme (dans $\\mathbb{Z}_p$) seront affichés selon le mode spécifié dans le contexte $p$-adique associé à <ctx> (<ctx -> ctxp>). */
 void zqadic_print(zqadic_t x, zqadic_ctx_t ctx);
+
+
+//-------------------- Annexe
+void _coeff_symetry(padic_poly_t P, padic_poly_t Q, padic_ctx_t C);
 
 #endif

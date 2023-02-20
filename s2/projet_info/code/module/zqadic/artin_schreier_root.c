@@ -6,7 +6,6 @@ void _zqadic_artin_schreier_root(zqadic_t x, zqadic_t alpha, zqadic_t beta, zqad
 
     if (N == 1)
     {
-
         zqadic_t cache;
 
         zqadic_init2(cache, 1, ctx);
@@ -18,6 +17,47 @@ void _zqadic_artin_schreier_root(zqadic_t x, zqadic_t alpha, zqadic_t beta, zqad
         zqadic_set(x, cache, ctx);
 
         zqadic_clear(cache);
+
+        // fmpz_t deux;
+        // fmpz_poly_t inter;
+        // fmpz_mod_ctx_t mod2_ctx;
+        // fmpz_mod_poly_t m;
+        // fq_ctx_t fq_ctx;
+        // fq_t alpha1;
+        // fq_t gamma1;
+
+        // fmpz_poly_init(inter);
+        // fmpz_init_set_ui(deux, 2);
+        // fmpz_mod_ctx_init(mod2_ctx, deux);
+        // fmpz_mod_poly_init(m, mod2_ctx);
+        // padic_poly_get_fmpz_poly(inter, ctx -> M, ctx -> pctx);
+        // fmpz_mod_poly_set_fmpz_poly(m, inter, mod2_ctx);
+        // fq_ctx_init_modulus(fq_ctx, m, mod2_ctx, "x"); // Contexte F_{2^d} initialisé
+
+        // fq_init(alpha1, fq_ctx);
+        // fq_init(gamma1, fq_ctx);
+
+        // zqadic_get_fmpz_poly(inter, alpha, ctx);
+        // fq_set_fmpz_poly(alpha1, inter, fq_ctx);
+
+        // zqadic_get_fmpz_poly(inter, gamma, ctx);
+        // fq_set_fmpz_poly(gamma1, inter, fq_ctx);
+
+        // fq_neg(gamma1, gamma1, fq_ctx);
+        // fq_inv(alpha1, alpha1, fq_ctx);
+        // fq_mul(alpha1, alpha1, gamma1, fq_ctx);
+        // fq_pth_root(alpha1, alpha1, fq_ctx);
+
+        // fq_get_fmpz_poly(inter, alpha1, fq_ctx);
+        // zqadic_set_fmpz_poly(x, inter, ctx);
+
+        // fq_clear(alpha1, fq_ctx);
+        // fq_clear(gamma1, fq_ctx);
+        // fq_ctx_clear(fq_ctx);
+        // fmpz_mod_poly_clear(m, mod2_ctx);
+        // fmpz_mod_ctx_clear(mod2_ctx);
+        // fmpz_poly_clear(inter);
+        // fmpz_clear(deux);
     }
     else
     {
@@ -71,13 +111,26 @@ void _zqadic_artin_schreier_root(zqadic_t x, zqadic_t alpha, zqadic_t beta, zqad
 
 void zqadic_artin_schreier_root(zqadic_t x, zqadic_t alpha, zqadic_t beta, zqadic_t gamma, zqadic_ctx_t ctx)
 {
-
     slong prec = zqadic_prec(x);
+
     zqadic_t x_auxi;
+    zqadic_t alpha_auxi;
+    zqadic_t beta_auxi;
+    zqadic_t gamma_auxi;
 
     zqadic_init2(x_auxi, prec, ctx);
-    _zqadic_artin_schreier_root(x_auxi, alpha, beta, gamma, ctx);
+    zqadic_init2(alpha_auxi, prec, ctx);
+    zqadic_init2(beta_auxi, prec, ctx);
+    zqadic_init2(gamma_auxi, prec, ctx);
+
+    zqadic_set(alpha_auxi, alpha, ctx);
+    zqadic_set(beta_auxi, beta, ctx);
+    zqadic_set(gamma_auxi, gamma, ctx);
+    _zqadic_artin_schreier_root(x_auxi, alpha_auxi, beta_auxi, gamma_auxi, ctx);
     zqadic_set(x, x_auxi, ctx);
 
     zqadic_clear(x_auxi);
+    zqadic_clear(alpha_auxi);
+    zqadic_clear(beta_auxi);
+    zqadic_clear(gamma_auxi);
 }
