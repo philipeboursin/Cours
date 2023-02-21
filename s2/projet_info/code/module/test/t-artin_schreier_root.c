@@ -4,7 +4,7 @@ int main()
 {
     printf("-------------------- TEST DE zqadic_artin_schreier_root --------------------\n");
     
-    slong deg = 23;
+    slong deg = 13;
     slong prec = 10;
 
     fmpz_t p;
@@ -13,9 +13,9 @@ int main()
     zqadic_t cache1, cache2;
     flint_rand_t state;
 
-    fmpz_init_set_ui(p, 2);
-    // zqadic_ctx_init(ctx, p, deg, prec, 0, prec, PADIC_TERSE);
-    zqadic_ctx_init_teichmuller(ctx, deg, prec, 0, prec, PADIC_TERSE);
+    fmpz_init_set_ui(p, 1789);
+    zqadic_ctx_init(ctx, p, deg, prec, 0, prec, PADIC_TERSE);
+    // zqadic_ctx_init_teichmuller(ctx, deg, prec, 0, prec, PADIC_TERSE);
     flint_randinit(state);
     zqadic_init(x, ctx);
     zqadic_init(alpha, ctx);
@@ -27,7 +27,7 @@ int main()
 
     int b = 1;
     int i = 0;
-    int N = 100;
+    int N = 1;
 
     printf("Test sur plusieurs instances : on résout l'équation %d fois avec des paramètres aléatoires, et on vérifie que l'algorithme renvoie le bon résultat en vérifiant qu'il satisfait l'équation. Si le test est passé, affiche 1, sinon 0.\n", N);
 

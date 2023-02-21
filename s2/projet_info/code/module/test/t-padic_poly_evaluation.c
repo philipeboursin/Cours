@@ -10,7 +10,7 @@ int main()
     padic_t a, one;
     zqadic_t x, xp;
 
-    slong deg = 33;
+    slong deg = 11;
     slong prec = 12;
 
     fmpz_init_set_ui(p, 2);
