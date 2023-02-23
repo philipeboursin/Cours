@@ -149,7 +149,7 @@
                 Mais comme $M$ et $M'$ collisionnent, alors le haché de ces deux fichiers est le même et on a bien obtenu ce que l'on voulait.
 
         \subsection{Fonctions de hachage usuelles}
-            \begin{tabular}{c|c|c|c|c|c}
+            \begin{tabularx}{\textwidth}{X|l|l|l|l|X}
                 Nom & Année & Inventeurs & $l$ & Anniv & Meilleure attaque connue \\
                 \hline
                 MD4 & 1990 & Rivest & $128$ & $2^{64}$ & 1995, Dobbertim trouve une collision \\
@@ -171,7 +171,7 @@
                 && Peters, van Asche & 256 & $2^{128}$ &\\
                 && (KECCAK) & 384 & $2^{192}$ &\\
                 &&& 512 & $2^{256}$ &\\
-            \end{tabular}
+            \end{tabularx}
 
         \subsection{Standards de signature RSA}
             Pour signer avec RSA, on réalise $s = (\mu(M))^d [n]$ où $\mu$ est un standard de signature RSA. 

@@ -43,6 +43,17 @@
             Courbes sur $\mathbb{R}$ : équation de Weierstrass $y^2 = x^3 + ax + b$. 
 
         \subsection{Formules d'addition}
+            On calcule $R = P + Q$ de la manière suivante :
+            \begin{align*}
+                &u =
+                \begin{cases}
+                    &\frac{y_Q - y_P}{x_Q - x_P} \\
+                    &\frac{3x_P^2 + a}{2y_P} \\
+                \end{cases} \\
+                &v = y_P - ux_P \\
+                &x_R = u^2 - x_P - x_Q \\
+                &y_R = -(ux_R + v)
+            \end{align*}
 
         \subsection{Coordonnées projectives}
 

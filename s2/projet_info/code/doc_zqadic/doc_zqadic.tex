@@ -26,18 +26,18 @@ Soit $p$ un nombre premier et $q = p^d \in \mathbb{Z}$. Ce module permet de fair
 \section{Structure de données}
 Un élément de $\mathbb{Z}_q$ est la classe d'équivalence d'un élément de $\mathbb{Z}_p[X]$ modulo $M$. On le représente donc par un élément de $\mathbb{Z}_p[X]$, que l'on réduira modulo $M$ tout au long des calculs. On dira qu'il est sous forme réduite s'il est réduit modulo $M$
 
-Type représentant un élément de $\mathbb{Z}_q$. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Type représentant un élément de $\mathbb{Z}_q$.
+\begin{minted}[breaklines]{c}
 typedef padic_poly_t zqadic_t;
 \end{minted}
 
-Fonction renvoyant la précision à laquelle \mintinline{c}{x} est représenté. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Fonction renvoyant la précision à laquelle \mintinline{c}{x} est représenté.
+\begin{minted}[breaklines]{c}
 slong zqadic_prec(zqadic_t x);
 \end{minted}
 
-Fonction renvoyant la valuation de \mintinline{c}{x}. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Fonction renvoyant la valuation de \mintinline{c}{x}.
+\begin{minted}[breaklines]{c}
 slong zqadic_val(zqadic_t x);
 \end{minted}
 
@@ -45,13 +45,13 @@ slong zqadic_val(zqadic_t x);
 \section{Contexte}
 Un contexte d'entiers $q$-adiques contient les informations nécessaires aux calculs dans $\mathbb{Z}_q$, ainsi que différents éléments précalculés permettant d'accélérer certains calculs.
 
-Différents types de polynômes pouvant représenter l'extension $\mathbb{Q}_q$ de $\mathbb{Q}_p$. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Différents types de polynômes pouvant représenter l'extension $\mathbb{Z}_q$ de $\mathbb{Z}_p$.
+\begin{minted}[breaklines]{c}
 enum rep_type {TEICHMULLER, SPARSE};
 \end{minted}
 
 Type représentant un contexte d'entiers $q$-adiques.
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+\begin{minted}[breaklines]{c}
 typedef struct _zqadic_ctx_t
 {
     slong prec; // Précision maximale des calculs dans l'extension, dans le cas où le représentant est calculé à une précision donnée (e.g. module de Teichmuller)
@@ -64,192 +64,206 @@ typedef struct _zqadic_ctx_t
 } zqadic_ctx_t[1];
 \end{minted}
 
-Procédure permettant d'initialiser un contexte \mintinline{c}{zqadic_ctx} à partir d'un polynôme \mintinline{c}{M} $\in \mathbb{Z}_p$ (supposé irréductible), dans un contexte \mintinline{c}{padic_ctx}. La précision maximale de l'extension sera donnée par la précision de \mintinline{c}{M} si \mintinline{c}{type == TEICHMULLER}. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Procédure permettant d'initialiser un contexte \mintinline{c}{zqadic_ctx} à partir d'un polynôme \mintinline{c}{M} $\in \mathbb{Z}_p[X]$ (supposé irréductible), dans un contexte \mintinline{c}{padic_ctx}. La précision maximale de l'extension sera donnée par la précision de \mintinline{c}{M} si \mintinline{c}{type == TEICHMULLER}.
+\begin{minted}[breaklines]{c}
 void zqadic_ctx_init_padic_poly(zqadic_ctx_t zqadic_ctx, padic_poly_t M, padic_ctx_t padic_ctx, enum rep_type type);
 \end{minted}
 
-Procédure calculant le module de Teichmuller de \mintinline{c}{m} $\in \mathbb{F}_p[X]$, vu comme un polynôme de $\mathbb{Z}_p[X]$, à précision \mintinline{c}{N}. Le résultat est mis dans \mintinline{c}{M}. /!\ Ne marche qu'avec $p = 2$ (dans le contexte) /!\ 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
-void _teichmuller_modulus(padic_poly_t M, padic_poly_t m, slong N, padic_ctx_t C);
+Procédure calculant le module de Teichmuller de \mintinline{c}{m} $\in \mathbb{F}_p[X]$, vu comme un polynôme de $\mathbb{Z}_p[X]$, à précision la précision de \mintinline{c}{M}. Le résultat est mis dans \mintinline{c}{M}. Ne marche qu'avec $p = 2$ (dans le contexte)
+\begin{minted}[breaklines]{c}
+void zqadic_teichmuller_modulus(padic_poly_t M, padic_poly_t m, padic_ctx_t C);
 \end{minted}
 
-Procédure permettant d'initialiser un contexte \mintinline{c}{zqadic_ctx}, avec comme représentant le module de Teichmuller de \mintinline{c}{m} $\in \mathbb{F}_p[X]$ vu comme un polynôme de $\mathbb{Z}[X]$. Les informations \mintinline{c}{min}, \mintinline{c}{max} et \mintinline{c}{mode} permettent d'initialiser le contexte $p$-adique dans lequel seront représentés les coefficients des polynômes représentant les éléments de $\mathbb{Z}_q$ (voir padic.h). /!\ Ne fonctionne qu'avec $p = 2$ /!\  
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Procédure permettant d'initialiser un contexte \mintinline{c}{zqadic_ctx}, avec comme représentant le module de Teichmuller de \mintinline{c}{m} $\in \mathbb{F}_p[X]$ vu comme un polynôme de $\mathbb{Z}[X]$. Les informations \mintinline{c}{min}, \mintinline{c}{max} et \mintinline{c}{mode} permettent d'initialiser le contexte $p$-adique dans lequel seront représentés les coefficients des polynômes représentant les éléments de $\mathbb{Z}_q$ (voir padic.h). Ne fonctionne qu'avec $p = 2$ 
+\begin{minted}[breaklines]{c}
 void _zqadic_ctx_init_teichmuller(zqadic_ctx_t zqadic_ctx, fmpz_poly_t m, slong prec, slong min, slong max, enum padic_print_mode mode);
 \end{minted}
 
-Procédure permettant d'initlaiser un contexte \mintinline{c}{zqadic_ctx}, avec comme un représentant le module de Teichmuller d'un polynôme alétoire pris dans $\mathbb{F}_p[X]$. Les informations \mintinline{c}{min}, \mintinline{c}{max} et \mintinline{c}{mode} permettent d'initialiser le contexte $p$-adique dans lequel seront représentés les coefficients des polynômes représentant les éléments de $\mathbb{Z}_q$ (voir padic.h). /!\ Ne fonctionne qu'avec $p = 2$ /!\ 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Procédure permettant d'initialiser un contexte \mintinline{c}{zqadic_ctx}, avec comme un représentant le module de Teichmuller d'un polynôme alétoire pris dans $\mathbb{F}_p[X]$. Les informations \mintinline{c}{min}, \mintinline{c}{max} et \mintinline{c}{mode} permettent d'initialiser le contexte $p$-adique dans lequel seront représentés les coefficients des polynômes représentant les éléments de $\mathbb{Z}_q$ (voir padic.h). Ne fonctionne qu'avec $p = 2$
+\begin{minted}[breaklines]{c}
 void zqadic_ctx_init_teichmuller(zqadic_ctx_t zqadic_ctx, slong deg, slong prec, slong min, slong max, enum padic_print_mode mode);
 \end{minted}
 
-Procédure permettant d'initlaiser un contexte \mintinline{c}{zqadic_ctx}, avec comme représentant le relèvememnt creux de \mintinline{c}{m} $\in \mathbb{F}_p[X]$ vu comme un polynôme de $\mathbb{Z}[X]$. Les informations \mintinline{c}{min}, \mintinline{c}{max} et \mintinline{c}{mode} permettent d'initialiser le contexte $p$-adique dans lequel seront représentés les coefficients des polynômes représentant les éléments de $\mathbb{Z}_q$ (voir padic.h). 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Procédure permettant d'initialiser un contexte \mintinline{c}{zqadic_ctx}, avec comme représentant le relèvememnt creux de \mintinline{c}{m} $\in \mathbb{F}_p[X]$ vu comme un polynôme de $\mathbb{Z}[X]$. Les informations \mintinline{c}{min}, \mintinline{c}{max} et \mintinline{c}{mode} permettent d'initialiser le contexte $p$-adique dans lequel seront représentés les coefficients des polynômes représentant les éléments de $\mathbb{Z}_q$ (voir padic.h).
+\begin{minted}[breaklines]{c}
 void _zqadic_ctx_init(zqadic_ctx_t zqadic_ctx, fmpz_poly_t m, fmpz_t p, slong prec, slong min, slong max, enum padic_print_mode mode);
 \end{minted}
 
-Procédure permettant d'initlaiser un contexte \mintinline{c}{zqadic_ctx}, avec comme un représentant le relèvement creux d'un polynôme alétoire pris dans $\mathbb{F}_p[X]$. Les informations \mintinline{c}{min}, \mintinline{c}{max} et \mintinline{c}{mode} permettent d'initialiser le contexte $p$-adique dans lequel seront représentés les coefficients des polynômes représentant les éléments de $\mathbb{Z}_q$ (voir padic.h). 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Procédure permettant d'initialiser un contexte \mintinline{c}{zqadic_ctx}, avec comme un représentant le relèvement creux d'un polynôme alétoire pris dans $\mathbb{F}_p[X]$. Les informations \mintinline{c}{min}, \mintinline{c}{max} et \mintinline{c}{mode} permettent d'initialiser le contexte $p$-adique dans lequel seront représentés les coefficients des polynômes représentant les éléments de $\mathbb{Z}_q$ (voir padic.h).
+\begin{minted}[breaklines]{c}
 void zqadic_ctx_init(zqadic_ctx_t zqadic_ctx, fmpz_t p, slong deg, slong prec, slong min, slong max, enum padic_print_mode mode);
 \end{minted}
 
-Procédure permettant de récupérer le représentant d'un contexte d'entiers $q$-adiques \mintinline{c}{zqadic_ctx_t}. Met le résultat dans \mintinline{c}{P}. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Procédure permettant de récupérer le représentant d'un contexte d'entiers $q$-adiques \mintinline{c}{zqadic_ctx_t}. Met le résultat dans \mintinline{c}{P}.
+\begin{minted}[breaklines]{c}
 void zqadic_ctx_rep(padic_poly_t P, zqadic_ctx_t ctx);
+\end{minted}
+
+Procédure permettant de changer la précision maximale d'un contexte.
+\begin{minted}[breaklines]{c}
+void zqadic_ctx_change_prec(zqadic_ctx_t ctx, slong prec);
 \end{minted}
 
 
 \section{Gestion de la mémoire}
 
-Permet d'initialiser la mémoire nécessaire pour un \mintinline{c}{x} $\in \mathbb{Z}_q$. La précision par défaut est donnée par la précision du contexte \mintinline{c}{zqadic_ctx}. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
-void zqadic_init(zqadic_t x, zqadic_ctx_t zqadic_ctx);
+Permet d'initialiser la mémoire nécessaire pour un \mintinline{c}{x} $\in \mathbb{Z}_q$. La précision par défaut est donnée par la précision du contexte \mintinline{c}{zqadic_ctx}.
+\begin{minted}[breaklines]{c}
+void zqadic_init(zqadic_t x, zqadic_ctx_t ctx);
 \end{minted}
 
-Permet d'initialiser la mémoire nécessaire opur un \mintinline{c}{x} $\in \mathbb{Z}_q$, à précision \mintinline{c}{prec}. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
-void zqadic_init2(zqadic_t x, slong prec, zqadic_ctx_t zqadic_ctx);
+Permet d'initialiser la mémoire nécessaire pour un \mintinline{c}{x} $\in \mathbb{Z}_q$, à précision \mintinline{c}{prec}.
+\begin{minted}[breaklines]{c}
+void zqadic_init2(zqadic_t x, slong prec, zqadic_ctx_t ctx);
 \end{minted}
 
-Permet de libérer la mémoire allouée pour \mintinline{c}{x}. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Permet de libérer la mémoire allouée pour \mintinline{c}{x}.
+\begin{minted}[breaklines]{c}
 void zqadic_clear(zqadic_t x);
 \end{minted}
 
-Permet de libérer la mémoire allouée pour \mintinline{c}{ctx} un contexte d'entiers q-adiques. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Permet de libérer la mémoire allouée pour \mintinline{c}{ctx} un contexte d'entiers q-adiques.
+\begin{minted}[breaklines]{c}
 void zqadic_ctx_clear(zqadic_ctx_t ctx);
 \end{minted}
 
 
 \section{Assignement}
 
-Met la valeur de \mintinline{c}{op} dans \mintinline{c}{rop}. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Met la valeur de \mintinline{c}{op} dans \mintinline{c}{rop}.
+\begin{minted}[breaklines]{c}
 void zqadic_set(zqadic_t rop, zqadic_t op, zqadic_ctx_t zqadic_ctx);
 \end{minted}
 
-Met la valeur de \mintinline{c}{op} $\in \mathbb{Z}_p$, vu comme un polynôme constant dans $\mathbb{Z}_p[X]$, dans \mintinline{c}{rop}. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Met la valeur de \mintinline{c}{op} $\in \mathbb{Z}_p$, vu comme un polynôme constant dans $\mathbb{Z}_p[X]$, dans \mintinline{c}{rop}.
+\begin{minted}[breaklines]{c}
 void zqadic_set_padic(zqadic_t rop, padic_t op, zqadic_ctx_t ctx);
 \end{minted}
 
-Met dans \mintinline{c}{rop} le représentant réduit modulo le polynôme représentant $\mathbb{Z}_q$ de \mintinline{c}{op}. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
-void zqadic_set_padic_poly(zqadic_t rop, padic_poly_t op, zqadic_ctx_t zqadic_ctx);
+Met dans \mintinline{c}{rop} le représentant réduit modulo le polynôme représentant $\mathbb{Z}_q$ de \mintinline{c}{op}.
+\begin{minted}[breaklines]{c}
+void zqadic_set_padic_poly(zqadic_t rop, padic_poly_t op, zqadic_ctx_t ctx);
 \end{minted}
 
-Met dans \mintinline{c}{rop} le représentant réduit modulo le polynôme représentant $\mathbb{Z}_q$ de l'inclusion canonique de \mintinline{c}{op} $\in \mathbb{Z}[X]$ dans $\mathbb{Z}_p[X]$. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
-void zqadic_set_fmpz_poly(zqadic_t rop, fmpz_poly_t op, zqadic_ctx_t zqadic_ctx);
+Met dans \mintinline{c}{rop} le représentant réduit modulo le polynôme représentant $\mathbb{Z}_q$ de l'inclusion canonique de \mintinline{c}{op} $\in \mathbb{Z}[X]$ dans $\mathbb{Z}_p[X]$.
+\begin{minted}[breaklines]{c}
+void zqadic_set_fmpz_poly(zqadic_t rop, fmpz_poly_t op, zqadic_ctx_t ctx);
 \end{minted}
 
-Met dans rop le relèvement canonique de \mintinline{c}{op} $\in \mathbb{Z}_q$, vu comme un élément de $\mathbb{Z}_p[X]$ à précision donnée, donc un élément de $(\mathbb{Z}/p^{prec} \mathbb{Z})[X]$. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
-void zqadic_get_fmpz_poly(fmpz_poly_t rop, zqadic_t op, zqadic_ctx_t zqadic_ctx);
+Met dans \mintinline{c}{rop} le relèvement canonique de \mintinline{c}{op} $\in \mathbb{Z}_q$, vu comme un élément de $\mathbb{Z}_p[X]$ à précision donnée, donc un élément de $(\mathbb{Z}/p^{prec} \mathbb{Z})[X]$.
+\begin{minted}[breaklines]{c}
+void zqadic_get_fmpz_poly(fmpz_poly_t rop, zqadic_t op, zqadic_ctx_t ctx);
 \end{minted}
 
-Met $1$ dans \mintinline{c}{rop}. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Met $1$ dans \mintinline{c}{rop}.
+\begin{minted}[breaklines]{c}
 void zqadic_one(zqadic_t rop);
 \end{minted}
 
-Met $0$ dans \mintinline{c}{rop}. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Met $0$ dans \mintinline{c}{rop}.
+\begin{minted}[breaklines]{c}
 void zqadic_zero(zqadic_t rop);
 \end{minted}
 
 
 \section{Randomisation}
 
-Génère un élément de $\mathbb{Z}_q$ aléatoire. Met le résultat dans \mintinline{c}{x}. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Génère un élément de $\mathbb{Z}_q$ aléatoire. Met le résultat dans \mintinline{c}{x}.
+\begin{minted}[breaklines]{c}
 void zqadic_randtest(zqadic_t x, flint_rand_t state, zqadic_ctx_t ctx);
 \end{minted}
 
 
 \section{Comparaison}
 
-Renvoie \mintinline{c}{1} si et seulement si \mintinline{c}{x} $=$ \mintinline{c}{y}. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Renvoie \mintinline{c}{1} si et seulement si \mintinline{c}{x} $=$ \mintinline{c}{y}. Suppose que \mintinline{c}{x} et \mintinline{c}{y} sont réduits.
+\begin{minted}[breaklines]{c}
 int zqadic_equal(zqadic_t x, zqadic_t y);
 \end{minted}
 
-Renvoie \mintinline{c}{1} si et seulement si \mintinline{c}{x} $= 1$. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Renvoie \mintinline{c}{1} si et seulement si \mintinline{c}{x} $= 0$. Suppose que \mintinline{c}{x} et \mintinline{c}{y} sont réduits.
+\begin{minted}[breaklines]{c}
+int zqadic_is_zero(zqadic_t x);
+\end{minted}
+
+Renvoie \mintinline{c}{1} si et seulement si \mintinline{c}{x} $= 1$. Suppose que \mintinline{c}{x} et \mintinline{c}{y} sont réduits.
+\begin{minted}[breaklines]{c}
 int zqadic_is_one(zqadic_t x);
 \end{minted}
 
 
 \section{Opérations arithmétiques}
 
-PAS CLAIR 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
-void _padic_poly_div_eucl(padic_poly_t A, padic_poly_t B, padic_poly_t R, padic_poly_t Q, padic_ctx_t C);
+Réalise la division euclidienne de \mintinline{c}{A} par \mintinline{c}{B} dans $\mathbb{Z}_p[X]$. Suppose que \mintinline{c}{B} est unitaire.
+\begin{minted}[breaklines]{c}
+void padic_poly_eucl_div(padic_poly_t R, padic_poly_t Q, padic_poly_t A, padic_poly_t B, padic_ctx_t C);
 \end{minted}
 
-Met sous forme réduite \mintinline{c}{x} $\in \mathbb{Z}_q$. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Met sous forme réduite \mintinline{c}{x} $\in \mathbb{Z}_q$.
+\begin{minted}[breaklines]{c}
 void zqadic_reduce(zqadic_t x, zqadic_ctx_t C);
 \end{minted}
 
-Additionne \mintinline{c}{op1} et \mintinline{c}{op2}. Met le résultat dans rop. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Additionne \mintinline{c}{op1} et \mintinline{c}{op2}. Met le résultat dans rop.
+\begin{minted}[breaklines]{c}
 void zqadic_add(zqadic_t rop, zqadic_t op1, zqadic_t op2, zqadic_ctx_t ctx);
 \end{minted}
 
-Réalise la soustration de \mintinline{c}{op1} avec \mintinline{c}{op2}. Met le résultat dans \mintinline{c}{rop}. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Réalise la soustration de \mintinline{c}{op1} avec \mintinline{c}{op2}. Met le résultat dans \mintinline{c}{rop}.
+\begin{minted}[breaklines]{c}
 void zqadic_sub(zqadic_t rop, zqadic_t op1, zqadic_t op2, zqadic_ctx_t ctx);
 \end{minted}
 
-Réalise la multiplication de \mintinline{c}{op1} avec \mintinline{c}{op2}. Met le résultat dans \mintinline{c}{rop}. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Met l'opposé de \mintinline{c}{op} dans \mintinline{c}{rop}.
+\begin{minted}[breaklines]{c}
+void zqadic_neg(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx);
+\end{minted}
+
+Réalise la multiplication de \mintinline{c}{op1} avec \mintinline{c}{op2}. Met le résultat dans \mintinline{c}{rop}.
+\begin{minted}[breaklines]{c}
 void zqadic_mul(zqadic_t rop, zqadic_t op1, zqadic_t op2, zqadic_ctx_t ctx);
 \end{minted}
 
-Inverse \mintinline{c}{op}, en supposant qu'il est inversible. Met le résultat dans \mintinline{c}{rop}. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
-void zqadic_inv(zqadic_t rop, zqadic_t op, zqadic_ctx_t zqadic_ctx);
+Inverse \mintinline{c}{op}, en supposant qu'il est inversible. Met le résultat dans \mintinline{c}{rop}.
+\begin{minted}[breaklines]{c}
+void zqadic_inv(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx);
 \end{minted}
 
-Met \mintinline{c}{op} à la puissance \mintinline{c}{e} dans rop. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Met \mintinline{c}{op} à la puissance \mintinline{c}{e} dans \mintinline{c}{rop}.
+\begin{minted}[breaklines]{c}
 void zqadic_pow(zqadic_t rop, zqadic_t op, fmpz_t e, zqadic_ctx_t ctx);
 \end{minted}
 
-Calcule la composition (en tant que polynômes) de \mintinline{c}{op1} avec \mintinline{c}{op2}. Met le résultat dans \mintinline{c}{rop}. Utilise l'astuce de Paterson-Stockmeyer. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
-void zqadic_composition(zqadic_t rop, zqadic_t op1, zqadic_t op2, zqadic_ctx_t ctx);
+Calcule la composition (en tant que polynômes) de \mintinline{c}{op1} avec \mintinline{c}{op2}. Met le résultat dans \mintinline{c}{rop}. Utilise l'astuce de Paterson-Stockmeyer.
+\begin{minted}[breaklines]{c}
+void zqadic_padic_poly_evaluation(zqadic_t rop, padic_poly_t op1, zqadic_t op2, zqadic_ctx_t ctx);
 \end{minted}
 
 
 \section{Fonctions spéciales}
 
-Réalise la substitution du frobenius en \mintinline{c}{op}, dans l'extension spécifiée par \mintinline{c}{ctx}. Met le résultat dans \mintinline{c}{rop}. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Réalise la substitution du frobenius en \mintinline{c}{op}, dans l'extension spécifiée par \mintinline{c}{ctx}. Met le résultat dans \mintinline{c}{rop}.
+\begin{minted}[breaklines]{c}
 void zqadic_frobenius_substitution(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx);
 \end{minted}
 
-Réalise la substitution du frobenius inverse en \mintinline{c}{op}, dans l'extension spécifiée par \mintinline{c}{ctx}. Met le résulta dans \mintinline{c}{rop}. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Réalise la substitution du frobenius inverse en \mintinline{c}{op}, dans l'extension spécifiée par \mintinline{c}{ctx}. Met le résulta dans \mintinline{c}{rop}.
+\begin{minted}[breaklines]{c}
 void zqadic_inv_frobenius_substitution(zqadic_t rop, zqadic_t op, zqadic_ctx_t ctx);
 \end{minted}
 
-Résout l'équation d'Artin-Schreier avec paramètres \mintinline{c}{alpha}, \mintinline{c}{beta} et \mintinline{c}{gamma}. Met le résultat dans \mintinline{c}{x}. 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Résout l'équation d'Artin-Schreier avec paramètres \mintinline{c}{alpha}, \mintinline{c}{beta} et \mintinline{c}{gamma}. Met le résultat dans \mintinline{c}{x}.
+\begin{minted}[breaklines]{c}
 void zqadic_artin_schreier_root(zqadic_t x, zqadic_t alpha, zqadic_t beta, zqadic_t gamma, zqadic_ctx_t ctx);
 \end{minted}
 
 
 \section{Misc}
 
-Affiche un \mintinline{c}{x} de $\mathbb{Z}_q$, représenté comme un élément de $\mathbb{Z}_p[X]$. Les coefficients de ce polynôme (dans $\mathbb{Z}_p$) seront affichés selon le mode spécifié dans le contexte $p$-adique associé à \mintinline{c}{ctx} (\mintinline{c}{ctx -> ctxp}). 
-\begin{minted}[linenos, tabsize = 2, breaklines]{c}
+Affiche un \mintinline{c}{x} de $\mathbb{Z}_q$, représenté comme un élément de $\mathbb{Z}_p[X]$. Les coefficients de ce polynôme (dans $\mathbb{Z}_p$) seront affichés selon le mode spécifié dans le contexte $p$-adique associé à \mintinline{c}{ctx} (\mintinline{c}{ctx -> ctxp}).
+\begin{minted}[breaklines]{c}
 void zqadic_print(zqadic_t x, zqadic_ctx_t ctx);
 \end{minted}
-
 
 %Bibliographie
 % \nocite{*}
