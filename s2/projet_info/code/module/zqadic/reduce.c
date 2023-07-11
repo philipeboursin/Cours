@@ -84,8 +84,8 @@ void _padic_poly_eucl_div(padic_poly_t R, padic_poly_t Q, padic_poly_t A, padic_
         padic_poly_init2(P2, degA, N);
 
         padic_poly_symetric(P2, B, C);
-        // padic_poly_inv_series(P2, P2, n, C); // Ne fonctionne pas pour une raison inconnue (bug dans flint)
-        padic_poly_newton_inv(P2, P2, n, C);
+        padic_poly_inv_series(P2, P2, n, C); // Ne fonctionne pas pour une raison inconnue (bug dans flint)
+        // padic_poly_newton_inv(P2, P2, n, C);
         padic_poly_symetric(P1, A, C);
         padic_poly_mul(P2, P1, P2, C);
         _padic_poly_set_length(P2, n);

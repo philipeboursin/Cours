@@ -4,8 +4,8 @@ int main()
 {
     printf("-------------------- TEST DE zqadic_inv_frobenius_substitution --------------------\n");
 
-    slong deg = 11;
-    slong prec = 20;
+    slong deg = 100;
+    slong prec = 100;
 
     flint_rand_t state;
     flint_randinit(state);
